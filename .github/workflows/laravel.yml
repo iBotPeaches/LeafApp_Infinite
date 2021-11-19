@@ -37,8 +37,5 @@ jobs:
       - name: Create SQLite database
         run: touch database/database.sqlite
 
-      - name: Do migrations
-        run: php artisan migrate
-
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: php artisan test
