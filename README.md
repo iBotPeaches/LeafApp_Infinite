@@ -19,3 +19,4 @@ Used for the API for Infinite information, an amazing service that proxies some 
 
 #### PHP
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
+2. Larastan - https://github.com/nunomaduro/larastan - MIT
