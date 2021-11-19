@@ -34,6 +34,9 @@ jobs:
       - name: PHPCS
         run: vendor/bin/phpcs
 
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse
+
       - name: Create SQLite database
         run: touch database/database.sqlite
 
