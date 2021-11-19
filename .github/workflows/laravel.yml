@@ -34,6 +34,9 @@ jobs:
       - name: PHPCS
         run: vendor/bin/phpcs
 
+      - name: Create SQLite database
+        run: touch database/database.sqlite
+
       - name: Do migrations
         run: php artisan migrate
 
