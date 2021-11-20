@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\HaloDotApi;
 
+use App\Models\Player;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
@@ -20,7 +21,7 @@ class ApiClient implements InfiniteInterface
             ]);
     }
 
-    public function appearance(string $gamertag)
+    public function appearance(string $gamertag): ?Player
     {
         $response = $this->pendingRequest->get('appearance/players/' . $gamertag);
         dd($response);
