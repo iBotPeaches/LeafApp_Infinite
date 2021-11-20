@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'halodotapi' => [
+        'key' => env('HALODOTAPI_KEY'),
+        'domain' => env('HALODOTAPI_DOMAIN', 'https://cryptum.halodotapi.com'),
+        'version' => env('HALODOTAPI_VERSION', '2.3-alpha')
+    ]
+
 ];
