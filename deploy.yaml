@@ -6,7 +6,6 @@ import:
 config:
   application: 'Leafapp'
   repository: 'git@github.com:iBotPeaches/LeafApp_Infinite.git'
-  php_fpm_version: ''
 
 hosts:
   prod:
@@ -26,7 +25,6 @@ tasks:
     - yarn:install
     - yarn:run:prod
     - deploy:publish
-    - php-fpm:reload
   yarn:run:prod:
     - script: 'cd {{release_or_current_path}} && yarn run prod'
 
