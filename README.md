@@ -22,7 +22,8 @@ _Another hobby stat site for another Halo game_
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
  * `HALODOTAPI_KEY` - The API key given after the OAuth Live dance
-
+ * `HALODOTAPI_DOMAIN` - The base domain for HaloDotAPI
+ * `HALODOTAPI_VERSION` - The version of the HaloDotAPI to use
 
 ### Dependencies
 
@@ -33,3 +34,4 @@ Used for the API for Infinite information, an amazing service that proxies some 
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
 2. Larastan - https://github.com/nunomaduro/larastan - MIT
 3. Paratest - https://github.com/paratestphp/paratest - MIT
+4. Guzzle - https://github.com/guzzle/guzzle - MIT
