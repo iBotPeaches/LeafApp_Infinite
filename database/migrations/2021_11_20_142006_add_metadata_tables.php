@@ -25,6 +25,7 @@ class AddMetadataTables extends Migration
 
     public function down(): void
     {
-        //
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('maps');
     }
 }
