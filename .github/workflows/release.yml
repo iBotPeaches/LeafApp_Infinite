@@ -21,7 +21,7 @@ jobs:
         uses: deployphp/action@v1
         with:
           private-key: ${{ secrets.DEPLOY_SECRET_KEY }}
-          dep: deploy deploy
+          dep: deploy
           deployer-version: "7.0.0-rc.2"
 
       - name: Release
