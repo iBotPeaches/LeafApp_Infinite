@@ -14,6 +14,7 @@ class AddPlayersTable extends Migration
             $table->string('service_tag', 8)->nullable(true);
             $table->string('emblem_url')->nullable(true);
             $table->string('backdrop_url')->nullable(true);
+            $table->timestamps();
         });
     }
 
