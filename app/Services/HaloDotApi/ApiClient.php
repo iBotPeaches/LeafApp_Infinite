@@ -24,6 +24,12 @@ class ApiClient implements InfiniteInterface
     public function appearance(string $gamertag): ?Player
     {
         $response = $this->pendingRequest->get('appearance/players/' . $gamertag);
-        dd($response);
+
+        if ($response->successful()) {
+            // @phpstan-ignore-next-line
+            return Player::fromHaloDotApi($response->json());
+        }
+
+        return null;
     }
 }
