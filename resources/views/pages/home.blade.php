@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    Test
+    <livewire:add-gamer-form />
 @endsection
