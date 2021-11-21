@@ -40,14 +40,14 @@ class AddGamerForm extends Component
         return $this->redirectPlayer($player);
     }
 
-    public function redirectPlayer(Player $player): Redirector
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return redirect()->route('player', [$player]); // @phpstan-ignore-line
-    }
-
     public function render(): View
     {
         return view('livewire.add-gamer-form');
+    }
+
+    private function redirectPlayer(Player $player): Redirector
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return redirect()->route('player', [$player]); // @phpstan-ignore-line
     }
 }
