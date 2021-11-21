@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read Category $category
  * @property-read Map $map
  */
-class Match extends Model
+class Game extends Model
 {
     use HasFactory;
 
