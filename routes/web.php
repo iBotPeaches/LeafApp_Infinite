@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/', [HomeController::class, 'index']);
+// Player
+Route::get('/player/{player}', [PlayerController::class, 'index'])->name('player');
+
+// Home
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/', [HomeController::class, 'index'])->name('home');
