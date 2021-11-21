@@ -36,3 +36,4 @@ Used for the API for Infinite information, an amazing service that proxies some 
 3. Paratest - https://github.com/paratestphp/paratest - MIT
 4. Guzzle - https://github.com/guzzle/guzzle - MIT
 5. Livewire - https://github.com/livewire/livewire - MIT
+6. Enum - https://github.com/BenSampo/laravel-enum - MIT
