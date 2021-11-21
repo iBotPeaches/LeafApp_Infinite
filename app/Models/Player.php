@@ -39,14 +39,15 @@ class Player extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        // @phpstan-ignore-next-line
         $player = self::fromGamertag(Arr::get($payload, 'additional.gamertag'));
 
-        $player->fill([
-            'service_tag' => Arr::get($payload, 'data.service_tag'),
-            'emblem_url' => Arr::get($payload, 'data.emblem_url'),
-            'backdrop_url' => Arr::get($payload, 'data.backdrop_image_url')
-        ]);
+        $player->service_tag = Arr::get($payload, 'data.service_tag');
+        $player->emblem_url = Arr::get($payload, 'data.emblem_url');
+        $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
+
+        if ($player->isDirty()) {
+            $player->saveOrFail();
+        }
 
         return $player;
     }
