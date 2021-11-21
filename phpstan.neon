@@ -8,7 +8,7 @@ parameters:
         - database/factories
         - database/seeders
 
-    level: 9
+    level: 8
 
     ignoreErrors:
     checkMissingIterableValueType: false
