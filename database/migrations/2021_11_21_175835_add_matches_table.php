@@ -2,7 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Map;
-use App\Models\Match;
+use App\Models\Game;
 use App\Models\Player;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,7 +12,7 @@ class AddMatchesTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('matches', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
             $table->foreignIdFor(Category::class);
@@ -27,10 +27,10 @@ class AddMatchesTable extends Migration
             $table->integer('duration_seconds');
         });
 
-        Schema::create('match_players', function (Blueprint $table) {
+        Schema::create('game_players', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Player::class);
-            $table->foreignIdFor(Match::class);
+            $table->foreignIdFor(Game::class);
 
             $table->unsignedTinyInteger('rank');
             $table->unsignedSmallInteger('outcome');

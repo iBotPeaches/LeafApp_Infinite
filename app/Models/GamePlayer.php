@@ -41,9 +41,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $assists_driver
  * @property int $assists_callout
  * @property-read Player $player
- * @property-read Match $match
+ * @property-read Game $game
  */
-class MatchPlayer extends Model
+class GamePlayer extends Model
 {
     use HasFactory;
 
@@ -58,8 +58,8 @@ class MatchPlayer extends Model
         return $this->belongsTo(Player::class);
     }
 
-    public function match(): BelongsTo
+    public function game(): BelongsTo
     {
-        return $this->belongsTo(Match::class);
+        return $this->belongsTo(Game::class);
     }
 }
