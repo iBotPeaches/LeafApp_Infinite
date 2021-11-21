@@ -9,14 +9,16 @@ class AddMetadataTables extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->uuid('uuid');
             $table->uuid('version');
             $table->string('name', 32);
             $table->string('thumbnail_url');
         });
 
         Schema::create('maps', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->uuid('uuid');
             $table->uuid('version');
             $table->string('name', 32);
             $table->string('thumbnail_url');
