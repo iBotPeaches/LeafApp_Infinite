@@ -8,7 +8,8 @@
         "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "livewire/livewire": "^2.7"
     },
     "require-dev": {
         "brianium/paratest": "^6.3",
