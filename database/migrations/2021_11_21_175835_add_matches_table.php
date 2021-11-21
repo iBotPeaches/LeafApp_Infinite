@@ -15,8 +15,8 @@ class AddMatchesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->foreignIdFor(Category::class);
-            $table->foreignIdFor(Map::class);
+            $table->foreignIdFor(Category::class)->constrained();
+            $table->foreignIdFor(Map::class)->constrained();
 
             $table->boolean('is_ffa');
             $table->boolean('is_scored');
@@ -29,8 +29,8 @@ class AddMatchesTable extends Migration
 
         Schema::create('game_players', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Player::class);
-            $table->foreignIdFor(Game::class);
+            $table->foreignIdFor(Player::class)->constrained();
+            $table->foreignIdFor(Game::class)->constrained();
 
             $table->unsignedTinyInteger('rank');
             $table->unsignedSmallInteger('outcome');
