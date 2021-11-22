@@ -51,7 +51,7 @@ class Game extends Model implements HasHaloDotApi
 
     public function setExperienceAttribute(string $value): void
     {
-        $experience = Experience::coerce(Str::upper($value));
+        $experience = Experience::coerce($value);
         if (empty($experience)) {
             throw new \InvalidArgumentException('Invalid Experience Enum (' . $value . ')');
         }
