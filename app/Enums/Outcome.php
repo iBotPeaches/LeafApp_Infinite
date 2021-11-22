@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
@@ -9,7 +10,7 @@ use BenSampo\Enum\Enum;
  * @method static static LOSS()
  * @method static static LEFT()
  */
-final class Outcome extends Enum
+final class Outcome extends Enum implements LocalizedEnum
 {
     const WIN = 1;
     const LOSS = 2;
