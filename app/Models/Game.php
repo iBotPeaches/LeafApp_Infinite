@@ -42,6 +42,11 @@ class Game extends Model implements HasHaloDotApi
         'experience' => Experience::class
     ];
 
+    public $with = [
+        'category',
+        'map'
+    ];
+
     public $timestamps = false;
 
     public function setExperienceAttribute(string $value): void

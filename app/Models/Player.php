@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Pivots\PersonalResult;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 
 /**
@@ -13,6 +16,7 @@ use Illuminate\Support\Arr;
  * @property string $service_tag
  * @property string $emblem_url
  * @property string $backdrop_url
+ * @property-read Game[]|Collection $games
  */
 class Player extends Model implements HasHaloDotApi
 {
@@ -50,5 +54,22 @@ class Player extends Model implements HasHaloDotApi
         }
 
         return $player;
+    }
+
+    public function games(): BelongsToMany
+    {
+        return $this->belongsToMany(Game::class, 'game_players')
+            ->as('personal')
+            ->using(PersonalResult::class)
+            ->withPivot([
+                'outcome',
+                'kills',
+                'deaths',
+                'kd',
+                'kda',
+                'accuracy',
+                'score',
+                'rank'
+            ]);
     }
 }
