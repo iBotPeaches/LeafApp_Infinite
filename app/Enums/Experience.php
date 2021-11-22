@@ -5,13 +5,22 @@ namespace App\Enums;
 
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
+use Illuminate\Support\Str;
 
 /**
  * @method static static BTB()
  * @method static static ARENA()
+ * @method static static PVE_BOTS()
  */
 final class Experience extends Enum implements LocalizedEnum
 {
     const BTB = 1;
     const ARENA = 2;
+    const PVE_BOTS = 3;
+
+    public static function coerce($enumKeyOrValue): ?Enum
+    {
+        $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+        return parent::coerce($enumKeyOrValue);
+    }
 }
