@@ -1,7 +1,8 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
-    <title>LeafApp</title>
+    <title>LeafApp - @yield('title')</title>
+    <meta name="description" content="LeafApp @yield('description')" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">

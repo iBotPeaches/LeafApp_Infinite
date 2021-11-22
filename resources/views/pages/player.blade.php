@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', $player->gamertag)
+@section('description', $player->gamertag . ' Halo Infinite Stats')
 
 @section('content')
     <div class="container mx-auto px-4 flex flex-col lg:flex-row">
