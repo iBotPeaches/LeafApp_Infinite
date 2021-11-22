@@ -7,7 +7,7 @@
             <img src="{{ $player->emblem_url }}" />
         </div>
         <div class="relative lg:w-2/3 p-8">
-            TODO
+            <livewire:game-history-table :player="$player" />
         </div>
     </div>
 @endsection
