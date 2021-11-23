@@ -17,7 +17,10 @@ class GameHistoryTable extends Component
     public function render(): View
     {
         return view('livewire.game-history-table', [
-            'games' => $this->player->games()->paginate(20)
+            'games' => $this->player
+                ->games()
+                ->orderByDesc('occurred_at')
+                ->paginate(20)
         ]);
     }
 }
