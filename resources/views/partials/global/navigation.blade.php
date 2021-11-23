@@ -13,7 +13,7 @@
 
     <div id="navbar" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item">
+            <a href="{{ route('about') }}" class="navbar-item">
                 About
             </a>
         </div>
