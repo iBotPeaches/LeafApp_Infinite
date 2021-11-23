@@ -3,12 +3,30 @@
 @section('description', $player->gamertag . ' Halo Infinite Stats')
 
 @section('content')
-    <div class="container mx-auto px-4 flex flex-col lg:flex-row">
-        <div class="mt-6 lg:mt-0 lg:ml-6 lg:w-1/3 p-8" style="background-image: url('{{ $player->backdrop_url }}');">
-            {{ $player->gamertag }}
-            <img src="{{ $player->emblem_url }}" />
+    <div class="columns">
+        <div class="column">
+            <div class="card has-background-light">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <img src="{{ $player->backdrop_url }}">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-64x64">
+                                <img src="{{ $player->emblem_url }}">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">{{ $player->gamertag }}</p>
+                            <p class="subtitle is-6">{{ $player->service_tag }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="relative lg:w-2/3 p-8">
+        <div class="column is-three-quarters">
             <livewire:game-history-table :player="$player" />
         </div>
     </div>
