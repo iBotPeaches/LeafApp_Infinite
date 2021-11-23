@@ -33,4 +33,19 @@ class PersonalResult extends Pivot
     {
         return number_format($value, 2);
     }
+
+    public function getScoreAttribute(int $value): string
+    {
+        return number_format($value);
+    }
+
+    public function hasPositiveKd(): bool
+    {
+        return $this->kd >= 1;
+    }
+
+    public function wasVictory(): bool
+    {
+        return $this->outcome->is(Outcome::WIN());
+    }
 }
