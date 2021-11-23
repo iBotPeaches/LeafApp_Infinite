@@ -28,7 +28,8 @@ Used for the API for Infinite information, an amazing service that proxies some 
 ### Dependencies
 
 #### Node
-1. Tailwind - https://github.com/tailwindlabs/tailwindcss - MIT
+1. Bulma - https://github.com/jgthms/bulma - MIT
+2. FontAwesome - https://github.com/FortAwesome/Font-Awesome - Font Awesome Free License
 
 #### PHP
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
