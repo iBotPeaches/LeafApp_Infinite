@@ -1,7 +1,31 @@
-<nav class="bg-green-700 flex items-center justify-between flex-wrap bg-grey-darkest p-6 fixed w-full z-10 pin-t">
-    <div class="flex items-center flex-no-shrink text-white mr-6">
-        <a class="text-white no-underline hover:text-white hover:no-underline" href="{{ url('/') }}">
-            <span class="text-2xl pl-2">LeafApp</span>
+<nav class="navbar is-fixed-top is-success" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ url('/') }}">
+            Leaf
         </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">
+                About
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="" class="button is-info">
+                        <strong>GitHub</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>

@@ -1,5 +1,8 @@
+<?php
+/** @var App\Models\Game[] $games */
+?>
 <div>
-    <table class="table table-auto">
+    <table class="table is-striped is-narrow is-hoverable">
         <thead>
             <tr>
                 <th>Mode</th>
@@ -22,7 +25,9 @@
                     <td>{{ $game->experience->description }}</td>
                     <td>{{ $game->map->name }}</td>
                     <td>{{ $game->category->name }}</td>
-                    <td>{{ $game->personal->outcome->description }}</td>
+                    <td class="@if ($game->personal->wasVictory()) has-background-success-light @endif">
+                        {{ $game->personal->outcome->description }}
+                    </td>
                     <td>{{ $game->personal->kills }}</td>
                     <td>{{ $game->personal->deaths }}</td>
                     <td>{{ $game->personal->kd }}</td>
@@ -30,10 +35,10 @@
                     <td>{{ $game->personal->accuracy }}</td>
                     <td>{{ $game->personal->score }}</td>
                     <td>{{ $game->personal->rank }}</td>
-                    <td>{{ $game->occurred_at }}</td>
+                    <td>{{ $game->occurred_at->diffForHumans() }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {{ $games->links() }}
+    {{ $games->links('pagination::bulma') }}
 </div>
