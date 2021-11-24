@@ -25,13 +25,17 @@
                     <td>{{ $game->experience->description }}</td>
                     <td>{{ $game->map->name }}</td>
                     <td>{{ $game->category->name }}</td>
-                    <td class="@if ($game->personal->wasVictory()) has-background-success-light @endif">
+                    <td class="{{ $game->personal->getVictoryColor() }}">
                         {{ $game->personal->outcome->description }}
                     </td>
                     <td>{{ $game->personal->kills }}</td>
                     <td>{{ $game->personal->deaths }}</td>
-                    <td>{{ $game->personal->kd }}</td>
-                    <td>{{ $game->personal->kda }}</td>
+                    <td class="{{ $game->personal->getKdColor() }}">
+                        {{ $game->personal->kd }}
+                    </td>
+                    <td class="{{ $game->personal->getKdaColor() }}">
+                        {{ $game->personal->kda }}
+                    </td>
                     <td>{{ $game->personal->accuracy }}</td>
                     <td>{{ $game->personal->score }}</td>
                     <td>{{ $game->personal->rank }}</td>
