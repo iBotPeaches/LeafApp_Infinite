@@ -14,6 +14,15 @@ class GameHistoryTable extends Component
 
     public Player $player;
 
+    public $listeners = [
+        '$refresh'
+    ];
+
+    public function paginationView(): string
+    {
+        return 'pagination::bulma';
+    }
+
     public function render(): View
     {
         return view('livewire.game-history-table', [

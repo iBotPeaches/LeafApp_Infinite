@@ -2,7 +2,7 @@
 /** @var App\Models\Game[] $games */
 ?>
 <div>
-    <table class="table is-striped is-narrow is-hoverable">
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
             <tr>
                 <th>Mode</th>
@@ -40,5 +40,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $games->links('pagination::bulma') }}
+    {{ $games->links() }}
 </div>
