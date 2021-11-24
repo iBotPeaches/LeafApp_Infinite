@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Experience;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Pivots\PersonalResult;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ use Illuminate\Support\Str;
  * @property int $duration_seconds
  * @property-read Category $category
  * @property-read Map $map
+ * @property-read PersonalResult $personal
  */
 class Game extends Model implements HasHaloDotApi
 {
