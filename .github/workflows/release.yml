@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: 'https://leafapp.co'
 
     steps:
       - uses: actions/checkout@v2
