@@ -37,7 +37,7 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function matches(Player $player): ?Collection
+    public function matches(Player $player, bool $forceUpdate = false): ?Collection
     {
         $currentPage = 1;
         $nextPage = 1;
@@ -65,7 +65,7 @@ class ApiClient implements InfiniteInterface
                     // To prevent loading ALL games to the beginning of time. We look for our first game/player
                     // combo that we already recognize in the database. This means we processed that user/game
                     // and everything prior was already processed.
-                    if ($gamePlayer instanceof GamePlayer && !$gamePlayer->wasRecentlyCreated) {
+                    if ($gamePlayer instanceof GamePlayer && !$gamePlayer->wasRecentlyCreated && !$forceUpdate) {
                         break 2;
                     }
                 }

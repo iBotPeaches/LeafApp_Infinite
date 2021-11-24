@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +55,13 @@ class Player extends Model implements HasHaloDotApi
         }
 
         return $player;
+    }
+
+    public function updateFromHaloDotApi(bool $forceUpdate = false): void
+    {
+        /** @var InfiniteInterface $client */
+        $client = resolve(InfiniteInterface::class);
+        $client->matches($this, $forceUpdate);
     }
 
     public function games(): BelongsToMany

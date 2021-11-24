@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Collection;
 interface InfiniteInterface
 {
     public function appearance(string $gamertag): ?Player;
-    public function matches(Player $player): ?Collection;
+    public function matches(Player $player, bool $forceUpdate = false): ?Collection;
 }
