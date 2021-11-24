@@ -1,8 +1,10 @@
-# Leafapp (Infinite)
+# Leaf (Infinite)
+[![Laravel](https://github.com/iBotPeaches/LeafApp_Infinite/actions/workflows/laravel.yml/badge.svg)](https://github.com/iBotPeaches/LeafApp_Infinite/actions/workflows/laravel.yml)
+
 _Another hobby stat site for another Halo game_
 
 ### Branches
- * `master` - Deploys to `leafapp.co`
+ * `master` - Branch off it. Must be stable.
 
 ### Setup
 1. PHP7.4 or PHP8
@@ -21,7 +23,7 @@ _Another hobby stat site for another Halo game_
 #### HaloDotApi
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
- * `HALODOTAPI_KEY` - The API key given after the OAuth Live dance
+ * `HALODOTAPI_KEY` - The API key given after the OAuth Live dance with [HaloDotApi](https://developers.halodotapi.com)
  * `HALODOTAPI_DOMAIN` - The base domain for HaloDotAPI
  * `HALODOTAPI_VERSION` - The version of the HaloDotAPI to use
 
