@@ -11,12 +11,14 @@ use Illuminate\Support\Str;
  * @method static static BTB()
  * @method static static ARENA()
  * @method static static PVE_BOTS()
+ * @method static static CUSTOM()
  */
 final class Experience extends Enum implements LocalizedEnum
 {
     const BTB = 1;
     const ARENA = 2;
     const PVE_BOTS = 3;
+    const CUSTOM = 4;
 
     public static function coerce($enumKeyOrValue): ?Enum
     {
