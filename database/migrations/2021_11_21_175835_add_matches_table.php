@@ -36,7 +36,7 @@ class AddMatchesTable extends Migration
             $table->unsignedSmallInteger('outcome');
             $table->double('kd', 8, 4);
             $table->double('kda', 8, 4);
-            $table->unsignedMediumInteger('score');
+            $table->mediumInteger('score');
 
             $table->unsignedSmallInteger('kills');
             $table->unsignedSmallInteger('deaths');
