@@ -21,7 +21,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a href="" class="button is-info">
+                    <a href="https://github.com/iBotPeaches/LeafApp_Infinite" class="button is-info">
                         <strong>GitHub</strong>
                     </a>
                 </div>
