@@ -8,6 +8,7 @@ return [
         Experience::BTB => 'BTB',
         Experience::ARENA => 'Arena',
         Experience::PVE_BOTS => 'PVE Bots',
+        Experience::CUSTOM => 'Custom',
     ],
     Outcome::class => [
         Outcome::WIN => 'Win',
