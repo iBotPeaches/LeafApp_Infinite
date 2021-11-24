@@ -30,7 +30,7 @@ class PullMatchHistory extends Command
             return CommandAlias::FAILURE;
         }
 
-        $this->client->matches($player);
+        $this->client->matches($player, true);
 
         return CommandAlias::SUCCESS;
     }
