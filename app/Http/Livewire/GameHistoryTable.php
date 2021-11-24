@@ -14,6 +14,7 @@ class GameHistoryTable extends Component
 
     public Player $player;
 
+    // @phpstan-ignore-next-line
     public $listeners = [
         '$refresh'
     ];
