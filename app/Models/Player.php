@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\XboxApi\XboxInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Illuminate\Support\Arr;
 
 /**
  * @property int $id
+ * @property string|null $xuid
  * @property string $gamertag
  * @property string $service_tag
  * @property string $emblem_url
@@ -51,10 +53,20 @@ class Player extends Model implements HasHaloDotApi
         $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
 
         if ($player->isDirty()) {
+            if (empty($player->xuid)) {
+                $player->syncXuidFromXboxApi();
+            }
             $player->saveOrFail();
         }
 
         return $player;
+    }
+
+    public function syncXuidFromXboxApi(): void
+    {
+        /** @var XboxInterface $client */
+        $client = resolve(XboxInterface::class);
+        $this->xuid = $client->xuid($this->gamertag);
     }
 
     public function updateFromHaloDotApi(bool $forceUpdate = false): void
