@@ -11,10 +11,10 @@
                 <th>Outcome</th>
                 <th>Kills</th>
                 <th>Deaths</th>
-                <th>KD</th>
-                <th>KDA</th>
-                <th>Accuracy</th>
-                <th>Score</th>
+                <th><abbr title="Kills / Deaths">KD</abbr></th>
+                <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
+                <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
+                <th><abbr title="Ordered by Points">Score</abbr></th>
                 <th>Rank</th>
                 <th>Occurred At</th>
             </tr>
