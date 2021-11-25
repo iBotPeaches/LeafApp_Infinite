@@ -27,6 +27,11 @@ Used for the API for Infinite information, an amazing service that proxies some 
  * `HALODOTAPI_DOMAIN` - The base domain for HaloDotAPI
  * `HALODOTAPI_VERSION` - The version of the HaloDotAPI to use
 
+#### XboxApi
+Used for resolving XUIDs so renames are possible without data loss.
+
+ * `XBOXAPI_DOMAIN` - The base domain for XboxAPI.
+
 ### Dependencies
 
 #### Node
