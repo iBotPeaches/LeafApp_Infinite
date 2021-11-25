@@ -34,6 +34,10 @@ return [
         'key' => env('HALODOTAPI_KEY'),
         'domain' => env('HALODOTAPI_DOMAIN', 'https://cryptum.halodotapi.com'),
         'version' => env('HALODOTAPI_VERSION', '2.3-alpha')
-    ]
+    ],
+
+    'xboxapi' => [
+        'domain' => env('XBOXAPI_DOMAIN', 'https://xbl-api.prouser123.me'),
+    ],
 
 ];
