@@ -34,6 +34,13 @@ class Player extends Model implements HasHaloDotApi
         return 'gamertag';
     }
 
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this->query()
+            ->where('gamertag', urldecode($value))
+            ->firstOrFail();
+    }
+
     public static function fromGamertag(string $gamertag): self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
