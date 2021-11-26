@@ -42,6 +42,9 @@ use Illuminate\Support\Arr;
  * @property int $assists_driver
  * @property int $assists_callout
  * @property-read Player $player
+ * @property-read float $win_percent
+ * @property-read float $average_score
+ * @property-read string $time_played
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
@@ -50,6 +53,21 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public $guarded = [
         'id'
     ];
+
+    public function getWinPercentAttribute(): float
+    {
+        return ($this->matches_won / $this->total_matches) * 100;
+    }
+
+    public function getAverageScoreAttribute(): float
+    {
+        return $this->total_score / $this->total_matches;
+    }
+
+    public function getTimePlayedAttribute(): string
+    {
+        return now()->addSeconds($this->total_seconds_played)->diffInHours();
+    }
 
     public static function fromHaloDotApi(array $payload): ?self
     {
