@@ -64,7 +64,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         return $this->total_score / $this->total_matches;
     }
 
-    public function getTimePlayedAttribute(): string
+    public function getTimePlayedAttribute(): int
     {
         return now()->addSeconds($this->total_seconds_played)->diffInHours();
     }
