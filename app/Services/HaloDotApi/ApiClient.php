@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\HaloDotApi;
 
+use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
@@ -32,6 +33,20 @@ class ApiClient implements InfiniteInterface
 
         if ($response->successful()) {
             return Player::fromHaloDotApi($response->json());
+        }
+
+        return null;
+    }
+
+    public function competitive(Player $player): ?Csr
+    {
+        $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/csrs');
+
+        if ($response->successful()) {
+            $data = $response->json();
+            $data['player'] = $player;
+
+            return Csr::fromHaloDotApi($data);
         }
 
         return null;
