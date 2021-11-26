@@ -31,7 +31,7 @@ class UpdatePlayerPanel extends Component
         } else {
             if ($this->runUpdate) {
                 $this->player->updateFromHaloDotApi();
-                Cache::put($cacheKey, true, 300);
+                Cache::put($cacheKey, true, now()->addMinutes(15));
                 $this->emitTo(GameHistoryTable::class, '$refresh');
             } else {
                 $color = 'is-info';
