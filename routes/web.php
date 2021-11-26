@@ -16,7 +16,8 @@ use App\Http\Controllers\PlayerController;
 */
 
 // Player
-Route::get('/player/{player}', [PlayerController::class, 'index'])->name('player');
+Route::pattern('type', 'overview|competitive|matches');
+Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');
