@@ -7,6 +7,7 @@ use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
+use App\Models\ServiceRecord;
 use App\Services\HaloDotApi\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
@@ -91,5 +92,19 @@ class ApiClient implements InfiniteInterface
             ->where('player_id', $player->id)
             ->limit(25)
             ->get();
+    }
+
+    public function serviceRecord(Player $player): ?ServiceRecord
+    {
+        $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/service-record/global');
+
+        if ($response->successful()) {
+            $data = $response->json();
+            $data['player'] = $player;
+
+            return ServiceRecord::fromHaloDotApi($data);
+        }
+
+        return null;
     }
 }
