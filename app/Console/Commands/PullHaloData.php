@@ -7,10 +7,10 @@ use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class PullMatchHistory extends Command
+class PullHaloData extends Command
 {
-    protected $signature = 'app:pull-match-history {player}';
-    protected $description = 'Pull match history from API';
+    protected $signature = 'app:pull-halo-data {player}';
+    protected $description = 'Pull all data from API';
 
     protected InfiniteInterface $client;
 
@@ -30,7 +30,8 @@ class PullMatchHistory extends Command
             return CommandAlias::FAILURE;
         }
 
-        $this->client->matches($player, true);
+        $this->client->competitive($player);
+        //$this->client->matches($player, true);
 
         return CommandAlias::SUCCESS;
     }
