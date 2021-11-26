@@ -51,6 +51,7 @@ class UpdatePlayerPanel extends Component
     {
         switch ($this->type) {
             case PlayerTab::OVERVIEW:
+                $this->emitTo(OverviewPage::class, '$refresh');
                 break;
             case PlayerTab::COMPETITIVE:
                 $this->emitTo(CompetitivePage::class, '$refresh');
