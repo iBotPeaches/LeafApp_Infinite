@@ -31,7 +31,7 @@ class PullHaloData extends Command
         }
 
         $this->client->competitive($player);
-        //$this->client->matches($player, true);
+        $this->client->matches($player, true);
 
         return CommandAlias::SUCCESS;
     }
