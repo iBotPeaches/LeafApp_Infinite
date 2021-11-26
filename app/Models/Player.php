@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 
 /**
@@ -22,6 +23,7 @@ use Illuminate\Support\Arr;
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games
  * @property-read Csr[]|Collection $csrs
+ * @property-read ServiceRecord $serviceRecord
  */
 class Player extends Model implements HasHaloDotApi
 {
@@ -85,6 +87,7 @@ class Player extends Model implements HasHaloDotApi
 
         $client->competitive($this);
         $client->matches($this, $forceUpdate);
+        $client->serviceRecord($this);
     }
 
     public function ranked(int $season = 1): Collection
@@ -93,6 +96,11 @@ class Player extends Model implements HasHaloDotApi
             ->where('season', $season)
             ->orderByDesc('csr')
             ->get();
+    }
+
+    public function serviceRecord(): HasOne
+    {
+        return $this->hasOne(ServiceRecord::class);
     }
 
     public function csrs(): HasMany
