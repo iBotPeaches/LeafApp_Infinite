@@ -22,7 +22,7 @@ class PlayerPageTest extends TestCase
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag));
+        $response = $this->get('/player/' . urlencode($gamertag) . '/matches');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
