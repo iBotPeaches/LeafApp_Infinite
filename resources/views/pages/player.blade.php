@@ -6,7 +6,7 @@
     <div class="columns">
         <div class="column">
             @include('partials.player.player-card')
-            <livewire:update-player-panel :player="$player" />
+            <livewire:update-player-panel :player="$player" :type="$type" />
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
