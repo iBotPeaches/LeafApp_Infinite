@@ -22,7 +22,12 @@
         <tbody>
             @foreach ($games as $game)
                 <tr>
-                    <td>{{ $game->experience->description }}</td>
+                    <td>
+                        {{ $game->experience->description }}
+                        @if ($game->is_ranked)
+                            <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
+                        @endif
+                    </td>
                     <td>{{ $game->map->name }}</td>
                     <td>{{ $game->category->name }}</td>
                     <td class="{{ $game->personal->getVictoryColor() }}">
