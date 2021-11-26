@@ -30,7 +30,7 @@ class GameHistoryTable extends Component
             'games' => $this->player
                 ->games()
                 ->orderByDesc('occurred_at')
-                ->paginate(20)
+                ->paginate(16)
         ]);
     }
 }
