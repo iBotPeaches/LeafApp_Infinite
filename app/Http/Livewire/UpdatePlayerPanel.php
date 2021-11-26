@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
+use App\Enums\PlayerTab;
 use App\Models\Player;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
@@ -11,6 +12,7 @@ use Livewire\Component;
 class UpdatePlayerPanel extends Component
 {
     public Player $player;
+    public string $type;
     public bool $runUpdate = false;
 
     public function processUpdate(): void
@@ -32,7 +34,7 @@ class UpdatePlayerPanel extends Component
             if ($this->runUpdate) {
                 $this->player->updateFromHaloDotApi();
                 Cache::put($cacheKey, true, now()->addMinutes(15));
-                $this->emitTo(GameHistoryTable::class, '$refresh');
+                $this->emitToRespectiveComponent();
             } else {
                 $color = 'is-info';
                 $message = 'Checking for updated stats.';
@@ -43,5 +45,19 @@ class UpdatePlayerPanel extends Component
             'color' => $color,
             'message' => $message
         ]);
+    }
+
+    private function emitToRespectiveComponent(): void
+    {
+        switch ($this->type) {
+            case PlayerTab::OVERVIEW:
+                break;
+            case PlayerTab::COMPETITIVE:
+                $this->emitTo(CompetitivePage::class, '$refresh');
+                break;
+            case PlayerTab::MATCHES:
+                $this->emitTo(GameHistoryTable::class, '$refresh');
+                break;
+        }
     }
 }
