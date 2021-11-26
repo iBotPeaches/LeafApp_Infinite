@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games
+ * @property-read Csr[]|Collection $csrs
  */
 class Player extends Model implements HasHaloDotApi
 {
@@ -80,7 +82,22 @@ class Player extends Model implements HasHaloDotApi
     {
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
+
+        $client->competitive($this);
         $client->matches($this, $forceUpdate);
+    }
+
+    public function ranked(int $season = 1): Collection
+    {
+        return $this->csrs()
+            ->where('season', $season)
+            ->orderByDesc('csr')
+            ->get();
+    }
+
+    public function csrs(): HasMany
+    {
+        return $this->hasMany(Csr::class);
     }
 
     public function games(): BelongsToMany
