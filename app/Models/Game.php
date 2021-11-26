@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
  * @property string $uuid
  * @property int $category_id
  * @property int $map_id
+ * @property boolean $is_ranked
  * @property boolean $is_ffa
  * @property boolean $is_scored
  * @property Experience $experience
@@ -76,6 +76,7 @@ class Game extends Model implements HasHaloDotApi
 
         $game->category()->associate($category);
         $game->map()->associate($map);
+        $game->is_ranked = (bool) Arr::get($payload, 'ranked');
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
