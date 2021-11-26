@@ -1,3 +1,1 @@
-<div class="message is-warning">
-    Under Construction
-</div>
+<livewire:competitive-page :player="$player" />
