@@ -9,7 +9,8 @@
             <livewire:update-player-panel :player="$player" />
         </div>
         <div class="column is-three-quarters">
-            <livewire:game-history-table :player="$player" />
+            @include('partials.player.navigation')
+            @include('partials.player.tabs.' . $type, ['player' => $player])
         </div>
     </div>
 @endsection
