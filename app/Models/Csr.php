@@ -30,6 +30,11 @@ use Illuminate\Support\Arr;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
+ * @property-read string $rank
+ * @property-read string $next_rank
+ * @property-read float $next_rank_percent
+ * @property-read string $title
+ * @property-read string $icon
  */
 class Csr extends Model implements HasHaloDotApi
 {
@@ -48,6 +53,73 @@ class Csr extends Model implements HasHaloDotApi
     {
         $this->attributes['csr'] = $csr === -1 ? null : $csr;
     }
+
+    public function getRankAttribute(): string
+    {
+        if ($this->hasNextRank()) {
+            return $this->tier . ' ' . ($this->sub_tier + 1);
+        } else {
+            return $this->tier;
+        }
+    }
+
+    public function getNextRankAttribute(): string
+    {
+        if ($this->hasNextRank()) {
+            return $this->next_tier . ' ' . ($this->next_sub_tier + 1);
+        } else {
+            return $this->next_tier;
+        }
+    }
+
+    public function getNextRankPercentAttribute(): float
+    {
+        if ($this->next_csr === 0) {
+            return 0;
+        }
+
+        return ($this->csr / $this->next_csr) * 100;
+    }
+
+    public function getTitleAttribute(): string
+    {
+        return $this->queue->description;
+    }
+
+    public function getIconAttribute(): ? string
+    {
+        if ($this->queue->is(Queue::SOLO_DUO)) {
+            return $this->input->is(Input::CONTROLLER())
+                ? '<i class="fa fa-gamepad"></i>'
+                : '<i class="fa fa-mouse"></i>';
+        }
+
+        return null;
+    }
+
+    public function hasNextRank(): bool
+    {
+        return $this->next_csr > 0;
+    }
+
+    public function getRankPercentColor(): string
+    {
+        if ($this->next_csr === 0) {
+            return 'is-dark';
+        }
+
+        switch (true) {
+            case $this->next_rank_percent > 80:
+                return 'is-success';
+            case $this->next_rank_percent > 60 && $this->next_rank_percent <= 80:
+                return 'is-primary';
+            case $this->next_rank_percent > 40 && $this->next_rank_percent <= 60:
+                return 'is-warning';
+            default:
+                return 'is-danger';
+        }
+    }
+
 
     public static function fromHaloDotApi(array $payload): ?self
     {
