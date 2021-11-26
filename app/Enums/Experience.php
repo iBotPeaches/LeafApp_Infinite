@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
  * @method static static ARENA()
  * @method static static PVE_BOTS()
  * @method static static CUSTOM()
+ * @method static static FEATURED()
  */
 final class Experience extends Enum implements LocalizedEnum
 {
@@ -19,6 +20,7 @@ final class Experience extends Enum implements LocalizedEnum
     const ARENA = 2;
     const PVE_BOTS = 3;
     const CUSTOM = 4;
+    const FEATURED = 5;
 
     public static function coerce($enumKeyOrValue): ?Enum
     {
