@@ -6,6 +6,7 @@ use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
+use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ use Illuminate\Support\Arr;
  * @property-read Game[]|Collection $games
  * @property-read Csr[]|Collection $csrs
  * @property-read ServiceRecord $serviceRecord
+ * @method static PlayerFactory factory(...$parameters)
  */
 class Player extends Model implements HasHaloDotApi
 {

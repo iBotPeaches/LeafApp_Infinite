@@ -6,6 +6,7 @@ use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasHaloDotApi;
 use Carbon\Carbon;
+use Database\Factories\CsrFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,6 +36,7 @@ use Illuminate\Support\Arr;
  * @property-read float $next_rank_percent
  * @property-read string $title
  * @property-read string $icon
+ * @method static CsrFactory factory(...$parameters)
  */
 class Csr extends Model implements HasHaloDotApi
 {

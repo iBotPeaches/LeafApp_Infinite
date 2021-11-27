@@ -2,9 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+/**
+ * @method Collection|User[]|User create($attributes = [], ?User $parent = null)
+ * @method Collection|User[] createMany(iterable $records)
+ * @method User createOne($attributes = [])
+ * @method Collection|User[]|User make($attributes = [], ?User $parent = null)
+ * @method User makeOne($attributes = [])
+ */
 class UserFactory extends Factory
 {
     public function definition(): array
