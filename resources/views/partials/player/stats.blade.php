@@ -2,17 +2,22 @@
 /** @var App\Models\ServiceRecord $serviceRecord */
 ?>
 <div>
+    <div class="divider">Quick Peek</div>
     <div class="level">
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">KD</p>
-                <p class="title">{{ $serviceRecord->kd }}</p>
+                <p class="title {{ $serviceRecord->kd_color }}">
+                    {{ number_format($serviceRecord->kd, 2) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">KDA</p>
-                <p class="title">{{ $serviceRecord->kda }}</p>
+                <p class="title {{ $serviceRecord->kda_color }}">
+                    {{ number_format($serviceRecord->kda, 2) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
@@ -24,65 +29,83 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Win Percent</p>
-                <p class="title">{{ number_format($serviceRecord->win_percent, 2) }}%</p>
+                <p class="title {{ $serviceRecord->win_percent_color }}">
+                    {{ number_format($serviceRecord->win_percent, 2) }}%
+                </p>
             </div>
         </div>
     </div>
-    <hr />
+    <div class="divider">Overall</div>
     <div class="level">
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Kills</p>
-                <p class="title">{{ $serviceRecord->kills }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->kills) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Deaths</p>
-                <p class="title">{{ $serviceRecord->deaths }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->deaths) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Medal Count</p>
-                <p class="title">{{ $serviceRecord->medal_count }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->medal_count) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Accuracy</p>
-                <p class="title">{{ number_format($serviceRecord->accuracy, 2) }}%</p>
+                <p class="title {{ $serviceRecord->accuracy_color }}">
+                    {{ number_format($serviceRecord->accuracy, 2) }}%
+                </p>
             </div>
         </div>
     </div>
-    <hr />
+    <div class="divider">Types of Kills</div>
     <div class="level">
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Melee</p>
-                <p class="title">{{ $serviceRecord->kills_melee }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->kills_melee) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Grenades</p>
-                <p class="title">{{ $serviceRecord->kills_grenade }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->kills_grenade) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Headshots</p>
-                <p class="title">{{ $serviceRecord->kills_headshot }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->kills_headshot) }}
+                </p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Power</p>
-                <p class="title">{{ $serviceRecord->kills_power }}</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->kills_power) }}
+                </p>
             </div>
         </div>
     </div>
-    <hr />
+    <div class="divider">Other</div>
     <div class="level">
         <div class="level-item has-text-centered">
             <div>
