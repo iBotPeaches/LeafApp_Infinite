@@ -8,8 +8,8 @@
     <div class="panel-block is-block">
         <div class="columns is-centered">
             @foreach ($ranked as $playlist)
-                <div class="column" style="min-height: 100%;">
-                    <div class="card">
+                <div class="column is-flex is-flex-direction-column is-align-items-stretch">
+                    <div class="card" style="height: 100%;">
                         <div class="card-header">
                             <span class="card-header-title">
                                 {{ $playlist->title }}
@@ -32,19 +32,21 @@
                             </p>
 
                             <div class="content">
-                                <progress
-                                    class="progress {{ $playlist->getRankPercentColor() }}"
-                                    value="{{ $playlist->csr }}"
-                                    max="{{ $playlist->next_csr }}"
-                                >%{{ number_format($playlist->next_rank_percent, 2) }}</progress>
-                                <br>
-                                @if ($playlist->hasNextRank())
-                                    <span>Up Next: {{ $playlist->next_rank }}</span>
-                                @else
-                                    <span>
-                                        {{ $playlist->matches_remaining }}
-                                        {{ Str::plural('match', $playlist->matches_remaining) }} remaining.
-                                    </span>
+                                @if (! $playlist->isOnyx())
+                                    <progress
+                                        class="progress {{ $playlist->getRankPercentColor() }}"
+                                        value="{{ $playlist->csr }}"
+                                        max="{{ $playlist->next_csr }}"
+                                    >%{{ number_format($playlist->next_rank_percent, 2) }}</progress>
+                                    <br>
+                                    @if ($playlist->hasNextRank())
+                                        <span>Up Next: {{ $playlist->next_rank }}</span>
+                                    @else
+                                        <span>
+                                            {{ $playlist->matches_remaining }}
+                                            {{ Str::plural('match', $playlist->matches_remaining) }} remaining.
+                                        </span>
+                                    @endif
                                 @endif
                             </div>
                         </div>
