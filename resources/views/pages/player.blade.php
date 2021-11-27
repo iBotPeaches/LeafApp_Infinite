@@ -7,6 +7,11 @@
         <div class="column">
             @include('partials.player.player-card')
             <livewire:update-player-panel :player="$player" :type="$type" />
+            @if ($player->is_private)
+                <div class="notification is-warning">
+                    <i class="fas fa-exclamation-triangle"></i> Account Private
+                </div>
+            @endif
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
