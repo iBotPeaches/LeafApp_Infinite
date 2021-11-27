@@ -37,6 +37,7 @@ Used for resolving XUIDs so renames are possible without data loss.
 #### Node
 1. Bulma - https://github.com/jgthms/bulma - MIT
 2. FontAwesome - https://github.com/FortAwesome/Font-Awesome - Font Awesome Free License
+3. Bulma-Dividers - https://github.com/CreativeBulma/bulma-divider - MIT
 
 #### PHP
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
