@@ -87,6 +87,7 @@ class MockMatchesService extends BaseMock
                 'rank' => $this->faker->numerify('#'),
                 'outcome' => $this->faker->randomElement(['win', 'lost', 'tied']),
                 'experience' => $this->faker->randomElement(['arena', 'btb']),
+                'ranked' => $this->faker->boolean,
                 'played_at' => $this->faker->dateTime,
                 'duration' => [
                     'seconds' => $this->faker->numerify('###'),
