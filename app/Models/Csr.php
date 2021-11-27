@@ -97,8 +97,17 @@ class Csr extends Model implements HasHaloDotApi
         return null;
     }
 
+    public function isOnyx(): bool
+    {
+        return $this->tier === 'Onyx';
+    }
+
     public function hasNextRank(): bool
     {
+        if ($this->isOnyx()) {
+            return false;
+        }
+
         return $this->next_csr > 0;
     }
 
@@ -119,7 +128,6 @@ class Csr extends Model implements HasHaloDotApi
                 return 'is-danger';
         }
     }
-
 
     public static function fromHaloDotApi(array $payload): ?self
     {
