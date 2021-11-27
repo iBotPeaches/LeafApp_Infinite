@@ -111,6 +111,12 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->assists_driver = Arr::get($payload, 'data.breakdowns.assists.driver');
         $serviceRecord->assists_callout = Arr::get($payload, 'data.breakdowns.assists.callouts');
 
+        // If we get no time played or score. We are going to assume account is private.
+        if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
+            $serviceRecord->player->is_private = true;
+            $serviceRecord->player->saveOrFail();
+        }
+
         if ($serviceRecord->isDirty()) {
             $serviceRecord->saveOrFail();
             return $serviceRecord;
