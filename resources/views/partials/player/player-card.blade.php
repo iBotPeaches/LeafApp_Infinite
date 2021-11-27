@@ -1,4 +1,4 @@
-<div class="card has-background-light mb-2">
+<div class="card has-background-success-light mb-2">
     <div class="card-image">
         <figure class="image is-4by3">
             <img src="{{ $player->backdrop_url }}">
