@@ -45,6 +45,10 @@ use Illuminate\Support\Arr;
  * @property-read float $win_percent
  * @property-read float $average_score
  * @property-read string $time_played
+ * @property-read string $kd_color
+ * @property-read string $kda_color
+ * @property-read string $win_percent_color
+ * @property-read string $accuracy_color
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
@@ -67,6 +71,73 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public function getTimePlayedAttribute(): int
     {
         return now()->addSeconds($this->total_seconds_played)->diffInHours();
+    }
+
+    public function getWinPercentColorAttribute(): string
+    {
+        switch (true) {
+            case $this->win_percent > 50:
+                return 'has-text-success';
+
+            case $this->win_percent > 35 && $this->win_percent <= 50:
+                return 'has-text-warning';
+
+            case $this->win_percent < 35:
+                return 'has-text-danger';
+        }
+
+        return '';
+    }
+
+    public function getAccuracyColorAttribute(): string
+    {
+        switch (true) {
+            case $this->accuracy > 55:
+                return 'has-text-success';
+
+            case $this->accuracy > 40 && $this->accuracy <= 55:
+                return 'has-text-info';
+
+            case $this->accuracy > 20 && $this->accuracy <= 40:
+                return 'has-text-warning';
+
+            case $this->accuracy < 20:
+                return 'has-text-danger';
+        }
+
+        return '';
+    }
+
+    public function getKdaColorAttribute(): string
+    {
+        switch (true) {
+            case $this->kda >= 2:
+                return 'has-text-success';
+
+            case $this->kd > 1 && $this->kda < 2:
+                return 'has-text-warning';
+
+            case $this->kda < 1:
+                return 'has-text-danger';
+        }
+
+        return '';
+    }
+
+    public function getKdColorAttribute(): string
+    {
+        switch (true) {
+            case $this->kd >= 1:
+                return 'has-text-success';
+
+            case $this->kd > 0.5 && $this->kd < 1:
+                return 'has-text-warning';
+
+            case $this->kd < 0.5:
+                return 'has-text-danger';
+        }
+
+        return '';
     }
 
     public static function fromHaloDotApi(array $payload): ?self
