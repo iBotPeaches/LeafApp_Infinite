@@ -11,7 +11,7 @@ use Tests\TestCase;
 class PlayerPageTest extends TestCase
 {
     /** @dataProvider gamertagDataProvider */
-    public function testLoadingPlayerPage(string $gamertag): void
+    public function testLoadingPlayerMatchesPage(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -27,6 +27,46 @@ class PlayerPageTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('game-history-table');
+        $response->assertSeeLivewire('update-player-panel');
+    }
+
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerOverviewPage(string $gamertag): void
+    {
+        // Arrange
+        Http::fake();
+
+        Player::factory()
+            ->createOne([
+                'gamertag' => $gamertag
+            ]);
+
+        // Act
+        $response = $this->get('/player/' . urlencode($gamertag) . '/overview');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('update-player-panel');
+    }
+
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerCompetitivePage(string $gamertag): void
+    {
+        // Arrange
+        Http::fake();
+
+        Player::factory()
+            ->createOne([
+                'gamertag' => $gamertag
+            ]);
+
+        // Act
+        $response = $this->get('/player/' . urlencode($gamertag) . '/competitive');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('competitive-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
