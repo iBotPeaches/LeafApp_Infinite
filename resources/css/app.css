@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-    a {
-        @apply underline text-blue-600 hover:text-blue-800;
-    }
-}
