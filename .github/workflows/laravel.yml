@@ -57,5 +57,5 @@ jobs:
         uses: sourcetoad/phpunit-coverage-action@v1
         with:
           clover_report_path: output.xml
-          min_coverage_percent: 80
+          min_coverage_percent: 95
           fail_build_on_under: true
