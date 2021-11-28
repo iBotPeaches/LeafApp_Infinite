@@ -188,10 +188,9 @@ class ServiceRecord extends Model implements HasHaloDotApi
 
         if ($serviceRecord->isDirty()) {
             $serviceRecord->saveOrFail();
-            return $serviceRecord;
         }
 
-        return null;
+        return $serviceRecord;
     }
 
     public function player(): BelongsTo
