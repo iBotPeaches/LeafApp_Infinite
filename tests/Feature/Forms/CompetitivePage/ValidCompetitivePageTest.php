@@ -46,7 +46,7 @@ class ValidCompetitivePageTest extends TestCase
             $livewire->assertSee($playlist->icon, false);
             $livewire->assertSee($playlist->tier_image_url);
             $livewire->assertSee($playlist->rank);
-            $livewire->assertSee($playlist->csr);
+            $livewire->assertSee(number_format($playlist->csr));
         }
     }
 }
