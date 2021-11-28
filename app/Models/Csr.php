@@ -21,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property int $csr
  * @property int $matches_remaining
  * @property string $tier
+ * @property int $tier_start_csr
  * @property string $tier_image_url
  * @property int $sub_tier
  * @property string $next_tier
@@ -34,6 +35,8 @@ use Illuminate\Support\Arr;
  * @property-read string $rank
  * @property-read string $next_rank
  * @property-read float $next_rank_percent
+ * @property-read float $next_xp_for_level
+ * @property-read float $current_xp_for_level
  * @property-read string $title
  * @property-read string $icon
  * @method static CsrFactory factory(...$parameters)
@@ -47,6 +50,7 @@ class Csr extends Model implements HasHaloDotApi
     ];
 
     public $casts = [
+        'csr' => 'int',
         'input' => Input::class,
         'queue' => Queue::class
     ];
@@ -74,13 +78,23 @@ class Csr extends Model implements HasHaloDotApi
         }
     }
 
+    public function getNextXpForLevelAttribute(): float
+    {
+        return $this->next_csr - $this->tier_start_csr;
+    }
+
+    public function getCurrentXpForLevelAttribute(): float
+    {
+        return $this->next_csr - $this->csr;
+    }
+
     public function getNextRankPercentAttribute(): float
     {
         if ($this->next_csr === 0) {
             return 0;
         }
 
-        return ($this->csr / $this->next_csr) * 100;
+        return ($this->current_xp_for_level / $this->next_xp_for_level) * 100;
     }
 
     public function getTitleAttribute(): string
@@ -166,6 +180,7 @@ class Csr extends Model implements HasHaloDotApi
             $csr->matches_remaining = Arr::get($playlist, 'response.current.measurement_matches_remaining');
 
             $csr->tier = Arr::get($playlist, 'response.current.tier');
+            $csr->tier_start_csr = Arr::get($playlist, 'response.current.tier_start');
             $csr->tier_image_url = Arr::get($playlist, 'response.current.tier_image_url');
             $csr->sub_tier = Arr::get($playlist, 'response.current.sub_tier');
 
