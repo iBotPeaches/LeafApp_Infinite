@@ -10,6 +10,7 @@ use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,8 +44,8 @@ class ValidPlayerUpdateTest extends TestCase
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => true
         ])
+            ->call('processUpdate')
             ->assertViewHas('color', 'is-danger')
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
@@ -64,6 +65,28 @@ class ValidPlayerUpdateTest extends TestCase
             ->call('render')
             ->assertViewHas('color', 'is-info')
             ->assertViewHas('message', 'Checking for updated stats.');
+
+        Http::assertNothingSent();
+    }
+
+    public function testPageLoadDeferredFromApiCalls(): void
+    {
+        // Arrange
+        Http::fake();
+        $player = Player::factory()->createOne();
+
+        $cacheKey = 'player-profile-' . $player->id . md5($player->gamertag);
+        Cache::put($cacheKey, true);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => false
+        ])
+            ->call('render')
+            ->assertViewHas('color', 'is-dark')
+            ->assertViewHas('message', 'Profile was recently updated. Check back soon.');
 
         Http::assertNothingSent();
     }
