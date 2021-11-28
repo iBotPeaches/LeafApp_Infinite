@@ -6,6 +6,8 @@ namespace App\Http\Livewire;
 use App\Enums\PlayerTab;
 use App\Models\Player;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -32,9 +34,17 @@ class UpdatePlayerPanel extends Component
             $message = 'Profile was recently updated. Check back soon.';
         } else {
             if ($this->runUpdate) {
-                $this->player->updateFromHaloDotApi();
-                Cache::put($cacheKey, true, now()->addMinutes(15));
-                $this->emitToRespectiveComponent();
+                try {
+                    DB::transaction(function () use ($cacheKey) {
+                        $this->player->updateFromHaloDotApi();
+                        Cache::put($cacheKey, true, now()->addMinutes(15));
+                        $this->emitToRespectiveComponent();
+                    });
+                } catch (\Throwable $exception) {
+                    Log::error($exception->getMessage());
+                    $color = 'is-danger';
+                    $message = 'Oops - something went wrong.';
+                }
             } else {
                 $color = 'is-info';
                 $message = 'Checking for updated stats.';
