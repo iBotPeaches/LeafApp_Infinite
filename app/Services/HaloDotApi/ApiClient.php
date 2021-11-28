@@ -39,7 +39,7 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function competitive(Player $player): ?Csr
+    public function competitive(Player $player): Csr
     {
         $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/csrs');
 
@@ -50,10 +50,10 @@ class ApiClient implements InfiniteInterface
             return Csr::fromHaloDotApi($data);
         }
 
-        return null;
+        $response->throw();
     }
 
-    public function matches(Player $player, bool $forceUpdate = false): ?Collection
+    public function matches(Player $player, bool $forceUpdate = false): Collection
     {
         $currentPage = 1;
         $nextPage = 1;
@@ -89,7 +89,7 @@ class ApiClient implements InfiniteInterface
 
             // If we fail, just drop out to prevent infinite loop.
             if ($response->failed()) {
-                break;
+                $response->throw();
             }
         }
 
@@ -99,7 +99,7 @@ class ApiClient implements InfiniteInterface
             ->get();
     }
 
-    public function serviceRecord(Player $player): ?ServiceRecord
+    public function serviceRecord(Player $player): ServiceRecord
     {
         $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/service-record/global');
 
@@ -110,6 +110,6 @@ class ApiClient implements InfiniteInterface
             return ServiceRecord::fromHaloDotApi($data);
         }
 
-        return null;
+        $response->throw();
     }
 }
