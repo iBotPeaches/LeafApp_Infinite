@@ -25,7 +25,7 @@ class UpdatePlayerPanel extends Component
         $color = 'is-success';
         $message = 'Profile updated!';
 
-        $cacheKey = 'player-profile-' . $this->player->id;
+        $cacheKey = 'player-profile-' . $this->player->id . md5($this->player->gamertag);
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
