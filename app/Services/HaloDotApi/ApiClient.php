@@ -67,7 +67,7 @@ class ApiClient implements InfiniteInterface
             if ($response->successful()) {
                 $data = $response->json();
                 $currentPage = (int)Arr::get($data, 'paging.page', 1);
-                $nextPage = (int)Arr::get($data, 'paging.next', 1);
+                $nextPage = (int)Arr::get($data, 'paging.next');
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
@@ -85,6 +85,11 @@ class ApiClient implements InfiniteInterface
                         break 2;
                     }
                 }
+            }
+
+            // If we fail, just drop out to prevent infinite loop.
+            if ($response->failed()) {
+                break;
             }
         }
 
