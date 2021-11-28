@@ -10,6 +10,7 @@ use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
@@ -48,6 +49,37 @@ class ValidPlayerUpdateTest extends TestCase
             ->call('processUpdate')
             ->assertViewHas('color', 'is-danger')
             ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
+    public function testAutomaticallyMarkedPrivateIfInvalidRecord(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        // Set values into responses that "fake" a private account.
+        Arr::set($mockServiceResponse, 'data.time_played.seconds', 0);
+        Arr::set($mockServiceResponse, 'data.total_score', 0);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
     }
 
     public function testInitialPageLoadDeferredFromApiCalls(): void
