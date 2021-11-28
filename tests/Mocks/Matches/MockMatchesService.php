@@ -10,7 +10,7 @@ class MockMatchesService extends BaseMock
 {
     use HasErrorFunctions;
 
-    public function success(int $page = 1, int $nextPage = 1): array
+    public function success(string $gamertag, int $page = 1, ?int $nextPage = null): array
     {
         return [
             'data' => [
@@ -89,10 +89,10 @@ class MockMatchesService extends BaseMock
                         'score' => $this->faker->numerify('####')
                     ],
                     'rank' => $this->faker->numerify('#'),
-                    'outcome' => $this->faker->randomElement(['win', 'lost', 'tied']),
+                    'outcome' => $this->faker->randomElement(['win', 'loss', 'draw']),
                     'experience' => $this->faker->randomElement(['arena', 'btb']),
                     'ranked' => $this->faker->boolean,
-                    'played_at' => $this->faker->dateTime,
+                    'played_at' => now()->toIso8601ZuluString(),
                     'duration' => [
                         'seconds' => $this->faker->numerify('###'),
                         'human' => ''
@@ -106,7 +106,7 @@ class MockMatchesService extends BaseMock
                 'next' => $nextPage,
             ],
             'additional' => [
-                'gamertag' => $this->faker->word,
+                'gamertag' => $gamertag,
                 'mode' => 'matchmade'
             ]
         ];
