@@ -114,7 +114,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->kda >= 2:
                 return 'has-text-success';
 
-            case $this->kd > 1 && $this->kda < 2:
+            case $this->kda > 1 && $this->kda < 2:
                 return 'has-text-warning';
 
             default:
