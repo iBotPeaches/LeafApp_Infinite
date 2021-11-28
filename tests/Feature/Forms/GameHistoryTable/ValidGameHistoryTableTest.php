@@ -29,7 +29,6 @@ class ValidGameHistoryTableTest extends TestCase
         Livewire::test(GameHistoryTable::class, [
             'player' => $player
         ])
-            ->call('render')
             ->assertViewHas('games')
             ->assertSee($game->experience->description)
             ->assertSee($game->map->name)

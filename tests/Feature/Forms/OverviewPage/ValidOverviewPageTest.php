@@ -24,7 +24,6 @@ class ValidOverviewPageTest extends TestCase
         Livewire::test(OverviewPage::class, [
             'player' => $player
         ])
-            ->call('render')
             ->assertViewHas('serviceRecord')
             ->assertSee('Quick Peek')
             ->assertSee('Overall')

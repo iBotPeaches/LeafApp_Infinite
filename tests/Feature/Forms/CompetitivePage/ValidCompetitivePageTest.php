@@ -36,8 +36,7 @@ class ValidCompetitivePageTest extends TestCase
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [
             'player' => $player
-        ])
-            ->call('render');
+        ]);
 
         // Assert
         $livewire->assertViewHas('ranked');
