@@ -39,18 +39,18 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function competitive(Player $player): Csr
+    public function competitive(Player $player): ?Csr
     {
         $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/csrs');
 
-        if ($response->successful()) {
+        if ($response->throw()->successful()) {
             $data = $response->json();
             $data['player'] = $player;
 
             return Csr::fromHaloDotApi($data);
         }
 
-        $response->throw();
+        return null;
     }
 
     public function matches(Player $player, bool $forceUpdate = false): Collection
@@ -64,7 +64,7 @@ class ApiClient implements InfiniteInterface
                 'page' => $nextPage
             ]);
 
-            if ($response->successful()) {
+            if ($response->throw()->successful()) {
                 $data = $response->json();
                 $currentPage = (int)Arr::get($data, 'paging.page', 1);
                 $nextPage = (int)Arr::get($data, 'paging.next');
@@ -86,11 +86,6 @@ class ApiClient implements InfiniteInterface
                     }
                 }
             }
-
-            // If we fail, just drop out to prevent infinite loop.
-            if ($response->failed()) {
-                $response->throw();
-            }
         }
 
         return GamePlayer::query()
@@ -99,17 +94,17 @@ class ApiClient implements InfiniteInterface
             ->get();
     }
 
-    public function serviceRecord(Player $player): ServiceRecord
+    public function serviceRecord(Player $player): ?ServiceRecord
     {
         $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/service-record/global');
 
-        if ($response->successful()) {
+        if ($response->throw()->successful()) {
             $data = $response->json();
             $data['player'] = $player;
 
             return ServiceRecord::fromHaloDotApi($data);
         }
 
-        $response->throw();
+        return null;
     }
 }
