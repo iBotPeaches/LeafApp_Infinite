@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,6 +50,7 @@ use Illuminate\Support\Arr;
  * @property-read string $kda_color
  * @property-read string $win_percent_color
  * @property-read string $accuracy_color
+ * @method static ServiceRecordFactory factory(...$parameters)
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
