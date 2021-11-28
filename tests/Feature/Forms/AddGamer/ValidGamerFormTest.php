@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\AddGamer;
 
 use App\Http\Livewire\AddGamerForm;
+use App\Models\Player;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
@@ -35,5 +36,25 @@ class ValidGamerFormTest extends TestCase
             'emblem_url' => Arr::get($mockResponse, 'data.emblem_url'),
             'backdrop_url' => Arr::get($mockResponse, 'data.backdrop_image_url'),
         ]);
+    }
+
+    public function testValidResponseFromHaloDotApiIfAccountAlreadyExists(): void
+    {
+        // Arrange
+        $mockResponse = (new MockAppearanceService())->success();
+        $gamertag = Arr::get($mockResponse, 'additional.gamertag');
+        Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        Http::fake([
+            '*' => Http::response($mockResponse, Response::HTTP_OK)
+        ]);
+
+        // Act & Assert
+        Livewire::test(AddGamerForm::class)
+            ->set('gamertag', $gamertag)
+            ->call('submit')
+            ->assertRedirect('/player/' . $gamertag);
     }
 }
