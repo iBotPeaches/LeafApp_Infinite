@@ -31,7 +31,9 @@ class ValidGamerFormTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
-            'service_tag' => Arr::get($mockResponse, 'data.service_tag')
+            'service_tag' => Arr::get($mockResponse, 'data.service_tag'),
+            'emblem_url' => Arr::get($mockResponse, 'data.emblem_url'),
+            'backdrop_url' => Arr::get($mockResponse, 'data.backdrop_image_url'),
         ]);
     }
 }
