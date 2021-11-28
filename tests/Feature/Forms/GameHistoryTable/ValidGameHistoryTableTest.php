@@ -8,9 +8,7 @@ use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Livewire\Livewire;
-use Tests\Mocks\Matches\MockMatchesService;
 use Tests\TestCase;
 
 class ValidGameHistoryTableTest extends TestCase
@@ -19,11 +17,7 @@ class ValidGameHistoryTableTest extends TestCase
     {
         // Arrange
         Carbon::setTestNow(now());
-        $mockResponse = (new MockMatchesService())->success();
-        $gamertag = Arr::get($mockResponse, 'additional.gamertag');
-        $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
-        ]);
+        $player = Player::factory()->createOne();
         GamePlayer::factory()->createOne([
             'player_id' => $player->id
         ]);
