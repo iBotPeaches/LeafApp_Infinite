@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
+use Database\Factories\GamePlayerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,6 +46,7 @@ use Illuminate\Support\Str;
  * @property int $assists_callout
  * @property-read Player $player
  * @property-read Game $game
+ * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
 {
@@ -62,7 +64,7 @@ class GamePlayer extends Model implements HasHaloDotApi
 
     public function setOutcomeAttribute(string $value): void
     {
-        $outcome = Outcome::coerce(Str::upper($value));
+        $outcome = is_numeric($value) ? Outcome::fromValue((int) $value) : Outcome::coerce(Str::upper($value));
         if (empty($outcome)) {
             throw new \InvalidArgumentException('Invalid Outcome Enum (' . $value . ')');
         }

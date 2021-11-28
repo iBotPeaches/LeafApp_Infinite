@@ -6,6 +6,7 @@ use App\Enums\Experience;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use Carbon\Carbon;
+use Database\Factories\GameFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,6 +26,7 @@ use Illuminate\Support\Arr;
  * @property-read Category $category
  * @property-read Map $map
  * @property-read PersonalResult $personal
+ * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
 {
@@ -53,7 +55,7 @@ class Game extends Model implements HasHaloDotApi
 
     public function setExperienceAttribute(string $value): void
     {
-        $experience = Experience::coerce($value);
+        $experience = is_numeric($value) ? Experience::fromValue((int) $value) : Experience::coerce($value);
         if (empty($experience)) {
             throw new \InvalidArgumentException('Invalid Experience Enum (' . $value . ')');
         }

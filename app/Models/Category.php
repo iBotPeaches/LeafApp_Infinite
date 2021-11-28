@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -13,6 +14,7 @@ use Illuminate\Support\Arr;
  * @property string $version
  * @property string $name
  * @property string $thumbnail_url
+ * @method static CategoryFactory factory(...$parameters)
  */
 class Category extends Model implements HasHaloDotApi
 {
