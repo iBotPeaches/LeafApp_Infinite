@@ -22,6 +22,33 @@ class ValidPlayerUpdateTest extends TestCase
 {
     use WithFaker;
 
+    public function testInvalidResponseFromAllHaloDotApiServices(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->error401();
+        $mockMatchesResponse = (new MockMatchesService())->error404();
+        $mockServiceResponse = (new MockServiceRecordService())->error429();
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
     public function testInitialPageLoadDeferredFromApiCalls(): void
     {
         // Arrange
