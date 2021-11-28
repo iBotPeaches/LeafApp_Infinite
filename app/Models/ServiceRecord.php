@@ -84,11 +84,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->win_percent > 35 && $this->win_percent <= 50:
                 return 'has-text-warning';
 
+            default:
             case $this->win_percent < 35:
                 return 'has-text-danger';
         }
-
-        return '';
     }
 
     public function getAccuracyColorAttribute(): string
@@ -103,11 +102,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->accuracy > 20 && $this->accuracy <= 40:
                 return 'has-text-warning';
 
+            default:
             case $this->accuracy < 20:
                 return 'has-text-danger';
         }
-
-        return '';
     }
 
     public function getKdaColorAttribute(): string
@@ -119,11 +117,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->kd > 1 && $this->kda < 2:
                 return 'has-text-warning';
 
+            default:
             case $this->kda < 1:
                 return 'has-text-danger';
         }
-
-        return '';
     }
 
     public function getKdColorAttribute(): string
@@ -135,11 +132,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->kd > 0.5 && $this->kd < 1:
                 return 'has-text-warning';
 
+            default:
             case $this->kd < 0.5:
                 return 'has-text-danger';
         }
-
-        return '';
     }
 
     public static function fromHaloDotApi(array $payload): ?self
