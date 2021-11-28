@@ -35,8 +35,8 @@
                                 @if (! $playlist->isOnyx())
                                     <progress
                                         class="progress {{ $playlist->getRankPercentColor() }}"
-                                        value="{{ $playlist->csr }}"
-                                        max="{{ $playlist->next_csr }}"
+                                        value="{{ $playlist->current_xp_for_level }}"
+                                        max="{{ $playlist->next_xp_for_level }}"
                                     >%{{ number_format($playlist->next_rank_percent, 2) }}</progress>
                                     <br>
                                     @if ($playlist->hasNextRank())
