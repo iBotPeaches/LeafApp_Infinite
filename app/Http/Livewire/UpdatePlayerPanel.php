@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\PlayerTab;
 use App\Models\Player;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -42,6 +43,11 @@ class UpdatePlayerPanel extends Component
                         Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
                         $this->emitToRespectiveComponent();
                     });
+                } catch (RequestException $exception) {
+                    $color = 'is-danger';
+                    $message = $exception->getCode() === 429
+                        ? 'Rate Limit Hit :( - Try later.'
+                        : 'Oops - something went wrong.';
                 } catch (\Throwable $exception) {
                     Log::error($exception->getMessage());
                     $color = 'is-danger';
