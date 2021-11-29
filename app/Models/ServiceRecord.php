@@ -60,13 +60,25 @@ class ServiceRecord extends Model implements HasHaloDotApi
         'id'
     ];
 
+    public $casts = [
+        'total_matches' => 'int'
+    ];
+
     public function getWinPercentAttribute(): float
     {
+        if ($this->total_matches == 0) {
+            return 100;
+        }
+
         return ($this->matches_won / $this->total_matches) * 100;
     }
 
     public function getAverageScoreAttribute(): float
     {
+        if ($this->total_matches == 0) {
+            return $this->total_score;
+        }
+
         return $this->total_score / $this->total_matches;
     }
 
