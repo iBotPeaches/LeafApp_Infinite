@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use App\Services\HaloDotApi\InfiniteInterface;
@@ -89,7 +90,15 @@ class Player extends Model implements HasHaloDotApi
         $client = resolve(InfiniteInterface::class);
 
         $client->competitive($this);
-        $client->matches($this, $forceUpdate);
+
+        // If we have no games, run this part in background. We pull ALL games, which tends to take a few minutes
+        // and will only get worse over time. We probably don't need to do this, but we can optimize that later.
+        if ($this->games->count() === 0) {
+            PullMatchHistory::dispatch($this);
+        } else {
+            $client->matches($this, $forceUpdate);
+        }
+
         $client->serviceRecord($this);
     }
 
