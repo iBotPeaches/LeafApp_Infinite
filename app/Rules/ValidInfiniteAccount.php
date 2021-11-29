@@ -16,18 +16,12 @@ class ValidInfiniteAccount implements Rule
 
     public function passes($attribute, $value): bool
     {
-        if (empty($value)) {
-            return false;
-        }
-
         if (is_string($value)) {
             $player = $this->apiClient->appearance($value);
 
             if ($player) {
                 return $player->saveQuietly();
             }
-
-            return false;
         }
 
         return false;
