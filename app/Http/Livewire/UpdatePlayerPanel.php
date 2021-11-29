@@ -36,8 +36,10 @@ class UpdatePlayerPanel extends Component
             if ($this->runUpdate) {
                 try {
                     DB::transaction(function () use ($cacheKey) {
+                        $cooldownMinutes = (int) config('services.halodotapi.cooldown');
+
                         $this->player->updateFromHaloDotApi();
-                        Cache::put($cacheKey, true, now()->addMinutes(15));
+                        Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
                         $this->emitToRespectiveComponent();
                     });
                 } catch (\Throwable $exception) {
