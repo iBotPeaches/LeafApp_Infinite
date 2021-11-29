@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
+use Tests\Mocks\Xuid\MockXuidService;
 use Tests\TestCase;
 
 class ValidGamerFormTest extends TestCase
@@ -36,6 +37,42 @@ class ValidGamerFormTest extends TestCase
             'emblem_url' => Arr::get($mockResponse, 'data.emblem_url'),
             'backdrop_url' => Arr::get($mockResponse, 'data.backdrop_image_url'),
         ]);
+    }
+
+    public function testValidResponseFromXuidServiceIfNoXuidFound(): void
+    {
+        // Arrange
+        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockXuidResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        Livewire::test(AddGamerForm::class)
+            ->set('gamertag', $gamertag)
+            ->call('submit')
+            ->assertRedirect('/player/' . $gamertag);
+    }
+
+    public function testGracefulFallbackIfXuidNotFound(): void
+    {
+        // Arrange
+        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockXuidResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        Livewire::test(AddGamerForm::class)
+            ->set('gamertag', $gamertag)
+            ->call('submit')
+            ->assertRedirect('/player/' . $gamertag);
     }
 
     public function testValidResponseFromHaloDotApiIfAccountAlreadyExists(): void
