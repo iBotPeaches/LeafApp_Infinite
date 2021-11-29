@@ -92,6 +92,10 @@ class InvalidGamerFormTest extends TestCase
                 'gamertag' => null,
                 'validation' => 'required'
             ],
+            'empty string' => [
+                'gamertag' => '',
+                'validation' => 'required'
+            ],
             'too long' => [
                 'gamertag' => 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnoprstuvwxyz',
                 'validation' => 'max'
