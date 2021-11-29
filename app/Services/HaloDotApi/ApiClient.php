@@ -46,11 +46,10 @@ class ApiClient implements InfiniteInterface
         if ($response->throw()->successful()) {
             $data = $response->json();
             $data['player'] = $player;
-
-            return Csr::fromHaloDotApi($data);
+            Csr::fromHaloDotApi($data);
         }
 
-        return null;
+        return $player->csrs->first();
     }
 
     public function matches(Player $player, bool $forceUpdate = false): Collection
@@ -101,10 +100,9 @@ class ApiClient implements InfiniteInterface
         if ($response->throw()->successful()) {
             $data = $response->json();
             $data['player'] = $player;
-
-            return ServiceRecord::fromHaloDotApi($data);
+            ServiceRecord::fromHaloDotApi($data);
         }
 
-        return null;
+        return $player->serviceRecord;
     }
 }
