@@ -82,6 +82,36 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Profile updated!');
     }
 
+    public function testCrashingOutIfNewOutcomeMode(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        // Set values into responses that "fake" a private account.
+        Arr::set($mockMatchesResponse, 'data.0.outcome', 'crashed');
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
     public function testCrashingOutIfNewQueueMode(): void
     {
         // Arrange
