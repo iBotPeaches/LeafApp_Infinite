@@ -18,6 +18,11 @@ _Another hobby stat site for another Halo game_
 9. `yarn run dev`
 10. `php artisan serve`
 
+### Contributions
+ * Code must pass phpcs. (`./vendor/bin/phpcs`)
+ * Code must pass phpstan. (`./vendor/bin/phpstan analyse`)
+ * Code must have 100% test coverage. (`php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-html=output`)
+
 ### Configuration
 
 #### HaloDotApi
