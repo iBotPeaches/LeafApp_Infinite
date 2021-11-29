@@ -8,6 +8,7 @@ use App\Http\Livewire\CompetitivePage;
 use App\Http\Livewire\GameHistoryTable;
 use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
+use App\Jobs\PullMatchHistory;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Csrs\MockCsrAllService;
@@ -57,9 +59,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Profile updated!');
     }
 
-    public function testAutomaticallyDeferNextPagesIfGamesAlreayLoaded(): void
+    public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
     {
         // Arrange
+        Queue::fake();
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -91,6 +94,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
             ->assertEmitted('$refresh');
+
+        Queue::assertNotPushed(PullMatchHistory::class);
     }
 
     public function testInitialPageLoadDeferredFromApiCalls(): void
