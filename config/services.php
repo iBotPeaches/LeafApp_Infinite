@@ -33,7 +33,8 @@ return [
     'halodotapi' => [
         'key' => env('HALODOTAPI_KEY'),
         'domain' => env('HALODOTAPI_DOMAIN', 'https://cryptum.halodotapi.com'),
-        'version' => env('HALODOTAPI_VERSION', '2.3-alpha')
+        'version' => env('HALODOTAPI_VERSION', '2.3-alpha'),
+        'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
     ],
 
     'xboxapi' => [
