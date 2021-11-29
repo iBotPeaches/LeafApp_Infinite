@@ -102,6 +102,12 @@ class ValidOverviewPageTest extends TestCase
                     'accuracy' => 15,
                 ]
             ],
+            '0 wins' => [
+                'attributes' => [
+                    'matches_won' => 1,
+                    'total_matches' => 0,
+                ]
+            ]
         ];
     }
 }
