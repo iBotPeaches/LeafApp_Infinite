@@ -8,6 +8,8 @@ use App\Http\Livewire\CompetitivePage;
 use App\Http\Livewire\GameHistoryTable;
 use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
+use App\Models\Game;
+use App\Models\GamePlayer;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
@@ -80,6 +82,42 @@ class ValidPlayerUpdateTest extends TestCase
             ->call('processUpdate')
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!');
+    }
+
+    public function testAutomaticallyDeferNextPagesIfGamesAlreayLoaded(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        GamePlayer::factory()
+            ->createOne([
+                'game_id' => Game::factory()->state([
+                    'uuid' => Arr::get($mockMatchesResponse, 'data.1.id')
+                ]),
+                'player_id' => $player->id
+            ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::MATCHES,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmitted('$refresh');
     }
 
     public function testCrashingOutIfNewExperienceMode(): void
