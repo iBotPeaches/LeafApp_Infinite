@@ -4,15 +4,15 @@
 
         <nav class="pagination is-centered">
             @if ($paginator->onFirstPage())
-                <a class="pagination-previous" disabled>Previous</a>
+                <a class="pagination-previous" wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-dead-previous" disabled>Previous</a>
             @else
-                <a class="pagination-previous" wire:click="previousPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="prev" aria-label="@lang('pagination.previous')">Previous</a>
+                <a class="pagination-previous" wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-previous" wire:click="previousPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="prev" aria-label="@lang('pagination.previous')">Previous</a>
             @endif
 
             @if ($paginator->hasMorePages())
-                <a class="pagination-next" wire:click="nextPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="next" aria-label="@lang('pagination.next')">Next</a>
+                <a class="pagination-next" wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-next" wire:click="nextPage('{{ $paginator->getPageName() }}')" wire:loading.attr="disabled" rel="next" aria-label="@lang('pagination.next')">Next</a>
             @else
-                <a class="pagination-next" disabled>Next page</a>
+                <a class="pagination-next" wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-dead-next" disabled>Next page</a>
             @endif
 
             <ul class="pagination-list">
