@@ -35,8 +35,8 @@ use Illuminate\Support\Arr;
  * @property-read string $rank
  * @property-read string $next_rank
  * @property-read float $next_rank_percent
- * @property-read float $next_xp_for_level
- * @property-read float $current_xp_for_level
+ * @property-read int $next_xp_for_level
+ * @property-read int|null $current_xp_for_level
  * @property-read string $title
  * @property-read string $icon
  * @method static CsrFactory factory(...$parameters)
@@ -51,11 +51,12 @@ class Csr extends Model implements HasHaloDotApi
 
     public $casts = [
         'csr' => 'int',
+        'next_csr' => 'int',
         'input' => Input::class,
         'queue' => Queue::class
     ];
 
-    public function setCsrAttribute(int $csr): void
+    public function setCsrAttribute(?int $csr): void
     {
         $this->attributes['csr'] = $csr === -1 ? null : $csr;
     }
@@ -78,19 +79,23 @@ class Csr extends Model implements HasHaloDotApi
         }
     }
 
-    public function getNextXpForLevelAttribute(): float
+    public function getNextXpForLevelAttribute(): int
     {
         return $this->next_csr - $this->tier_start_csr;
     }
 
-    public function getCurrentXpForLevelAttribute(): float
+    public function getCurrentXpForLevelAttribute(): ?int
     {
-        return $this->next_csr - $this->csr;
+        if (empty($this->csr)) {
+            return null;
+        }
+
+        return $this->csr - $this->tier_start_csr;
     }
 
     public function getNextRankPercentAttribute(): float
     {
-        if ($this->next_csr === 0) {
+        if ($this->next_xp_for_level === 0) {
             return 0;
         }
 
