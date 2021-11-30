@@ -9,15 +9,17 @@ class AddUniqueToUuidGames extends Migration
 {
     public function up(): void
     {
-        Schema::table('game_players', function (Blueprint $table) {
-            $table->dropForeign(['game_id']);
+        if (DB::connection()->getDriverName() === 'mysql') {
+            Schema::table('game_players', function (Blueprint $table) {
+                $table->dropForeign(['game_id']);
 
-            $table
-                ->foreign('game_id')
-                ->references('id')
-                ->on('games')
-                ->cascadeOnDelete();
-        });
+                $table
+                    ->foreign('game_id')
+                    ->references('id')
+                    ->on('games')
+                    ->cascadeOnDelete();
+            });
+        }
 
         DB::table('games')
             ->select('uuid', DB::raw('count(`uuid`) as occurrences'))
