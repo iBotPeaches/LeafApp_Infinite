@@ -72,11 +72,6 @@ class GamePlayer extends Model implements HasHaloDotApi
         $this->attributes['outcome'] = $outcome->value;
     }
 
-    public function setShotsMissedAttribute(int $value): void
-    {
-        $this->attributes['shots_missed'] = $value < 0 ? 0 : $value;
-    }
-
     public static function fromHaloDotApi(array $payload): ?self
     {
         /** @var Player $player */
