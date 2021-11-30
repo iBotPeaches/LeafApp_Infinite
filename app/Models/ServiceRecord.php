@@ -196,6 +196,9 @@ class ServiceRecord extends Model implements HasHaloDotApi
         if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
             $serviceRecord->player->is_private = true;
             $serviceRecord->player->saveOrFail();
+        } elseif ($serviceRecord->player->is_private) {
+            $serviceRecord->player->is_private = false;
+            $serviceRecord->player->saveOrFail();
         }
 
         if ($serviceRecord->isDirty()) {
