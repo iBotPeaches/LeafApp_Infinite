@@ -10,13 +10,14 @@ _Another hobby stat site for another Halo game_
 1. PHP7.4 or PHP8
 2. Node + Yarn installed
 3. [Composer](https://getcomposer.org/) installed.
-4. `cp .env.example .env`
-5. `composer install`
-6. `yarn install`
-7. `php artisan key:generate`
-8. `php artisan migrate`
-9. `yarn run dev`
-10. `php artisan serve`
+4. `docker-compose build`
+5. `docker-compose run app composer install`
+6. `printf "127.0.0.1 leafapp.test\n" | sudo tee -a /etc/hosts`
+7.  `docker-compose up -d `   
+8. `yarn install`
+9. `docker-compose exec app php artisan key:generate`
+10. `docker-compose exec app php artisan migrate`
+11. `yarn run dev`
 
 ### Contributions
  * Code must pass phpcs. (`./vendor/bin/phpcs`)
