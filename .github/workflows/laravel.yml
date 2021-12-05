@@ -1,7 +1,10 @@
 name: Laravel
 on:
-  push:
+  pull_request:
     branches:
+      - '**'
+  push:
+    branches-ignore:
       - '**'
     tags-ignore:
       - '**'
