@@ -57,6 +57,14 @@ class CsrModelTest extends TestCase
                 'next_sub_tier' => 1,
                 'expected' => 'Diamond 2'
             ],
+            'diamond 6' => [
+                'tier' => 'Diamond',
+                'sub_tier' => 5,
+                'next_csr' => 1500,
+                'next_tier' => 'Onyx',
+                'next_sub_tier' => 0,
+                'expected' => 'Onyx'
+            ],
             'onyx' => [
                 'tier' => 'Onyx',
                 'sub_tier' => 0,
