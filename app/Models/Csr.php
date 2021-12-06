@@ -72,7 +72,7 @@ class Csr extends Model implements HasHaloDotApi
 
     public function getNextRankAttribute(): string
     {
-        if ($this->hasNextRank()) {
+        if ($this->hasNextRank() && !$this->isNextOnyx()) {
             return $this->next_tier . ' ' . ($this->next_sub_tier + 1);
         } else {
             return $this->next_tier;
@@ -121,6 +121,11 @@ class Csr extends Model implements HasHaloDotApi
     public function isOnyx(): bool
     {
         return $this->tier === 'Onyx';
+    }
+
+    public function isNextOnyx(): bool
+    {
+        return $this->next_tier === 'Onyx';
     }
 
     public function hasNextRank(): bool
