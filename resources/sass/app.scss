@@ -9,6 +9,20 @@
 // Custom
 @import 'grid';
 
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
 .container {
-    min-height: 100vh;
+    width: 100%;
 }
