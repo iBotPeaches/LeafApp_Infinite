@@ -1,4 +1,4 @@
-<footer class="footer mt-6">
+<footer class="footer mt-auto">
     <div class="content has-text-centered">
         <p>
             <strong>Leaf</strong> by <a href="https://twitter.com/iBotPeaches">iBotPeaches</a>. The source code is available at

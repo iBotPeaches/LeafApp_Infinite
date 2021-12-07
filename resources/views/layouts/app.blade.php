@@ -9,7 +9,7 @@
     <livewire:styles />
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column">
     @include('partials.global.navigation')
     <main class="container mt-4">
         @yield('content')
