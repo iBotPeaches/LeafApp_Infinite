@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
+use Tests\Mocks\Xuid\MockXuidService;
 use Tests\TestCase;
 
 class ValidPlayerUpdateTest extends TestCase
@@ -61,6 +62,41 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
             'is_private' => true
+        ]);
+    }
+
+    public function testAutomaticallyPullingXuidIfMissing(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockXuidResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+            'xuid' => null
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
+
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'xuid' => Arr::get($mockXuidResponse, 'xuid')
         ]);
     }
 
