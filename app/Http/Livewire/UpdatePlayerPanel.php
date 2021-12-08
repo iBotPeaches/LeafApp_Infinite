@@ -40,6 +40,12 @@ class UpdatePlayerPanel extends Component
                         $cooldownMinutes = (int) config('services.halodotapi.cooldown');
 
                         $this->player->updateFromHaloDotApi();
+
+                        // For some accounts, we don't have an xuid. We will grab them with this fallback
+                        if (empty($this->player->xuid)) {
+                            $this->player->syncXuidFromXboxApi();
+                            $this->player->saveOrFail();
+                        }
                         Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
                         $this->emitToRespectiveComponent();
                     });
