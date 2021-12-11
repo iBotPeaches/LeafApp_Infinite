@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\HaloDotApi;
+namespace App\Services\Autocode;
 
 use App\Models\Csr;
 use App\Models\Player;
