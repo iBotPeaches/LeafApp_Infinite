@@ -75,10 +75,10 @@ class GamePlayer extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         /** @var Player $player */
-        $player = Arr::get($payload, 'player');
+        $player = Arr::get($payload, '_leaf.player');
 
         /** @var Game $game */
-        $game = Arr::get($payload, 'game');
+        $game = Arr::get($payload, '_leaf.game');
 
         /** @var GamePlayer $gamePlayer */
         $gamePlayer = self::query()
@@ -88,35 +88,35 @@ class GamePlayer extends Model implements HasHaloDotApi
 
         $gamePlayer->player()->associate($player);
         $gamePlayer->game()->associate($game);
-        $gamePlayer->rank = Arr::get($payload, 'rank');
-        $gamePlayer->outcome = Arr::get($payload, 'outcome');
-        $gamePlayer->kd = Arr::get($payload, 'stats.kdr');
-        $gamePlayer->kda = Arr::get($payload, 'stats.kda');
-        $gamePlayer->score = Arr::get($payload, 'stats.score');
-        $gamePlayer->kills = Arr::get($payload, 'stats.summary.kills');
-        $gamePlayer->deaths = Arr::get($payload, 'stats.summary.deaths');
-        $gamePlayer->assists = Arr::get($payload, 'stats.summary.assists');
-        $gamePlayer->betrayals = Arr::get($payload, 'stats.summary.betrayals');
-        $gamePlayer->suicides = Arr::get($payload, 'stats.summary.suicides');
-        $gamePlayer->vehicle_destroys = Arr::get($payload, 'stats.summary.vehicles.destroys');
-        $gamePlayer->vehicle_hijacks = Arr::get($payload, 'stats.summary.vehicles.hijacks');
-        $gamePlayer->medal_count = Arr::get($payload, 'stats.summary.medals');
-        $gamePlayer->damage_taken = Arr::get($payload, 'stats.damage.taken');
-        $gamePlayer->damage_dealt = Arr::get($payload, 'stats.damage.dealt');
-        $gamePlayer->shots_fired = Arr::get($payload, 'stats.shots.fired');
-        $gamePlayer->shots_landed = Arr::get($payload, 'stats.shots.landed');
-        $gamePlayer->shots_missed = Arr::get($payload, 'stats.shots.missed');
-        $gamePlayer->accuracy = Arr::get($payload, 'stats.shots.accuracy');
-        $gamePlayer->rounds_won = Arr::get($payload, 'stats.rounds.won');
-        $gamePlayer->rounds_lost = Arr::get($payload, 'stats.rounds.lost');
-        $gamePlayer->rounds_tied = Arr::get($payload, 'stats.rounds.tied');
-        $gamePlayer->kills_melee = Arr::get($payload, 'stats.breakdowns.kills.melee');
-        $gamePlayer->kills_grenade = Arr::get($payload, 'stats.breakdowns.kills.grenades');
-        $gamePlayer->kills_headshot = Arr::get($payload, 'stats.breakdowns.kills.headshots');
-        $gamePlayer->kills_power = Arr::get($payload, 'stats.breakdowns.kills.power_weapons');
-        $gamePlayer->assists_emp = Arr::get($payload, 'stats.breakdowns.assists.emp');
-        $gamePlayer->assists_driver = Arr::get($payload, 'stats.breakdowns.assists.driver');
-        $gamePlayer->assists_callout = Arr::get($payload, 'stats.breakdowns.assists.callouts');
+        $gamePlayer->rank = Arr::get($payload, 'player.rank');
+        $gamePlayer->outcome = Arr::get($payload, 'player.outcome');
+        $gamePlayer->kd = Arr::get($payload, 'player.stats.core.kdr');
+        $gamePlayer->kda = Arr::get($payload, 'player.stats.core.kda');
+        $gamePlayer->score = Arr::get($payload, 'player.stats.core.score');
+        $gamePlayer->kills = Arr::get($payload, 'player.stats.core.summary.kills');
+        $gamePlayer->deaths = Arr::get($payload, 'player.stats.core.summary.deaths');
+        $gamePlayer->assists = Arr::get($payload, 'player.stats.core.summary.assists');
+        $gamePlayer->betrayals = Arr::get($payload, 'player.stats.core.summary.betrayals');
+        $gamePlayer->suicides = Arr::get($payload, 'player.stats.core.summary.suicides');
+        $gamePlayer->vehicle_destroys = Arr::get($payload, 'player.stats.core.summary.vehicles.destroys');
+        $gamePlayer->vehicle_hijacks = Arr::get($payload, 'player.stats.core.summary.vehicles.hijacks');
+        $gamePlayer->medal_count = Arr::get($payload, 'player.stats.core.summary.medals');
+        $gamePlayer->damage_taken = Arr::get($payload, 'player.stats.core.damage.taken');
+        $gamePlayer->damage_dealt = Arr::get($payload, 'player.stats.core.damage.dealt');
+        $gamePlayer->shots_fired = Arr::get($payload, 'player.stats.core.shots.fired');
+        $gamePlayer->shots_landed = Arr::get($payload, 'player.stats.core.shots.landed');
+        $gamePlayer->shots_missed = Arr::get($payload, 'player.stats.core.shots.missed');
+        $gamePlayer->accuracy = Arr::get($payload, 'player.stats.core.shots.accuracy');
+        $gamePlayer->rounds_won = Arr::get($payload, 'player.stats.core.rounds.won');
+        $gamePlayer->rounds_lost = Arr::get($payload, 'player.stats.core.rounds.lost');
+        $gamePlayer->rounds_tied = Arr::get($payload, 'player.stats.core.rounds.tied');
+        $gamePlayer->kills_melee = Arr::get($payload, 'player.stats.core.breakdowns.kills.melee');
+        $gamePlayer->kills_grenade = Arr::get($payload, 'player.stats.core.breakdowns.kills.grenades');
+        $gamePlayer->kills_headshot = Arr::get($payload, 'player.stats.core.breakdowns.kills.headshots');
+        $gamePlayer->kills_power = Arr::get($payload, 'player.stats.core.breakdowns.kills.power_weapons');
+        $gamePlayer->assists_emp = Arr::get($payload, 'player.stats.core.breakdowns.assists.emp');
+        $gamePlayer->assists_driver = Arr::get($payload, 'player.stats.core.breakdowns.assists.driver');
+        $gamePlayer->assists_callout = Arr::get($payload, 'player.stats.core.breakdowns.assists.callouts');
 
         if ($gamePlayer->isDirty()) {
             $gamePlayer->saveOrFail();

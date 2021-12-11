@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
