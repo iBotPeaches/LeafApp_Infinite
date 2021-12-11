@@ -113,7 +113,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
-        Arr::set($mockMatchesResponse, 'data.0.outcome', 'crashed');
+        Arr::set($mockMatchesResponse, 'data.0.player.outcome', 'crashed');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)

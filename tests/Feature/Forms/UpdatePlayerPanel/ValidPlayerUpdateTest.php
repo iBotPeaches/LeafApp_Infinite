@@ -39,7 +39,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         // Set values into responses that "fake" a private account.
         Arr::set($mockServiceResponse, 'data.time_played.seconds', 0);
-        Arr::set($mockServiceResponse, 'data.total_score', 0);
+        Arr::set($mockServiceResponse, 'data.core.total_score', 0);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
