@@ -153,7 +153,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         /** @var Player $player */
-        $player = Arr::get($payload, 'player');
+        $player = Arr::get($payload, '_leaf.player');
 
         /** @var ServiceRecord $serviceRecord */
         $serviceRecord = ServiceRecord::query()
@@ -161,36 +161,36 @@ class ServiceRecord extends Model implements HasHaloDotApi
             ->firstOrNew();
 
         $serviceRecord->player()->associate($player);
-        $serviceRecord->kd = Arr::get($payload, 'data.kdr');
-        $serviceRecord->kda = Arr::get($payload, 'data.kda');
-        $serviceRecord->total_score = Arr::get($payload, 'data.total_score');
+        $serviceRecord->kd = Arr::get($payload, 'data.core.kdr');
+        $serviceRecord->kda = Arr::get($payload, 'data.core.kda');
+        $serviceRecord->total_score = Arr::get($payload, 'data.core.total_score');
         $serviceRecord->total_matches = Arr::get($payload, 'data.matches_played');
-        $serviceRecord->matches_won = Arr::get($payload, 'data.breakdowns.matches.wins');
-        $serviceRecord->matches_lost = Arr::get($payload, 'data.breakdowns.matches.losses');
-        $serviceRecord->matches_tied = Arr::get($payload, 'data.breakdowns.matches.draws');
-        $serviceRecord->matches_left = Arr::get($payload, 'data.breakdowns.matches.left');
+        $serviceRecord->matches_won = Arr::get($payload, 'data.core.breakdowns.matches.wins');
+        $serviceRecord->matches_lost = Arr::get($payload, 'data.core.breakdowns.matches.losses');
+        $serviceRecord->matches_tied = Arr::get($payload, 'data.core.breakdowns.matches.draws');
+        $serviceRecord->matches_left = Arr::get($payload, 'data.core.breakdowns.matches.left');
         $serviceRecord->total_seconds_played = Arr::get($payload, 'data.time_played.seconds');
-        $serviceRecord->kills = Arr::get($payload, 'data.summary.kills');
-        $serviceRecord->deaths = Arr::get($payload, 'data.summary.deaths');
-        $serviceRecord->assists = Arr::get($payload, 'data.summary.assists');
-        $serviceRecord->betrayals = Arr::get($payload, 'data.summary.betrayals');
-        $serviceRecord->suicides = Arr::get($payload, 'data.summary.suicides');
-        $serviceRecord->vehicle_destroys = Arr::get($payload, 'data.summary.vehicles.destroys');
-        $serviceRecord->vehicle_hijacks = Arr::get($payload, 'data.summary.vehicles.hijacks');
-        $serviceRecord->medal_count = Arr::get($payload, 'data.summary.medals');
-        $serviceRecord->damage_taken = Arr::get($payload, 'data.damage.taken');
-        $serviceRecord->damage_dealt = Arr::get($payload, 'data.damage.dealt');
-        $serviceRecord->shots_fired = Arr::get($payload, 'data.shots.fired');
-        $serviceRecord->shots_landed = Arr::get($payload, 'data.shots.landed');
-        $serviceRecord->shots_missed = Arr::get($payload, 'data.shots.missed');
-        $serviceRecord->accuracy = Arr::get($payload, 'data.shots.accuracy');
-        $serviceRecord->kills_melee = Arr::get($payload, 'data.breakdowns.kills.melee');
-        $serviceRecord->kills_grenade = Arr::get($payload, 'data.breakdowns.kills.grenades');
-        $serviceRecord->kills_headshot = Arr::get($payload, 'data.breakdowns.kills.headshots');
-        $serviceRecord->kills_power = Arr::get($payload, 'data.breakdowns.kills.power_weapons');
-        $serviceRecord->assists_emp = Arr::get($payload, 'data.breakdowns.assists.emp');
-        $serviceRecord->assists_driver = Arr::get($payload, 'data.breakdowns.assists.driver');
-        $serviceRecord->assists_callout = Arr::get($payload, 'data.breakdowns.assists.callouts');
+        $serviceRecord->kills = Arr::get($payload, 'data.core.summary.kills');
+        $serviceRecord->deaths = Arr::get($payload, 'data.core.summary.deaths');
+        $serviceRecord->assists = Arr::get($payload, 'data.core.summary.assists');
+        $serviceRecord->betrayals = Arr::get($payload, 'data.core.summary.betrayals');
+        $serviceRecord->suicides = Arr::get($payload, 'data.core.summary.suicides');
+        $serviceRecord->vehicle_destroys = Arr::get($payload, 'data.core.summary.vehicles.destroys');
+        $serviceRecord->vehicle_hijacks = Arr::get($payload, 'data.core.summary.vehicles.hijacks');
+        $serviceRecord->medal_count = Arr::get($payload, 'data.core.summary.medals');
+        $serviceRecord->damage_taken = Arr::get($payload, 'data.core.damage.taken');
+        $serviceRecord->damage_dealt = Arr::get($payload, 'data.core.damage.dealt');
+        $serviceRecord->shots_fired = Arr::get($payload, 'data.core.shots.fired');
+        $serviceRecord->shots_landed = Arr::get($payload, 'data.core.shots.landed');
+        $serviceRecord->shots_missed = Arr::get($payload, 'data.core.shots.missed');
+        $serviceRecord->accuracy = Arr::get($payload, 'data.core.shots.accuracy');
+        $serviceRecord->kills_melee = Arr::get($payload, 'data.core.breakdowns.kills.melee');
+        $serviceRecord->kills_grenade = Arr::get($payload, 'data.core.breakdowns.kills.grenades');
+        $serviceRecord->kills_headshot = Arr::get($payload, 'data.core.breakdowns.kills.headshots');
+        $serviceRecord->kills_power = Arr::get($payload, 'data.core.breakdowns.kills.power_weapons');
+        $serviceRecord->assists_emp = Arr::get($payload, 'data.core.breakdowns.assists.emp');
+        $serviceRecord->assists_driver = Arr::get($payload, 'data.core.breakdowns.assists.driver');
+        $serviceRecord->assists_callout = Arr::get($payload, 'data.core.breakdowns.assists.callouts');
 
         // If we get no time played or score. We are going to assume account is private.
         if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
