@@ -43,7 +43,7 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey) {
-                    $cooldownMinutes = (int)config('services.halodotapi.cooldown');
+                    $cooldownMinutes = (int)config('services.autocode.cooldown');
 
                     $this->player->updateFromHaloDotApi();
                     if (empty($this->player->xuid)) {
