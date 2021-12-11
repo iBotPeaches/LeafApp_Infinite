@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\HaloDotApi\ApiClient as HaloApiClient;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\Autocode\ApiClient as HaloApiClient;
+use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
 use App\Services\XboxApi\XboxInterface;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->singleton(InfiniteInterface::class, function ($app) {
-            return new HaloApiClient($app['config']['services']['halodotapi']);
+            return new HaloApiClient($app['config']['services']['autocode']);
         });
 
         $this->app->singleton(XboxInterface::class, function ($app) {

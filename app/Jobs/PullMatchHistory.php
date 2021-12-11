@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Models\Player;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

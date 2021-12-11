@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Player;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
