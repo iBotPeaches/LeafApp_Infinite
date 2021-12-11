@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\PlayerController;
 // Player
 Route::pattern('type', 'overview|competitive|matches');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
+
+// Game
+Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');
