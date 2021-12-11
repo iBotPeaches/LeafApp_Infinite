@@ -25,13 +25,13 @@ _Another hobby stat site for another Halo game_
 
 ### Configuration
 
-#### HaloDotApi
+#### HaloDotApi (Autocode)
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
- * `HALODOTAPI_KEY` - The API key given after the OAuth Live dance with [HaloDotApi](https://developers.halodotapi.com)
- * `HALODOTAPI_DOMAIN` - The base domain for HaloDotAPI
- * `HALODOTAPI_VERSION` - The version of the HaloDotAPI to use
- * `HALODOTAPI_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
+ * `AUTOCODE_KEY` - The API key given [Autocode](https://autocode.com/lib/halo/)
+ * `AUTOCODE_DOMAIN` - The base domain for Autocode
+ * `AUTOCODE_VERSION` - The version of the Autocode to use
+ * `AUTOCODE_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
 
 #### XboxApi
 Used for resolving XUIDs so renames are possible without data loss.
