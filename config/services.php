@@ -30,11 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'halodotapi' => [
-        'key' => env('HALODOTAPI_KEY'),
-        'domain' => env('HALODOTAPI_DOMAIN', 'https://cryptum.halodotapi.com'),
-        'version' => env('HALODOTAPI_VERSION', '2.3-alpha'),
-        'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
+    'autocode' => [
+        'key' => env('AUTOCODE_KEY'),
+        'domain' => env('AUTOCODE_DOMAIN', 'https://halo.api.stdlib.com'),
+        'version' => env('AUTOCODE_VERSION', '0.0.3'),
+        'cooldown' => env('AUTOCODE_COOLDOWN', 120),
     ],
 
     'xboxapi' => [
