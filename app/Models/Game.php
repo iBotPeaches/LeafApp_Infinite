@@ -32,6 +32,8 @@ use Illuminate\Support\Arr;
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
+ * @property-read string $title
+ * @property-read string $description
  * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
@@ -72,6 +74,20 @@ class Game extends Model implements HasHaloDotApi
         }
 
         $this->attributes['experience'] = $experience->value;
+    }
+
+    public function getTitleAttribute(): string
+    {
+        return $this->category->name . ' on ' . $this->map->name;
+    }
+
+    public function getDescriptionAttribute(): string
+    {
+        return $this->category->name . ' on ' .
+            $this->map->name . ' in ' .
+            $this->experience->description . ' at ' .
+            $this->occurred_at->toFormattedDateString() . ' with: ' .
+            $this->players->implode('player.gamertag', ', ');
     }
 
     public function updateFromHaloDotApi(): void
