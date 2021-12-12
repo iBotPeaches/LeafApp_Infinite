@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Experience;
+use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use App\Services\Autocode\Enums\PlayerType;
@@ -145,6 +146,7 @@ class Game extends Model implements HasHaloDotApi
 
                 $player = Player::fromGamertag(Arr::get($playerData, 'gamertag'));
                 if (! $player->exists) {
+                    PullAppearance::dispatch($player);
                     $player->saveOrFail();
                 }
                 $playerData['_leaf']['player'] = $player;
