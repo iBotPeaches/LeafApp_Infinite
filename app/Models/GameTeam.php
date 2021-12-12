@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasOutcome;
+use Database\Factories\GameTeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,7 @@ use Illuminate\Support\Arr;
  * @property int $score
  * @property-read Game $game
  * @property-read string $color
+ * @method static GameTeamFactory factory(...$parameters)
  */
 class GameTeam extends Model implements HasHaloDotApi
 {
