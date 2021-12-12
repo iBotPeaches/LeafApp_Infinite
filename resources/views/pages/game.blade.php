@@ -3,5 +3,5 @@
 @section('description', $game->description . ' Halo Infinite PCGR')
 
 @section('content')
-    <livewire:game-page :game="$game"></livewire:game-page>
+    <livewire:game-page :game="$game" />
 @endsection
