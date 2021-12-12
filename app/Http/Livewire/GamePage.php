@@ -11,6 +11,11 @@ class GamePage extends Component
 {
     public Game $game;
 
+    // @phpstan-ignore-next-line
+    public $listeners = [
+        '$refresh'
+    ];
+
     public function render(): View
     {
         $groupedPlayers = $this->game->players

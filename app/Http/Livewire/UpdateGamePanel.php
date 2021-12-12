@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
-use App\Enums\PlayerTab;
 use App\Models\Game;
-use App\Models\Player;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -39,6 +36,7 @@ class UpdateGamePanel extends Component
             DB::transaction(function () {
                 $this->game->updateFromHaloDotApi();
             });
+            $this->emitTo(GamePage::class, '$refresh');
         } catch (RequestException $exception) {
             $color = 'is-danger';
             $message = $exception->getCode() === 429
