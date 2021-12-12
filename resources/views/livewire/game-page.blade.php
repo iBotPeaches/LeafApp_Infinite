@@ -6,7 +6,7 @@
         @include('partials.game.game-card')
         @include('partials.game.team-breakdown')
         @if ($game->players->count() <= 1)
-            <livewire:update-game-panel :game="$game"></livewire:update-game-panel>
+            <livewire:update-game-panel :game="$game" />
         @endif
     </div>
     <div class="column is-four-fifths">
