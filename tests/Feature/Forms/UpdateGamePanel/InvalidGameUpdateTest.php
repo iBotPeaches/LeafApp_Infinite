@@ -48,10 +48,9 @@ class InvalidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $mockMatchResponse = (new MockMatchService())->error500();
 
         Http::fakeSequence()
-            ->push($mockMatchResponse, Response::HTTP_INTERNAL_SERVER_ERROR);
+            ->push([], Response::HTTP_OK);
 
         $game = Game::factory()->createOne();
 
