@@ -44,6 +44,26 @@ class InvalidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Rate Limit Hit :( - Try later.');
     }
 
+    public function testInvalidResponseDueToUnknownRequestIssue(): void
+    {
+        // Arrange
+        Queue::fake();
+        $mockMatchResponse = (new MockMatchService())->error404();
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_NOT_FOUND);
+
+        $game = Game::factory()->createOne();
+
+        // Act & Assert
+        Livewire::test(UpdateGamePanel::class, [
+            'game' => $game,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
     public function testInvalidResponseDueToCrash(): void
     {
         // Arrange
