@@ -21,7 +21,7 @@ _Another hobby stat site for another Halo game_
 ### Contributions
  * Code must pass phpcs. (`./vendor/bin/phpcs`)
  * Code must pass phpstan. (`./vendor/bin/phpstan analyse`)
- * Code must have 100% test coverage. (`php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-html=output`)
+ * Code must have 100% test coverage. (`composer coverage`)
 
 ### Configuration
 
