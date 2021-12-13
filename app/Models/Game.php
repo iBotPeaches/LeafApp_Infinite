@@ -146,8 +146,8 @@ class Game extends Model implements HasHaloDotApi
 
                 $player = Player::fromGamertag(Arr::get($playerData, 'gamertag'));
                 if (! $player->exists) {
-                    PullAppearance::dispatch($player);
                     $player->saveOrFail();
+                    PullAppearance::dispatch($player);
                 }
                 $playerData['_leaf']['player'] = $player;
                 $playerData['_leaf']['game'] = $game;
