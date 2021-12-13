@@ -75,10 +75,10 @@ class ValidPlayerUpdateTest extends TestCase
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
+            ->push($mockXuidResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockXuidResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
