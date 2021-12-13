@@ -68,9 +68,6 @@ class Player extends Model implements HasHaloDotApi
         $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
 
         if ($player->isDirty()) {
-            if (empty($player->xuid)) {
-                $player->syncXuidFromXboxApi();
-            }
             $player->saveOrFail();
         }
 

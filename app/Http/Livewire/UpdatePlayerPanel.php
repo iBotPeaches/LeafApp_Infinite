@@ -44,12 +44,7 @@ class UpdatePlayerPanel extends Component
             try {
                 DB::transaction(function () use ($cacheKey) {
                     $cooldownMinutes = (int)config('services.autocode.cooldown');
-
                     $this->player->updateFromHaloDotApi();
-                    if (empty($this->player->xuid)) {
-                        $this->player->syncXuidFromXboxApi();
-                        $this->player->saveOrFail();
-                    }
 
                     Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
                     $this->emitToRespectiveComponent();
