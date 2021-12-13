@@ -10,7 +10,7 @@ class MockAppearanceService extends BaseMock
 {
     use HasErrorFunctions;
 
-    public function success(): array
+    public function success(?string $gamertag = null): array
     {
         return [
             'data' => [
@@ -19,7 +19,7 @@ class MockAppearanceService extends BaseMock
                 'backdrop_image_url' => $this->faker->url,
             ],
             'additional' => [
-                'gamertag' => $this->faker->word
+                'gamertag' => $gamertag ?? $this->faker->word
             ]
         ];
     }
