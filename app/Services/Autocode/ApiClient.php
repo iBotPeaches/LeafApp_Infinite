@@ -102,15 +102,11 @@ class ApiClient implements InfiniteInterface
     {
         $response = $this->pendingRequest->get('stats/matches/retrieve', [
             'id' => $matchUuid
-        ]);
+        ])->throw();
 
-        if ($response->throw()->successful()) {
-            $data = $response->json();
+        $data = $response->json();
 
-            return Game::fromHaloDotApi((array)Arr::get($data, 'data', []));
-        }
-
-        return null;
+        return Game::fromHaloDotApi((array)Arr::get($data, 'data', []));
     }
 
     public function serviceRecord(Player $player): ?ServiceRecord
