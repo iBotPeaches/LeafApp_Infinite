@@ -16,7 +16,7 @@ class PullAppearance implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private Player $player;
+    public Player $player;
 
     public function __construct(Player $player)
     {
