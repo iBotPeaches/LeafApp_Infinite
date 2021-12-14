@@ -32,6 +32,15 @@ class MockMatchesService extends BaseMock
                                 'version' => $this->faker->uuid,
                                 'thumbnail_url' => $this->faker->url
                             ]
+                        ],
+                        'playlist' => [
+                            'queue' => 'open',
+                            'input' => 'crossplay',
+                            'ranked' => true,
+                            'asset' => [
+                                'id' => $this->faker->uuid,
+                                'version' => $this->faker->uuid
+                            ]
                         ]
                     ],
                     'teams' => [
@@ -119,6 +128,15 @@ class MockMatchesService extends BaseMock
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
                                 'thumbnail_url' => $this->faker->url
+                            ]
+                        ],
+                        'playlist' => [
+                            'queue' => 'solo_duo',
+                            'input' => 'controller',
+                            'ranked' => true,
+                            'asset' => [
+                                'id' => $this->faker->uuid,
+                                'version' => $this->faker->uuid
                             ]
                         ]
                     ],

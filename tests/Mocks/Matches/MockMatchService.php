@@ -32,6 +32,15 @@ class MockMatchService extends BaseMock
                             'version' => $this->faker->uuid,
                             'thumbnail_url' => $this->faker->url
                         ]
+                    ],
+                    'playlist' => [
+                        'queue' => 'open',
+                        'input' => 'crossplay',
+                        'ranked' => true,
+                        'asset' => [
+                            'id' => $this->faker->uuid,
+                            'version' => $this->faker->uuid
+                        ]
                     ]
                 ],
                 'teams' => [
@@ -157,7 +166,6 @@ class MockMatchService extends BaseMock
                     $this->playerBlock($gamertag2),
                 ],
                 'experience' => $this->faker->randomElement(['arena', 'btb']),
-                'ranked' => $this->faker->boolean,
                 'played_at' => now()->toIso8601ZuluString(),
                 'duration' => [
                     'seconds' => $this->faker->numerify('###'),
