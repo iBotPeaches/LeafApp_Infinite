@@ -28,7 +28,7 @@ $team = $gamePlayers->first()->team;
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-32x32">
-                                    <img src="{{ $gamePlayer->player->emblem_url }}">
+                                    @include('partials.game.team_emblem_url')
                                 </p>
                             </figure>
                             <div class="media-content">
