@@ -169,6 +169,7 @@ class Game extends Model implements HasHaloDotApi
         $game->input = Arr::get($payload, 'details.playlist.input');
         $game->occurred_at = Arr::get($payload, 'played_at');
         $game->duration_seconds = Arr::get($payload, 'duration.seconds');
+        $game->version = config('services.autocode.version');
 
         if ($game->isDirty()) {
             $game->saveOrFail();
