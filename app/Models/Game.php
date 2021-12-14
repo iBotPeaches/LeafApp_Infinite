@@ -33,11 +33,13 @@ use Illuminate\Support\Arr;
  * @property Input $input
  * @property Carbon $occurred_at
  * @property int $duration_seconds
+ * @property string $version
  * @property-read Category $category
  * @property-read Map $map
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
+ * @property-read boolean $outdated
  * @property-read string $name
  * @property-read string $description
  * @method static GameFactory factory(...$parameters)
@@ -84,8 +86,12 @@ class Game extends Model implements HasHaloDotApi
         $this->attributes['experience'] = $experience->value;
     }
 
-    public function setQueueAttribute(string $value): void
+    public function setQueueAttribute(?string $value): void
     {
+        if (is_null($value)) {
+            return;
+        }
+
         $queue = is_numeric($value) ? Queue::fromValue((int) $value) : Queue::coerce($value);
         if (empty($queue)) {
             throw new \InvalidArgumentException('Invalid Queue Enum (' . $value . ')');
@@ -94,8 +100,12 @@ class Game extends Model implements HasHaloDotApi
         $this->attributes['queue'] = $queue->value;
     }
 
-    public function setInputAttribute(string $value): void
+    public function setInputAttribute(?string $value): void
     {
+        if (is_null($value)) {
+            return;
+        }
+
         $input = is_numeric($value) ? Input::fromValue((int) $value) : Input::coerce($value);
         if (empty($input)) {
             throw new \InvalidArgumentException('Invalid Input Enum (' . $value . ')');
@@ -116,6 +126,11 @@ class Game extends Model implements HasHaloDotApi
             $this->experience->description . ' at ' .
             $this->occurred_at->toFormattedDateString() . ' with: ' .
             $this->players->implode('player.gamertag', ', ');
+    }
+
+    public function getOutdatedAttribute(): bool
+    {
+        return $this->version !== config('services.autocode.version');
     }
 
     public function updateFromHaloDotApi(): void
