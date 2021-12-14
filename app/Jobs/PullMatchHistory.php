@@ -26,7 +26,7 @@ class PullMatchHistory implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id))->dontRelease()
+            (new WithoutOverlapping((string)$this->player->id))->dontRelease()
         ];
     }
 
