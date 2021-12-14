@@ -8,6 +8,7 @@ use App\Enums\Queue;
 use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Models\Traits\HasPlaylist;
 use App\Services\Autocode\Enums\PlayerType;
 use App\Services\Autocode\InfiniteInterface;
 use Carbon\Carbon;
@@ -37,13 +38,13 @@ use Illuminate\Support\Arr;
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
- * @property-read string $title
+ * @property-read string $name
  * @property-read string $description
  * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
 {
-    use HasFactory;
+    use HasFactory, HasPlaylist;
 
     public $guarded = [
         'id',
@@ -103,7 +104,7 @@ class Game extends Model implements HasHaloDotApi
         $this->attributes['input'] = $input->value;
     }
 
-    public function getTitleAttribute(): string
+    public function getNameAttribute(): string
     {
         return $this->category->name . ' on ' . $this->map->name;
     }
