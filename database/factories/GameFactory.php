@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\Experience;
+use App\Enums\Input;
+use App\Enums\Queue;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Map;
@@ -30,6 +32,8 @@ class GameFactory extends Factory
             'is_ffa' => $this->faker->boolean,
             'is_scored' => $this->faker->boolean,
             'experience' => Experience::getRandomValue(),
+            'queue' => Queue::getRandomValue(),
+            'input' => Input::getRandomValue(),
             'occurred_at' => Carbon::now(),
             'duration_seconds' => $this->faker->numerify('####'),
         ];
