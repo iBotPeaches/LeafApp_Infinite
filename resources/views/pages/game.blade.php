@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $game->title)
+@section('title', $game->name)
 @section('description', $game->description . ' Halo Infinite PCGR')
 
 @section('content')
