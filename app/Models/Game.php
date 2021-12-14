@@ -34,6 +34,7 @@ use Illuminate\Support\Arr;
  * @property Carbon $occurred_at
  * @property int $duration_seconds
  * @property string $version
+ * @property boolean $was_pulled
  * @property-read Category $category
  * @property-read Map $map
  * @property-read PersonalResult $personal
@@ -130,6 +131,9 @@ class Game extends Model implements HasHaloDotApi
 
     public function getOutdatedAttribute(): bool
     {
+        if (!$this->was_pulled) {
+            return true;
+        }
         return $this->version !== config('services.autocode.version');
     }
 
@@ -170,6 +174,10 @@ class Game extends Model implements HasHaloDotApi
         $game->occurred_at = Arr::get($payload, 'played_at');
         $game->duration_seconds = Arr::get($payload, 'duration.seconds');
         $game->version = config('services.autocode.version');
+
+        if (Arr::has($payload, 'teams.details')) {
+            $game->was_pulled = true;
+        }
 
         if ($game->isDirty()) {
             $game->saveOrFail();
