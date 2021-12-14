@@ -72,6 +72,38 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
+    public function testValidResponseFromAllHaloDotApiServicesForUnranked(): void
+    {
+        // Arrange
+        Queue::fake();
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+
+        Arr::set($mockMatchResponse, 'data.details.playlist.queue', null);
+        Arr::set($mockMatchResponse, 'data.details.playlist.input', null);
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        $game = Game::factory()->createOne([
+            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdateGamePanel::class, [
+            'game' => $game,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Game updated!')
+
+            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
+            ->assertEmitted('$refresh');
+
+        Queue::assertPushed(PullAppearance::class);
+    }
+
     public function testValidResponseFromAllHaloDotApiServices(): void
     {
         // Arrange
