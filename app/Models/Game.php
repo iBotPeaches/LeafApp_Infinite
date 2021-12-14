@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Experience;
+use App\Enums\Input;
+use App\Enums\Queue;
 use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
@@ -26,6 +28,8 @@ use Illuminate\Support\Arr;
  * @property boolean $is_ffa
  * @property boolean $is_scored
  * @property Experience $experience
+ * @property Queue $queue
+ * @property Input $input
  * @property Carbon $occurred_at
  * @property int $duration_seconds
  * @property-read Category $category
@@ -52,7 +56,9 @@ class Game extends Model implements HasHaloDotApi
     ];
 
     public $casts = [
-        'experience' => Experience::class
+        'experience' => Experience::class,
+        'queue' => Queue::class,
+        'input' => Input::class,
     ];
 
     public $with = [
@@ -75,6 +81,26 @@ class Game extends Model implements HasHaloDotApi
         }
 
         $this->attributes['experience'] = $experience->value;
+    }
+
+    public function setQueueAttribute(string $value): void
+    {
+        $queue = is_numeric($value) ? Queue::fromValue((int) $value) : Queue::coerce($value);
+        if (empty($queue)) {
+            throw new \InvalidArgumentException('Invalid Queue Enum (' . $value . ')');
+        }
+
+        $this->attributes['queue'] = $queue->value;
+    }
+
+    public function setInputAttribute(string $value): void
+    {
+        $input = is_numeric($value) ? Input::fromValue((int) $value) : Input::coerce($value);
+        if (empty($input)) {
+            throw new \InvalidArgumentException('Invalid Input Enum (' . $value . ')');
+        }
+
+        $this->attributes['input'] = $input->value;
     }
 
     public function getTitleAttribute(): string
@@ -119,10 +145,12 @@ class Game extends Model implements HasHaloDotApi
 
         $game->category()->associate($category);
         $game->map()->associate($map);
-        $game->is_ranked = (bool) Arr::get($payload, 'ranked');
+        $game->is_ranked = (bool) Arr::get($payload, 'details.playlist.ranked');
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
+        $game->queue = Arr::get($payload, 'details.playlist.queue');
+        $game->input = Arr::get($payload, 'details.playlist.input');
         $game->occurred_at = Arr::get($payload, 'played_at');
         $game->duration_seconds = Arr::get($payload, 'duration.seconds');
 
