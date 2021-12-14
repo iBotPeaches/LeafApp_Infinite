@@ -11,7 +11,12 @@
         <div class="media">
             <div class="media-content">
                 <p class="title is-4">{{ $game->map->name }}</p>
-                <p class="subtitle is-6">{{ $game->category->name }}</p>
+                <p class="subtitle is-6">
+                    {{ $game->category->name }}
+                    @if ($game->queue)
+                        ({{ $game->title }}{!! $game->icon !!})
+                    @endif
+                </p>
             </div>
         </div>
         <div class="content">
