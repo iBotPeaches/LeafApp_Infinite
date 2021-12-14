@@ -16,6 +16,9 @@ class GamePageTest extends TestCase
         Http::fake();
 
         $game = Game::factory()->createOne();
+        Game::query()
+            ->where('id', $game->id)
+            ->update(['queue' => null]);
 
         // Act
         $response = $this->get('/game/' . $game->uuid);
