@@ -55,6 +55,10 @@ class Csr extends Model implements HasHaloDotApi
         'queue' => Queue::class
     ];
 
+    public $touches = [
+        'player'
+    ];
+
     public function setCsrAttribute(?int $csr): void
     {
         $this->attributes['csr'] = $csr === -1 ? null : $csr;
