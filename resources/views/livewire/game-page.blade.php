@@ -5,7 +5,7 @@
     <div class="column">
         @include('partials.game.game-card')
         @include('partials.game.team-breakdown')
-        @if (empty($game->queue))
+        @if ($game->outdated)
             <livewire:update-game-panel :game="$game" />
         @endif
     </div>
