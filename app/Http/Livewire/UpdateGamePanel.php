@@ -34,6 +34,7 @@ class UpdateGamePanel extends Component
 
         try {
             DB::transaction(function () {
+                $this->game->lockForUpdate();
                 $this->game->updateFromHaloDotApi();
             });
             $this->emitTo(GamePage::class, '$refresh');
