@@ -64,6 +64,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
         'total_matches' => 'int'
     ];
 
+    public $touches = [
+        'player'
+    ];
+
     public function getWinPercentAttribute(): float
     {
         if ($this->total_matches == 0) {

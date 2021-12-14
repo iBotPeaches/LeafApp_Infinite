@@ -65,6 +65,10 @@ class GamePlayer extends Model implements HasHaloDotApi
         'game'
     ];
 
+    public $touches = [
+        'player'
+    ];
+
     public static function fromHaloDotApi(array $payload): ?self
     {
         /** @var Player $player */
