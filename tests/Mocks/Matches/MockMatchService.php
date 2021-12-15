@@ -34,12 +34,16 @@ class MockMatchService extends BaseMock
                         ]
                     ],
                     'playlist' => [
-                        'queue' => 'open',
-                        'input' => 'crossplay',
-                        'ranked' => true,
+                        'name' => $this->faker->word,
                         'asset' => [
                             'id' => $this->faker->uuid,
-                            'version' => $this->faker->uuid
+                            'version' => $this->faker->uuid,
+                            'thumbnail_url' => $this->faker->imageUrl
+                        ],
+                        'properties' => [
+                            'queue' => 'open',
+                            'input' => 'crossplay',
+                            'ranked' => true,
                         ]
                     ]
                 ],
@@ -98,7 +102,8 @@ class MockMatchService extends BaseMock
                                     'kda' => $this->faker->randomFloat(2, 0, 10),
                                     'kdr' => $this->faker->randomFloat(2, 0, 10),
                                     'score' => $this->faker->numerify('####')
-                                ]
+                                ],
+                                'mode' => null
                             ],
                             'rank' => 1,
                             'outcome' => 'win'
@@ -231,9 +236,17 @@ class MockMatchService extends BaseMock
                     'kdr' => $this->faker->randomFloat(2, 0, 10),
                     'score' => $this->faker->numerify('####')
                 ],
+                'mode' => null,
             ],
             'rank' => $this->faker->numerify('#'),
             'outcome' => $this->faker->randomElement(['win', 'loss', 'draw']),
+            'participation' => [
+                'joined_in_progress' => true,
+                'presence' => [
+                    'beginning' => true,
+                    'completion' => true
+                ]
+            ]
         ];
     }
 }
