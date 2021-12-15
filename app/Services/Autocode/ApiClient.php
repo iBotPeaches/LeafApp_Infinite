@@ -8,7 +8,9 @@ use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use App\Models\ServiceRecord;
+use App\Services\Autocode\Enums\Experience;
 use App\Services\Autocode\Enums\Mode;
+use App\Services\Autocode\Enums\Playlist;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
@@ -112,7 +114,9 @@ class ApiClient implements InfiniteInterface
     public function serviceRecord(Player $player): ?ServiceRecord
     {
         $response = $this->pendingRequest->get('stats/service-record', [
-            'gamertag' => $player->gamertag
+            'gamertag' => $player->gamertag,
+            'experience' => Experience::ARENA,
+            'playlist' => Playlist::RANKED_ALL,
         ]);
 
         if ($response->throw()->successful()) {
