@@ -5,7 +5,7 @@ $team = $gamePlayers->first()->team;
 ?>
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
-        {{ $team->name ?? 'Unknown' }}
+        {{ $team->name ?? 'Players' }}
     </p>
     <div class="table-container">
         <table class="table is-striped is-narrow is-hoverable is-fullwidth">
