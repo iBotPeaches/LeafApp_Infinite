@@ -26,11 +26,15 @@ class AddPartipationColumns extends Migration
     public function down(): void
     {
         Schema::table('game_players', function (Blueprint $table) {
-            $table->dropColumn([
-                'was_at_start',
-                'was_at_end',
-                'was_inprogress_join'
-            ]);
+            $table->dropColumn('was_at_start');
+        });
+
+        Schema::table('game_players', function (Blueprint $table) {
+            $table->dropColumn('was_at_end');
+        });
+
+        Schema::table('game_players', function (Blueprint $table) {
+            $table->dropColumn('was_inprogress_join');
         });
     }
 }
