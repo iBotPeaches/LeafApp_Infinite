@@ -10,6 +10,9 @@ class DropUnusedGameColumns extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             $table->dropColumn('queue');
+        });
+
+        Schema::table('games', function (Blueprint $table) {
             $table->dropColumn('input');
         });
     }
