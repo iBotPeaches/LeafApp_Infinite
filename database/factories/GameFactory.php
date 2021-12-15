@@ -28,12 +28,9 @@ class GameFactory extends Factory
             'uuid' => $this->faker->unique()->uuid,
             'category_id' => Category::factory(),
             'map_id' => Map::factory(),
-            'is_ranked' => $this->faker->boolean,
             'is_ffa' => $this->faker->boolean,
             'is_scored' => $this->faker->boolean,
             'experience' => Experience::getRandomValue(),
-            'queue' => Queue::getRandomValue(),
-            'input' => Input::getRandomValue(),
             'occurred_at' => Carbon::now(),
             'duration_seconds' => $this->faker->numerify('####'),
         ];
