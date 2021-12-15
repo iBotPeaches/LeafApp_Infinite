@@ -80,8 +80,8 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.playlist.queue', null);
-        Arr::set($mockMatchResponse, 'data.details.playlist.input', null);
+        Arr::set($mockMatchResponse, 'data.details.playlist.properties.queue', null);
+        Arr::set($mockMatchResponse, 'data.details.playlist.properties.input', null);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
