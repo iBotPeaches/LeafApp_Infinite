@@ -43,7 +43,7 @@ use Illuminate\Support\Arr;
  */
 class Game extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasPlaylist;
+    use HasFactory;
 
     public $guarded = [
         'id',
