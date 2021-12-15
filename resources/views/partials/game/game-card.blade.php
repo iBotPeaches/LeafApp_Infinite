@@ -20,9 +20,16 @@
             </div>
         </div>
         <div class="content">
-            {{ $game->experience->description }}
-            @if ($game->is_ranked)
-                <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
+            @if ($game->playlist)
+                {{ $game->playlist->name }}
+                @if ($game->playlist->is_ranked)
+                    <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
+                @endif
+            @else
+                {{ $game->experience->description }}
+                @if ($game->is_ranked)
+                    <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
+                @endif
             @endif
             <br />
             <time datetime="{{ $game->occurred_at->toIso8601ZuluString() }}">
