@@ -111,7 +111,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.0.details.playlist.queue', 'unknown-queue');
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.queue', 'unknown-queue');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -140,7 +140,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.0.details.playlist.input', 'unknown-input');
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.input', 'unknown-input');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
