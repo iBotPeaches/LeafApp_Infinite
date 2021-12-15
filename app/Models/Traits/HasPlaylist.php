@@ -14,11 +14,15 @@ trait HasPlaylist
 {
     public function getTitleAttribute(): string
     {
-        return $this->queue->description;
+        return $this->queue->description ?? '';
     }
 
     public function getIconAttribute(): ? string
     {
+        if (empty($this->queue) || empty($this->input)) {
+            return null;
+        }
+
         if ($this->queue->is(Queue::SOLO_DUO)) {
             return $this->input->is(Input::CONTROLLER())
                 ? '<i class="ml-1 fa fa-gamepad"></i>'
