@@ -17,7 +17,7 @@
                     <p>What about customs?</p>
                 </div>
                 <div class="message-body">
-                    Leaf is not interested in those. Only matchmade games.
+                    Leaf is not interested in those as of now. Only matchmade games.
                 </div>
             </article>
             <article class="message is-dark">
@@ -32,11 +32,10 @@
         <div class="column">
             <article class="message is-dark">
                 <div class="message-header">
-                    <p>What about my full match history?</p>
+                    <p>What powers my service record?</p>
                 </div>
                 <div class="message-body">
-                    The current iteration of an unofficial API can only go 100 games in the past. Leaf records
-                    these, so visit often to keep the database growing of your older games.
+                    The current iteration only keeps the results scoped to ranked playlists.
                 </div>
             </article>
             <article class="message is-dark">
