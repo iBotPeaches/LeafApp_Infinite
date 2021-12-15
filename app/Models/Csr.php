@@ -16,8 +16,8 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property int $player_id
- * @property Queue $queue
- * @property Input $input
+ * @property Queue|null $queue
+ * @property Input|null $input
  * @property int $season
  * @property int $csr
  * @property int $matches_remaining

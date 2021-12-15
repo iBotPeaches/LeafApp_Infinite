@@ -19,11 +19,7 @@ trait HasPlaylist
 
     public function getIconAttribute(): ? string
     {
-        if (empty($this->queue) || empty($this->input)) {
-            return null;
-        }
-
-        if ($this->queue->is(Queue::SOLO_DUO)) {
+        if ($this->queue && $this->input && $this->queue->is(Queue::SOLO_DUO)) {
             return $this->input->is(Input::CONTROLLER())
                 ? '<i class="ml-1 fa fa-gamepad"></i>'
                 : '<i class="ml-1 fa fa-mouse"></i>';
