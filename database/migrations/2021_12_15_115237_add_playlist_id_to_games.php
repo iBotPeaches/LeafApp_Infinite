@@ -12,7 +12,6 @@ class AddPlaylistIdToGames extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             $table->foreignIdFor(Playlist::class)
-                ->nullable(true)
                 ->after('map_id')
                 ->constrained();
         });
