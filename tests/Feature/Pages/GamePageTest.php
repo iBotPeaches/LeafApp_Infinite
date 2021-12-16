@@ -52,10 +52,12 @@ class GamePageTest extends TestCase
         // Arrange
         Http::fake();
 
-        $game = Game::factory()->createOne([
-            'version' => config('services.autocode.version'),
-            'was_pulled' => true
-        ]);
+        $game = Game::factory()
+            ->forPlaylist(['name' => 'Unknown'])
+            ->createOne([
+                'version' => config('services.autocode.version'),
+                'was_pulled' => true
+            ]);
 
         // Act
         $response = $this->get('/game/' . $game->uuid);
