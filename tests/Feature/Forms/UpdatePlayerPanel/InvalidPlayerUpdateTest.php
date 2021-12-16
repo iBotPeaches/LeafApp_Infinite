@@ -53,11 +53,13 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->error429();
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_TOO_MANY_REQUESTS);
 
         $player = Player::factory()->createOne([
@@ -80,6 +82,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.experience', 'unknown-gametype');
@@ -87,6 +90,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -109,6 +113,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.queue', 'unknown-queue');
@@ -116,6 +121,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -138,6 +144,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.input', 'unknown-input');
@@ -145,6 +152,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -167,6 +175,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.player.outcome', 'crashed');
@@ -174,6 +183,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -196,6 +206,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockCsrResponse, 'data.0.queue', 'closed');
@@ -203,6 +214,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
