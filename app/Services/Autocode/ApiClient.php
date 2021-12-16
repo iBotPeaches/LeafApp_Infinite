@@ -67,14 +67,14 @@ class ApiClient implements InfiniteInterface
                 'gamertag' => $player->gamertag,
                 'limit' => [
                     'count' => $perPage,
-                    'offset' => $offset + $perPage
+                    'offset' => $offset
                 ]
             ]);
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $count = (int)Arr::get($data, 'paging.count', 0);
-                $offset += $count;
+                $count = count(Arr::get($data, 'data', []));
+                $offset += $perPage;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
