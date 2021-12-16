@@ -14,10 +14,7 @@ trait HasPlaylist
 {
     public function getTitleAttribute(): string
     {
-        if ($this->name === 'Unknown') {
-            return 'Featured';
-        }
-        return $this->name ?? $this->queue->description ?? '';
+        return $this->queue->description ?? '';
     }
 
     public function getIconAttribute(): ? string
