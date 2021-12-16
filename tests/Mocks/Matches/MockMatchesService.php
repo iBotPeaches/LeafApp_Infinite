@@ -10,7 +10,7 @@ class MockMatchesService extends BaseMock
 {
     use HasErrorFunctions;
 
-    public function success(string $gamertag, int $count = 2, int $offset = 0, ?int $total = 2): array
+    public function success(string $gamertag, int $count = 2, int $offset = 0): array
     {
         return [
             'data' => [
@@ -233,11 +233,26 @@ class MockMatchesService extends BaseMock
                     ]
                 ]
             ],
-            'count' => 25,
+            'count' => $count,
             'paging' => [
                 'count' => $count,
-                'offset' => $offset,
-                'total' => $total,
+                'offset' => $offset
+            ],
+            'additional' => [
+                'gamertag' => $gamertag,
+                'mode' => 'matchmade'
+            ]
+        ];
+    }
+
+    public function empty(string $gamertag, int $offset = 0): array
+    {
+        return [
+            'data' => [],
+            'count' => 0,
+            'paging' => [
+                'count' => 0,
+                'offset' => $offset
             ],
             'additional' => [
                 'gamertag' => $gamertag,
