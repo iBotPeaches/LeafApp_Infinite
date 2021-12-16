@@ -58,22 +58,23 @@ class ApiClient implements InfiniteInterface
 
     public function matches(Player $player, bool $forceUpdate = false): Collection
     {
-        $count = 25;
+        $perPage = 25;
+        $count = $perPage;
         $offset = 0;
-        $total = PHP_INT_MAX;
 
-        while (($count + $offset) < $total) {
-            $response = $this->pendingRequest->get('stats/matches/list', [
+        while ($count !== 0) {
+            $response = $this->pendingRequest->post('stats/matches/list', [
                 'gamertag' => $player->gamertag,
-                'mode' => Mode::MATCHMADE,
-                'count' => $count,
-                'offset' => $offset
+                'limit' => [
+                    'count' => $perPage,
+                    'offset' => $offset + $perPage
+                ]
             ]);
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $offset = (int)Arr::get($data, 'paging.offset', 0) + $count;
-                $total = (int)Arr::get($data, 'paging.total', 0);
+                $count = (int)Arr::get($data, 'paging.count', 0);
+                $offset += $count;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
