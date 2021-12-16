@@ -24,9 +24,9 @@
                 <tr>
                     <td>
                         <a href="{{ route('game', [$game]) }}">
-                            {{ $game->experience->description }}
+                            {{ $game->playlist->title }}
                         </a>
-                        @if ($game->is_ranked)
+                        @if ($game->playlist->is_ranked)
                             <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
                         @endif
                     </td>
