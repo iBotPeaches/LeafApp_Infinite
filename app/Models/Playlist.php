@@ -38,6 +38,15 @@ class Playlist extends Model implements HasHaloDotApi
         'input' => Input::class,
     ];
 
+    public function getNameAttribute(string $value): string
+    {
+        if ($value === 'Unknown') {
+            return 'Featured';
+        }
+
+        return $value;
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
         $playlistId = Arr::get($payload, 'asset.id');
