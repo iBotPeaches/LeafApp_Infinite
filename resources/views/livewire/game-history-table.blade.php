@@ -5,7 +5,7 @@
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
             <tr>
-                <th>Mode</th>
+                <th>Playlist</th>
                 <th>Map</th>
                 <th>Gametype</th>
                 <th>Outcome</th>

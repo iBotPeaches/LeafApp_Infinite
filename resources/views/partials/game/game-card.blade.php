@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="content">
-            {{ $game->playlist->name }}
+            {{ $game->playlist->title }}
             @if ($game->playlist->is_ranked)
                 <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
             @endif
