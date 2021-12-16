@@ -30,11 +30,13 @@ class PullHaloDataTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
