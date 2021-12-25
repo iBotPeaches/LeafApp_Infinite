@@ -6,10 +6,10 @@ namespace App\Services\Autocode;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
-use App\Services\Autocode\Enums\Experience;
-use App\Services\Autocode\Enums\Mode;
+use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Playlist;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
@@ -110,6 +110,18 @@ class ApiClient implements InfiniteInterface
         $data = $response->json();
 
         return Game::fromHaloDotApi((array)Arr::get($data, 'data', []));
+    }
+
+    public function metadataMedals(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/medals/')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $medal) {
+            Medal::fromHaloDotApi($medal);
+        }
+
+        return Medal::all();
     }
 
     public function serviceRecord(Player $player): ?ServiceRecord
