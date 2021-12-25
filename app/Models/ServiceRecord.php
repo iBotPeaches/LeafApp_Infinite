@@ -166,6 +166,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
             $medal['count'] = $medals[$medal->id] ?? 0;
             return $medal;
         })->reject(function (Medal $medal) {
+            // @phpstan-ignore-next-line
             return $medal->count === 0;
         })->sortByDesc('count')->chunk(5);
     }
@@ -217,7 +218,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
                 return [
                     $medal['id'] => $medal['count']
                 ];
-            });
+            })->toArray();
 
         // If we get no time played or score. We are going to assume account is private.
         if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
