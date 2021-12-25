@@ -15,5 +15,6 @@ interface InfiniteInterface
     public function competitive(Player $player): ?Csr;
     public function matches(Player $player, bool $forceUpdate = false): Collection;
     public function match(string $matchUuid): ?Game;
+    public function metadataMedals(): Collection;
     public function serviceRecord(Player $player): ?ServiceRecord;
 }
