@@ -114,10 +114,9 @@ class ApiClient implements InfiniteInterface
 
     public function serviceRecord(Player $player): ?ServiceRecord
     {
-        $response = $this->pendingRequest->get('stats/service-record', [
+        $response = $this->pendingRequest->get('stats/service-record/multiplayer', [
             'gamertag' => $player->gamertag,
-            'experience' => Experience::ARENA,
-            'playlist' => Playlist::RANKED_ALL,
+            'filter' => Filter::MATCHMADE_RANKED,
         ]);
 
         if ($response->throw()->successful()) {
