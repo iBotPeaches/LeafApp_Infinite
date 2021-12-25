@@ -68,7 +68,7 @@ class ValidCompetitivePageTest extends TestCase
         }
     }
 
-    public function testValidUnratedResponseFromHaloDotApi(): void
+    public function testValidUnrankedResponseFromHaloDotApi(): void
     {
         // Arrange
         Carbon::setTestNow(now());
@@ -79,7 +79,7 @@ class ValidCompetitivePageTest extends TestCase
                     'input' => Input::CROSSPLAY,
                     'matches_remaining' => 10,
                     'next_csr' => 0,
-                    'tier' => 'Unrated',
+                    'tier' => 'Unranked',
                     'tier_start_csr' => 0,
                     'csr' => null
                 ];
