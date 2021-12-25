@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks\ServiceRecord;
 
+use App\Services\Autocode\Enums\Filter;
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
 
@@ -55,7 +56,17 @@ class MockServiceRecordService extends BaseMock
                             'losses' => $this->faker->numberBetween(0, 25),
                             'left' => $this->faker->numberBetween(0, 25),
                             'draws' => $this->faker->numberBetween(0, 25),
-                        ]
+                        ],
+                        'medals' => [
+                            [
+                                'id' => 3233952928,
+                                'count' => $this->faker->numberBetween(0, 25),
+                            ],
+                            [
+                                'id' => 1169571763,
+                                'count' => $this->faker->numberBetween(0, 25),
+                            ]
+                        ],
                     ],
                     'kda' => $this->faker->randomFloat(2, 0, 10),
                     'kdr' => $this->faker->randomFloat(2, 0, 10),
@@ -70,6 +81,7 @@ class MockServiceRecordService extends BaseMock
             ],
             'additional' => [
                 'gamertag' => $gamertag,
+                'filter' => Filter::MATCHMADE_RANKED
             ]
         ];
     }
