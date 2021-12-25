@@ -10,7 +10,6 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Services\Autocode\Enums\Filter;
-use App\Services\Autocode\Enums\Playlist;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
