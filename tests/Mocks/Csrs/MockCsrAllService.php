@@ -54,7 +54,7 @@ class MockCsrAllService extends BaseMock
         return [
             'value' => $this->faker->numerify('####'),
             'measurement_matches_remaining' => 0,
-            'tier' => $this->faker->randomElement(['Gold', 'Diamond', 'Onyx', 'Unrated']),
+            'tier' => $this->faker->randomElement(['Gold', 'Diamond', 'Onyx', 'Unranked']),
             'tier_start' => $this->faker->numerify('####'),
             'sub_tier' => $this->faker->numberBetween(0, 5),
             'next_tier' => $this->faker->randomElement(['Diamond', 'Onyx', '']),

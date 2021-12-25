@@ -73,8 +73,8 @@ class CsrModelTest extends TestCase
                 'next_sub_tier' => 0,
                 'expected' => 'Onyx'
             ],
-            'unrated' => [
-                'tier' => 'Unrated',
+            'unranked' => [
+                'tier' => 'Unranked',
                 'sub_tier' => 0,
                 'next_csr' => 0,
                 'next_tier' => '',
@@ -99,11 +99,11 @@ class CsrModelTest extends TestCase
                 'next_csr' => 1500,
                 'expected' => 'Onyx'
             ],
-            'unrated' => [
-                'tier' => 'Unrated',
+            'unranked' => [
+                'tier' => 'Unranked',
                 'sub_tier' => 0,
                 'next_csr' => 0,
-                'expected' => 'Unrated'
+                'expected' => 'Unranked'
             ]
         ];
     }
