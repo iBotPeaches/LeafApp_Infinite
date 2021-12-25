@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -42,6 +43,7 @@ use Illuminate\Support\Arr;
  * @property int $assists_emp
  * @property int $assists_driver
  * @property int $assists_callout
+ * @property array $medals
  * @property-read Player $player
  * @property-read float $win_percent
  * @property-read float $average_score
@@ -50,6 +52,7 @@ use Illuminate\Support\Arr;
  * @property-read string $kda_color
  * @property-read string $win_percent_color
  * @property-read string $accuracy_color
+ * @property-read Collection $hydrated_medals
  * @method static ServiceRecordFactory factory(...$parameters)
  */
 class ServiceRecord extends Model implements HasHaloDotApi
@@ -61,7 +64,8 @@ class ServiceRecord extends Model implements HasHaloDotApi
     ];
 
     public $casts = [
-        'total_matches' => 'int'
+        'total_matches' => 'int',
+        'medals' => 'array',
     ];
 
     public $touches = [
@@ -154,6 +158,18 @@ class ServiceRecord extends Model implements HasHaloDotApi
         }
     }
 
+    public function getHydratedMedalsAttribute(): Collection
+    {
+        $medals = $this->medals;
+
+        return Medal::all()->map(function (Medal $medal) use ($medals) {
+            $medal['count'] = $medals[$medal->id] ?? 0;
+            return $medal;
+        })->reject(function (Medal $medal) {
+            return $medal->count === 0;
+        })->sortByDesc('count')->chunk(5);
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
         /** @var Player $player */
@@ -196,12 +212,21 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->assists_driver = Arr::get($payload, 'data.core.breakdowns.assists.driver');
         $serviceRecord->assists_callout = Arr::get($payload, 'data.core.breakdowns.assists.callouts');
 
+        $serviceRecord->medals = collect(Arr::get($payload, 'data.core.breakdowns.medals'))
+            ->mapWithKeys(function (array $medal) {
+                return [
+                    $medal['id'] => $medal['count']
+                ];
+            });
+
         // If we get no time played or score. We are going to assume account is private.
         if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
             $serviceRecord->player->is_private = true;
-            $serviceRecord->player->saveOrFail();
         } elseif ($serviceRecord->player->is_private) {
             $serviceRecord->player->is_private = false;
+        }
+
+        if ($serviceRecord->player->isDirty(['is_private'])) {
             $serviceRecord->player->saveOrFail();
         }
 
