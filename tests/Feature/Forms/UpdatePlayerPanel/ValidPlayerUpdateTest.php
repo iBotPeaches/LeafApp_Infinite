@@ -8,17 +8,20 @@ use App\Http\Livewire\CompetitivePage;
 use App\Http\Livewire\GameHistoryTable;
 use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
+use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
@@ -32,6 +35,9 @@ class ValidPlayerUpdateTest extends TestCase
     public function testAutomaticallyMarkedPrivateIfInvalidRecord(): void
     {
         // Arrange
+        Bus::fake([
+            PullAppearance::class
+        ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -65,11 +71,16 @@ class ValidPlayerUpdateTest extends TestCase
             'id' => $player->id,
             'is_private' => true
         ]);
+
+        Bus::assertDispatched(PullAppearance::class);
     }
 
     public function testAutomaticallyPullingXuidIfMissing(): void
     {
         // Arrange
+        Bus::fake([
+            PullAppearance::class
+        ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -102,11 +113,16 @@ class ValidPlayerUpdateTest extends TestCase
             'id' => $player->id,
             'xuid' => Arr::get($mockXuidResponse, 'xuid')
         ]);
+
+        Bus::assertDispatched(PullAppearance::class);
     }
 
     public function testAutomaticallyUnmarkedPrivateIfValidRecord(): void
     {
         // Arrange
+        Bus::fake([
+            PullAppearance::class
+        ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -137,6 +153,8 @@ class ValidPlayerUpdateTest extends TestCase
             'id' => $player->id,
             'is_private' => false
         ]);
+
+        Bus::assertDispatched(PullAppearance::class);
     }
 
     public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
@@ -228,12 +246,14 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
