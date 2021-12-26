@@ -23,9 +23,11 @@
             </div>
         </article>
     @else
-        @include('partials.player.stats')
-        @if ($serviceRecord->medals)
-            @include('partials.player.medal-groups')
-        @endif
+        <div>
+            @include('partials.player.stats')
+            @if ($serviceRecord->medals)
+                @include('partials.player.medal-groups')
+            @endif
+        </div>
     @endif
 @endif
