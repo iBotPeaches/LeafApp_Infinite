@@ -113,7 +113,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMedals(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/medals/')->throw();
+        $response = $this->pendingRequest->get('metadata/medals/list')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $medal) {
