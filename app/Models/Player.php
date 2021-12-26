@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
@@ -97,6 +98,9 @@ class Player extends Model implements HasHaloDotApi
         }
 
         $client->serviceRecord($this);
+
+        // Dispatch an async update for the appearance
+        PullAppearance::dispatch($this);
     }
 
     public function ranked(int $season = 1): Collection
