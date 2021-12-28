@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Pages;
 
 use App\Models\Game;
+use App\Models\GamePlayer;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -58,6 +60,15 @@ class GamePageTest extends TestCase
                 'version' => config('services.autocode.version'),
                 'was_pulled' => true
             ]);
+
+        GamePlayer::factory()
+            ->for($game)
+            ->state(new Sequence(
+                ['pre_csr' => null],
+                ['pre_csr' => 1500],
+            ))
+            ->count(2)
+            ->create();
 
         // Act
         $response = $this->get('/game/' . $game->uuid);
