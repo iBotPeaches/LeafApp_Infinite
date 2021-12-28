@@ -180,6 +180,36 @@ class MockMatchService extends BaseMock
         ];
     }
 
+    private function modeFlag(): array
+    {
+        return [
+            'flags' => [
+                'grabs' => $this->faker->numberBetween(1, 10),
+                'steals' => $this->faker->numberBetween(1, 10),
+                'secures' => $this->faker->numberBetween(1, 10),
+                'returns' => $this->faker->numberBetween(1, 10),
+                'possession' => [
+                    'duration' => [
+                        'seconds' => $this->faker->numberBetween(1, 50),
+                        'human' => ''
+                    ]
+                ],
+                'captures' => [
+                    'total' => $this->faker->numberBetween(1, 10),
+                    'assists' => $this->faker->numberBetween(1, 10),
+                ],
+                'kills' => [
+                    'carriers' => $this->faker->numberBetween(0, 5),
+                    'returners' => $this->faker->numberBetween(0, 5),
+                    'as' => [
+                        'carrier' => $this->faker->numberBetween(0, 1),
+                        'returner' => $this->faker->numberBetween(0, 1),
+                    ]
+                ]
+            ]
+        ];
+    }
+
     private function playerBlock(string $gamertag): array
     {
         return [
@@ -245,6 +275,24 @@ class MockMatchService extends BaseMock
                 'presence' => [
                     'beginning' => true,
                     'completion' => true
+                ]
+            ],
+            'progression' => [
+                'csr' => [
+                    'pre_match' => [
+                        'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
+                        'value' => $this->faker->numberBetween(1000, 1400),
+                        'tier_start' => 1200,
+                        'sub_tier' => $this->faker->numberBetween(0, 5),
+                        'tier_image_url' => $this->faker->imageUrl,
+                    ],
+                    'post_match' => [
+                        'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
+                        'value' => $this->faker->numberBetween(1000, 1400),
+                        'tier_start' => 1200,
+                        'sub_tier' => $this->faker->numberBetween(0, 5),
+                        'tier_image_url' => $this->faker->imageUrl,
+                    ]
                 ]
             ]
         ];
