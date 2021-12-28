@@ -1,4 +1,5 @@
 <?php
+/** @var App\Models\Game $game */
 /** @var App\Models\GamePlayer[] $gamePlayers */
 /** @var App\Models\GameTeam $team */
 $team = $gamePlayers->first()->team;
@@ -12,6 +13,7 @@ $team = $gamePlayers->first()->team;
             <thead>
             <tr>
                 <th>Gamertag</th>
+                <th>Level</th>
                 <th>Kills</th>
                 <th>Deaths</th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
@@ -40,6 +42,9 @@ $team = $gamePlayers->first()->team;
                             </div>
                         </article>
                     </td>
+                    <td>
+                        {{ $gamePlayer->level }}
+                    </td>
                     <td>{{ $gamePlayer->kills }}</td>
                     <td>{{ $gamePlayer->deaths }}</td>
                     <td class="{{ $gamePlayer->getKdColor() }}">
@@ -50,7 +55,14 @@ $team = $gamePlayers->first()->team;
                     </td>
                     <td>{{ $gamePlayer->accuracy }}%</td>
                     <td>{{ $gamePlayer->score }}</td>
-                    <td>{{ $gamePlayer->rank }}</td>
+                    <td>
+                        {{ $gamePlayer->rank }}
+                        @if (!$gamePlayer->was_at_end)
+                            <span class="tag is-danger">
+                                <abbr title="Did Not Finish (Quit/Crashed)">DNF</abbr>
+                            </span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
             </tbody>
