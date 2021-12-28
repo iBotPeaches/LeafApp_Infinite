@@ -7,6 +7,7 @@ use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasKd;
 use App\Models\Traits\HasOutcome;
 use App\Models\Traits\HasScoring;
+use App\Support\Csr\CsrHelper;
 use Database\Factories\GamePlayerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,9 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property int $player_id
- * @property int $match_id
+ * @property int $game_id
+ * @property int $pre_csr
+ * @property int $post_csr
  * @property int $rank
  * @property Outcome $outcome
  * @property boolean $was_at_start
@@ -52,6 +55,7 @@ use Illuminate\Support\Arr;
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam $team
+ * @property-read string $level
  * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
@@ -71,6 +75,14 @@ class GamePlayer extends Model implements HasHaloDotApi
     public $touches = [
         'player'
     ];
+
+    public function getLevelAttribute(): string
+    {
+        if (empty($this->pre_csr)) {
+            return '-';
+        }
+        return CsrHelper::getCsrFromValue($this->pre_csr)->rank;
+    }
 
     public static function fromHaloDotApi(array $payload): ?self
     {
@@ -96,6 +108,8 @@ class GamePlayer extends Model implements HasHaloDotApi
 
         $gamePlayer->player()->associate($player);
         $gamePlayer->game()->associate($game);
+        $gamePlayer->pre_csr = Arr::get($payload, $prefix . 'progression.csr.pre_match.value');
+        $gamePlayer->post_csr = Arr::get($payload, $prefix . 'progression.csr.post_match.value');
         $gamePlayer->rank = Arr::get($payload, $prefix . 'rank');
         $gamePlayer->outcome = Arr::get($payload, $prefix . 'outcome');
         $gamePlayer->was_at_start = Arr::get($payload, $prefix . 'participation.presence.beginning');
