@@ -32,7 +32,9 @@ class MockMedalsService extends BaseMock
             'category' => $this->faker->randomElement(['mode', 'proficiency']),
             'type' => $this->faker->randomElement(['normal', 'mythic']),
             'image_urls' => [
-                'small' => $this->faker->imageUrl
+                'small' => $this->faker->imageUrl,
+                'medium' => $this->faker->imageUrl,
+                'large' => $this->faker->imageUrl,
             ]
         ];
     }
