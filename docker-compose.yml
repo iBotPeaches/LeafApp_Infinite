@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: php:8.0-fpm
+    image: leafapp:7.4-fpm
     container_name: app
     restart: unless-stopped
     tty: true
@@ -29,7 +29,6 @@ services:
     tty: true
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -38,7 +37,7 @@ services:
 
   #MySQL Service
   db:
-    image: mariadb:10.7.1
+    image: mariadb:10.4
     container_name: db
     restart: unless-stopped
     tty: true
@@ -51,7 +50,6 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
 

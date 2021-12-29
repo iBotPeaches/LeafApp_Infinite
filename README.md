@@ -16,8 +16,10 @@ _Another hobby stat site for another Halo game_
 7.  `docker-compose up -d `   
 8. `yarn install`
 9. `docker-compose exec app php artisan key:generate`
-10. `docker-compose exec app php artisan migrate`
-11. `yarn run dev`
+10. `cp .env.example .env`
+11. `docker-compose exec app php artisan migrate`
+12. `yarn run dev`
+
 
 ### Contributions
  * Code must pass phpcs. (`./vendor/bin/phpcs`)
