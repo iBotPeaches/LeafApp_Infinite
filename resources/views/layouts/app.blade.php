@@ -2,14 +2,14 @@
 <html class="has-navbar-fixed-top" lang="en">
 <head>
     <title>Leaf @yield('title')</title>
-    <meta name="description" content="LeafApp @yield('description')" />
+    <meta name="description" content="Leaf @yield('description')" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <livewire:styles />
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column">
     @include('partials.global.navigation')
     <main class="container mt-4">
         @yield('content')

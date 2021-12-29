@@ -24,17 +24,17 @@ _Another hobby stat site for another Halo game_
 ### Contributions
  * Code must pass phpcs. (`./vendor/bin/phpcs`)
  * Code must pass phpstan. (`./vendor/bin/phpstan analyse`)
- * Code must have 100% test coverage. (`php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-html=output`)
+ * Code must have 100% test coverage. (`composer coverage`)
 
 ### Configuration
 
-#### HaloDotApi
+#### HaloDotApi (Autocode)
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
- * `HALODOTAPI_KEY` - The API key given after the OAuth Live dance with [HaloDotApi](https://developers.halodotapi.com)
- * `HALODOTAPI_DOMAIN` - The base domain for HaloDotAPI
- * `HALODOTAPI_VERSION` - The version of the HaloDotAPI to use
- * `HALODOTAPI_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
+ * `AUTOCODE_KEY` - The API key given [Autocode](https://autocode.com/lib/halo/)
+ * `AUTOCODE_DOMAIN` - The base domain for Autocode
+ * `AUTOCODE_VERSION` - The version of the Autocode to use
+ * `AUTOCODE_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
 
 #### XboxApi
 Used for resolving XUIDs so renames are possible without data loss.
@@ -55,3 +55,4 @@ Used for resolving XUIDs so renames are possible without data loss.
 4. Guzzle - https://github.com/guzzle/guzzle - MIT
 5. Livewire - https://github.com/livewire/livewire - MIT
 6. Enum - https://github.com/BenSampo/laravel-enum - MIT
+7. DBAL - https://github.com/doctrine/dbal - MIT

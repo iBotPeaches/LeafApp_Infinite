@@ -40,7 +40,7 @@ class ValidGameHistoryTableTest extends TestCase
             'player' => $player
         ])
             ->assertViewHas('games')
-            ->assertSee($game->experience->description)
+            ->assertSee($game->playlist->name)
             ->assertSee($game->map->name)
             ->assertSee($game->category->name)
             ->assertSee($game->personal->outcome->description)

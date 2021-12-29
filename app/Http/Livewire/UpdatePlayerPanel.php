@@ -34,28 +34,31 @@ class UpdatePlayerPanel extends Component
             $color = 'is-dark';
             $message = 'Profile was recently updated. Check back soon.';
         } else {
-            if ($this->runUpdate) {
-                try {
-                    DB::transaction(function () use ($cacheKey) {
-                        $cooldownMinutes = (int) config('services.halodotapi.cooldown');
+            if (! $this->runUpdate) {
+                return view('livewire.update-player-panel', [
+                    'color' => 'is-info',
+                    'message' => 'Checking for updated stats.'
+                ]);
+            }
 
-                        $this->player->updateFromHaloDotApi();
-                        Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
-                        $this->emitToRespectiveComponent();
-                    });
-                } catch (RequestException $exception) {
-                    $color = 'is-danger';
-                    $message = $exception->getCode() === 429
-                        ? 'Rate Limit Hit :( - Try later.'
-                        : 'Oops - something went wrong.';
-                } catch (\Throwable $exception) {
-                    Log::error($exception->getMessage());
-                    $color = 'is-danger';
-                    $message = 'Oops - something went wrong.';
-                }
-            } else {
-                $color = 'is-info';
-                $message = 'Checking for updated stats.';
+            try {
+                DB::transaction(function () use ($cacheKey) {
+                    $this->player->lockForUpdate();
+                    $cooldownMinutes = (int)config('services.autocode.cooldown');
+                    $this->player->updateFromHaloDotApi();
+
+                    Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
+                    $this->emitToRespectiveComponent();
+                });
+            } catch (RequestException $exception) {
+                $color = 'is-danger';
+                $message = $exception->getCode() === 429
+                    ? 'Rate Limit Hit :( - Try later.'
+                    : 'Oops - something went wrong.';
+            } catch (\Throwable $exception) {
+                Log::error($exception->getMessage());
+                $color = 'is-danger';
+                $message = 'Oops - something went wrong.';
             }
         }
 

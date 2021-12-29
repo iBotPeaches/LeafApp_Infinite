@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\Experience;
+use App\Enums\Input;
+use App\Enums\Queue;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Map;
+use App\Models\Playlist;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
@@ -26,7 +29,7 @@ class GameFactory extends Factory
             'uuid' => $this->faker->unique()->uuid,
             'category_id' => Category::factory(),
             'map_id' => Map::factory(),
-            'is_ranked' => $this->faker->boolean,
+            'playlist_id' => Playlist::factory(),
             'is_ffa' => $this->faker->boolean,
             'is_scored' => $this->faker->boolean,
             'experience' => Experience::getRandomValue(),

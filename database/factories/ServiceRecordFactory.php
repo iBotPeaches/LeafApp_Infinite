@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -52,5 +53,21 @@ class ServiceRecordFactory extends Factory
             'assists_driver' => $this->faker->numberBetween(0, 25),
             'assists_callout' => $this->faker->numberBetween(0, 25),
         ];
+    }
+
+    public function withMedals(): self
+    {
+        return $this->state(function (array $attributes) {
+            $medals = Medal::factory()->count(2)->create();
+
+            return [
+                // @phpstan-ignore-next-line
+                'medals' => $medals->mapWithKeys(function (Medal $medal) {
+                    return [
+                        $medal->id => $this->faker->numberBetween(1, 25)
+                    ];
+                })->toArray()
+            ];
+        });
     }
 }

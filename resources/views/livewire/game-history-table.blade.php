@@ -5,7 +5,7 @@
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
             <tr>
-                <th>Mode</th>
+                <th>Playlist</th>
                 <th>Map</th>
                 <th>Gametype</th>
                 <th>Outcome</th>
@@ -23,8 +23,10 @@
             @foreach ($games as $game)
                 <tr>
                     <td>
-                        {{ $game->experience->description }}
-                        @if ($game->is_ranked)
+                        <a href="{{ route('game', [$game]) }}">
+                            {{ $game->playlist->name }}
+                        </a>
+                        @if ($game->playlist->is_ranked)
                             <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
                         @endif
                     </td>
@@ -41,7 +43,7 @@
                     <td class="{{ $game->personal->getKdaColor() }}">
                         {{ $game->personal->kda }}
                     </td>
-                    <td>{{ $game->personal->accuracy }}</td>
+                    <td>{{ $game->personal->accuracy }}%</td>
                     <td>{{ $game->personal->score }}</td>
                     <td>{{ $game->personal->rank }}</td>
                     <td>{{ $game->occurred_at->diffForHumans() }}</td>

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasPlaylist;
 use Carbon\Carbon;
 use Database\Factories\CsrFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,8 +16,8 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property int $player_id
- * @property Queue $queue
- * @property Input $input
+ * @property Queue|null $queue
+ * @property Input|null $input
  * @property int $season
  * @property int $csr
  * @property int $matches_remaining
@@ -37,13 +38,11 @@ use Illuminate\Support\Arr;
  * @property-read float $next_rank_percent
  * @property-read int $next_xp_for_level
  * @property-read int|null $current_xp_for_level
- * @property-read string $title
- * @property-read string $icon
  * @method static CsrFactory factory(...$parameters)
  */
 class Csr extends Model implements HasHaloDotApi
 {
-    use HasFactory;
+    use HasFactory, HasPlaylist;
 
     public $guarded = [
         'id'
@@ -54,6 +53,10 @@ class Csr extends Model implements HasHaloDotApi
         'next_csr' => 'int',
         'input' => Input::class,
         'queue' => Queue::class
+    ];
+
+    public $touches = [
+        'player'
     ];
 
     public function setCsrAttribute(?int $csr): void
@@ -72,7 +75,7 @@ class Csr extends Model implements HasHaloDotApi
 
     public function getNextRankAttribute(): string
     {
-        if ($this->hasNextRank()) {
+        if ($this->hasNextRank() && !$this->isNextOnyx()) {
             return $this->next_tier . ' ' . ($this->next_sub_tier + 1);
         } else {
             return $this->next_tier;
@@ -102,25 +105,14 @@ class Csr extends Model implements HasHaloDotApi
         return ($this->current_xp_for_level / $this->next_xp_for_level) * 100;
     }
 
-    public function getTitleAttribute(): string
-    {
-        return $this->queue->description;
-    }
-
-    public function getIconAttribute(): ? string
-    {
-        if ($this->queue->is(Queue::SOLO_DUO)) {
-            return $this->input->is(Input::CONTROLLER())
-                ? '<i class="fa fa-gamepad"></i>'
-                : '<i class="fa fa-mouse"></i>';
-        }
-
-        return null;
-    }
-
     public function isOnyx(): bool
     {
         return $this->tier === 'Onyx';
+    }
+
+    public function isNextOnyx(): bool
+    {
+        return $this->next_tier === 'Onyx';
     }
 
     public function hasNextRank(): bool

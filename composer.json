@@ -5,6 +5,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "bensampo/laravel-enum": "^4.1",
+        "doctrine/dbal": "^3.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "^8.65",
@@ -47,6 +48,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "coverage": [
+            "@php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-html=output"
         ]
     },
     "extra": {
@@ -57,7 +61,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

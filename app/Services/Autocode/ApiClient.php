@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\HaloDotApi;
+namespace App\Services\Autocode;
 
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
-use App\Services\HaloDotApi\Enums\Mode;
+use App\Services\Autocode\Enums\Filter;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
@@ -21,16 +22,15 @@ class ApiClient implements InfiniteInterface
     public function __construct(array $config)
     {
         $this->pendingRequest = Http::asJson()
-            ->baseUrl($config['domain'] . '/games/hi/')
-            ->withToken($config['key'], 'Cryptum-Token')
-            ->withHeaders([
-                'Cryptum-API-Version' => $config['version']
-            ]);
+            ->baseUrl($config['domain'] . '/infinite@'. $config['version'])
+            ->withToken($config['key']);
     }
 
     public function appearance(string $gamertag): ?Player
     {
-        $response = $this->pendingRequest->get('appearance/players/' . $gamertag);
+        $response = $this->pendingRequest->get('appearance', [
+            'gamertag' => $gamertag
+        ]);
 
         if ($response->successful()) {
             return Player::fromHaloDotApi($response->json());
@@ -41,7 +41,10 @@ class ApiClient implements InfiniteInterface
 
     public function competitive(Player $player): ?Csr
     {
-        $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/csrs');
+        $response = $this->pendingRequest->get('stats/csrs', [
+            'gamertag' => $player->gamertag,
+            'season' => 1
+        ]);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
@@ -54,26 +57,30 @@ class ApiClient implements InfiniteInterface
 
     public function matches(Player $player, bool $forceUpdate = false): Collection
     {
-        $currentPage = 1;
-        $nextPage = 1;
+        $perPage = 25;
+        $count = $perPage;
+        $offset = 0;
 
-        while ($currentPage <= $nextPage) {
-            $response = $this->pendingRequest->get('stats/players/' . $player->gamertag .'/matches', [
-                'mode' => Mode::MATCHMADE,
-                'page' => $nextPage
+        while ($count !== 0) {
+            $response = $this->pendingRequest->post('stats/matches/list', [
+                'gamertag' => $player->gamertag,
+                'limit' => [
+                    'count' => $perPage,
+                    'offset' => $offset
+                ]
             ]);
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $currentPage = (int)Arr::get($data, 'paging.page', 1);
-                $nextPage = (int)Arr::get($data, 'paging.next');
+                $count = count(Arr::get($data, 'data', []));
+                $offset += $perPage;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
-                    $gameData['player'] = Player::fromGamertag(Arr::get($data, 'additional.gamertag'));
-                    $gameData['game'] = $game;
+                    $gameData['_leaf']['player'] = Player::fromGamertag(Arr::get($data, 'additional.gamertag'));
+                    $gameData['_leaf']['game'] = $game;
 
                     $gamePlayer = GamePlayer::fromHaloDotApi($gameData);
 
@@ -93,13 +100,39 @@ class ApiClient implements InfiniteInterface
             ->get();
     }
 
+    public function match(string $matchUuid): ?Game
+    {
+        $response = $this->pendingRequest->get('stats/matches/retrieve', [
+            'id' => $matchUuid
+        ])->throw();
+
+        $data = $response->json();
+
+        return Game::fromHaloDotApi((array)Arr::get($data, 'data', []));
+    }
+
+    public function metadataMedals(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/medals/list')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $medal) {
+            Medal::fromHaloDotApi($medal);
+        }
+
+        return Medal::all();
+    }
+
     public function serviceRecord(Player $player): ?ServiceRecord
     {
-        $response = $this->pendingRequest->get('stats/players/' . $player->gamertag . '/service-record/global');
+        $response = $this->pendingRequest->get('stats/service-record/multiplayer', [
+            'gamertag' => $player->gamertag,
+            'filter' => Filter::MATCHMADE_RANKED,
+        ]);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
-            $data['player'] = $player;
+            $data['_leaf']['player'] = $player;
             ServiceRecord::fromHaloDotApi($data);
         }
 

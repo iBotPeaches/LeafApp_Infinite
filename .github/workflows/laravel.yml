@@ -1,7 +1,10 @@
 name: Laravel
 on:
-  push:
+  pull_request:
     branches:
+      - '**'
+  push:
+    branches-ignore:
       - '**'
     tags-ignore:
       - '**'
@@ -51,7 +54,7 @@ jobs:
         run: touch database/database.sqlite
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: php artisan test --without-tty --parallel -p2 --coverage-clover=output.xml
+        run: php artisan test --without-tty --parallel -p2 --coverage-html=output --coverage-clover=output.xml
 
       - name: Code Coverage Check
         uses: sourcetoad/phpunit-coverage-action@v1
@@ -59,3 +62,10 @@ jobs:
           clover_report_path: output.xml
           min_coverage_percent: 100
           fail_build_on_under: true
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: coverage-html
+          path: output
+          if-no-files-found: ignore

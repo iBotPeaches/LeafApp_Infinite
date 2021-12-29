@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Models\Pivots;
 
 use App\Enums\Outcome;
+use App\Models\Traits\HasKd;
+use App\Models\Traits\HasScoring;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
@@ -20,53 +22,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class PersonalResult extends Pivot
 {
+    use HasKd, HasScoring;
+
     public $casts = [
         'outcome' => Outcome::class
     ];
-
-    public function getKdAttribute(float $value): string
-    {
-        return number_format($value, 2);
-    }
-
-    public function getKdaAttribute(float $value): string
-    {
-        return number_format($value, 2);
-    }
-
-    public function getScoreAttribute(int $value): string
-    {
-        return number_format($value);
-    }
-
-    public function getVictoryColor(): string
-    {
-        if ($this->outcome->is(Outcome::WIN())) {
-            return 'has-background-success-light';
-        }
-
-        if ($this->outcome->is(Outcome::LOSS())) {
-            return 'has-background-warning-light';
-        }
-
-        if ($this->outcome->is(Outcome::LEFT())) {
-            return 'has-background-danger-light';
-        }
-
-        return '';
-    }
-
-    public function getKdColor(): string
-    {
-        return $this->kd >= 1
-            ? 'has-background-success-light'
-            : 'has-background-danger-light';
-    }
-
-    public function getKdaColor(): string
-    {
-        return $this->kda >= 1
-            ? 'has-background-success-light'
-            : 'has-background-danger-light';
-    }
 }

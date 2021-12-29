@@ -53,11 +53,13 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->error429();
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_TOO_MANY_REQUESTS);
 
         $player = Player::factory()->createOne([
@@ -80,14 +82,77 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        // Set values into responses that "fake" a private account.
         Arr::set($mockMatchesResponse, 'data.0.experience', 'unknown-gametype');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
+    public function testCrashingOutIfNewQueueModeInMatchHistory(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.queue', 'unknown-queue');
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
+    public function testCrashingOutIfNewInputMode(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.input', 'unknown-input');
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -110,14 +175,15 @@ class InvalidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        // Set values into responses that "fake" a private account.
-        Arr::set($mockMatchesResponse, 'data.0.outcome', 'crashed');
+        Arr::set($mockMatchesResponse, 'data.0.player.outcome', 'crashed');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -134,20 +200,21 @@ class InvalidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
-    public function testCrashingOutIfNewQueueMode(): void
+    public function testCrashingOutIfNewQueueModeInCsr(): void
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        // Set values into responses that "fake" a private account.
         Arr::set($mockCsrResponse, 'data.0.queue', 'closed');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([

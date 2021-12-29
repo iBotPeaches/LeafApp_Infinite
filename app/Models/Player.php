@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -68,9 +69,6 @@ class Player extends Model implements HasHaloDotApi
         $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
 
         if ($player->isDirty()) {
-            if (empty($player->xuid)) {
-                $player->syncXuidFromXboxApi();
-            }
             $player->saveOrFail();
         }
 
@@ -100,6 +98,9 @@ class Player extends Model implements HasHaloDotApi
         }
 
         $client->serviceRecord($this);
+
+        // Dispatch an async update for the appearance
+        PullAppearance::dispatch($this);
     }
 
     public function ranked(int $season = 1): Collection

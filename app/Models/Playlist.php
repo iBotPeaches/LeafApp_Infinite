@@ -1,0 +1,74 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Enums\Input;
+use App\Enums\Queue;
+use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasPlaylist;
+use Database\Factories\PlaylistFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property string $version
+ * @property string $name
+ * @property string $thumbnail_url
+ * @property boolean $is_ranked
+ * @property Queue|null $queue
+ * @property Input|null $input
+ * @method static PlaylistFactory factory(...$parameters)
+ */
+class Playlist extends Model implements HasHaloDotApi
+{
+    use HasFactory, HasPlaylist;
+
+    public $guarded = [
+        'id'
+    ];
+
+    public $timestamps = false;
+
+    public $casts = [
+        'queue' => Queue::class,
+        'input' => Input::class,
+    ];
+
+    public function getNameAttribute(string $value): string
+    {
+        if ($value === 'Unknown') {
+            return 'Featured';
+        }
+
+        return $value;
+    }
+
+    public static function fromHaloDotApi(array $payload): ?self
+    {
+        $playlistId = Arr::get($payload, 'asset.id');
+
+        /** @var Playlist $playlist */
+        $playlist = self::query()
+            ->where('uuid', $playlistId)
+            ->firstOrNew([
+                'uuid' => $playlistId
+            ]);
+
+        $playlist->name = Arr::get($payload, 'name');
+        $playlist->version = Arr::get($payload, 'asset.version');
+        $playlist->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
+        $playlist->is_ranked = Arr::get($payload, 'properties.ranked');
+        $playlist->queue = Arr::get($payload, 'properties.queue');
+        $playlist->input = Arr::get($payload, 'properties.input');
+
+        if ($playlist->isDirty()) {
+            $playlist->saveOrFail();
+        }
+
+        return $playlist;
+    }
+}

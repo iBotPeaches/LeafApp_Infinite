@@ -24,8 +24,13 @@ class GamePlayerFactory extends Factory
         return [
             'player_id' => Player::factory(),
             'game_id' => Game::factory(),
+            'pre_csr' => $this->faker->numberBetween(600, 1500),
+            'post_csr' => $this->faker->numberBetween(600, 1500),
             'rank' => $this->faker->numberBetween(1, 8),
             'outcome' => Outcome::getRandomValue(),
+            'was_at_start' => $this->faker->boolean,
+            'was_at_end' => $this->faker->boolean,
+            'was_inprogress_join' => $this->faker->boolean,
             'kd' => $this->faker->numerify('#.##'),
             'kda' => $this->faker->numerify('#.##'),
             'score' => $this->faker->numerify('####'),

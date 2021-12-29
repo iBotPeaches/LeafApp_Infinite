@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\HaloDotApi\Enums;
+namespace App\Services\Autocode\Enums;
 
 use BenSampo\Enum\Enum;
 

@@ -13,7 +13,7 @@
                         <div class="card-header">
                             <span class="card-header-title">
                                 {{ $playlist->title }}
-                                &nbsp;{!! $playlist->icon !!}
+                                {!! $playlist->icon !!}
                             </span>
                         </div>
                         <div class="card-image has-background-light">
