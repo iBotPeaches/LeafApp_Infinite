@@ -281,7 +281,7 @@ class MockMatchService extends BaseMock
                 'csr' => [
                     'pre_match' => [
                         'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
-                        'value' => $this->faker->numberBetween(1000, 1400),
+                        'value' => $this->faker->numberBetween(-1, 1400),
                         'tier_start' => 1200,
                         'sub_tier' => $this->faker->numberBetween(0, 5),
                         'tier_image_url' => $this->faker->imageUrl,
