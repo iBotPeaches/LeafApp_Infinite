@@ -76,6 +76,16 @@ class GamePlayer extends Model implements HasHaloDotApi
         'player'
     ];
 
+    public function setPreCsrAttribute(?int $value): void
+    {
+        $this->attributes['pre_csr'] = $value === -1 ? null : $value;
+    }
+
+    public function setPostCsrAttribute(?int $value): void
+    {
+        $this->attributes['post_csr'] = $value === -1 ? null : $value;
+    }
+
     public function getLevelAttribute(): string
     {
         if (empty($this->pre_csr)) {
