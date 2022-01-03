@@ -82,6 +82,8 @@ class ValidGameUpdateTest extends TestCase
 
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.queue', null);
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.input', null);
+        Arr::set($mockMatchResponse, 'data.players.0.progression.csr.pre_match.value', -1);
+        Arr::set($mockMatchResponse, 'data.players.0.progression.csr.post_match.value', -1);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
