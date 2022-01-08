@@ -52,7 +52,9 @@ $team = $gamePlayers->first()->team;
                     @if ($game->playlist->is_ranked)
                         <td>
                             @if ($gamePlayer->pre_csr > 0)
-                                <abbr title="CSR: {{ $gamePlayer->pre_csr }}">{{ $gamePlayer->level }}</abbr>
+                                <abbr title="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})">
+                                    {{ $gamePlayer->level }}
+                                </abbr>
                             @else
                                 {{ $gamePlayer->level }}
                             @endif
