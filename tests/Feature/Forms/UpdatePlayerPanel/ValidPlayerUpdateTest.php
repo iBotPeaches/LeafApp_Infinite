@@ -175,13 +175,16 @@ class ValidPlayerUpdateTest extends TestCase
             'gamertag' => $gamertag
         ]);
 
-        GamePlayer::factory()
+        $gamePlayer = GamePlayer::factory()
             ->createOne([
                 'game_id' => Game::factory()->state([
                     'uuid' => Arr::get($mockMatchesResponse, 'data.1.id')
                 ]),
                 'player_id' => $player->id
             ]);
+
+        $player->last_game_id_pulled = $gamePlayer->game_id;
+        $player->saveOrFail();
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
