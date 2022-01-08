@@ -60,6 +60,7 @@ class ApiClient implements InfiniteInterface
         $perPage = 25;
         $count = $perPage;
         $offset = 0;
+        $firstPulledGameId = null;
 
         while ($count !== 0) {
             $response = $this->pendingRequest->post('stats/matches/list', [
@@ -77,22 +78,24 @@ class ApiClient implements InfiniteInterface
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
+                    $firstPulledGameId = $firstPulledGameId ?? $game->id;
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
                     $gameData['_leaf']['player'] = Player::fromGamertag(Arr::get($data, 'additional.gamertag'));
                     $gameData['_leaf']['game'] = $game;
 
-                    $gamePlayer = GamePlayer::fromHaloDotApi($gameData);
+                    GamePlayer::fromHaloDotApi($gameData);
 
-                    // To prevent loading ALL games to the beginning of time. We look for our first game/player
-                    // combo that we already recognize in the database. This means we processed that user/game
-                    // and everything prior was already processed.
-                    if ($gamePlayer instanceof GamePlayer && !$gamePlayer->wasRecentlyCreated && !$forceUpdate) {
+                    if ($game->id === $player->last_game_id_pulled) {
                         break 2;
                     }
                 }
             }
         }
+
+        // Save the Player with the latest game pulled
+        $player->last_game_id_pulled = $firstPulledGameId;
+        $player->saveOrFail();
 
         return GamePlayer::query()
             ->where('player_id', $player->id)
