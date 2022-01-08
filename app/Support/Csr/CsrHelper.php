@@ -5,7 +5,7 @@ namespace App\Support\Csr;
 
 class CsrHelper
 {
-    public static function getCsrFromValue(int $value): Csr
+    public static function getCsrFromValue(?int $value): Csr
     {
         // Since there is 50 CSR per level and 6 levels per class
         $rankClass = $value / 50;

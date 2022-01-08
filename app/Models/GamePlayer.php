@@ -88,9 +88,6 @@ class GamePlayer extends Model implements HasHaloDotApi
 
     public function getLevelAttribute(): string
     {
-        if (empty($this->pre_csr)) {
-            return '-';
-        }
         return CsrHelper::getCsrFromValue($this->pre_csr)->rank;
     }
 
