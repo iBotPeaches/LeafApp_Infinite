@@ -31,7 +31,7 @@ $team = $gamePlayers->first()->team;
             </tr>
             </thead>
             <tbody>
-            @foreach ($gamePlayers as $gamePlayer)
+            @foreach ($gamePlayers->sortBy('rank') as $gamePlayer)
                 <tr>
                     <td>
                         <article class="media">
