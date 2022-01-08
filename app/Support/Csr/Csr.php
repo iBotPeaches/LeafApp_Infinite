@@ -5,10 +5,10 @@ namespace App\Support\Csr;
 
 class Csr
 {
-    public int $value;
+    public ?int $value;
     public string $rank;
 
-    public function __construct(int $value, string $rank)
+    public function __construct(?int $value, string $rank)
     {
         $this->value = $value;
         $this->rank = $rank;
