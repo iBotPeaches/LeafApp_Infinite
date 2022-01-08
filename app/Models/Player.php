@@ -23,7 +23,7 @@ use Illuminate\Support\Arr;
  * @property string $gamertag
  * @property string $service_tag
  * @property boolean $is_private
- * @property int $last_game_id_pulled
+ * @property int|null $last_game_id_pulled
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games

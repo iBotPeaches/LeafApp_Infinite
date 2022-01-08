@@ -78,7 +78,7 @@ class ApiClient implements InfiniteInterface
 
                 foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
-                    $firstPulledGameId = $firstPulledGameId ?? $game->id;
+                    $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
                     $gameData['_leaf']['player'] = Player::fromGamertag(Arr::get($data, 'additional.gamertag'));
@@ -86,7 +86,7 @@ class ApiClient implements InfiniteInterface
 
                     GamePlayer::fromHaloDotApi($gameData);
 
-                    if ($game->id === $player->last_game_id_pulled) {
+                    if ($game && $game->id === $player->last_game_id_pulled) {
                         break 2;
                     }
                 }
