@@ -23,11 +23,13 @@ use Illuminate\Support\Arr;
  * @property string $gamertag
  * @property string $service_tag
  * @property boolean $is_private
+ * @property int $last_game_id_pulled
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games
  * @property-read Csr[]|Collection $csrs
  * @property-read ServiceRecord $serviceRecord
+ * @property-read Game|null $lastGame
  * @method static PlayerFactory factory(...$parameters)
  */
 class Player extends Model implements HasHaloDotApi
@@ -119,6 +121,11 @@ class Player extends Model implements HasHaloDotApi
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
+    }
+
+    public function lastGame(): HasOne
+    {
+        return $this->hasOne(Game::class, 'last_game_id_pulled');
     }
 
     public function games(): BelongsToMany
