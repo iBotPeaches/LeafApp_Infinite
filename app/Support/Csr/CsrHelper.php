@@ -15,19 +15,19 @@ class CsrHelper
             case $rankClass > 0 && $rankClass < 6:
                 return new Csr($value, 'Bronze ' . $subTier);
 
-            case $rankClass >= 6 && $rankClass < 12: // @phpstan-ignore-line
+            case $rankClass >= 6 && $rankClass < 12:
                 return new Csr($value, 'Silver ' . ($subTier - 6));
 
-            case $rankClass >= 12 && $rankClass < 18: // @phpstan-ignore-line
+            case $rankClass >= 12 && $rankClass < 18:
                 return new Csr($value, 'Gold ' . ($subTier - 12));
 
-            case $rankClass >= 18 && $rankClass < 24: // @phpstan-ignore-line
+            case $rankClass >= 18 && $rankClass < 24:
                 return new Csr($value, 'Platinum ' . ($subTier - 18));
 
-            case $rankClass >= 24 && $rankClass < 30: // @phpstan-ignore-line
+            case $rankClass >= 24 && $rankClass < 30:
                 return new Csr($value, 'Diamond ' . ($subTier - 24));
 
-            case $rankClass >= 30: // @phpstan-ignore-line
+            case $rankClass >= 30:
                 return new Csr($value, 'Onyx');
 
             default:
