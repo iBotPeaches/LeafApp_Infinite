@@ -13,4 +13,9 @@ class Csr
         $this->value = $value;
         $this->rank = $rank;
     }
+
+    public function isDifferent(Csr $csr): bool
+    {
+        return $this->rank !== $csr->rank;
+    }
 }

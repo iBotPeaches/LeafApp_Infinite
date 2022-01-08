@@ -57,6 +57,7 @@ use Illuminate\Support\Arr;
  * @property-read GameTeam $team
  * @property-read string $level
  * @property-read string $csr_change
+ * @property-read string $csr_rank_change_message
  * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
@@ -97,6 +98,19 @@ class GamePlayer extends Model implements HasHaloDotApi
         $difference = $this->post_csr - $this->pre_csr;
 
         return $difference > 0 ? '+' . $difference : (string) $difference;
+    }
+
+    public function getCsrRankChangeMessageAttribute(): ?string
+    {
+        $preCsr = CsrHelper::getCsrFromValue($this->pre_csr);
+        $postCsr = CsrHelper::getCsrFromValue($this->post_csr);
+
+        if ($preCsr->isDifferent($postCsr)) {
+            $message = $postCsr > $preCsr ? 'moved to ' : 'fell to ';
+            return $message . $postCsr->rank;
+        }
+
+        return null;
     }
 
     public static function fromHaloDotApi(array $payload): ?self
