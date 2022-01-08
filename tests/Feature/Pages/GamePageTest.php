@@ -66,8 +66,9 @@ class GamePageTest extends TestCase
             ->state(new Sequence(
                 ['pre_csr' => null],
                 ['pre_csr' => 1500],
+                ['pre_csr' => 1500, 'post_csr' => 1500],
             ))
-            ->count(2)
+            ->count(3)
             ->create();
 
         // Act
