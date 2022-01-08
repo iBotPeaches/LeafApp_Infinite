@@ -29,7 +29,6 @@ use Illuminate\Support\Arr;
  * @property-read Game[]|Collection $games
  * @property-read Csr[]|Collection $csrs
  * @property-read ServiceRecord $serviceRecord
- * @property-read Game|null $lastGame
  * @method static PlayerFactory factory(...$parameters)
  */
 class Player extends Model implements HasHaloDotApi
@@ -121,11 +120,6 @@ class Player extends Model implements HasHaloDotApi
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
-    }
-
-    public function lastGame(): HasOne
-    {
-        return $this->hasOne(Game::class, 'last_game_id_pulled');
     }
 
     public function games(): BelongsToMany
