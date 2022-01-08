@@ -13,7 +13,9 @@ $team = $gamePlayers->first()->team;
             <thead>
             <tr>
                 <th>Gamertag</th>
-                <th>Level</th>
+                @if ($game->playlist->is_ranked)
+                    <th>Level</th>
+                @endif
                 <th>Kills</th>
                 <th>Deaths</th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
@@ -42,9 +44,11 @@ $team = $gamePlayers->first()->team;
                             </div>
                         </article>
                     </td>
-                    <td>
-                        {{ $gamePlayer->level }}
-                    </td>
+                    @if ($game->playlist->is_ranked)
+                        <td>
+                            {{ $gamePlayer->level }}
+                        </td>
+                    @endif
                     <td>{{ $gamePlayer->kills }}</td>
                     <td>{{ $gamePlayer->deaths }}</td>
                     <td class="{{ $gamePlayer->getKdColor() }}">
