@@ -8,6 +8,8 @@
         @if ($game->outdated)
             <livewire:update-game-panel :game="$game" />
         @endif
+        <hr />
+        @include('partials.game.player-rank-changes')
     </div>
     <div class="column is-four-fifths">
         @foreach ($groupedGamePlayers as $gamePlayers)
