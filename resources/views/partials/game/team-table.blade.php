@@ -7,6 +7,11 @@ $team = $gamePlayers->first()->team;
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
         {{ $team->name ?? 'Players' }}
+        @if ($game->playlist->is_ranked)
+            <span class="is-pulled-right">
+                <abbr title="Avg. Team CSR">{{ $gamePlayers->avg('pre_csr') }}</abbr>
+            </span>
+        @endif
     </p>
     <div class="table-container">
         <table class="table is-striped is-narrow is-hoverable is-fullwidth">
@@ -46,7 +51,7 @@ $team = $gamePlayers->first()->team;
                     </td>
                     @if ($game->playlist->is_ranked)
                         <td>
-                            {{ $gamePlayer->level }}
+                            <abbr title="CSR: {{ $gamePlayer->pre_csr }}">{{ $gamePlayer->level }}</abbr>
                         </td>
                     @endif
                     <td>{{ $gamePlayer->kills }}</td>
