@@ -18,9 +18,7 @@ class GamePage extends Component
 
     public function render(): View
     {
-        $groupedPlayers = $this->game->players
-            ->sortByDesc('score')
-            ->groupBy('game_team_id');
+        $groupedPlayers = $this->game->players->groupBy('game_team_id');
 
         return view('livewire.game-page', [
             'game' => $this->game,
