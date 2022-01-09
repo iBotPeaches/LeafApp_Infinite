@@ -18,7 +18,8 @@ class GameTeamModelTest extends TestCase
             ]);
 
         // Act & Assert
-        $this->assertEquals($expected, $gameTeam->color);
+        $this->assertEquals('is-' . $expected, $gameTeam->color);
+        $this->assertEquals('has-tooltip-' . $expected, $gameTeam->tooltip_color);
     }
 
     public function teamColorDataProvider(): array
@@ -26,15 +27,15 @@ class GameTeamModelTest extends TestCase
         return [
             [
                 'name' => 'Eagle',
-                'expected' => 'is-info'
+                'expected' => 'info'
             ],
             [
                 'name' => 'Cobra',
-                'expected' => 'is-danger'
+                'expected' => 'danger'
             ],
             [
                 'name' => 'AAAA',
-                'expected' => 'is-dark'
+                'expected' => 'dark'
             ]
         ];
     }
