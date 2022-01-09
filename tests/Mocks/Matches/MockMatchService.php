@@ -13,12 +13,14 @@ class MockMatchService extends BaseMock
 
     public function success(string $gamertag1, string $gamertag2): array
     {
+        $randomCategoryName = $this->faker->randomElement(['CTF', 'Strongholds', 'Slayer', 'Oddball']);
+
         return [
             'data' => [
                 'id' => $this->faker->uuid,
                 'details' => [
                     'category' => [
-                        'name' => $this->faker->word,
+                        'name' => $randomCategoryName,
                         'asset' => [
                             'id' => $this->faker->uuid,
                             'version' => $this->faker->uuid,
@@ -103,7 +105,7 @@ class MockMatchService extends BaseMock
                                     'kdr' => $this->faker->randomFloat(2, 0, 10),
                                     'score' => $this->faker->numerify('####')
                                 ],
-                                'mode' => null
+                                'mode' => $this->getMode($randomCategoryName)
                             ],
                             'rank' => 1,
                             'outcome' => 'win'
@@ -159,7 +161,8 @@ class MockMatchService extends BaseMock
                                     'kda' => $this->faker->randomFloat(2, 0, 10),
                                     'kdr' => $this->faker->randomFloat(2, 0, 10),
                                     'score' => $this->faker->numerify('####')
-                                ]
+                                ],
+                                'mode' => $this->getMode($randomCategoryName),
                             ],
                             'rank' => 2,
                             'outcome' => 'loss'
@@ -167,8 +170,8 @@ class MockMatchService extends BaseMock
                     ]
                 ],
                 'players' => [
-                    $this->playerBlock($gamertag1),
-                    $this->playerBlock($gamertag2),
+                    $this->playerBlock($randomCategoryName, $gamertag1),
+                    $this->playerBlock($randomCategoryName, $gamertag2),
                 ],
                 'experience' => $this->faker->randomElement(['arena', 'btb']),
                 'played_at' => now()->toIso8601ZuluString(),
@@ -178,6 +181,77 @@ class MockMatchService extends BaseMock
                 ]
             ],
         ];
+    }
+
+    private function getMode(string $mode): ?array
+    {
+        switch ($mode) {
+            case 'Oddball':
+                return $this->modeOddball();
+
+            case 'CTF':
+                return $this->modeFlag();
+
+            case 'Strongholds':
+                return $this->modeStrongholds();
+
+            case 'Slayer':
+            default:
+                return $this->modeSlayer();
+        }
+    }
+
+    private function modeStrongholds(): array
+    {
+        return [
+            'zones' => [
+                'secured' => $this->faker->numberBetween(10, 25),
+                'captured' => $this->faker->numberBetween(0, 25),
+                'occupation' => [
+                    'ticks' => $this->faker->numerify('##'),
+                    'duration' => [
+                        'seconds' => $this->faker->numberBetween(1, 50),
+                        'human' => ''
+                    ],
+                ],
+                'kills' => [
+                    'defensive' => $this->faker->numberBetween(0, 40),
+                    'offensive' => $this->faker->numberBetween(0, 40)
+                ]
+            ]
+        ];
+    }
+
+    private function modeOddball(): array
+    {
+        return [
+            'oddballs' => [
+                'grabs' => $this->faker->numberBetween(0, 5),
+                'controls' => $this->faker->numberBetween(0, 5),
+                'possession' => [
+                    'ticks' => $this->faker->numerify('##'),
+                    'longest' => [
+                        'seconds' => $this->faker->numberBetween(1, 50),
+                        'human' => ''
+                    ],
+                    'total' => [
+                        'seconds' => $this->faker->numberBetween(1, 50),
+                        'human' => ''
+                    ]
+                ],
+                'kills' => [
+                    'carriers' => $this->faker->numberBetween(0, 5),
+                    'as' => [
+                        'carrier' => $this->faker->numberBetween(0, 5)
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    private function modeSlayer(): ?array
+    {
+        return null;
     }
 
     private function modeFlag(): array
@@ -210,7 +284,7 @@ class MockMatchService extends BaseMock
         ];
     }
 
-    private function playerBlock(string $gamertag): array
+    private function playerBlock(string $categoryName, string $gamertag): array
     {
         return [
             'gamertag' => $gamertag,
@@ -266,7 +340,7 @@ class MockMatchService extends BaseMock
                     'kdr' => $this->faker->randomFloat(2, 0, 10),
                     'score' => $this->faker->numerify('####')
                 ],
-                'mode' => null,
+                'mode' => $this->getMode($categoryName),
             ],
             'rank' => $this->faker->numerify('#'),
             'outcome' => $this->faker->randomElement(['win', 'loss', 'draw']),
