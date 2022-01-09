@@ -27,7 +27,7 @@
                             {{ $game->playlist->name }}
                         </a>
                         @if ($game->playlist->is_ranked)
-                            <span class="has-tooltip-arrow" data-tooltip="Ranked">
+                            <span class="has-tooltip-arrow" data-tooltip="Ranked ({{ $game->playlist->title }})">
                                 <i class="fa fa-crosshairs"></i>
                             </span>
                         @endif
