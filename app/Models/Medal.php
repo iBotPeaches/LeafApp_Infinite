@@ -73,8 +73,8 @@ class Medal extends Model implements HasHaloDotApi
         $medal->id = Arr::get($payload, 'id');
         $medal->name = Arr::get($payload, 'name');
         $medal->description = Arr::get($payload, 'description');
-        $medal->category = Arr::get($payload, 'category');
-        $medal->type = Arr::get($payload, 'type');
+        $medal->category = Arr::get($payload, 'category', 'unknown');
+        $medal->type = Arr::get($payload, 'difficulty');
         $medal->thumbnail_url = Arr::get($payload, 'image_urls.small');
 
         if ($medal->isDirty()) {
