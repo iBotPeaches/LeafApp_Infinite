@@ -23,6 +23,7 @@ use Illuminate\Support\Arr;
  * @property int $score
  * @property-read Game $game
  * @property-read string $color
+ * @property-read string $tooltip_color
  * @method static GameTeamFactory factory(...$parameters)
  */
 class GameTeam extends Model implements HasHaloDotApi
@@ -44,6 +45,18 @@ class GameTeam extends Model implements HasHaloDotApi
                 return 'is-danger';
             default:
                 return 'is-dark';
+        }
+    }
+
+    public function getTooltipColorAttribute(): string
+    {
+        switch ($this->name) {
+            case 'Eagle':
+                return 'has-tooltip-info';
+            case 'Cobra':
+                return 'has-tooltip-danger';
+            default:
+                return 'has-tooltip-dark';
         }
     }
 
