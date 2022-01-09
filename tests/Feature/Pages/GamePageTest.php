@@ -67,8 +67,9 @@ class GamePageTest extends TestCase
                 ['pre_csr' => null],
                 ['pre_csr' => 1500],
                 ['pre_csr' => 1500, 'post_csr' => 1500],
+                ['pre_csr' => 1491, 'post_csr' => 1501],
             ))
-            ->count(3)
+            ->count(4)
             ->create();
 
         // Act
