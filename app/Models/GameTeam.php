@@ -21,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property Outcome $outcome
  * @property int $rank
  * @property int $score
+ * @property int $final_score
  * @property-read Game $game
  * @property-read string $color
  * @property-read string $tooltip_color
@@ -80,6 +81,31 @@ class GameTeam extends Model implements HasHaloDotApi
         $gameTeam->outcome = Arr::get($payload, 'outcome');
         $gameTeam->rank = Arr::get($payload, 'rank');
         $gameTeam->score = Arr::get($payload, 'stats.core.score');
+
+        // We are going to check what type of category this is to extract the mode specific final value
+        // This is like kills for slayer, rounds won in Oddball & points in Strongholds.
+        switch ($game->category->name) {
+            case 'Slayer':
+                $key = 'stats.core.summary.kills';
+                break;
+
+            case 'Strongholds':
+                $key = 'stats.mode.zones.occupation.duration.seconds';
+                break;
+
+            case 'CTF':
+                $key = 'stats.mode.flags.captures.total';
+                break;
+
+            case 'Total Control':
+            case 'Stockpile':
+            case 'Oddball':
+            default:
+                $key = 'stats.core.rounds.won';
+                break;
+        }
+
+        $gameTeam->final_score = Arr::get($payload, $key);
 
         if ($gameTeam->isDirty()) {
             $gameTeam->saveOrFail();
