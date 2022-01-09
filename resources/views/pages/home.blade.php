@@ -12,14 +12,11 @@
         </div>
     </section>
     <div class="columns">
-        <div class="column is-half">
+        <div class="column">
             <livewire:add-gamer-form />
         </div>
         <div class="column">
-
-        </div>
-        <div class="column">
-
+            @include('partials.home.recently_updated')
         </div>
     </div>
 @endsection
