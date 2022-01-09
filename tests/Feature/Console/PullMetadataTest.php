@@ -61,7 +61,7 @@ class PullMetadataTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockMetadataResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMetadataResponse, 'data.0.type', 'invalid-type');
+        Arr::set($mockMetadataResponse, 'data.0.difficulty', 'invalid-type');
         Http::fakeSequence()->push($mockMetadataResponse, Response::HTTP_OK);
 
         // Act & Assert
