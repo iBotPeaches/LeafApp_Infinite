@@ -22,7 +22,9 @@
         <div class="content">
             {{ $game->playlist->name }}
             @if ($game->playlist->is_ranked)
-                <abbr title="Ranked"><i class="fa fa-crosshairs"></i></abbr>
+                <span class="has-tooltip-arrow" data-tooltip="Ranked">
+                    <i class="fa fa-crosshairs"></i>
+                </span>
             @endif
             <br />
             <time datetime="{{ $game->occurred_at->toIso8601ZuluString() }}">

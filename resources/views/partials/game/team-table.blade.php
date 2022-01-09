@@ -9,7 +9,9 @@ $team = $gamePlayers->first()->team;
         {{ $team->name ?? 'Players' }}
         @if ($game->playlist->is_ranked)
             <span class="is-pulled-right">
-                <abbr title="Avg. Team CSR">{{ number_format($gamePlayers->avg('pre_csr'), 2) }}</abbr>
+                <span class="has-tooltip-arrow" data-tooltip="Avg. Team CSR">
+                    {{ number_format($gamePlayers->avg('pre_csr'), 2) }}
+                </span>
             </span>
         @endif
     </p>
@@ -52,9 +54,10 @@ $team = $gamePlayers->first()->team;
                     @if ($game->playlist->is_ranked)
                         <td>
                             @if ($gamePlayer->pre_csr > 0)
-                                <abbr title="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})">
+                                <span class="has-tooltip-arrow {{ $gamePlayer->team->tooltip_color ?? '' }}"
+                                      data-tooltip="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})">
                                     {{ $gamePlayer->level }}
-                                </abbr>
+                                </span>
                             @else
                                 {{ $gamePlayer->level }}
                             @endif
