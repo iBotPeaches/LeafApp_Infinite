@@ -8,11 +8,11 @@
         <div class="media-content">
             <div class="content">
                 <p>
-                    <abbr title="{{ $medal->description }}">
+                    <span class="has-tooltip-arrow" data-tooltip="{{ $medal->description }}">
                         <strong style="white-space: nowrap">
                             {{ $medal->name }}
                         </strong>
-                    </abbr>
+                    </span>
                     <br>
                     {{ $medal->count }}
                 </p>
