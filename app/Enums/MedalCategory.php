@@ -12,6 +12,7 @@ use BenSampo\Enum\Enum;
  * @method static static PROFICIENCY()
  * @method static static SKILL()
  * @method static static STYLE()
+ * @method static static UNKNOWN()
  */
 final class MedalCategory extends Enum implements LocalizedEnum
 {
@@ -20,4 +21,5 @@ final class MedalCategory extends Enum implements LocalizedEnum
     const PROFICIENCY = 3;
     const SKILL = 4;
     const STYLE = 5;
+    const UNKNOWN = 6;
 }
