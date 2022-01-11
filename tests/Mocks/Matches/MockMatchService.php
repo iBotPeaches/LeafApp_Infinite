@@ -160,7 +160,8 @@ class MockMatchService extends BaseMock
                                     ],
                                     'kda' => $this->faker->randomFloat(2, 0, 10),
                                     'kdr' => $this->faker->randomFloat(2, 0, 10),
-                                    'score' => $this->faker->numerify('####')
+                                    'score' => $this->faker->numerify('####'),
+                                    'points' => $this->faker->numberBetween(0, 50),
                                 ],
                                 'mode' => $this->getMode($randomCategoryName),
                             ],
