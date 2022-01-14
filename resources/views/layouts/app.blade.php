@@ -1,8 +1,8 @@
 <!doctype html>
 <html class="has-navbar-fixed-top" lang="en">
 <head>
-    <title>Leaf @yield('title')</title>
-    <meta name="description" content="Leaf @yield('description')" />
+    <title>@yield('title')</title>
+    <meta name="description" content="@yield('description')" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
