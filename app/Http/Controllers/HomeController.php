@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Contracts\View\View;
 
@@ -17,8 +18,14 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
+        $randomMedal = Medal::query()
+            ->limit(1)
+            ->inRandomOrder()
+            ->first();
+
         return view('pages.home', [
-            'lastUpdated' => $lastUpdated
+            'lastUpdated' => $lastUpdated,
+            'medal' => $randomMedal
         ]);
     }
 
