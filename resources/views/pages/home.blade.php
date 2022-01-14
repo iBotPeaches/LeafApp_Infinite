@@ -14,6 +14,9 @@
     <div class="columns">
         <div class="column">
             <livewire:add-gamer-form />
+            @if ($medal)
+                @include('partials.home.random_medal')
+            @endif
         </div>
         <div class="column">
             @include('partials.home.recently_updated')
