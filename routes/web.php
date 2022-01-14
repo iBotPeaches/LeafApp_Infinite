@@ -19,6 +19,7 @@ use App\Http\Controllers\GameController;
 // Player
 Route::pattern('type', 'overview|competitive|matches');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
+Route::redirect('/profile/{player}', '/player/{player}');
 
 // Game
 Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
