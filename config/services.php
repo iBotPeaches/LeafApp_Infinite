@@ -33,7 +33,7 @@ return [
     'autocode' => [
         'key' => env('AUTOCODE_KEY'),
         'domain' => env('AUTOCODE_DOMAIN', 'https://halo.api.stdlib.com'),
-        'version' => env('AUTOCODE_VERSION', '0.3.5'),
+        'version' => env('AUTOCODE_VERSION', '0.3.6'),
         'cooldown' => env('AUTOCODE_COOLDOWN', 120),
     ],
 
