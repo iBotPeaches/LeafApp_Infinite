@@ -6,6 +6,7 @@ use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasPlaylist;
+use App\Support\Csr\CsrHelper;
 use Carbon\Carbon;
 use Database\Factories\CsrFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +24,6 @@ use Illuminate\Support\Arr;
  * @property int $matches_remaining
  * @property string $tier
  * @property int $tier_start_csr
- * @property string $tier_image_url
  * @property int $sub_tier
  * @property string $next_tier
  * @property int $next_sub_tier
@@ -130,16 +130,17 @@ class Csr extends Model implements HasHaloDotApi
             return 'is-dark';
         }
 
-        switch (true) {
-            case $this->next_rank_percent > 80:
-                return 'is-success';
-            case $this->next_rank_percent > 60 && $this->next_rank_percent <= 80:
-                return 'is-primary';
-            case $this->next_rank_percent > 40 && $this->next_rank_percent <= 60:
-                return 'is-warning';
-            default:
-                return 'is-danger';
-        }
+        return match (true) {
+            $this->next_rank_percent > 80 => 'is-success',
+            $this->next_rank_percent > 60 && $this->next_rank_percent <= 80 => 'is-primary',
+            $this->next_rank_percent > 40 && $this->next_rank_percent <= 60 => 'is-warning',
+            default => 'is-danger',
+        };
+    }
+
+    public function toCsrObject(): \App\Support\Csr\Csr
+    {
+        return CsrHelper::getCsrFromValue($this->csr);
     }
 
     public static function fromHaloDotApi(array $payload): ?self
@@ -178,7 +179,6 @@ class Csr extends Model implements HasHaloDotApi
 
             $csr->tier = Arr::get($playlist, 'response.current.tier');
             $csr->tier_start_csr = Arr::get($playlist, 'response.current.tier_start');
-            $csr->tier_image_url = Arr::get($playlist, 'response.current.tier_image_url');
             $csr->sub_tier = Arr::get($playlist, 'response.current.sub_tier');
 
             $csr->next_tier = Arr::get($playlist, 'response.current.next_tier');
