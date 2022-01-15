@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
 use App\Models\Traits\HasOutcome;
 use App\Models\Traits\HasScoring;
-use App\Support\Csr\CsrHelper;
 use Database\Factories\GamePlayerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -55,15 +55,11 @@ use Illuminate\Support\Arr;
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam $team
- * @property-read string $level
- * @property-read string $level_image
- * @property-read string $csr_change
- * @property-read string $csr_rank_change_message
  * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasOutcome, HasKd, HasScoring;
+    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr;
 
     public $casts = [
         'outcome' => Outcome::class
@@ -78,46 +74,6 @@ class GamePlayer extends Model implements HasHaloDotApi
     public $touches = [
         'player'
     ];
-
-    public function setPreCsrAttribute(?int $value): void
-    {
-        $this->attributes['pre_csr'] = $value === -1 ? null : $value;
-    }
-
-    public function setPostCsrAttribute(?int $value): void
-    {
-        $this->attributes['post_csr'] = $value === -1 ? null : $value;
-    }
-
-    public function getLevelAttribute(): string
-    {
-        return CsrHelper::getCsrFromValue($this->pre_csr)->title;
-    }
-
-    public function getLevelImageAttribute(): string
-    {
-        return CsrHelper::getCsrFromValue($this->pre_csr)->url();
-    }
-
-    public function getCsrChangeAttribute(): string
-    {
-        $difference = $this->post_csr - $this->pre_csr;
-
-        return $difference > 0 ? '+' . $difference : (string) $difference;
-    }
-
-    public function getCsrRankChangeMessageAttribute(): ?string
-    {
-        $preCsr = CsrHelper::getCsrFromValue($this->pre_csr);
-        $postCsr = CsrHelper::getCsrFromValue($this->post_csr);
-
-        if ($preCsr->isDifferent($postCsr)) {
-            $message = $postCsr > $preCsr ? 'moved to ' : 'fell to ';
-            return $message . $postCsr->title;
-        }
-
-        return null;
-    }
 
     public static function fromHaloDotApi(array $payload): ?self
     {
