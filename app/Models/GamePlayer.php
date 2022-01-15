@@ -56,6 +56,7 @@ use Illuminate\Support\Arr;
  * @property-read Game $game
  * @property-read GameTeam $team
  * @property-read string $level
+ * @property-read string $level_image
  * @property-read string $csr_change
  * @property-read string $csr_rank_change_message
  * @method static GamePlayerFactory factory(...$parameters)
@@ -91,6 +92,11 @@ class GamePlayer extends Model implements HasHaloDotApi
     public function getLevelAttribute(): string
     {
         return CsrHelper::getCsrFromValue($this->pre_csr)->title;
+    }
+
+    public function getLevelImageAttribute(): string
+    {
+        return CsrHelper::getCsrFromValue($this->pre_csr)->url();
     }
 
     public function getCsrChangeAttribute(): string
