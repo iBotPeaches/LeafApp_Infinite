@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -65,6 +66,7 @@ class GamePlayer extends Model implements HasHaloDotApi
     use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals;
 
     public $casts = [
+        'medals' => 'array',
         'outcome' => Outcome::class
     ];
 
@@ -137,6 +139,13 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists_emp = Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.emp');
         $gamePlayer->assists_driver = Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver');
         $gamePlayer->assists_callout = Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts');
+
+        $gamePlayer->medals = collect(Arr::get($payload, $prefix . 'stats.core.breakdowns.medals'))
+            ->mapWithKeys(function (array $medal) {
+                return [
+                    $medal['id'] => $medal['count']
+                ];
+            })->toArray();
 
         if ($gamePlayer->isDirty()) {
             $gamePlayer->saveOrFail();
