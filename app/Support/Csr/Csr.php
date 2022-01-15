@@ -8,10 +8,10 @@ class Csr
     public ?int $value;
     public string $rank;
 
-    public function __construct(?int $value, string $rank)
+    public function __construct(?int $value, ?int $tier, string $rank)
     {
         $this->value = $value;
-        $this->rank = $rank;
+        $this->rank = trim($rank . ' ' . $tier);
     }
 
     public function isDifferent(Csr $csr): bool
