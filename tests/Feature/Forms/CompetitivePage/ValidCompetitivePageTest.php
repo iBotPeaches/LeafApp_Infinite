@@ -62,7 +62,7 @@ class ValidCompetitivePageTest extends TestCase
         foreach ($ranked as $playlist) {
             $livewire->assertSee($playlist->title);
             $livewire->assertSee($playlist->icon, false);
-            $livewire->assertSee($playlist->tier_image_url);
+            $livewire->assertSee($playlist->toCsrObject()->url());
             $livewire->assertSee($playlist->rank);
             $livewire->assertSee(number_format($playlist->csr));
         }
@@ -109,7 +109,7 @@ class ValidCompetitivePageTest extends TestCase
         foreach ($ranked as $playlist) {
             $livewire->assertSee($playlist->title);
             $livewire->assertSee($playlist->icon, false);
-            $livewire->assertSee($playlist->tier_image_url);
+            $livewire->assertSee($playlist->toCsrObject()->url());
             $livewire->assertSee($playlist->rank);
             $livewire->assertSee('In Placements');
         }
