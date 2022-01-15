@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
@@ -83,7 +84,7 @@ class Player extends Model implements HasHaloDotApi
         $this->xuid = $client->xuid($this->gamertag);
     }
 
-    public function updateFromHaloDotApi(bool $forceUpdate = false): void
+    public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
@@ -92,7 +93,7 @@ class Player extends Model implements HasHaloDotApi
 
         // If we have no games, run this part in background. We pull ALL games, which tends to take a few minutes
         // and will only get worse over time. We probably don't need to do this, but we can optimize that later.
-        if ($this->games->count() === 0) {
+        if ($this->games->count() === 0 || $type !== PlayerTab::MATCHES) {
             PullMatchHistory::dispatch($this);
         } else {
             $client->matches($this, $forceUpdate);
