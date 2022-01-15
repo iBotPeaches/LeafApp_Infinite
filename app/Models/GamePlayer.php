@@ -6,6 +6,7 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
+use App\Models\Traits\HasMedals;
 use App\Models\Traits\HasOutcome;
 use App\Models\Traits\HasScoring;
 use Database\Factories\GamePlayerFactory;
@@ -52,14 +53,16 @@ use Illuminate\Support\Arr;
  * @property int $assists_emp
  * @property int $assists_driver
  * @property int $assists_callout
+ * @property array $medals
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam $team
+ * @property-read Collection $hydrated_medals
  * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr;
+    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals;
 
     public $casts = [
         'outcome' => Outcome::class

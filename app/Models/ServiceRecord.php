@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasMedals;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,7 +58,7 @@ use Illuminate\Support\Collection;
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
-    use HasFactory;
+    use HasFactory, HasMedals;
 
     public $guarded = [
         'id'
@@ -156,19 +157,6 @@ class ServiceRecord extends Model implements HasHaloDotApi
             case $this->kd < 0.5:
                 return 'has-text-danger';
         }
-    }
-
-    public function getHydratedMedalsAttribute(): Collection
-    {
-        $medals = $this->medals;
-
-        return Medal::all()->map(function (Medal $medal) use ($medals) {
-            $medal['count'] = $medals[$medal->id] ?? 0;
-            return $medal;
-        })->reject(function (Medal $medal) {
-            // @phpstan-ignore-next-line
-            return $medal->count === 0;
-        })->sortByDesc('count')->chunk(5);
     }
 
     public static function fromHaloDotApi(array $payload): ?self
