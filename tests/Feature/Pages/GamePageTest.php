@@ -63,6 +63,7 @@ class GamePageTest extends TestCase
 
         GamePlayer::factory()
             ->for($game)
+            ->withMedals()
             ->state(new Sequence(
                 ['pre_csr' => null],
                 ['pre_csr' => 1500],
