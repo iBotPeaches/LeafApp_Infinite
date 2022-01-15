@@ -135,7 +135,9 @@ class Player extends Model implements HasHaloDotApi
                 'kda',
                 'accuracy',
                 'score',
-                'rank'
+                'rank',
+                'pre_csr',
+                'post_csr',
             ]);
     }
 }
