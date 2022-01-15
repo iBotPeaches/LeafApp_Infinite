@@ -29,7 +29,6 @@ class CsrFactory extends Factory
             'matches_remaining' => 0,
             'tier' => 'Diamond',
             'tier_start_csr' => 1450,
-            'tier_image_url' => $this->faker->imageUrl,
             'sub_tier' => 1,
             'next_tier' => 'Diamond',
             'next_sub_tier' => 5,
