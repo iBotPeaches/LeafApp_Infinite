@@ -10,7 +10,7 @@
     <div class="card-content">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="{{ $medal->thumbnail_url }}" />
+                <img src="{{ $medal->image }}" />
             </p>
         </figure>
         <div class="media-content">

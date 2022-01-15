@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @property MedalCategory $category
  * @property MedalType $type
  * @property string $thumbnail_url
+ * @property-read string $image
  * @method static MedalFactory factory(...$parameters)
  */
 class Medal extends Model implements HasHaloDotApi
@@ -59,6 +60,11 @@ class Medal extends Model implements HasHaloDotApi
         }
 
         $this->attributes['type'] = $type->value;
+    }
+
+    public function getImageAttribute(): string
+    {
+        return asset('images/medals/' . $this->id . '.png');
     }
 
     public static function fromHaloDotApi(array $payload): ?self
