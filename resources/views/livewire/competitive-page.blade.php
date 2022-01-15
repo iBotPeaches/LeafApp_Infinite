@@ -18,7 +18,7 @@
                         </div>
                         <div class="card-image has-background-light">
                             <figure class="image is-4by3">
-                                <img src="{{ $playlist->tier_image_url }}" alt="{{ $playlist->rank }}">
+                                <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}">
                             </figure>
                         </div>
                         <div class="card-content">
