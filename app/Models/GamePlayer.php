@@ -71,7 +71,8 @@ class GamePlayer extends Model implements HasHaloDotApi
     public $timestamps = false;
 
     public $with = [
-        'game'
+        'game',
+        'player',
     ];
 
     public $touches = [
