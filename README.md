@@ -7,7 +7,7 @@ _Another hobby stat site for another Halo game_
  * `master` - Branch off it. Must be stable.
 
 ### Setup
-1. PHP7.4 or PHP8
+1. PHP8.1
 2. Node + Yarn installed
 3. [Composer](https://getcomposer.org/) installed.
 4. `cp .env.example .env`
