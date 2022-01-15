@@ -235,7 +235,7 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->call('render')
             ->assertViewHas('color', 'is-dark')
-            ->assertViewHas('message', 'Profile was recently updated. Check back soon.');
+            ->assertViewHas('message', 'Profile was recently updated (or updating). Check back soon.');
 
         Http::assertNothingSent();
     }

@@ -32,7 +32,7 @@ class UpdatePlayerPanel extends Component
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
-            $message = 'Profile was recently updated. Check back soon.';
+            $message = 'Profile was recently updated (or updating). Check back soon.';
         } else {
             if (! $this->runUpdate) {
                 return view('livewire.update-player-panel', [
@@ -43,11 +43,12 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey) {
-                    $this->player->lockForUpdate();
                     $cooldownMinutes = (int)config('services.autocode.cooldown');
+                    Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
+
+                    $this->player->lockForUpdate();
                     $this->player->updateFromHaloDotApi(false, $this->type);
 
-                    Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
                     $this->emitToRespectiveComponent();
                 });
             } catch (RequestException $exception) {
