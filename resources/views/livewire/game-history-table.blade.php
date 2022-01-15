@@ -36,6 +36,9 @@
                     <td>{{ $game->category->name }}</td>
                     <td class="{{ $game->personal->getVictoryColor() }}">
                         {{ $game->personal->outcome->description }}
+                        @if ($game->playlist->is_ranked)
+                            @include('partials.player.game_outcome_icon')
+                        @endif
                     </td>
                     <td>{{ $game->personal->kills }}</td>
                     <td>{{ $game->personal->deaths }}</td>
