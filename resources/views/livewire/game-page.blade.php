@@ -15,5 +15,7 @@
         @foreach ($groupedGamePlayers as $gamePlayers)
             @include('partials.game.team-table')
         @endforeach
+        <div class="divider">Powerful Medals (Legendary or Heroic)</div>
+        @include('partials.game.powerful_medals')
     </div>
 </div>
