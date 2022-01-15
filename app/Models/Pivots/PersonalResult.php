@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property float $accuracy
  * @property int $score
  * @property int $rank
+ * @property int $pre_csr
+ * @property int $post_csr
  */
 class PersonalResult extends Pivot
 {
