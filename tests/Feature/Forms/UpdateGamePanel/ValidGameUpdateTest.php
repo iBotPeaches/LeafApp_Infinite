@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdateGamePanel;
 
-use App\Http\Livewire\GamePage;
 use App\Http\Livewire\UpdateGamePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
