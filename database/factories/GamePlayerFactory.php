@@ -6,6 +6,7 @@ namespace Database\Factories;
 use App\Enums\Outcome;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
@@ -59,5 +60,21 @@ class GamePlayerFactory extends Factory
             'assists_driver' => $this->faker->numberBetween(0, 10),
             'assists_callout' => $this->faker->numberBetween(0, 10),
         ];
+    }
+
+    public function withMedals(): self
+    {
+        return $this->state(function (array $attributes) {
+            $medals = Medal::factory()->count(2)->create();
+
+            return [
+                // @phpstan-ignore-next-line
+                'medals' => $medals->mapWithKeys(function (Medal $medal) {
+                    return [
+                        $medal->id => $this->faker->numberBetween(1, 25)
+                    ];
+                })->toArray()
+            ];
+        });
     }
 }
