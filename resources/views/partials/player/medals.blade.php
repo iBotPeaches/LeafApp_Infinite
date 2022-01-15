@@ -13,8 +13,9 @@
                             {{ $medal->name }}
                         </strong>
                     </span>
-                    <br>
-                    {{ $medal->count }}
+                    <span class="is-clipped" style="display: block;">
+                        {{ $medal->count }}
+                    </span>
                 </p>
             </div>
         </div>
