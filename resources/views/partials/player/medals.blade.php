@@ -2,7 +2,7 @@
     <article class="tile">
         <figure class="media-left">
             <p class="image is-48x48">
-                <img src="{{ $medal->thumbnail_url }}" />
+                <img src="{{ $medal->image }}" />
             </p>
         </figure>
         <div class="media-content">
