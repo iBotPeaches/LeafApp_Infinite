@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Support;
 
 use App\Support\Csr\CsrHelper;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CsrHelperTest extends TestCase
@@ -13,8 +14,18 @@ class CsrHelperTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            CsrHelper::getCsrFromValue($csr)->rank,
+            CsrHelper::getCsrFromValue($csr)->title,
             $csr . ' csr is not: ' . $expected
+        );
+    }
+
+    /** @dataProvider csrDataProvider */
+    public function testCsrCalculationToAsset(int $csr, string $expected)
+    {
+        $this->assertStringEndsWith(
+            Str::slug($expected) . '.png',
+            CsrHelper::getCsrFromValue($csr)->url(),
+            $csr . ' url() is not ending with proper string.'
         );
     }
 
