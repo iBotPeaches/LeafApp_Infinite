@@ -90,7 +90,7 @@ class GamePlayer extends Model implements HasHaloDotApi
 
     public function getLevelAttribute(): string
     {
-        return CsrHelper::getCsrFromValue($this->pre_csr)->rank;
+        return CsrHelper::getCsrFromValue($this->pre_csr)->title;
     }
 
     public function getCsrChangeAttribute(): string
@@ -107,7 +107,7 @@ class GamePlayer extends Model implements HasHaloDotApi
 
         if ($preCsr->isDifferent($postCsr)) {
             $message = $postCsr > $preCsr ? 'moved to ' : 'fell to ';
-            return $message . $postCsr->rank;
+            return $message . $postCsr->title;
         }
 
         return null;

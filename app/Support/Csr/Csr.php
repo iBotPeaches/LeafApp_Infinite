@@ -3,19 +3,31 @@ declare(strict_types=1);
 
 namespace App\Support\Csr;
 
+use Illuminate\Support\Str;
+
 class Csr
 {
-    public ?int $value;
-    public string $rank;
+    public readonly ?int $value;
+    public readonly ?int $tier;
+    public readonly string $rank;
+    public readonly string $title;
 
     public function __construct(?int $value, ?int $tier, string $rank)
     {
         $this->value = $value;
-        $this->rank = trim($rank . ' ' . $tier);
+        $this->tier = $tier;
+        $this->rank = $rank;
+        $this->title = trim($rank . ' ' . $tier);
     }
 
     public function isDifferent(Csr $csr): bool
     {
         return $this->rank !== $csr->rank;
+    }
+
+    public function url(): string
+    {
+        $assetName = trim(Str::lower($this->rank) . '-' . $this->tier, '-');
+        return asset('/images/csrs/' . $assetName . '.png');
     }
 }
