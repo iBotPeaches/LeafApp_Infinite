@@ -54,3 +54,4 @@ Used for resolving XUIDs so renames are possible without data loss.
 5. Livewire - https://github.com/livewire/livewire - MIT
 6. Enum - https://github.com/BenSampo/laravel-enum - MIT
 7. DBAL - https://github.com/doctrine/dbal - MIT
+8. SEOTools - https://github.com/artesaos/seotools - MIT
