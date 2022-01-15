@@ -97,7 +97,17 @@ class MockMatchesService extends BaseMock
                                         'emp' => $this->faker->numberBetween(0, 5),
                                         'driver' => $this->faker->numberBetween(0, 5),
                                         'callouts' => $this->faker->numberBetween(0, 5)
-                                    ]
+                                    ],
+                                    'medals' => [
+                                        [
+                                            'id' => 3233952928,
+                                            'count' => $this->faker->numberBetween(0, 25),
+                                        ],
+                                        [
+                                            'id' => 1169571763,
+                                            'count' => $this->faker->numberBetween(0, 25),
+                                        ]
+                                    ],
                                 ],
                                 'kda' => $this->faker->randomFloat(2, 0, 10),
                                 'kdr' => $this->faker->randomFloat(2, 0, 10),
