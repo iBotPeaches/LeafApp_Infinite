@@ -65,9 +65,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -99,9 +97,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -128,9 +124,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -159,9 +153,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -190,9 +182,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -221,9 +211,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -252,9 +240,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -286,9 +272,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo('game-page', '$refresh');
 
         Bus::assertDispatchedTimes(PullXuid::class, 2);
     }

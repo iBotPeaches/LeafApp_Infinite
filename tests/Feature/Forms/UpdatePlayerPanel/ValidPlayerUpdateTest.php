@@ -270,9 +270,7 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-
-            // TODO - I cannot assert to a specific component - https://github.com/livewire/livewire/discussions/4298
-            ->assertEmitted('$refresh');
+            ->assertEmittedTo($event, '$refresh');
     }
 
     public function validPageDataProvider(): array
@@ -280,15 +278,15 @@ class ValidPlayerUpdateTest extends TestCase
         return [
             'overview' => [
                 'type' => PlayerTab::OVERVIEW,
-                'event' => OverviewPage::class,
+                'event' => 'overview-page',
             ],
             'competitive' => [
                 'type' => PlayerTab::COMPETITIVE,
-                'event' => CompetitivePage::class,
+                'event' => 'competitive-page',
             ],
             'matches' => [
                 'type' => PlayerTab::MATCHES,
-                'event' => GameHistoryTable::class,
+                'event' => 'game-history-table',
             ]
         ];
     }
