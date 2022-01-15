@@ -29,6 +29,7 @@ class GameHistoryTable extends Component
         return view('livewire.game-history-table', [
             'games' => $this->player
                 ->games()
+                ->with(['playlist', 'map', 'category'])
                 ->orderByDesc('occurred_at')
                 ->paginate(16)
         ]);
