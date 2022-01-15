@@ -43,7 +43,7 @@ $team = $gamePlayers->first()->team;
                                 </p>
                             </figure>
                             <div class="media-content">
-                                <div class="content">
+                                <div class="content" style="white-space: nowrap">
                                     <a href="{{ route('player', [$gamePlayer->player]) }}">
                                         {{ $gamePlayer->player->gamertag }}
                                     </a>
@@ -53,14 +53,27 @@ $team = $gamePlayers->first()->team;
                     </td>
                     @if ($game->playlist->is_ranked)
                         <td>
-                            @if ($gamePlayer->pre_csr > 0)
-                                <span class="has-tooltip-arrow {{ $gamePlayer->team->tooltip_color ?? '' }}"
-                                      data-tooltip="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})">
-                                    {{ $gamePlayer->level }}
-                                </span>
-                            @else
-                                {{ $gamePlayer->level }}
-                            @endif
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-32x32">
+                                        <img src="{{ $gamePlayer->level_image }}" />
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content" style="white-space: nowrap;">
+                                        @if ($gamePlayer->pre_csr > 0)
+                                            <span
+                                                class="has-tooltip-arrow {{ $gamePlayer->team->tooltip_color ?? '' }}"
+                                                data-tooltip="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})"
+                                            >
+                                                {{ $gamePlayer->level }}
+                                            </span>
+                                        @else
+                                            {{ $gamePlayer->level }}
+                                        @endif
+                                    </div>
+                                </div>
+                            </article>
                         </td>
                     @endif
                     <td>{{ $gamePlayer->kills }}</td>
