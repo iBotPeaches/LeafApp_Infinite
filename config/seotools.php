@@ -3,13 +3,13 @@
 return [
     'meta' => [
         'defaults'       => [
-            'title'        => "",
+            'title'        => 'Leaf - Halo Infinite Stats',
             'titleBefore'  => false,
             'description'  => '',
             'separator'    => ' - ',
             'keywords'     => [],
             'canonical'    => false,
-            'robots'       => false,
+            'robots'       => 'all',
         ],
         'webmaster_tags' => [
             'google'    => null,

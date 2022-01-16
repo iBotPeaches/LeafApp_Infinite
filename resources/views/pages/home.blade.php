@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Leaf')
+@section('description', 'Leaf - Halo Infinite Stats')
 
 @section('content')
     <section class="hero">
