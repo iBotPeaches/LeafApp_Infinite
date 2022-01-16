@@ -24,8 +24,8 @@ class GamePage extends Component
     {
         $groupedPlayers = $this->game->players->groupBy('game_team_id');
 
-        $this->game->players
-            ->each(function (GamePlayer $gamePlayer) {
+        if (! $this->game->outdated) {
+            $this->game->players->each(function (GamePlayer $gamePlayer) {
                 $gamePlayer->hydrated_medals->filter(function (Medal $medal) {
                     return $medal->type->in([
                         MedalType::LEGENDARY(),
@@ -40,6 +40,7 @@ class GamePage extends Component
                     $this->powerfulMedals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
                 });
             });
+        }
 
         return view('livewire.game-page', [
             'game' => $this->game,
