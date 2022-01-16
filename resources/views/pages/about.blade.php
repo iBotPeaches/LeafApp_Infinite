@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'About')
+@section('title', 'Leaf - About')
 
 @section('content')
     <article class="message is-link">
