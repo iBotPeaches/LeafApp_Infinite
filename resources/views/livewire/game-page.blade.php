@@ -16,7 +16,7 @@
             @include('partials.game.team-table')
         @endforeach
         @if (! $game->outdated)
-            <div class="divider">Powerful Medals (Legendary or Heroic)</div>
+            <div class="divider">Medals</div>
             @include('partials.game.powerful_medals')
         @endif
     </div>
