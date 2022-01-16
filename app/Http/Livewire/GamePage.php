@@ -26,12 +26,7 @@ class GamePage extends Component
 
         if (! $this->game->outdated) {
             $this->game->players->each(function (GamePlayer $gamePlayer) {
-                $gamePlayer->hydrated_medals->filter(function (Medal $medal) {
-                    return $medal->type->in([
-                        MedalType::LEGENDARY(),
-                        MedalType::HEROIC()
-                    ]);
-                })->each(function (Medal $medal) use ($gamePlayer) {
+                $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
                     $this->powerfulMedals[$medal->id]['medal'] = $medal;
 
                     // Pass on our medal specific count and attach to the specific gamePlayer
