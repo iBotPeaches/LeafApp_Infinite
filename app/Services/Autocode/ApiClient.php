@@ -86,7 +86,7 @@ class ApiClient implements InfiniteInterface
 
                     GamePlayer::fromHaloDotApi($gameData);
 
-                    if ($game && $game->id === $player->last_game_id_pulled) {
+                    if (!$forceUpdate && $game && $game->id === $player->last_game_id_pulled) {
                         break 2;
                     }
                 }
