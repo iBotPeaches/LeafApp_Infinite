@@ -57,7 +57,7 @@ class ExportBlogData extends Command
                     $gamePlayer->game->playlist->name,
                     $gamePlayer->game->playlist->input?->description,
                     $gamePlayer->game->playlist->queue?->description,
-                    $gamePlayer->pre_csr,
+                    $gamePlayer->pre_csr ?? 0,
                     $gamePlayer->outcome->description,
                     $gamePlayer->accuracy,
                     $gamePlayer->damage_dealt,
