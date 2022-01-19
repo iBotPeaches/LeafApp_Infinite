@@ -24,7 +24,9 @@
                 <tr>
                     <td>
                         <a href="{{ route('game', [$game]) }}">
-                            {{ $game->playlist->name }}
+                            <abbr title="{{ $game->playlist->name }}">
+                                {{ \Illuminate\Support\Str::limit($game->playlist->name, 15) }}
+                            </abbr>
                         </a>
                         @if ($game->playlist->is_ranked)
                             <span class="has-tooltip-arrow" data-tooltip="Ranked ({{ $game->playlist->title }})">
