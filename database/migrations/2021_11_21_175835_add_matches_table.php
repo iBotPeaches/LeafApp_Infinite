@@ -29,8 +29,8 @@ class AddMatchesTable extends Migration
 
         Schema::create('game_players', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Player::class)->constrained();
-            $table->foreignIdFor(Game::class)->constrained();
+            $table->foreignIdFor(Player::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Game::class)->constrained()->cascadeOnDelete();
 
             $table->unsignedTinyInteger('rank');
             $table->unsignedSmallInteger('outcome');

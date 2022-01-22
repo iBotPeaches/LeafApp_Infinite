@@ -11,7 +11,7 @@ class AddCompetitiveTable extends Migration
     {
         Schema::create('csrs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Player::class)->constrained();
+            $table->foreignIdFor(Player::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('queue')->unsigned();
             $table->tinyInteger('input')->unsigned();
             $table->tinyInteger('season')->unsigned();
