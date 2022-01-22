@@ -8,7 +8,7 @@ use App\Models\Player;
 
 class PlayerObserver
 {
-    public function created(Player $player): void
+    public function saved(Player $player): void
     {
         if (empty($player->xuid)) {
             PullXuid::dispatch($player);
