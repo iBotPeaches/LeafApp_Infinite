@@ -17,6 +17,8 @@ class PullXuid implements ShouldQueue
 
     private Player $player;
 
+    public int $tries = 1;
+
     public function __construct(Player $player)
     {
         $this->player = $player;
@@ -29,10 +31,23 @@ class PullXuid implements ShouldQueue
         ];
     }
 
+    private function checkForGamertagChange(): void
+    {
+        $player = Player::query()
+            ->where('xuid', $this->player->xuid)
+            ->where('id', '<>', $this->player->id)
+            ->first();
+
+        if ($player) {
+            $player->deleteOrFail();
+        }
+    }
+
     public function handle(): void
     {
         $this->player->syncXuidFromXboxApi();
-        if ($this->player->isDirty('xuid')) {
+        if ($this->player->isDirty('xuid') && $this->player->xuid) {
+            $this->checkForGamertagChange();
             $this->player->saveOrFail();
         }
     }
