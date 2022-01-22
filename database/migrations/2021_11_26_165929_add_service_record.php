@@ -11,7 +11,7 @@ class AddServiceRecord extends Migration
     {
         Schema::create('service_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Player::class)->constrained();
+            $table->foreignIdFor(Player::class)->constrained()->cascadeOnDelete();
             $table->double('kd', 8, 4);
             $table->double('kda', 8, 4);
             $table->unsignedInteger('total_score');
