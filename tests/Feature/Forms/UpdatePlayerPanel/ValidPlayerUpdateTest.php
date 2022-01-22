@@ -117,6 +117,59 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
+    public function testAutomaticallyRemovingOldAgentIfXuidMoved(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullAppearance::class
+        ]);
+
+        $xuid = $this->faker->numerify('################');
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
+
+        Http::fakeSequence()
+            ->push($mockXuidResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $oldPlayer = Player::factory()->createOne([
+            'gamertag' => $gamertag . 'old',
+            'xuid' => $xuid
+        ]);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+            'xuid' => null
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
+
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'xuid' => Arr::get($mockXuidResponse, 'xuid')
+        ]);
+
+        $this->assertDatabaseMissing('players', [
+            'id' => $oldPlayer->id
+        ]);
+
+        Bus::assertDispatched(PullAppearance::class);
+    }
+
     public function testAutomaticallyUnmarkedPrivateIfValidRecord(): void
     {
         // Arrange

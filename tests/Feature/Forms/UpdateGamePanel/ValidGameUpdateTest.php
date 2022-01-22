@@ -274,6 +274,6 @@ class ValidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Game updated!')
             ->assertEmittedTo('game-page', '$refresh');
 
-        Bus::assertDispatchedTimes(PullXuid::class, 2);
+        Bus::assertDispatchedTimes(PullXuid::class, 6);
     }
 }
