@@ -41,4 +41,9 @@ return [
         'domain' => env('XBOXAPI_DOMAIN', 'https://xbl-api.prouser123.me'),
     ],
 
+    'faceit' => [
+        'key' => env('FACEIT_KEY'),
+        'domain' => env('FACEIT_DOMAIN', 'https://open.faceit.com')
+    ],
+
 ];
