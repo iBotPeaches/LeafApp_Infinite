@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\HcsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,10 @@ Route::redirect('/profile/{player}', '/player/{player}');
 
 // Game
 Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
+
+// HCS
+Route::get('/hcs/{championship}', [HcsController::class, 'championship'])->name('championship');
+Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');
