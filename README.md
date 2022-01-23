@@ -38,6 +38,12 @@ Used for resolving XUIDs so renames are possible without data loss.
 
  * `XBOXAPI_DOMAIN` - The base domain for [Unofficial XboxAPI](https://xbl-api.prouser123.me/).
 
+#### FaceIt
+Used for HCS features for listing championships.
+
+ * `FACEIT_KEY` - The API key given from [Developer Portal](https://developers.faceit.com)
+ * `FACEIT_DOMAIN` - The base domain for FaceIt
+
 ### Dependencies
 
 #### Node
