@@ -41,7 +41,7 @@ class Championship extends Model implements HasFaceItApi
 
     public function getRouteKeyName(): string
     {
-        return 'uuid';
+        return 'faceit_id';
     }
 
     public function setRegionAttribute(string $value): void
