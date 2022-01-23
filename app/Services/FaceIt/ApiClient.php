@@ -19,7 +19,7 @@ class ApiClient implements TournamentInterface
             ->withToken($config['key']);
     }
 
-    public function championship(string $championshipId): Championship
+    public function championship(string $championshipId): ?Championship
     {
         $response = $this->pendingRequest->get('championships/' . $championshipId)->throw();
         $data = $response->json();
