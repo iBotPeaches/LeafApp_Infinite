@@ -7,8 +7,10 @@ use BenSampo\Enum\Enum;
 
 /**
  * @method static static NA()
+ * @method static static EU()
  */
 final class Region extends Enum
 {
     const NA = 1;
+    const EU = 2;
 }
