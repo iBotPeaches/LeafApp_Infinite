@@ -5,6 +5,7 @@ use App\Enums\Input;
 use App\Enums\Outcome;
 use App\Enums\PlayerTab;
 use App\Enums\Queue;
+use App\Services\FaceIt\Enums\Region;
 
 return [
     Experience::class => [
@@ -33,5 +34,11 @@ return [
     Queue::class => [
         Queue::OPEN => 'Open',
         Queue::SOLO_DUO => 'Solo/Duo',
+    ],
+    Region::class => [
+        Region::NA => 'NA',
+        Region::EU => 'EU',
+        Region::OCE => 'OCE',
+        Region::LATAM => 'LATAM'
     ],
 ];
