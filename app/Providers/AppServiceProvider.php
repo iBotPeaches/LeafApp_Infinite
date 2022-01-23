@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\Autocode\ApiClient as HaloApiClient;
 use App\Services\Autocode\InfiniteInterface;
+use App\Services\FaceIt\TournamentInterface;
+use App\Services\FaceIt\ApiClient as FaceItApiClient;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
 use App\Services\XboxApi\XboxInterface;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(XboxInterface::class, function ($app) {
             return new XboxApiClient($app['config']['services']['xboxapi']);
+        });
+
+        $this->app->singleton(TournamentInterface::class, function ($app) {
+            return new FaceItApiClient($app['config']['services']['faceit']);
         });
     }
 }
