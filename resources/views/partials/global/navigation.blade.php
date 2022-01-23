@@ -13,6 +13,9 @@
 
     <div id="navbar" class="navbar-menu">
         <div class="navbar-start">
+            <a href="{{ route('championships') }}" class="navbar-item">
+                HCS Open
+            </a>
             <a href="{{ route('about') }}" class="navbar-item">
                 About
             </a>
