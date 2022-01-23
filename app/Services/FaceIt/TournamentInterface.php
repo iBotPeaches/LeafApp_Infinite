@@ -7,5 +7,5 @@ use App\Models\Championship;
 
 interface TournamentInterface
 {
-    public function championship(string $championshipId): Championship;
+    public function championship(string $championshipId): ?Championship;
 }

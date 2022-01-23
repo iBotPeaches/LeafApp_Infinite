@@ -24,7 +24,9 @@ class PullChampionship extends Command
     {
         $championshipId = $this->argument('championshipId');
 
-        $this->client->championship($championshipId);
+        if (is_string($championshipId)) {
+            $this->client->championship($championshipId);
+        }
 
         return CommandAlias::SUCCESS;
     }
