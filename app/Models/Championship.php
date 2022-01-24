@@ -10,7 +10,9 @@ use Carbon\Carbon;
 use Database\Factories\GameFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -19,7 +21,7 @@ use Illuminate\Support\Str;
  * @property string $name
  * @property Region $region
  * @property Carbon $started_at
- * @method static GameFactory factory(...$parameters)
+ * @property-read Matchup[]|Collection $matchups
  */
 class Championship extends Model implements HasFaceItApi
 {
@@ -79,5 +81,10 @@ class Championship extends Model implements HasFaceItApi
         }
 
         return $championship;
+    }
+
+    public function matchups(): HasMany
+    {
+        return $this->hasMany(Matchup::class);
     }
 }
