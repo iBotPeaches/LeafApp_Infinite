@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Console\Commands;
 
+use App\Models\Championship;
 use App\Services\FaceIt\TournamentInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -25,7 +26,11 @@ class PullChampionship extends Command
         $championshipId = $this->argument('championshipId');
 
         if (is_string($championshipId)) {
-            $this->client->championship($championshipId);
+            $championship = $this->client->championship($championshipId);
+
+            if ($championship instanceof Championship) {
+                $this->client->bracket($championship);
+            }
         }
 
         return CommandAlias::SUCCESS;
