@@ -19,7 +19,7 @@ class AddMatchups extends Migration
 
         Schema::create('matchups', function (Blueprint $table) {
             $table->id();
-            $table->uuid('faceit_id');
+            $table->string('faceit_id', 64);
             $table->foreignIdFor(Championship::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('round');
             $table->tinyInteger('group');
@@ -37,17 +37,18 @@ class AddMatchups extends Migration
             $table->tinyInteger('outcome');
         });
 
-        Schema::create('team_players', function (Blueprint $table) {
+        Schema::create('team_player', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Team::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Player::class)->nullable(true)->constrained()->nullOnDelete();
+            $table->uuid('faceit_id');
             $table->string('faceit_name', 64);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('team_players');
+        Schema::dropIfExists('team_player');
         Schema::dropIfExists('teams');
         Schema::dropIfExists('matchups');
 
