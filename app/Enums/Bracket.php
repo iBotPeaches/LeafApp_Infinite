@@ -31,12 +31,13 @@ final class Bracket extends Enum implements LocalizedEnum
         return parent::coerce($enumKeyOrValue);
     }
 
-    public function toNumerical(): int
+    public function toNumerical(): ?int
     {
-        return match ($this->value) {
+        return match ((string)$this->value) {
             self::WINNERS => 1,
             self::LOSERS => 2,
             self::GRAND_FINALS => 3,
+            default => null
         };
     }
 }

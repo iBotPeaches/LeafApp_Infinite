@@ -28,7 +28,7 @@ class ChampionshipBracket extends Component
         $rounds = $this->championship->matchups
             ->where('group', $bracketEnum->toNumerical())
             ->groupBy('round')
-            ->map(function (Collection $row) {
+            ->map(function (\Illuminate\Support\Collection $row) {
                 return $row->count();
             })
             ->reverse();

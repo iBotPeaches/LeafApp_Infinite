@@ -66,9 +66,11 @@ class ApiClient implements TournamentInterface
                         TeamPlayer::fromFaceItApi($playerData);
                     }
 
-                    Bus::chain([
-                        new FindPlayersFromTeam($team)
-                    ])->dispatch();
+                    if ($team) {
+                        Bus::chain([
+                            new FindPlayersFromTeam($team)
+                        ])->dispatch();
+                    }
                 }
             }
         }

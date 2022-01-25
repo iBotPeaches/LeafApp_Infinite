@@ -24,8 +24,8 @@ use Illuminate\Support\Arr;
  * @property Carbon $ended_at
  * @property-read Championship $championship
  * @property-read Team[]|Collection $teams
- * @property-read Team $winner
- * @property-read Team $loser
+ * @property-read Team|null $winner
+ * @property-read Team|null $loser
  * @property-read string $score
  */
 class Matchup extends Model implements HasFaceItApi
@@ -49,12 +49,12 @@ class Matchup extends Model implements HasFaceItApi
         $this->attributes['ended_at'] = Carbon::createFromTimestampMsUTC($value);
     }
 
-    public function getWinnerAttribute(): Team
+    public function getWinnerAttribute(): ?Team
     {
         return $this->teams->firstWhere('outcome', Outcome::WIN());
     }
 
-    public function getLoserAttribute(): Team
+    public function getLoserAttribute(): ?Team
     {
         return $this->teams->firstWhere('outcome', Outcome::LOSS());
     }
