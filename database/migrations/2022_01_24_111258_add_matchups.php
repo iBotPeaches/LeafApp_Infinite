@@ -13,10 +13,6 @@ class AddMatchups extends Migration
 {
     public function up(): void
     {
-        Schema::table('players', function (Blueprint $table) {
-            $table->uuid('faceit_id')->after('xuid')->nullable(true);
-        });
-
         Schema::create('matchups', function (Blueprint $table) {
             $table->id();
             $table->string('faceit_id', 64);
@@ -51,9 +47,5 @@ class AddMatchups extends Migration
         Schema::dropIfExists('team_player');
         Schema::dropIfExists('teams');
         Schema::dropIfExists('matchups');
-
-        Schema::table('players', function (Blueprint $table) {
-            $table->dropColumn('faceit_id');
-        });
     }
 }
