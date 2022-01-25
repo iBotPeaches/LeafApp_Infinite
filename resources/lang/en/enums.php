@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Bracket;
 use App\Enums\Experience;
 use App\Enums\Input;
 use App\Enums\Outcome;
@@ -40,5 +41,10 @@ return [
         Region::EU => 'EU',
         Region::OCE => 'OCE',
         Region::LATAM => 'LATAM'
+    ],
+    Bracket::class => [
+        Bracket::WINNERS => 'Winners',
+        Bracket::LOSERS => 'Losers',
+        Bracket::GRAND_FINALS => 'Grand Finals'
     ],
 ];
