@@ -3,11 +3,14 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
 /**
@@ -20,6 +23,10 @@ use Illuminate\Support\Arr;
  * @property Carbon $started_at
  * @property Carbon $ended_at
  * @property-read Championship $championship
+ * @property-read Team[]|Collection $teams
+ * @property-read Team $winner
+ * @property-read Team $loser
+ * @property-read string $score
  */
 class Matchup extends Model implements HasFaceItApi
 {
@@ -40,6 +47,21 @@ class Matchup extends Model implements HasFaceItApi
     public function setEndedAtAttribute(string $value): void
     {
         $this->attributes['ended_at'] = Carbon::createFromTimestampMsUTC($value);
+    }
+
+    public function getWinnerAttribute(): Team
+    {
+        return $this->teams->firstWhere('outcome', Outcome::WIN());
+    }
+
+    public function getLoserAttribute(): Team
+    {
+        return $this->teams->firstWhere('outcome', Outcome::LOSS());
+    }
+
+    public function getScoreAttribute(): string
+    {
+        return $this->winner?->points . ' - ' . $this->loser?->points;
     }
 
     public static function fromFaceItApi(array $payload): ?self
@@ -73,5 +95,10 @@ class Matchup extends Model implements HasFaceItApi
     public function championship(): BelongsTo
     {
         return $this->belongsTo(Championship::class);
+    }
+
+    public function teams(): HasMany
+    {
+        return $this->hasMany(Team::class);
     }
 }
