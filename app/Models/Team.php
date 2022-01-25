@@ -5,12 +5,16 @@ namespace App\Models;
 
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
+use App\Models\Pivots\TeamPlayer;
 use App\Models\Traits\HasOutcome;
 use BenSampo\Enum\Traits\CastsEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -20,6 +24,8 @@ use Illuminate\Support\Arr;
  * @property int $points
  * @property Outcome $outcome
  * @property-read Matchup $matchup
+ * @property-read Player[]|Collection $players
+ * @property-read TeamPlayer[]|Collection $faceitPlayers
  */
 class Team extends Model implements HasFaceItApi
 {
@@ -55,10 +61,10 @@ class Team extends Model implements HasFaceItApi
 
         $team->matchup()->associate($matchup);
         $team->name = Arr::get($payload, 'name');
-        $team->points = Arr::get($matchupPayload, 'results.score.' . $teamInternalId);
+        $team->points = (int)Arr::get($matchupPayload, 'results.score.' . $teamInternalId, 0);
         $team->outcome = Arr::get($matchupPayload, 'results.winner') === $teamInternalId
-            ? Outcome::WIN
-            : Outcome::LOSS;
+            ? Outcome::WIN()
+            : Outcome::LOSS();
 
         if ($team->isDirty()) {
             $team->saveOrFail();
@@ -70,5 +76,21 @@ class Team extends Model implements HasFaceItApi
     public function matchup(): BelongsTo
     {
         return $this->belongsTo(Matchup::class);
+    }
+
+    public function faceitPlayers(): HasMany
+    {
+        return $this->hasMany(TeamPlayer::class);
+    }
+
+    public function players(): BelongsToMany
+    {
+        return $this->belongsToMany(Player::class, 'team_player')
+            ->as('faceit')
+            ->using(TeamPlayer::class)
+            ->withPivot([
+                'faceit_id',
+                'faceit_name'
+            ]);
     }
 }
