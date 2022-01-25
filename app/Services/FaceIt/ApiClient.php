@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\FaceIt;
 
+use App\Jobs\FindPlayersFromTeam;
 use App\Models\Championship;
 use App\Models\Matchup;
 use App\Models\Pivots\TeamPlayer;
@@ -10,6 +11,7 @@ use App\Models\Team;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;
 
 class ApiClient implements TournamentInterface
@@ -63,6 +65,10 @@ class ApiClient implements TournamentInterface
                         $playerData['_leaf']['matchup'] = $matchup;
                         TeamPlayer::fromFaceItApi($playerData);
                     }
+
+                    Bus::chain([
+                        new FindPlayersFromTeam($team)
+                    ])->dispatch();
                 }
             }
         }
