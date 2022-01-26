@@ -39,6 +39,11 @@ class Matchup extends Model implements HasFaceItApi
 
     public $timestamps = false;
 
+    public function getRouteKeyName(): string
+    {
+        return 'faceit_id';
+    }
+
     public function setStartedAtAttribute(string $value): void
     {
         $this->attributes['started_at'] = Carbon::createFromTimestampMsUTC($value);
