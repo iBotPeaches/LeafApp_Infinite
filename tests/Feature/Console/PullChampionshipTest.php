@@ -18,9 +18,9 @@ class PullChampionshipTest extends TestCase
     {
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampshionResponse = (new MockChampionshipService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
 
-        Http::fakeSequence()->push($mockChampshionResponse, Response::HTTP_OK);
+        Http::fakeSequence()->push($mockChampionshipResponse, Response::HTTP_OK);
 
         // Act & Assert
         $this
