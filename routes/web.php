@@ -27,6 +27,7 @@ Route::redirect('/profile/{player}', '/player/{player}');
 Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 
 // HCS
+Route::get('/hcs/{championship}/matchup/{matchup}', [HcsController::class, 'matchup'])->name('matchup');
 Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])->name('championship');
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
