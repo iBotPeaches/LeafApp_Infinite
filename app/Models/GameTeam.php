@@ -39,26 +39,20 @@ class GameTeam extends Model implements HasHaloDotApi
 
     public function getColorAttribute(): string
     {
-        switch ($this->name) {
-            case 'Eagle':
-                return 'is-info';
-            case 'Cobra':
-                return 'is-danger';
-            default:
-                return 'is-dark';
-        }
+        return match ($this->name) {
+            'Eagle' => 'is-info',
+            'Cobra' => 'is-danger',
+            default => 'is-dark',
+        };
     }
 
     public function getTooltipColorAttribute(): string
     {
-        switch ($this->name) {
-            case 'Eagle':
-                return 'has-tooltip-info';
-            case 'Cobra':
-                return 'has-tooltip-danger';
-            default:
-                return 'has-tooltip-dark';
-        }
+        return match ($this->name) {
+            'Eagle' => 'has-tooltip-info',
+            'Cobra' => 'has-tooltip-danger',
+            default => 'has-tooltip-dark',
+        };
     }
 
     public static function fromHaloDotApi(array $payload): ?self
