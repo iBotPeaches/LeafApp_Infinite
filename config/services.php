@@ -39,6 +39,7 @@ return [
 
     'xboxapi' => [
         'domain' => env('XBOXAPI_DOMAIN', 'https://xbl-api.prouser123.me'),
+        'enabled' => env('XBOXAPI_ENABLED', true),
     ],
 
     'faceit' => [
