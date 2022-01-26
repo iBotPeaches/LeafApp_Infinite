@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use App\Models\Player;
-use App\Models\Team;
+use App\Models\MatchupTeam;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +24,7 @@ class AddMatchups extends Migration
             $table->dateTime('ended_at');
         });
 
-        Schema::create('teams', function (Blueprint $table) {
+        Schema::create('matchup_teams', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Matchup::class)->constrained()->cascadeOnDelete();
             $table->uuid('faceit_id');
@@ -33,9 +33,9 @@ class AddMatchups extends Migration
             $table->tinyInteger('outcome');
         });
 
-        Schema::create('team_player', function (Blueprint $table) {
+        Schema::create('matchup_player', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Team::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(MatchupTeam::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Player::class)->nullable(true)->constrained()->nullOnDelete();
             $table->uuid('faceit_id');
             $table->string('faceit_name', 64);
@@ -44,8 +44,8 @@ class AddMatchups extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('team_player');
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('matchup_player');
+        Schema::dropIfExists('matchup_teams');
         Schema::dropIfExists('matchups');
     }
 }
