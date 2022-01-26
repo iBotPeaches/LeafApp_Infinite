@@ -31,6 +31,8 @@ class MatchupTeam extends Model implements HasFaceItApi
 {
     use HasFactory, CastsEnums, HasOutcome;
 
+    private static string $byeTeamId = 'bye';
+
     public $guarded = [
         'id',
         'matchup_id',
@@ -41,6 +43,11 @@ class MatchupTeam extends Model implements HasFaceItApi
     ];
 
     public $timestamps = false;
+
+    public function isBye(): bool
+    {
+        return $this->faceit_id === self::$byeTeamId;
+    }
 
     public static function fromFaceItApi(array $payload): ?self
     {
@@ -85,7 +92,7 @@ class MatchupTeam extends Model implements HasFaceItApi
 
     public function players(): BelongsToMany
     {
-        return $this->belongsToMany(Player::class, 'team_player')
+        return $this->belongsToMany(Player::class, 'matchup_player')
             ->as('faceit')
             ->using(MatchupPlayer::class)
             ->withPivot([
