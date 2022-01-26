@@ -37,6 +37,7 @@ Used for the API for Infinite information, an amazing service that proxies some 
 Used for resolving XUIDs so renames are possible without data loss.
 
  * `XBOXAPI_DOMAIN` - The base domain for [Unofficial XboxAPI](https://xbl-api.prouser123.me/).
+ * `XBOXAPI_ENABLED` - Boolean to enable the XUID resolving or not.
 
 #### FaceIt
 Used for HCS features for listing championships.
