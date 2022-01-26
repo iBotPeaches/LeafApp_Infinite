@@ -14,16 +14,24 @@
     @foreach ($matchups as $matchup)
         <tr>
             <td class="has-background-success-light">
-                {{ $matchup->winner->name }}
+                <a href="{{ route('matchup', [$championship, $matchup]) }}">
+                    {{ $matchup->winner->name }}
+                </a>
             </td>
             <td class="has-background-warning-light">
-                {{ $matchup->loser->name }}
+                <a href="{{ route('matchup', [$championship, $matchup]) }}">
+                    {{ $matchup->loser->name }}
+                </a>
             </td>
             <td>
                 {{ $matchup->best_of }}
             </td>
             <td>
-                {{ $matchup->score }}
+                @if ($matchup->loser->isBye())
+                    -
+                @else
+                    {{ $matchup->score }}
+                @endif
             </td>
         </tr>
     @endforeach
