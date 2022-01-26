@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\Bracket;
 use App\Models\Championship;
+use App\Models\Matchup;
 use Illuminate\Contracts\View\View;
 
 class HcsController extends Controller
@@ -20,6 +21,14 @@ class HcsController extends Controller
             'championship' => $championship,
             'bracket' => $bracket,
             'round' => $round
+        ]);
+    }
+
+    public function matchup(Championship $championship, Matchup $matchup): View
+    {
+        return view('pages.matchup', [
+            'championship' => $championship,
+            'matchup' => $matchup
         ]);
     }
 }
