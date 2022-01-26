@@ -45,6 +45,10 @@ class PullXuid implements ShouldQueue
 
     public function handle(): void
     {
+        if (!config('services.xboxapi.enabled')) {
+            return;
+        }
+
         $this->player->syncXuidFromXboxApi();
         if ($this->player->isDirty('xuid') && $this->player->xuid) {
             $this->checkForGamertagChange();
