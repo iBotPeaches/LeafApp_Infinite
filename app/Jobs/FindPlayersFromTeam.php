@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Jobs;
 
-use App\Models\Team;
+use App\Models\MatchupTeam;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,10 +17,10 @@ class FindPlayersFromTeam implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private Team $team;
+    private MatchupTeam $team;
     private ?InfiniteInterface $client;
 
-    public function __construct(Team $team)
+    public function __construct(MatchupTeam $team)
     {
         $this->team = $team;
     }

@@ -6,8 +6,8 @@ namespace App\Services\FaceIt;
 use App\Jobs\FindPlayersFromTeam;
 use App\Models\Championship;
 use App\Models\Matchup;
-use App\Models\Pivots\TeamPlayer;
-use App\Models\Team;
+use App\Models\Pivots\MatchupPlayer;
+use App\Models\MatchupTeam;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -58,12 +58,12 @@ class ApiClient implements TournamentInterface
                     $teamData['_leaf']['matchup'] = $matchup;
                     $teamData['_leaf']['raw_matchup'] = $matchupData;
                     $teamData['_leaf']['team_id'] = $teamId;
-                    $team = Team::fromFaceItApi((array)$teamData);
+                    $team = MatchupTeam::fromFaceItApi((array)$teamData);
 
                     foreach (Arr::get($teamData, 'roster', []) as $playerData) {
                         $playerData['_leaf']['team'] = $team;
                         $playerData['_leaf']['matchup'] = $matchup;
-                        TeamPlayer::fromFaceItApi($playerData);
+                        MatchupPlayer::fromFaceItApi($playerData);
                     }
 
                     if ($team) {
@@ -72,6 +72,8 @@ class ApiClient implements TournamentInterface
                         ])->dispatch();
                     }
                 }
+
+                continue 2;
             }
         }
 

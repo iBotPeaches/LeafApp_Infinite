@@ -5,7 +5,7 @@ namespace App\Models;
 
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
-use App\Models\Pivots\TeamPlayer;
+use App\Models\Pivots\MatchupPlayer;
 use App\Models\Traits\HasOutcome;
 use BenSampo\Enum\Traits\CastsEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,9 +25,9 @@ use Illuminate\Support\Collection;
  * @property Outcome $outcome
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
- * @property-read TeamPlayer[]|Collection $faceitPlayers
+ * @property-read MatchupPlayer[]|Collection $faceitPlayers
  */
-class Team extends Model implements HasFaceItApi
+class MatchupTeam extends Model implements HasFaceItApi
 {
     use HasFactory, CastsEnums, HasOutcome;
 
@@ -51,7 +51,7 @@ class Team extends Model implements HasFaceItApi
         /** @var Matchup $matchup */
         $matchup = Arr::get($payload, '_leaf.matchup');
 
-        /** @var Team $team */
+        /** @var MatchupTeam $team */
         $team = self::query()
             ->where('matchup_id', $matchup->id)
             ->where('faceit_id', $teamId)
@@ -80,14 +80,14 @@ class Team extends Model implements HasFaceItApi
 
     public function faceitPlayers(): HasMany
     {
-        return $this->hasMany(TeamPlayer::class);
+        return $this->hasMany(MatchupPlayer::class);
     }
 
     public function players(): BelongsToMany
     {
         return $this->belongsToMany(Player::class, 'team_player')
             ->as('faceit')
-            ->using(TeamPlayer::class)
+            ->using(MatchupPlayer::class)
             ->withPivot([
                 'faceit_id',
                 'faceit_name'

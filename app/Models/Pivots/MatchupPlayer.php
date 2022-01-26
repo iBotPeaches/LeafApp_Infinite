@@ -3,30 +3,28 @@ declare(strict_types = 1);
 
 namespace App\Models\Pivots;
 
-use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
-use App\Models\Matchup;
 use App\Models\Player;
-use App\Models\Team;
+use App\Models\MatchupTeam;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Arr;
 
 /**
  * @property int $id
- * @property int $team_id
+ * @property int $matchup_team_id
  * @property int|null $player_id
  * @property string $faceit_id
  * @property string $faceit_name
- * @property-read Team $team
+ * @property-read MatchupTeam $matchupTeam
  * @property-read Player|null $player
  */
-class TeamPlayer extends Pivot implements HasFaceItApi
+class MatchupPlayer extends Pivot implements HasFaceItApi
 {
     public $guarded = [
         'id',
         'player_id',
-        'team_id',
+        'matchup_team_id',
     ];
 
     public $timestamps = false;
@@ -35,18 +33,18 @@ class TeamPlayer extends Pivot implements HasFaceItApi
     {
         $playerId = Arr::get($payload, 'player_id');
 
-        /** @var Team $team */
+        /** @var MatchupTeam $team */
         $team = Arr::get($payload, '_leaf.team');
 
-        /** @var TeamPlayer $teamPlayer */
+        /** @var MatchupPlayer $teamPlayer */
         $teamPlayer = self::query()
-            ->where('team_id', $team->id)
+            ->where('matchup_team_id', $team->id)
             ->where('faceit_id', $playerId)
             ->firstOrNew([
                 'faceit_id' => $playerId
             ]);
 
-        $teamPlayer->team()->associate($team);
+        $teamPlayer->matchupTeam()->associate($team);
         $teamPlayer->faceit_name = Arr::get($payload, 'game_player_id');
 
         if ($teamPlayer->isDirty()) {
@@ -56,9 +54,9 @@ class TeamPlayer extends Pivot implements HasFaceItApi
         return $teamPlayer;
     }
 
-    public function team(): BelongsTo
+    public function matchupTeam(): BelongsTo
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(MatchupTeam::class);
     }
 
     public function player(): BelongsTo
