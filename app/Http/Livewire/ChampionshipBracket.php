@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 
 use App\Enums\Bracket;
 use App\Models\Championship;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
