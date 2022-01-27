@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Enums\Bracket;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
+use BenSampo\Enum\Enum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +29,7 @@ use Illuminate\Support\Arr;
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read string $score
+ * @property-read Bracket $bracket
  */
 class Matchup extends Model implements HasFaceItApi
 {
@@ -67,6 +70,11 @@ class Matchup extends Model implements HasFaceItApi
     public function getScoreAttribute(): string
     {
         return $this->winner?->points . ' - ' . $this->loser?->points;
+    }
+
+    public function getBracketAttribute(): ?Enum
+    {
+        return Bracket::coerce($this->group);
     }
 
     public static function fromFaceItApi(array $payload): ?self
