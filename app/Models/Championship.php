@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
 use App\Services\FaceIt\Enums\Region;
 use Carbon\Carbon;
-use Database\Factories\GameFactory;
+use Database\Factories\ChampionshipFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,6 +21,7 @@ use Illuminate\Support\Str;
  * @property Region $region
  * @property Carbon $started_at
  * @property-read Matchup[]|Collection $matchups
+ * @method static ChampionshipFactory factory(...$parameters)
  */
 class Championship extends Model implements HasFaceItApi
 {
