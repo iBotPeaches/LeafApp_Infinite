@@ -72,8 +72,6 @@ class ApiClient implements TournamentInterface
                         ])->dispatch();
                     }
                 }
-
-                continue 2;
             }
         }
 
