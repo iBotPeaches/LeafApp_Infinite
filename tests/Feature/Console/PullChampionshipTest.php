@@ -5,8 +5,10 @@ namespace Tests\Feature\Console;
 
 use App\Jobs\FindPlayersFromTeam;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Championship\MockChampionshipBracketService;
@@ -37,5 +39,28 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::SUCCESS);
 
         Queue::assertPushed(FindPlayersFromTeam::class);
+    }
+
+    public function testValidDataPullWithInvalidRegion(): void
+    {
+        // Expectations
+        $this->expectException(InvalidArgumentException::class);
+
+        // Arrange
+        $championshipId = $this->faker->uuid;
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Arr::set($mockChampionshipResponse, 'region', 'INVALID-ENUM');
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
+
+        // Act & Assert
+        $this->artisan('app:championship ' . $championshipId)
+            ->assertExitCode(CommandAlias::FAILURE);
     }
 }

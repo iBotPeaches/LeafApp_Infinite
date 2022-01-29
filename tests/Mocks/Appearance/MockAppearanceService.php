@@ -15,8 +15,8 @@ class MockAppearanceService extends BaseMock
         return [
             'data' => [
                 'service_tag' => $this->faker->lexify('????'),
-                'emblem_url' => $this->faker->url,
-                'backdrop_image_url' => $this->faker->url,
+                'emblem_url' => $this->faker->imageUrl,
+                'backdrop_image_url' => $this->faker->imageUrl,
             ],
             'additional' => [
                 'gamertag' => $gamertag ?? $this->faker->word
