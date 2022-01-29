@@ -30,4 +30,14 @@ class MatchupTeamFactory extends Factory
             'outcome' => $outcome
         ];
     }
+
+    public function bye(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'faceit_id' => MatchupTeam::$byeTeamId,
+                'name' => 'bye'
+            ];
+        });
+    }
 }

@@ -33,7 +33,7 @@ class MatchupTeam extends Model implements HasFaceItApi
 {
     use HasFactory, CastsEnums, HasOutcome;
 
-    private static string $byeTeamId = 'bye';
+    public static string $byeTeamId = 'bye';
 
     public $guarded = [
         'id',
