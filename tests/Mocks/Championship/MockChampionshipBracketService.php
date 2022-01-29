@@ -13,7 +13,8 @@ class MockChampionshipBracketService extends BaseMock
         return [
             'items' => [
                 $this->matchBlock(),
-                $this->matchBlock()
+                $this->matchBlock(),
+                $this->matchBlock('CANCELLED')
             ]
         ];
     }
@@ -57,7 +58,7 @@ class MockChampionshipBracketService extends BaseMock
         ];
     }
 
-    private function matchBlock(): array
+    private function matchBlock(string $status = 'FINISHED'): array
     {
         return [
             'match_id' => '1-' . $this->faker->uuid,
@@ -84,7 +85,7 @@ class MockChampionshipBracketService extends BaseMock
                     'faction2' => 2
                 ]
             ],
-            'status' => 'FINISHED',
+            'status' => $status,
             'round' => $this->faker->numberBetween(1, 12),
             'group' => $this->faker->numberBetween(1, 3),
             'faceit_url' => $this->faker->url

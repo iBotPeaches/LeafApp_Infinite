@@ -6,6 +6,7 @@ namespace Tests\Feature\Forms\AddGamer;
 use App\Http\Livewire\AddGamerForm;
 use App\Models\Player;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,23 @@ class ValidGamerFormTest extends TestCase
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
             ->push($mockXuidResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        Livewire::test(AddGamerForm::class)
+            ->set('gamertag', $gamertag)
+            ->call('submit')
+            ->assertRedirect('/player/' . $gamertag);
+    }
+
+    public function testValidResponseIfXuidServiceDisabled(): void
+    {
+        // Arrange
+        Config::set('services.xboxapi.enabled', false);
+        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         // Act & Assert
         Livewire::test(AddGamerForm::class)
