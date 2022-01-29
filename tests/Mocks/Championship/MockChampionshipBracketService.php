@@ -87,7 +87,7 @@ class MockChampionshipBracketService extends BaseMock
             ],
             'status' => $status,
             'round' => $this->faker->numberBetween(1, 12),
-            'group' => $this->faker->numberBetween(1, 3),
+            'group' => $this->faker->numberBetween(1, 2),
             'faceit_url' => $this->faker->url
         ];
     }
