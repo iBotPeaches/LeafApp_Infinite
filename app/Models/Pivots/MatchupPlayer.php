@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace App\Models\Pivots;
 
 use App\Models\Contracts\HasFaceItApi;
-use App\Models\Player;
 use App\Models\MatchupTeam;
+use App\Models\Player;
+use Database\Factories\Pivots\MatchupPlayerFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Arr;
@@ -18,9 +20,12 @@ use Illuminate\Support\Arr;
  * @property string $faceit_name
  * @property-read MatchupTeam $matchupTeam
  * @property-read Player|null $player
+ * @method static MatchupPlayerFactory factory(...$parameters)
  */
 class MatchupPlayer extends Pivot implements HasFaceItApi
 {
+    use HasFactory;
+
     public $guarded = [
         'id',
         'player_id',

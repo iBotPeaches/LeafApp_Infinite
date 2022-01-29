@@ -8,6 +8,7 @@ use App\Models\Contracts\HasFaceItApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Traits\HasOutcome;
 use BenSampo\Enum\Traits\CastsEnums;
+use Database\Factories\MatchupTeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
  * @property-read MatchupPlayer[]|Collection $faceitPlayers
+ * @method static MatchupTeamFactory factory(...$parameters)
  */
 class MatchupTeam extends Model implements HasFaceItApi
 {

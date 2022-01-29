@@ -6,8 +6,10 @@ namespace App\Models;
 use App\Enums\Bracket;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
+use App\Models\Pivots\MatchupPlayer;
 use BenSampo\Enum\Enum;
 use Carbon\Carbon;
+use Database\Factories\MatchupFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,10 +28,12 @@ use Illuminate\Support\Arr;
  * @property Carbon $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
+ * @property-read MatchupPlayer[]|Collection $matchupPlayers
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read string $score
  * @property-read Bracket $bracket
+ * @method static MatchupFactory factory(...$parameters)
  */
 class Matchup extends Model implements HasFaceItApi
 {
@@ -113,5 +117,10 @@ class Matchup extends Model implements HasFaceItApi
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class);
+    }
+
+    public function matchupPlayers(): HasMany
+    {
+        return $this->hasMany(MatchupPlayer::class);
     }
 }
