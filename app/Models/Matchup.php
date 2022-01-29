@@ -6,7 +6,6 @@ namespace App\Models;
 use App\Enums\Bracket;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
-use App\Models\Pivots\MatchupPlayer;
 use BenSampo\Enum\Enum;
 use Carbon\Carbon;
 use Database\Factories\MatchupFactory;
