@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Pages;
 
 use App\Enums\Outcome;
+use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
@@ -12,19 +13,25 @@ use Tests\TestCase;
 
 class HcsMatchupPageTest extends TestCase
 {
-    public function testLoadingMatchupPageWithTeamAndPlayers(): void
+    /** @dataProvider groupDataProvider */
+    public function testLoadingMatchupPageWithTeamAndPlayers(int $group): void
     {
         // Arrange
         Http::fake();
 
+        $matchup = Matchup::factory()
+            ->createOne([
+                'group' => $group
+            ]);
+
         $matchupTeam = MatchupTeam::factory()->createOne([
-            'outcome' => Outcome::WIN
+            'outcome' => Outcome::WIN,
+            'matchup_id' => $matchup->id
         ]);
         MatchupPlayer::factory()->createOne([
             'matchup_team_id' => $matchupTeam->id
         ]);
 
-        $matchup = $matchupTeam->matchup;
         MatchupTeam::factory()->createOne([
             'matchup_id' => $matchup->id,
             'outcome' => Outcome::LOSS
@@ -60,5 +67,17 @@ class HcsMatchupPageTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('championship-matchup');
+    }
+
+    public function groupDataProvider(): array
+    {
+        return [
+            [
+                'round' => 1
+            ],
+            [
+                'round' => 2
+            ]
+        ];
     }
 }
