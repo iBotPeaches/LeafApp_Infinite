@@ -45,6 +45,5 @@ return [
     Bracket::class => [
         Bracket::WINNERS => 'Winners',
         Bracket::LOSERS => 'Losers',
-        Bracket::GRAND_FINALS => 'Grand Finals'
     ],
 ];
