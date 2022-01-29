@@ -1,18 +1,22 @@
 <?php
+declare(strict_types = 1);
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
 use App\Models\GamePlayer;
-use Illuminate\Console\Command;
-use League\Csv\Writer;
+use App\Models\Player;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class ExportBlogData extends Command
+class ExportGameHistory implements ShouldQueue
 {
-    protected $signature = 'app:export-blog-data';
-    protected $description = 'Exports Records for me';
+    use Dispatchable, InteractsWithQueue, SerializesModels;
 
-    protected array $header = [
+    public static array $header = [
         'Date',
+        'MatchId',
         'Map',
         'Category',
         'Playlist',
@@ -32,7 +36,14 @@ class ExportBlogData extends Command
 
     protected array $data = [];
 
-    public function handle(): int
+    public Player $player;
+
+    public function __construct(Player $player)
+    {
+        $this->player = $player;
+    }
+
+    public function handle(): array
     {
         GamePlayer::query()
             ->with([
@@ -42,9 +53,7 @@ class ExportBlogData extends Command
             ])
             ->join('games', 'games.id', '=', 'game_players.game_id')
             ->join('playlists', 'playlists.id', '=', 'games.playlist_id')
-            ->where('player_id', 1)
-            ->where('was_at_end', 1)
-            ->where('playlists.is_ranked', 1)
+            ->where('player_id', '=', $this->player->id)
             ->orderBy('games.occurred_at')
             ->cursor()
             ->each(function (GamePlayer $gamePlayer) {
@@ -52,6 +61,7 @@ class ExportBlogData extends Command
 
                 $this->data[] = [
                     $gamePlayer->game->occurred_at->toDateTimeString(),
+                    $gamePlayer->game->uuid,
                     $gamePlayer->game->map->name,
                     $gamePlayer->game->category->name,
                     $gamePlayer->game->playlist->name,
@@ -70,12 +80,6 @@ class ExportBlogData extends Command
                 ];
             });
 
-        $csv = Writer::createFromString();
-        $csv->insertOne($this->header);
-        $csv->insertAll($this->data);
-
-        echo $csv->toString();
-
-        return self::SUCCESS;
+        return $this->data;
     }
 }

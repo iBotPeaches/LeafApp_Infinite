@@ -17,6 +17,7 @@ use App\Http\Controllers\GameController;
 */
 
 // Player
+Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
 Route::pattern('type', 'overview|competitive|matches');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
