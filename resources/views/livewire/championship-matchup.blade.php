@@ -3,7 +3,10 @@
 /** @var App\Models\Matchup $matchup */
 ?>
 <h1 class="title">{{ $championship->name }}</h1>
-<h2 class="subtitle">{{ $matchup->bracket->description }} Round {{ $matchup->round }}</h2>
+<h2 class="subtitle">
+    {{ $matchup->bracket->description }} Round {{ $matchup->round }}
+    (<a target="_blank" href="{{ $matchup->faceitUrl }}">FaceIt</a>)
+</h2>
 <div class="columns">
     <div class="column">
         @include('partials.hcs.matchup_team_snippet', [
