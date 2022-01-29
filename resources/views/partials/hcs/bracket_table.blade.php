@@ -13,12 +13,12 @@
     <tbody>
     @foreach ($matchups as $matchup)
         <tr>
-            <td class="has-background-success-light">
+            <td class="has-background-danger-light">
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
                     {{ $matchup->winner->name }}
                 </a>
             </td>
-            <td class="has-background-warning-light">
+            <td class="has-background-info-light">
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
                     {{ $matchup->loser->name }}
                 </a>
