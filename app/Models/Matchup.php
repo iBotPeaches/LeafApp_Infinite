@@ -28,11 +28,12 @@ use Illuminate\Support\Arr;
  * @property Carbon $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
- * @property-read MatchupPlayer[]|Collection $matchupPlayers
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read string $score
  * @property-read Bracket $bracket
+ * @property-read string $title
+ * @property-read string $description
  * @method static MatchupFactory factory(...$parameters)
  */
 class Matchup extends Model implements HasFaceItApi
@@ -76,6 +77,17 @@ class Matchup extends Model implements HasFaceItApi
         return $this->winner?->points . ' - ' . $this->loser?->points;
     }
 
+    public function getTitleAttribute(): string
+    {
+        return $this->bracket->description . ' Round ' . $this->round .
+            ' ' . $this->winner?->name . ' vs ' . $this->loser?->name;
+    }
+
+    public function getDescriptionAttribute(): string
+    {
+        return $this->winner?->name . ' won ' . $this->score;
+    }
+
     public function getBracketAttribute(): ?Enum
     {
         return Bracket::coerce($this->group);
@@ -117,10 +129,5 @@ class Matchup extends Model implements HasFaceItApi
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class);
-    }
-
-    public function matchupPlayers(): HasMany
-    {
-        return $this->hasMany(MatchupPlayer::class);
     }
 }
