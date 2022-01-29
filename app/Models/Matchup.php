@@ -54,12 +54,12 @@ class Matchup extends Model implements HasFaceItApi
 
     public function setStartedAtAttribute(string $value): void
     {
-        $this->attributes['started_at'] = Carbon::createFromTimestampMsUTC($value);
+        $this->attributes['started_at'] = Carbon::createFromTimestamp($value);
     }
 
     public function setEndedAtAttribute(string $value): void
     {
-        $this->attributes['ended_at'] = Carbon::createFromTimestampMsUTC($value);
+        $this->attributes['ended_at'] = Carbon::createFromTimestamp($value);
     }
 
     public function getWinnerAttribute(): ?MatchupTeam
@@ -116,7 +116,11 @@ class Matchup extends Model implements HasFaceItApi
         $matchup->round = Arr::get($payload, 'round');
         $matchup->group = Arr::get($payload, 'group');
         $matchup->best_of = Arr::get($payload, 'best_of');
-        $matchup->started_at = Arr::get($payload, 'started_at');
+        $matchup->started_at = Arr::get(
+            $payload,
+            'started_at',
+            Arr::get($payload, 'finished_at', $championship->started_at)
+        );
         $matchup->ended_at = Arr::get($payload, 'finished_at');
 
         if ($matchup->isDirty()) {
