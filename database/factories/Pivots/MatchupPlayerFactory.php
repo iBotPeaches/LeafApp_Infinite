@@ -18,6 +18,8 @@ use Illuminate\Support\Collection;
  */
 class MatchupPlayerFactory extends Factory
 {
+    protected $model = MatchupPlayer::class;
+
     public function definition(): array
     {
         return [
