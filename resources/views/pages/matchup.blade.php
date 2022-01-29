@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'HCS Matchup TODO')
-@section('description', 'HCS Matchup TODO')
+@section('title', $matchup->title)
+@section('description', $matchup->description)
 
 @section('content')
     <livewire:championship-matchup
