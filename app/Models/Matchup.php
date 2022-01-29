@@ -33,6 +33,7 @@ use Illuminate\Support\Arr;
  * @property-read Bracket $bracket
  * @property-read string $title
  * @property-read string $description
+ * @property-read string $faceitUrl
  * @method static MatchupFactory factory(...$parameters)
  */
 class Matchup extends Model implements HasFaceItApi
@@ -85,6 +86,11 @@ class Matchup extends Model implements HasFaceItApi
     public function getDescriptionAttribute(): string
     {
         return $this->winner?->name . ' won ' . $this->score;
+    }
+
+    public function getFaceitUrlAttribute(): string
+    {
+        return 'https://www.faceit.com/en/halo_infinite/room/' . $this->faceit_id;
     }
 
     public function getBracketAttribute(): ?Enum

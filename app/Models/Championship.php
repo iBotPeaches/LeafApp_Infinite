@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
  * @property Region $region
  * @property Carbon $started_at
  * @property-read Matchup[]|Collection $matchups
+ * @property-read string $faceitUrl
  * @method static ChampionshipFactory factory(...$parameters)
  */
 class Championship extends Model implements HasFaceItApi
@@ -59,6 +60,11 @@ class Championship extends Model implements HasFaceItApi
     public function setStartedAtAttribute(string $value): void
     {
         $this->attributes['started_at'] = Carbon::createFromTimestampMsUTC($value);
+    }
+
+    public function getFaceitUrlAttribute(): string
+    {
+        return 'https://www.faceit.com/en/championship/' . $this->faceit_id . '/' . $this->name;
     }
 
     public static function fromFaceItApi(array $payload): ?self

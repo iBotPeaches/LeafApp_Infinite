@@ -17,6 +17,11 @@
     <div class="columns">
         <div class="column is-one-fifth">
             @include('partials.hcs.bracket_panel')
+            <article class="message is-link">
+                <div class="message-body">
+                    View on <a target="_blank" href="{{ $championship->faceitUrl }}">FaceIt</a>
+                </div>
+            </article>
         </div>
         <div class="column">
             @include('partials.hcs.bracket_table')
