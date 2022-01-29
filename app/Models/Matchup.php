@@ -79,7 +79,7 @@ class Matchup extends Model implements HasFaceItApi
 
     public function getTitleAttribute(): string
     {
-        return $this->bracket->description . ' Round ' . $this->round .
+        return $this->bracket?->description . ' Round ' . $this->round .
             ' ' . $this->winner?->name . ' vs ' . $this->loser?->name;
     }
 
