@@ -27,7 +27,7 @@ class PullXuid implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping((string)$this->player->id))->dontRelease()
+            (new WithoutOverlapping($this->player->id . 'xuid'))->dontRelease()
         ];
     }
 
