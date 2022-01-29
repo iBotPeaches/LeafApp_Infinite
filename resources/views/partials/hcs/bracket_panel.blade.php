@@ -13,7 +13,7 @@
         >
             Round {{ $roundNumber }}
             <span class="is-pulled-right">
-                <span class="tag <?= $round == $roundNumber ? 'is-success' : 'is-light'; ?>">{{ $teams }} matches</span>
+                <span class="tag <?= $round == $roundNumber ? 'is-success' : 'is-light'; ?>">{{ $teams }} matchups</span>
             </span>
         </a>
     @endforeach
