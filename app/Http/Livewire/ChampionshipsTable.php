@@ -12,7 +12,7 @@ class ChampionshipsTable extends Component
     public function render(): View
     {
         $championships = Championship::query()
-            ->orderBy('started_at')
+            ->orderByDesc('started_at')
             ->paginate();
 
         return view('livewire.championships-table', [
