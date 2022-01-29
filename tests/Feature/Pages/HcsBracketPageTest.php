@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
 
+use App\Enums\Bracket;
 use App\Models\Championship;
 use App\Models\Matchup;
 use Illuminate\Support\Facades\Http;
@@ -11,7 +12,8 @@ use Tests\TestCase;
 
 class HcsBracketPageTest extends TestCase
 {
-    public function testLoadingBracketPageWithMatchups(): void
+    /** @dataProvider bracketDataProvider */
+    public function testLoadingBracketPageWithMatchups(?int $round, ?string $bracket): void
     {
         // Arrange
         Http::fake();
@@ -21,7 +23,7 @@ class HcsBracketPageTest extends TestCase
             ->createOne();
 
         // Act
-        $response = $this->get(route('championship', [$championship]));
+        $response = $this->get(route('championship', [$championship, $bracket, $round]));
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -41,5 +43,23 @@ class HcsBracketPageTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('championship-bracket');
+    }
+
+    public function bracketDataProvider(): array
+    {
+        return [
+            [
+                'round' => null,
+                'group' => null
+            ],
+            [
+                'round' => 1,
+                'group' => Bracket::WINNERS
+            ],
+            [
+                'round' => 2,
+                'group' => Bracket::LOSERS
+            ]
+        ];
     }
 }
