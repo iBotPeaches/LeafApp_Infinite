@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlayerController;
@@ -16,6 +17,9 @@ use App\Http\Controllers\HcsController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Webhook
+Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit');
 
 // Player
 Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
