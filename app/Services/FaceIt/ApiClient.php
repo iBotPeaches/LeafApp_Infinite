@@ -33,6 +33,14 @@ class ApiClient implements TournamentInterface
         return Championship::fromFaceItApi((array)$data);
     }
 
+    public function matchup(Championship $championship, string $matchupId): ?Matchup
+    {
+        $response = $this->pendingRequest->get('matches/' . $matchupId)->throw();
+        $data = $response->json();
+
+        return $this->parseMatchup($championship, (array)$data);
+    }
+
     public function bracket(Championship $championship): Collection
     {
         $perPage = 100;
@@ -56,31 +64,38 @@ class ApiClient implements TournamentInterface
                     continue;
                 }
 
-                $matchupData['_leaf']['championship'] = $championship;
-                $matchup = Matchup::fromFaceItApi((array)$matchupData);
-
-                foreach (Arr::get($matchupData, 'teams', []) as $teamId => $teamData) {
-                    $teamData['_leaf']['matchup'] = $matchup;
-                    $teamData['_leaf']['raw_matchup'] = $matchupData;
-                    $teamData['_leaf']['team_id'] = $teamId;
-                    $team = MatchupTeam::fromFaceItApi((array)$teamData);
-
-                    foreach (Arr::get($teamData, 'roster', []) as $playerData) {
-                        $playerData['_leaf']['team'] = $team;
-                        $playerData['_leaf']['matchup'] = $matchup;
-                        MatchupPlayer::fromFaceItApi($playerData);
-                    }
-
-                    if ($team) {
-                        Bus::chain([
-                            new FindPlayersFromTeam($team)
-                        ])->dispatch();
-                    }
-                }
+                $this->parseMatchup($championship, $matchupData);
             }
         }
 
 
         return $championship->matchups;
+    }
+
+    private function parseMatchup(Championship $championship, array $matchupData): ?Matchup
+    {
+        $matchupData['_leaf']['championship'] = $championship;
+        $matchup = Matchup::fromFaceItApi($matchupData);
+
+        foreach (Arr::get($matchupData, 'teams', []) as $teamId => $teamData) {
+            $teamData['_leaf']['matchup'] = $matchup;
+            $teamData['_leaf']['raw_matchup'] = $matchupData;
+            $teamData['_leaf']['team_id'] = $teamId;
+            $team = MatchupTeam::fromFaceItApi((array)$teamData);
+
+            foreach (Arr::get($teamData, 'roster', []) as $playerData) {
+                $playerData['_leaf']['team'] = $team;
+                $playerData['_leaf']['matchup'] = $matchup;
+                MatchupPlayer::fromFaceItApi($playerData);
+            }
+
+            if ($team) {
+                Bus::chain([
+                    new FindPlayersFromTeam($team)
+                ])->dispatch();
+            }
+        }
+
+        return $matchup;
     }
 }
