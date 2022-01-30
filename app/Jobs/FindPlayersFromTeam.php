@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Jobs;
 
 use App\Models\MatchupTeam;
+use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,7 +38,11 @@ class FindPlayersFromTeam implements ShouldQueue
         $this->client = App::make(InfiniteInterface::class);
 
         foreach ($this->team->faceitPlayers->whereNull('player_id') as $teamPlayer) {
-            $player = $this->client->appearance($teamPlayer->faceit_name);
+            $player = Player::query()->firstWhere('gamertag', $teamPlayer->faceit_name);
+            if (empty($player)) {
+                $player = $this->client->appearance($teamPlayer->faceit_name);
+            }
+
             if ($player) {
                 $teamPlayer->player()->associate($player);
                 $teamPlayer->saveOrFail();
