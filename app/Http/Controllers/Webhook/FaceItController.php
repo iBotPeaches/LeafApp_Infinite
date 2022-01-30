@@ -27,12 +27,12 @@ class FaceItController extends Controller
             $championship = $client->championship($championshipId);
         }
 
+        $matchup = null;
         if ($championship) {
             $matchId = Arr::get($payload, 'payload.id');
             $matchup = $client->matchup($championship, $matchId);
-            return response()->json($matchup?->toArray());
         }
 
-        return response()->json(null);
+        return response()->json($matchup?->toArray());
     }
 }
