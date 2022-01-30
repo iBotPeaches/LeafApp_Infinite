@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,9 @@ class HomeController extends Controller
     {
         $lastUpdated = Player::query()
             ->with('serviceRecord')
-            ->whereHas('serviceRecord')
+            ->whereHas('serviceRecord', function (Builder $query) {
+                $query->where('total_score', '>', 0);
+            })
             ->orderByDesc('updated_at')
             ->limit(5)
             ->get();
