@@ -2,14 +2,6 @@
 @section('title', 'Leaf - About')
 
 @section('content')
-    <article class="message is-link">
-        <div class="message-header">
-            <p>Legal</p>
-        </div>
-        <div class="message-body">
-            This application is offered by, which is solely responsible for its content. It is not sponsored or endorsed by Microsoft. This application uses HaloDotAPI, an unofficial, not sponsored or endorsed Halo API. All rights reserved. Microsoft, Halo, and the Halo Logo are trademarks of the Microsoft group of companies.
-        </div>
-    </article>
     <div class="columns">
         <div class="column">
             <article class="message is-dark">
@@ -25,7 +17,25 @@
                     <p>Feedback? Bugs?</p>
                 </div>
                 <div class="message-body">
-                    The <a href="https://github.com/iBotPeaches/LeafApp_Infinite/issues">GitHub</a> will handle it all.
+                    The <a href="https://github.com/iBotPeaches/LeafApp_Infinite/issues">GitHub</a> will handle it all or
+                    <a href="https://twitter.com/iBotPeaches">tweet me</a>.
+                </div>
+            </article>
+            <div class="divider"></div>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>Why are some players missing in HCS?</p>
+                </div>
+                <div class="message-body">
+                    They failed to put their correct gamertag in FaceIt. Blame them.
+                </div>
+            </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>What about old HCS tournaments?</p>
+                </div>
+                <div class="message-body">
+                    In time we will retroactively pull that data in.
                 </div>
             </article>
         </div>
@@ -46,6 +56,31 @@
                     You are probably not sharing match made stats. Check the Accessibility tab.
                 </div>
             </article>
+            <div class="divider"></div>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>When do HCS games show up?</p>
+                </div>
+                <div class="message-body">
+                    The instant FaceIt sends an API request to us.
+                </div>
+            </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>The games associated with a matchup are wrong!</p>
+                </div>
+                <div class="message-body">
+                    Our system attempts to automatically find the matches in a matchup. Sometimes its wrong.
+                </div>
+            </article>
         </div>
     </div>
+    <article class="message is-link">
+        <div class="message-header">
+            <p>Legal</p>
+        </div>
+        <div class="message-body">
+            This application is offered by, which is solely responsible for its content. It is not sponsored or endorsed by Microsoft. This application uses HaloDotAPI, an unofficial, not sponsored or endorsed Halo API. All rights reserved. Microsoft, Halo, and the Halo Logo are trademarks of the Microsoft group of companies.
+        </div>
+    </article>
 @endsection
