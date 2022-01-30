@@ -44,7 +44,10 @@ return [
 
     'faceit' => [
         'key' => env('FACEIT_KEY'),
-        'domain' => env('FACEIT_DOMAIN', 'https://open.faceit.com')
+        'domain' => env('FACEIT_DOMAIN', 'https://open.faceit.com'),
+        'webhook' => [
+            'secret' => env('FACEIT_WEBHOOK_SECRET', '')
+        ]
     ],
 
 ];
