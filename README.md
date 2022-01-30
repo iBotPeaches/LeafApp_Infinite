@@ -44,6 +44,7 @@ Used for HCS features for listing championships.
 
  * `FACEIT_KEY` - The API key given from [Developer Portal](https://developers.faceit.com)
  * `FACEIT_DOMAIN` - The base domain for FaceIt
+ * `FACEIT_WEBHOOK_SECRET` - The exchanged secret for validating Webhook messages.
 
 ### Dependencies
 
