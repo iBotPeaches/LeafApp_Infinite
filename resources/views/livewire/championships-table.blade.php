@@ -5,7 +5,7 @@
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
         <tr>
-            <th>Championship</th>
+            <th>Tournament</th>
             <th>Region</th>
             <th>Date</th>
         </tr>
