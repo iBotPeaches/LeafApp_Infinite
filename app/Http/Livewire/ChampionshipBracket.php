@@ -26,11 +26,11 @@ class ChampionshipBracket extends Component
 
         $rounds = $this->championship->matchups
             ->where('group', $bracketEnum->toNumerical())
+            ->sortBy('round')
             ->groupBy('round')
             ->map(function (\Illuminate\Support\Collection $row) {
                 return $row->count();
-            })
-            ->reverse();
+            });
 
         return view('livewire.championship-bracket', [
             'bracket' => $this->bracket,
