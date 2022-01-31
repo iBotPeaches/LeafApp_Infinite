@@ -46,6 +46,13 @@ Used for HCS features for listing championships.
  * `FACEIT_DOMAIN` - The base domain for FaceIt
  * `FACEIT_WEBHOOK_SECRET` - The exchanged secret for validating Webhook messages.
 
+Additionally, register webhooks for the following events:
+
+ * `match_status_finished`
+ * `championship_finished`
+
+Finally, create a security header called `X-Cat-Dog` and set it to a random value that you add to env.
+
 ### Dependencies
 
 #### Node
