@@ -7,8 +7,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Championship\MockChampionshipBracketService;
 use Tests\Mocks\Championship\MockChampionshipService;
 use Tests\Mocks\Championship\MockMatchupService;
+use Tests\Mocks\Webhooks\MockChampionshipFinished;
 use Tests\Mocks\Webhooks\MockMatchStatusFinished;
 use Tests\TestCase;
 
@@ -29,6 +31,30 @@ class IncomingFaceItWebhookTest extends TestCase
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
             ->push($mockMatchupResponse, Response::HTTP_OK);
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function testIncomingFaceItChampionshipCompleted(): void
+    {
+        // Arrange & Act
+        Queue::fake();
+        $payload = (new MockChampionshipFinished())->success();
+        $headers = [
+            'X-Cat-Dog' => config('services.faceit.webhook.secret')
+        ];
+
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
 
         $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
 

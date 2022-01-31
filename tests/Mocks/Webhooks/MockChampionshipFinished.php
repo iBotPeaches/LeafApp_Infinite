@@ -6,7 +6,7 @@ namespace Tests\Mocks\Webhooks;
 use App\Services\FaceIt\Enums\WebhookEvent;
 use Tests\Mocks\BaseMock;
 
-class MockMatchStatusFinished extends BaseMock
+class MockChampionshipFinished extends BaseMock
 {
     public function error(): array
     {
@@ -17,7 +17,7 @@ class MockMatchStatusFinished extends BaseMock
     {
         return [
             'transaction_id' => $this->faker->uuid,
-            'event' => WebhookEvent::MATCH_STATUS_FINISHED,
+            'event' => WebhookEvent::CHAMPIONSHIP_FINISHED,
             'event_id' => $this->faker->uuid,
             'third_party_id' => $this->faker->uuid,
             'app_id' => $this->faker->uuid,
@@ -27,14 +27,7 @@ class MockMatchStatusFinished extends BaseMock
             'payload' => [
                 'id' => '1-' . $this->faker->uuid,
                 'organizer_id' => $this->faker->uuid,
-                'region' => 'NA',
                 'game' => 'halo_infinite',
-                'version' => 1,
-                'entity' => [
-                    'id' => $this->faker->uuid,
-                    'name' => 'HCS Something',
-                    'type' => 'championship'
-                ]
             ]
         ];
     }
