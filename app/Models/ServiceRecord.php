@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,13 +53,12 @@ use Illuminate\Support\Collection;
  * @property-read string $kd_color
  * @property-read string $kda_color
  * @property-read string $win_percent_color
- * @property-read string $accuracy_color
  * @property-read Collection $hydrated_medals
  * @method static ServiceRecordFactory factory(...$parameters)
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasMedals;
+    use HasFactory, HasMedals, HasAccuracy;
 
     public $guarded = [
         'id'
@@ -107,24 +107,6 @@ class ServiceRecord extends Model implements HasHaloDotApi
 
             default:
             case $this->win_percent < 35:
-                return 'has-text-danger';
-        }
-    }
-
-    public function getAccuracyColorAttribute(): string
-    {
-        switch (true) {
-            case $this->accuracy > 55:
-                return 'has-text-success';
-
-            case $this->accuracy > 40 && $this->accuracy <= 55:
-                return 'has-text-info';
-
-            case $this->accuracy > 20 && $this->accuracy <= 40:
-                return 'has-text-warning';
-
-            default:
-            case $this->accuracy < 20:
                 return 'has-text-danger';
         }
     }

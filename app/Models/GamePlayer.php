@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
 use App\Models\Traits\HasMedals;
@@ -63,7 +64,7 @@ use Illuminate\Support\Collection;
  */
 class GamePlayer extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals;
+    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals, HasAccuracy;
 
     public $casts = [
         'medals' => 'array',
