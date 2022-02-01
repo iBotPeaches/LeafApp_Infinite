@@ -8,6 +8,7 @@ use App\Services\FaceIt\TournamentInterface;
 use App\Services\FaceIt\ApiClient as FaceItApiClient;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
 use App\Services\XboxApi\XboxInterface;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(TournamentInterface::class, function ($app) {
             return new FaceItApiClient($app['config']['services']['faceit']);
         });
+
+        // @codeCoverageIgnoreStart
+        Blade::directive('th', function ($expression) {
+            return "<?php echo (new NumberFormatter('en_US', NumberFormatter::ORDINAL))->format({$expression}); ?>";
+        });
+        // @codeCoverageIgnoreEnd
     }
 }
