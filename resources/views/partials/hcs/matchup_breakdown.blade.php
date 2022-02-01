@@ -9,7 +9,7 @@
         <div class="column">
             @include('partials.hcs.team_snippet.4v4', [
                 'color' => 'danger',
-                'team' => $matchup->loser
+                'team' => $matchup->winner
             ])
         </div>
         <div class="column">
