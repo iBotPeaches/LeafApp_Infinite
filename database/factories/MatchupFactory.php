@@ -22,8 +22,8 @@ class MatchupFactory extends Factory
         return [
             'faceit_id' => $this->faker->unique()->uuid,
             'championship_id' => Championship::factory(),
-            'round' => $this->faker->numberBetween(1, 12),
-            'group' => $this->faker->numberBetween(1, 2),
+            'round' => 1,
+            'group' => 1,
             'best_of' => 3,
             'started_at' => now(),
             'ended_at' => now(),
