@@ -3,10 +3,15 @@
 ?>
 <div>
     <div class="columns">
-        <div class="column is-one-third">
+        <div class="column">
             <div class="card">
                 <div class="card-content">
-                    <p class="title">{{ $championship->name }}</p>
+                    <p class="title">
+                        {{ $championship->name }}
+                        <span class="tag is-black">
+                            {{ $championship->started_at->toFormattedDateString() }}
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>
