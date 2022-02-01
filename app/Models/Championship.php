@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
  * @property Carbon $started_at
  * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
+ * @property-read bool $is_ffa
  * @method static ChampionshipFactory factory(...$parameters)
  */
 class Championship extends Model implements HasFaceItApi
@@ -65,6 +66,11 @@ class Championship extends Model implements HasFaceItApi
     public function getFaceitUrlAttribute(): string
     {
         return 'https://www.faceit.com/en/championship/' . $this->faceit_id . '/' . $this->name;
+    }
+
+    public function getIsFfaAttribute(): bool
+    {
+        return Str::contains($this->name, 'FFA');
     }
 
     public static function fromFaceItApi(array $payload): ?self
