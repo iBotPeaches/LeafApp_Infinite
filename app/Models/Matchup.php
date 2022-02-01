@@ -98,6 +98,11 @@ class Matchup extends Model implements HasFaceItApi
         return Bracket::coerce($this->group);
     }
 
+    public function getTeamAt(int $place): ?MatchupTeam
+    {
+        return $this->matchupTeams->firstWhere('points', $place);
+    }
+
     public static function fromFaceItApi(array $payload): ?self
     {
         $matchId = Arr::get($payload, 'match_id');
