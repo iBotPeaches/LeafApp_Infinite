@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models\Pivots;
 
 use App\Enums\Outcome;
+use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
 use App\Models\Traits\HasScoring;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class PersonalResult extends Pivot
 {
-    use HasKd, HasScoring, HasCsr;
+    use HasKd, HasScoring, HasCsr, HasAccuracy;
 
     public $casts = [
         'outcome' => Outcome::class
