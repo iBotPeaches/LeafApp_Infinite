@@ -76,7 +76,7 @@ class MatchupTeam extends Model implements HasFaceItApi
         $team->matchup()->associate($matchup);
         $team->name = count(Arr::get($payload, 'roster', [])) > 1
             ? Arr::get($payload, 'name')
-            : Arr::get($payload, 'roster.0.game_player_name');
+            : Arr::get($payload, 'roster.0.game_player_name', Arr::get($payload, 'name'));
         $team->points = (int)Arr::get($matchupPayload, 'results.score.' . $teamInternalId, 0);
         $team->outcome = Arr::get($matchupPayload, 'results.winner') === $teamInternalId
             ? Outcome::WIN()
