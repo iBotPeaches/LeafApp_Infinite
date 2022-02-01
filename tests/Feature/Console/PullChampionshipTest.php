@@ -50,6 +50,7 @@ class PullChampionshipTest extends TestCase
         $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
         $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
+        Arr::set($mockChampionshipResponse, 'name', 'HCS FFA 1');
         // TODO - Make setting players per team easier, this changes 4 to 1.
         $match1Player = Arr::get($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster.0');
         Arr::set($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster', []);
