@@ -41,6 +41,33 @@ class PullChampionshipTest extends TestCase
         Queue::assertPushed(FindPlayersFromTeam::class);
     }
 
+    public function testValidDataPullAsFfa(): void
+    {
+        // Arrange
+        Queue::fake();
+        $championshipId = $this->faker->uuid;
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        // TODO - Make setting players per team easier, this changes 4 to 1.
+        $match1Player = Arr::get($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster.0');
+        Arr::set($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster', []);
+        Arr::set($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster.0', $match1Player);
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
+
+        // Act & Assert
+        $this
+            ->artisan('app:championship ' . $championshipId)
+            ->assertExitCode(CommandAlias::SUCCESS);
+
+        Queue::assertPushed(FindPlayersFromTeam::class);
+    }
+
     public function testValidDataPullWithInvalidRegion(): void
     {
         // Expectations

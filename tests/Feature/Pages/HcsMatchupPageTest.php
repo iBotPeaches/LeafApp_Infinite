@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Pages;
 
 use App\Enums\Outcome;
+use App\Models\Championship;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupPlayer;
@@ -44,6 +45,39 @@ class HcsMatchupPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('championship-matchup');
     }
+
+    public function testLoadingMatchupPageForFfa(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $championship = Championship::factory()->createOne([
+            'name' => 'FFA'
+        ]);
+
+        $matchup = Matchup::factory()
+            ->createOne([
+                'championship_id' => $championship->id
+            ]);
+
+        MatchupTeam::factory()->createOne([
+            'outcome' => Outcome::WIN,
+            'matchup_id' => $matchup->id
+        ]);
+
+        MatchupTeam::factory()->createOne([
+            'outcome' => Outcome::LOSS,
+            'matchup_id' => $matchup->id,
+        ]);
+
+        // Act
+        $response = $this->get(route('matchup', [$matchup->championship, $matchup]));
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('championship-matchup');
+    }
+
 
     public function testLoadingMatchupPageWithNoData(): void
     {

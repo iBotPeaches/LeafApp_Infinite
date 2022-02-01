@@ -6,6 +6,8 @@ namespace Tests\Feature\Pages;
 use App\Enums\Bracket;
 use App\Models\Championship;
 use App\Models\Matchup;
+use App\Models\MatchupTeam;
+use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -13,14 +15,21 @@ use Tests\TestCase;
 class HcsBracketPageTest extends TestCase
 {
     /** @dataProvider bracketDataProvider */
-    public function testLoadingBracketPageWithMatchups(?int $round, ?string $bracket): void
+    public function testLoadingBracketPageWithMatchups(?int $round, ?string $bracket, array $attributes): void
     {
         // Arrange
         Http::fake();
 
         $championship = Championship::factory()
             ->has(Matchup::factory())
-            ->createOne();
+            ->createOne($attributes);
+
+        MatchupTeam::factory()
+            ->has(MatchupPlayer::factory(), 'faceitPlayers')
+            ->createOne([
+                'matchup_id' => $championship->matchups->first()->id,
+                'points' => 2
+            ]);
 
         // Act
         $response = $this->get(route('championship', [$championship, $bracket, $round]));
@@ -50,15 +59,32 @@ class HcsBracketPageTest extends TestCase
         return [
             [
                 'round' => null,
-                'group' => null
+                'group' => null,
+                'attributes' => []
             ],
             [
                 'round' => 1,
-                'group' => Bracket::WINNERS
+                'group' => Bracket::WINNERS,
+                'attributes' => []
             ],
             [
                 'round' => 2,
-                'group' => Bracket::LOSERS
+                'group' => Bracket::LOSERS,
+                'attributes' => []
+            ],
+            [
+                'round' => 1,
+                'group' => Bracket::WINNERS,
+                'attributes' => [
+                    'name' => 'FFA'
+                ]
+            ],
+            [
+                'round' => 2,
+                'group' => Bracket::LOSERS,
+                'attributes' => [
+                    'name' => 'FFA'
+                ]
             ]
         ];
     }
