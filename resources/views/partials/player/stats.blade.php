@@ -64,7 +64,7 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Accuracy</p>
-                <p class="title {{ $serviceRecord->accuracy_color }}">
+                <p class="title has-text-{{ $serviceRecord->accuracy_color }}">
                     {{ number_format($serviceRecord->accuracy, 2) }}%
                 </p>
             </div>
