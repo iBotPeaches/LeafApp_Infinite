@@ -12,7 +12,7 @@ $team = $gamePlayers->first()->team;
                 <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
                     <span class="is-hidden-mobile">CSR: </span>{{ number_format($gamePlayers->avg('pre_csr'), 2) }}
                 </span>
-                @if ($team->mmr)
+                @if ($team && $team->mmr)
                     | <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
                         <span class="is-hidden-mobile">MMR: </span>{{ number_format($team->mmr, 2) }}
                     </span>
