@@ -177,12 +177,16 @@ class Csr extends Model implements HasHaloDotApi
             $csr->csr = Arr::get($playlist, 'response.current.value');
             $csr->matches_remaining = Arr::get($playlist, 'response.current.measurement_matches_remaining');
 
+            // Subtracting 1 from `sub_tier` and `next_sub_tier` is because Autocode 0.3.8
+            // Turned these from indexes to levels. This is more sane, but entire codebase expects indexes
+            // Old data would become invalid and this is easier for now. For future, we should one-off migrate all
+            // data in database to +1, then remove the -1 below.
             $csr->tier = Arr::get($playlist, 'response.current.tier');
             $csr->tier_start_csr = Arr::get($playlist, 'response.current.tier_start');
-            $csr->sub_tier = Arr::get($playlist, 'response.current.sub_tier');
+            $csr->sub_tier = ((int)Arr::get($playlist, 'response.current.sub_tier')) - 1;
 
             $csr->next_tier = Arr::get($playlist, 'response.current.next_tier');
-            $csr->next_sub_tier = Arr::get($playlist, 'response.current.next_sub_tier');
+            $csr->next_sub_tier = ((int)Arr::get($playlist, 'response.current.next_sub_tier')) - 1;
             $csr->next_csr = Arr::get($playlist, 'response.current.next_tier_start');
 
             $csr->season_tier = Arr::get($playlist, 'response.season.tier');
