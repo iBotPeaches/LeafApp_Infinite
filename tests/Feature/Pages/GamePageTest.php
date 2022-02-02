@@ -5,6 +5,7 @@ namespace Tests\Feature\Pages;
 
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Playlist;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,30 @@ class GamePageTest extends TestCase
         $game = Game::factory()->createOne([
             'version' => '0.0.1',
             'was_pulled' => true
+        ]);
+
+        // Act
+        $response = $this->get('/game/' . $game->uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-page');
+        $response->assertSeeLivewire('update-game-panel');
+    }
+
+    public function testLoadingGamePageWithSocialGame(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $playlist = Playlist::factory()->createOne([
+            'is_ranked' => 1,
+            'queue' => null,
+            'input' => null
+        ]);
+
+        $game = Game::factory()->createOne([
+            'playlist_id' => $playlist->id
         ]);
 
         // Act
