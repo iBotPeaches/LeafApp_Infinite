@@ -89,7 +89,9 @@ $team = $gamePlayers->first()->team;
                     <td class="{{ $gamePlayer->getKdaColor() }}">
                         {{ $gamePlayer->kda }}
                     </td>
-                    <td>{{ $gamePlayer->accuracy }}%</td>
+                    <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
+                        {{ $gamePlayer->accuracy }}%
+                    </td>
                     <td>{{ $gamePlayer->score }}</td>
                     <td>
                         {{ $gamePlayer->rank }}
