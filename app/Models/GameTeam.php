@@ -21,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property Outcome $outcome
  * @property int $rank
  * @property int $score
+ * @property float $mmr
  * @property int $final_score
  * @property-read Game $game
  * @property-read string $color
@@ -74,6 +75,7 @@ class GameTeam extends Model implements HasHaloDotApi
         $gameTeam->emblem_url = Arr::get($payload, 'team.emblem_url');
         $gameTeam->outcome = Arr::get($payload, 'outcome');
         $gameTeam->rank = Arr::get($payload, 'rank');
+        $gameTeam->mmr = Arr::get($payload, 'team.skill.mmr');
         $gameTeam->score = Arr::get($payload, 'stats.core.score');
 
         // We are going to check what type of category this is to extract the mode specific final value
