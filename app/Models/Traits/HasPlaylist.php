@@ -14,15 +14,19 @@ trait HasPlaylist
 {
     public function getTitleAttribute(): string
     {
-        return $this->queue->description ?? '';
+        return $this->queue?->description . ' - ' . $this->input?->description;
     }
 
-    public function getIconAttribute(): ? string
+    public function getIconAttribute(): ?string
     {
-        if ($this->queue && $this->input && $this->queue->is(Queue::SOLO_DUO)) {
+        if ($this->queue && $this->input && $this->queue->is(Queue::SOLO_DUO())) {
             return $this->input->is(Input::CONTROLLER())
                 ? '<i class="ml-1 fa fa-gamepad"></i>'
                 : '<i class="ml-1 fa fa-mouse"></i>';
+        }
+
+        if ($this->queue && $this->input && $this->queue->is(Queue::OPEN())) {
+            return '<i class="ml-1 fa fa-globe"></i>';
         }
 
         return null;
