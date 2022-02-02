@@ -29,9 +29,7 @@
                             </abbr>
                         </a>
                         @if ($game->playlist->is_ranked)
-                            <span class="has-tooltip-arrow" data-tooltip="Ranked ({{ $game->playlist->title }})">
-                                <i class="fa fa-crosshairs"></i>
-                            </span>
+                            @include('partials.game.playlist_type', ['playlist' => $game->playlist])
                         @endif
                     </td>
                     <td>{{ $game->map->name }}</td>
