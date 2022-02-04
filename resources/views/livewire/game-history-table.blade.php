@@ -2,8 +2,9 @@
 /** @var App\Models\Game[] $games */
 ?>
 <div>
-    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
+    <div class="table-container">
+        <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
             <tr>
                 <th>Playlist</th>
                 <th>Map</th>
@@ -18,8 +19,8 @@
                 <th>Rank</th>
                 <th>Occurred At</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @foreach ($games as $game)
                 <tr>
                     <td>
@@ -56,7 +57,8 @@
                     <td>{{ $game->occurred_at->diffForHumans() }}</td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
     {{ $games->links() }}
 </div>
