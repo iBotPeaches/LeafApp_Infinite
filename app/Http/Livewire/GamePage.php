@@ -7,13 +7,14 @@ use App\Enums\MedalType;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Medal;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class GamePage extends Component
 {
     public Game $game;
-    public array $powerfulMedals = [];
+    public array $medals = [];
 
     // @phpstan-ignore-next-line
     public $listeners = [
@@ -27,20 +28,31 @@ class GamePage extends Component
         if (! $this->game->outdated) {
             $this->game->players->each(function (GamePlayer $gamePlayer) {
                 $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
-                    $this->powerfulMedals[$medal->id]['medal'] = $medal;
+                    $this->medals[$medal->id]['medal'] = $medal;
 
                     // Pass on our medal specific count and attach to the specific gamePlayer
                     $gamePlayer['medal_' . $medal->id] = $medal['count'];
 
-                    $this->powerfulMedals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
+                    $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
                 });
             });
         }
 
+        foreach ($this->medals as &$medal) {
+            usort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
+                return Arr::get($b, 'medal_' . $medal['medal']->id) <=> Arr::get($a, 'medal_' . $medal['medal']->id);
+            });
+        }
+
+        // TODO - When API returns difficulty again, order by that
+        usort($this->medals, function (array $a, array $b) {
+            return Arr::get($a, 'medal.type') <=> Arr::get($b, 'medal.type');
+        });
+
         return view('livewire.game-page', [
             'game' => $this->game,
             'groupedGamePlayers' => $groupedPlayers,
-            'powerfulMedals' => $this->powerfulMedals
+            'powerfulMedals' => $this->medals
         ]);
     }
 }
