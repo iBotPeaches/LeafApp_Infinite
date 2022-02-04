@@ -68,18 +68,18 @@ class Csr extends Model implements HasHaloDotApi
     {
         if ($this->hasNextRank()) {
             return $this->tier . ' ' . ($this->sub_tier + 1);
-        } else {
-            return $this->tier;
         }
+
+        return $this->tier;
     }
 
     public function getNextRankAttribute(): string
     {
         if ($this->hasNextRank() && !$this->isNextOnyx()) {
             return $this->next_tier . ' ' . ($this->next_sub_tier + 1);
-        } else {
-            return $this->next_tier;
         }
+
+        return $this->next_tier;
     }
 
     public function getNextXpForLevelAttribute(): int
