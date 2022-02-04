@@ -14,6 +14,7 @@ class ApiClient implements XboxInterface
     public function __construct(array $config)
     {
         $this->pendingRequest = Http::asJson()
+            ->withUserAgent('Leaf - v' . config('services.autocode.version', 'dirty'))
             ->baseUrl($config['domain']);
     }
 
