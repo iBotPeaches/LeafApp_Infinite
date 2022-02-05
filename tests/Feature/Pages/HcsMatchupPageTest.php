@@ -111,6 +111,9 @@ class HcsMatchupPageTest extends TestCase
             ],
             [
                 'round' => 2
+            ],
+            [
+                'round' => 3
             ]
         ];
     }
