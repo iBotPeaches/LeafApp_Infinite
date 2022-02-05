@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\QueueName;
 use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
@@ -24,6 +25,7 @@ class PullMatchHistory implements ShouldQueue
     public function __construct(Player $player)
     {
         $this->player = $player;
+        $this->onQueue(QueueName::MATCH_HISTORY);
     }
 
     public function middleware(): array

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\QueueName;
 use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
@@ -11,7 +12,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
-use function resolve;
 
 class PullAppearance implements ShouldQueue
 {
@@ -22,6 +22,7 @@ class PullAppearance implements ShouldQueue
     public function __construct(Player $player)
     {
         $this->player = $player;
+        $this->onQueue(QueueName::APPEARANCE);
     }
 
     public function middleware(): array

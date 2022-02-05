@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\QueueName;
 use App\Models\Player;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\ThrottlesExceptions;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
-class PullXuid implements ShouldQueue
+class PullXuid implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,12 +25,14 @@ class PullXuid implements ShouldQueue
     public function __construct(Player $player)
     {
         $this->player = $player;
+        $this->onQueue(QueueName::XUID);
     }
 
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'xuid'))->dontRelease()
+            (new WithoutOverlapping($this->player->id . 'xuid'))->dontRelease(),
+            (new ThrottlesExceptions(5, 10))
         ];
     }
 

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Jobs;
 
+use App\Enums\QueueName;
 use App\Models\MatchupTeam;
 use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
@@ -24,6 +25,7 @@ class FindPlayersFromTeam implements ShouldQueue
     public function __construct(MatchupTeam $team)
     {
         $this->team = $team;
+        $this->onQueue(QueueName::HCS);
     }
 
     public function middleware(): array
