@@ -46,8 +46,8 @@ class AddMatchesTable extends Migration
             $table->unsignedSmallInteger('vehicle_destroys');
             $table->unsignedSmallInteger('vehicle_hijacks');
             $table->unsignedSmallInteger('medal_count');
-            $table->unsignedSmallInteger('damage_taken');
-            $table->unsignedSmallInteger('damage_dealt');
+            $table->unsignedMediumInteger('damage_taken');
+            $table->unsignedMediumInteger('damage_dealt');
             $table->unsignedSmallInteger('shots_fired');
             $table->unsignedSmallInteger('shots_landed');
             $table->unsignedSmallInteger('shots_missed');
