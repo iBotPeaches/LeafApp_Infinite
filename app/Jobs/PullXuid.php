@@ -24,10 +24,6 @@ class PullXuid implements ShouldQueue
     {
         $this->player = $player;
         $this->onQueue(QueueName::XUID);
-
-        if ($this->player->xuid) {
-            $this->delete();
-        }
     }
 
     public function middleware(): array
