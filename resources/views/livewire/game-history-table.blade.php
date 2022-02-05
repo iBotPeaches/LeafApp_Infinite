@@ -9,15 +9,16 @@
                 <th>Playlist</th>
                 <th>Map</th>
                 <th>Gametype</th>
-                <th>Outcome</th>
-                <th>Kills</th>
-                <th>Deaths</th>
+                <th>Result</th>
+                <th><abbr title="Kills">K</abbr></th>
+                <th><abbr title="Deaths">D</abbr></th>
+                <th><abbr title="Assists">A</abbr></th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
                 <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                 <th><abbr title="Ordered by Points">Score</abbr></th>
                 <th>Rank</th>
-                <th>Occurred At</th>
+                <th>Date</th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +44,7 @@
                     </td>
                     <td>{{ $game->personal->kills }}</td>
                     <td>{{ $game->personal->deaths }}</td>
+                    <td>{{ $game->personal->assists }}</td>
                     <td class="{{ $game->personal->getKdColor() }}">
                         {{ $game->personal->kd }}
                     </td>
