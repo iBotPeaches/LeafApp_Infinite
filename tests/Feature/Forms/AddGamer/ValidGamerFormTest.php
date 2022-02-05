@@ -56,6 +56,11 @@ class ValidGamerFormTest extends TestCase
             ->set('gamertag', $gamertag)
             ->call('submit')
             ->assertRedirect('/player/' . $gamertag);
+
+        $this->assertDatabaseHas('players', [
+            'gamertag' => $gamertag,
+            'xuid' => Arr::get($mockXuidResponse, 'xuid')
+        ]);
     }
 
     public function testValidResponseIfXuidServiceDisabled(): void
