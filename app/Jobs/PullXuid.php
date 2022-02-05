@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\ThrottlesExceptions;
-use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class PullXuid implements ShouldQueue
@@ -25,12 +24,15 @@ class PullXuid implements ShouldQueue
     {
         $this->player = $player;
         $this->onQueue(QueueName::XUID);
+
+        if ($this->player->xuid) {
+            $this->delete();
+        }
     }
 
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'xuid'))->dontRelease(),
             (new ThrottlesExceptions(5, 10))
         ];
     }
@@ -49,7 +51,8 @@ class PullXuid implements ShouldQueue
 
     public function handle(): void
     {
-        if (!config('services.xboxapi.enabled')) {
+        if (!config('services.xboxapi.enabled') || $this->player->xuid) {
+            $this->delete();
             return;
         }
 
