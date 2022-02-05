@@ -55,8 +55,10 @@ class PullXuid implements ShouldQueue
         }
 
         $this->player->syncXuidFromXboxApi();
-        if ($this->player->isDirty('xuid') && $this->player->xuid) {
-            $this->checkForGamertagChange();
+        if ($this->player->isDirty('xuid')) {
+            if ($this->player->xuid) {
+                $this->checkForGamertagChange();
+            }
             $this->player->saveOrFail();
         }
     }
