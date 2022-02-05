@@ -132,6 +132,7 @@ class Player extends Model implements HasHaloDotApi
                 'outcome',
                 'kills',
                 'deaths',
+                'assists',
                 'kd',
                 'kda',
                 'accuracy',
