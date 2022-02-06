@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
@@ -27,6 +28,7 @@ use Illuminate\Support\Arr;
  * @property Carbon $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
+ * @property-read Game[]|Collection $games
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read string $score
@@ -47,6 +49,11 @@ class Matchup extends Model implements HasFaceItApi
 
     public $with = [
         'matchupTeams'
+    ];
+
+    public $dates = [
+        'started_at',
+        'ended_at'
     ];
 
     public $timestamps = false;
@@ -147,5 +154,10 @@ class Matchup extends Model implements HasFaceItApi
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class);
+    }
+
+    public function games(): BelongsToMany
+    {
+        return $this->belongsToMany(Game::class, 'matchup_game');
     }
 }
