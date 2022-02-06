@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property Outcome $outcome
  * @property int $kills
  * @property int $deaths
+ * @property int $assists
  * @property float $kd
  * @property float $kda
  * @property float $accuracy
