@@ -32,7 +32,7 @@ use Illuminate\Support\Arr;
  * @property boolean $was_pulled
  * @property-read Category $category
  * @property-read Map $map
- * @property-read Playlist $playlist
+ * @property-read Playlist|null $playlist
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
