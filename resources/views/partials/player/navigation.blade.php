@@ -22,5 +22,11 @@
                 <span>Matches</span>
             </a>
         </li>
+        <li class="<?= $type === App\Enums\PlayerTab::CUSTOM ? 'is-active' : null; ?>">
+            <a href="<?= route('player', [$player, App\Enums\PlayerTab::CUSTOM]); ?>">
+                <span class="icon"><i class="fa fa-redo"></i></span>
+                <span>Customs</span>
+            </a>
+        </li>
     </ul>
 </div>
