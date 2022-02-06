@@ -23,7 +23,7 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 
 // Player
 Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
-Route::pattern('type', 'overview|competitive|matches');
+Route::pattern('type', 'overview|competitive|matches|custom');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
 
