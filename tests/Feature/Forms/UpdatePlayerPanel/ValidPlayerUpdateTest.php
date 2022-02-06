@@ -4,15 +4,13 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\UpdatePlayerPanel;
 
 use App\Enums\PlayerTab;
-use App\Http\Livewire\CompetitivePage;
-use App\Http\Livewire\GameHistoryTable;
-use App\Http\Livewire\OverviewPage;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
+use App\Services\Autocode\Enums\Mode;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -42,6 +40,8 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
@@ -52,6 +52,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -85,6 +87,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
@@ -93,6 +96,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -129,6 +133,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
 
@@ -137,6 +142,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $oldPlayer = Player::factory()->createOne([
@@ -180,12 +186,14 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -249,7 +257,9 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Profile updated!')
             ->assertEmitted('$refresh');
 
-        Queue::assertNotPushed(PullMatchHistory::class);
+        Queue::assertPushed(PullMatchHistory::class, function (PullMatchHistory $job) {
+            return Mode::CUSTOM()->is($job->mode);
+        });
     }
 
     public function testInitialPageLoadDeferredFromApiCalls(): void
@@ -301,6 +311,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
@@ -308,6 +319,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
@@ -340,6 +352,10 @@ class ValidPlayerUpdateTest extends TestCase
             'matches' => [
                 'type' => PlayerTab::MATCHES,
                 'event' => 'game-history-table',
+            ],
+            'custom' => [
+                'type' => PlayerTab::CUSTOM,
+                'event' => 'game-custom-history-table',
             ]
         ];
     }
