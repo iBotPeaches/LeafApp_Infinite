@@ -6,12 +6,17 @@
     <div class="columns">
         <div class="column">
             @include('partials.player.player-card')
-            <livewire:update-player-panel :player="$player" :type="$type" />
+            @if (in_array($type, ['matches', 'custom']))
+                <div class="notification">
+                    <a class="is-small" href="{{ route('historyCsv', [$player]) }}">export to csv</a>
+                </div>
+            @endif
             @if ($player->is_private)
                 <div class="notification is-warning">
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
+            <livewire:update-player-panel :player="$player" :type="$type" />
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
