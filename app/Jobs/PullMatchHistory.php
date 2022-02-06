@@ -5,6 +5,7 @@ namespace App\Jobs;
 
 use App\Enums\QueueName;
 use App\Models\Player;
+use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,10 +22,12 @@ class PullMatchHistory implements ShouldQueue
     public int $timeout = 720;
 
     private Player $player;
+    private Mode $mode;
 
-    public function __construct(Player $player)
+    public function __construct(Player $player, Mode $mode)
     {
         $this->player = $player;
+        $this->mode = $mode;
         $this->onQueue(QueueName::MATCH_HISTORY);
     }
 
@@ -40,6 +43,6 @@ class PullMatchHistory implements ShouldQueue
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->matches($this->player);
+        $client->matches($this->player, $this->mode);
     }
 }
