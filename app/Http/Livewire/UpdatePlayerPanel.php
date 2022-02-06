@@ -81,6 +81,9 @@ class UpdatePlayerPanel extends Component
             case PlayerTab::MATCHES:
                 $this->emitTo(GameHistoryTable::class, '$refresh');
                 break;
+            case PlayerTab::CUSTOM:
+                $this->emitTo(GameCustomHistoryTable::class, '$refresh');
+                break;
         }
     }
 }
