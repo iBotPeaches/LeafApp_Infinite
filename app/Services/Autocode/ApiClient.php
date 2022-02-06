@@ -10,6 +10,7 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Services\Autocode\Enums\Filter;
+use App\Services\Autocode\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
@@ -55,12 +56,13 @@ class ApiClient implements InfiniteInterface
         return $player->csrs->first();
     }
 
-    public function matches(Player $player, bool $forceUpdate = false): Collection
+    public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection
     {
         $perPage = 25;
         $count = $perPage;
         $offset = 0;
         $firstPulledGameId = null;
+        $lastGameIdVariable = $mode->is(Mode::MATCHMADE()) ? 'last_game_id_pulled' : 'last_custom_game_id_pulled';
 
         while ($count !== 0) {
             $response = $this->pendingRequest->post('stats/matches/list', [
@@ -68,7 +70,8 @@ class ApiClient implements InfiniteInterface
                 'limit' => [
                     'count' => $perPage,
                     'offset' => $offset
-                ]
+                ],
+                'mode' => (string)$mode->value
             ]);
 
             if ($response->throw()->successful()) {
@@ -86,15 +89,15 @@ class ApiClient implements InfiniteInterface
 
                     GamePlayer::fromHaloDotApi($gameData);
 
-                    if (!$forceUpdate && $game && $game->id === $player->last_game_id_pulled) {
+                    if (!$forceUpdate && $game && $game->id === $player->$lastGameIdVariable) {
                         break 2;
                     }
                 }
             }
         }
 
-        // Save the Player with the latest game pulled
-        $player->last_game_id_pulled = $firstPulledGameId;
+        // Save the Player with the latest game pulled (Custom vs Matchmaking)
+        $player->$lastGameIdVariable = $firstPulledGameId;
         $player->saveOrFail();
 
         return GamePlayer::query()
