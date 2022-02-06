@@ -7,7 +7,7 @@ $team = $gamePlayers->first()->team;
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
         {{ $team->name ?? 'Players' }}
-        @if ($game->playlist->is_ranked)
+        @if ($game->playlist && $game->playlist->is_ranked)
             <span class="is-pulled-right">
                 <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
                     <span class="is-hidden-mobile">CSR: </span>{{ number_format($gamePlayers->avg('pre_csr'), 2) }}
@@ -25,7 +25,7 @@ $team = $gamePlayers->first()->team;
             <thead>
             <tr>
                 <th>Gamertag</th>
-                @if ($game->playlist->is_ranked)
+                @if ($game->playlist?->is_ranked)
                     <th>Level</th>
                 @endif
                 <th>Kills</th>
@@ -56,7 +56,7 @@ $team = $gamePlayers->first()->team;
                             </div>
                         </article>
                     </td>
-                    @if ($game->playlist->is_ranked)
+                    @if ($game->playlist?->is_ranked)
                         <td>
                             <article class="media">
                                 <figure class="media-left">
