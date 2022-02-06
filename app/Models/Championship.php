@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
+use App\Enums\Bracket;
 use App\Models\Contracts\HasFaceItApi;
 use App\Services\FaceIt\Enums\Region;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ use Illuminate\Support\Str;
  * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
  * @property-read bool $is_ffa
+ * @property-read bool $has_championship
  * @method static ChampionshipFactory factory(...$parameters)
  */
 class Championship extends Model implements HasFaceItApi
@@ -71,6 +73,11 @@ class Championship extends Model implements HasFaceItApi
     public function getIsFfaAttribute(): bool
     {
         return Str::contains($this->name, 'FFA');
+    }
+
+    public function getHasChampionshipAttribute(): bool
+    {
+        return $this->matchups()->where('group', Bracket::GRAND()->toNumerical())->exists();
     }
 
     public static function fromFaceItApi(array $payload): ?self

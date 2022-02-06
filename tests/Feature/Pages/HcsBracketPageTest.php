@@ -73,6 +73,11 @@ class HcsBracketPageTest extends TestCase
                 'attributes' => []
             ],
             [
+                'round' => 2,
+                'group' => Bracket::GRAND,
+                'attributes' => []
+            ],
+            [
                 'round' => 1,
                 'group' => Bracket::WINNERS,
                 'attributes' => [
