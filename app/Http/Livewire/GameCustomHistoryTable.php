@@ -8,7 +8,7 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class GameHistoryTable extends Component
+class GameCustomHistoryTable extends Component
 {
     use WithPagination;
 
@@ -26,11 +26,11 @@ class GameHistoryTable extends Component
 
     public function render(): View
     {
-        return view('livewire.game-history-table', [
+        return view('livewire.game-custom-history-table', [
             'games' => $this->player
                 ->games()
-                ->with(['playlist', 'map', 'category'])
-                ->whereHas('playlist')
+                ->with(['map', 'category'])
+                ->whereDoesntHave('playlist')
                 ->orderByDesc('occurred_at')
                 ->paginate(16)
         ]);
