@@ -2,8 +2,18 @@
 /** @var string $color */
 /** @var App\Models\MatchupTeam $team */
 ?>
+<<<<<<< HEAD
 @if ($championship->type->isFfa())
-    @include('partials.hcs.team_snippet.ffa')
+    <div class="columns">
+        <div class="column">
+            <h3 class="title is-3">Games</h3>
+            @include('partials.hcs.game_breakdown.ffa')
+        </div>
+        <div class="column">
+            <h3 class="title is-3">Players</h3>
+            @include('partials.hcs.team_snippet.ffa')
+        </div>
+    </div>
 @else
     <div class="columns">
         <div class="column">

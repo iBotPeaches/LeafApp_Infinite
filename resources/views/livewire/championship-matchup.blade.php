@@ -1,6 +1,8 @@
 <?php
 /** @var App\Models\Championship $championship */
 /** @var App\Models\Matchup $matchup */
+/** @var App\Models\Game[] $games */
+/** @var array $aggregateStats */
 ?>
 <h1 class="title">{{ $championship->name }}</h1>
 <h2 class="subtitle">
