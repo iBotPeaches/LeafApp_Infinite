@@ -7,6 +7,7 @@ use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
 use Database\Factories\PlayerFactory;
@@ -25,6 +26,7 @@ use Illuminate\Support\Arr;
  * @property string $service_tag
  * @property boolean $is_private
  * @property int|null $last_game_id_pulled
+ * @property int|null $last_custom_game_id_pulled
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games
@@ -93,10 +95,15 @@ class Player extends Model implements HasHaloDotApi
 
         // If we have no games, run this part in background. We pull ALL games, which tends to take a few minutes
         // and will only get worse over time. We probably don't need to do this, but we can optimize that later.
-        if ($this->games->count() === 0 || $type !== PlayerTab::MATCHES) {
-            PullMatchHistory::dispatch($this);
-        } else {
-            $client->matches($this, $forceUpdate);
+        if ($this->games->count() === 0 || in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE()])) {
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+        } elseif ($type === PlayerTab::MATCHES) {
+            $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+        } elseif ($type === PlayerTab::CUSTOM) {
+            $client->matches($this, Mode::CUSTOM(), $forceUpdate);
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
         $client->serviceRecord($this);
