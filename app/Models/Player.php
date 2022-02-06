@@ -90,12 +90,9 @@ class Player extends Model implements HasHaloDotApi
     {
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
-
         $client->competitive($this);
 
-        // If we have no games, run this part in background. We pull ALL games, which tends to take a few minutes
-        // and will only get worse over time. We probably don't need to do this, but we can optimize that later.
-        if ($this->games->count() === 0 || in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE()])) {
+        if (in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE])) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
         } elseif ($type === PlayerTab::MATCHES) {
