@@ -20,9 +20,13 @@
             </div>
         </div>
         <div class="content">
-            {{ $game->playlist->name }}
-            @if ($game->playlist->is_ranked)
-                @include('partials.game.playlist_type', ['playlist' => $game->playlist])
+            @if ($game->playlist)
+                {{ $game->playlist->name }}
+                @if ($game->playlist->is_ranked)
+                    @include('partials.game.playlist_type', ['playlist' => $game->playlist])
+                @endif
+            @else
+                <i>Custom Game</i>
             @endif
             <br />
             <time datetime="{{ $game->occurred_at->toIso8601ZuluString() }}">
