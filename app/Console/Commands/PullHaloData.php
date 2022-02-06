@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Player;
+use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -31,7 +32,8 @@ class PullHaloData extends Command
         }
 
         $this->client->competitive($player);
-        $this->client->matches($player, true);
+        $this->client->matches($player, Mode::MATCHMADE(), true);
+        $this->client->matches($player, Mode::CUSTOM(), true);
         $this->client->serviceRecord($player);
 
         return CommandAlias::SUCCESS;
