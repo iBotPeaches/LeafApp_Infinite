@@ -123,7 +123,12 @@ class Game extends Model implements HasHaloDotApi
         $gameId = Arr::get($payload, 'id');
         $category = Category::fromHaloDotApi(Arr::get($payload, 'details.category'));
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
-        $playlist = Playlist::fromHaloDotApi(Arr::get($payload, 'details.playlist'));
+
+        // Customs do not have a Playlist
+        $playlistData = Arr::get($payload, 'details.playlist');
+        if ($playlistData) {
+            $playlist = Playlist::fromHaloDotApi($playlistData);
+        }
 
         /** @var Game $game */
         $game = self::query()
@@ -134,7 +139,9 @@ class Game extends Model implements HasHaloDotApi
 
         $game->category()->associate($category);
         $game->map()->associate($map);
-        $game->playlist()->associate($playlist);
+        if (isset($playlist)) {
+            $game->playlist()->associate($playlist);
+        }
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
