@@ -22,7 +22,7 @@ class PullMatchHistory implements ShouldQueue
     public int $timeout = 720;
 
     private Player $player;
-    private Mode $mode;
+    public Mode $mode;
 
     public function __construct(Player $player, Mode $mode)
     {
