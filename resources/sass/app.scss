@@ -22,3 +22,11 @@ td {
 .container {
     width: 100%;
 }
+
+.is-greyscale {
+    opacity: 0.5;
+}
+
+.is-greyscale:hover {
+    opacity: 1;
+}
