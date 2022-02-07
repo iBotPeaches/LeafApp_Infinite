@@ -10,6 +10,12 @@
                 <span>Overview</span>
             </a>
         </li>
+        <li class="<?= $type === App\Enums\PlayerTab::MEDALS ? 'is-active' : null; ?>">
+            <a href="<?= route('player', [$player, App\Enums\PlayerTab::MEDALS]); ?>">
+                <span class="icon"><i class="fa fa-medal"></i></span>
+                <span>Medals</span>
+            </a>
+        </li>
         <li class="<?= $type === App\Enums\PlayerTab::COMPETITIVE ? 'is-active' : null; ?>">
             <a href="<?= route('player', [$player, App\Enums\PlayerTab::COMPETITIVE]); ?>">
                 <span class="icon"><i class="fa fa-crosshairs"></i></span>
