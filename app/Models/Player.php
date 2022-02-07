@@ -7,6 +7,7 @@ use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
@@ -103,7 +104,7 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
-        $client->serviceRecord($this);
+        $client->serviceRecord($this, Filter::MATCHMADE_RANKED());
 
         // Dispatch an async update for the appearance
         PullAppearance::dispatch($this);
@@ -119,7 +120,8 @@ class Player extends Model implements HasHaloDotApi
 
     public function serviceRecord(): HasOne
     {
-        return $this->hasOne(ServiceRecord::class);
+        return $this->hasOne(ServiceRecord::class)
+            ->where('mode', \App\Enums\Mode::MATCHMADE_RANKED);
     }
 
     public function csrs(): HasMany
