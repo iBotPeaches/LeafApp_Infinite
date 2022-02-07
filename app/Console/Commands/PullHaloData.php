@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Player;
+use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Console\Command;
@@ -34,7 +35,8 @@ class PullHaloData extends Command
         $this->client->competitive($player);
         $this->client->matches($player, Mode::MATCHMADE(), true);
         $this->client->matches($player, Mode::CUSTOM(), true);
-        $this->client->serviceRecord($player);
+        $this->client->serviceRecord($player, Filter::MATCHMADE_RANKED());
+        $this->client->serviceRecord($player, Filter::MATCHMADE_PVP());
 
         return CommandAlias::SUCCESS;
     }
