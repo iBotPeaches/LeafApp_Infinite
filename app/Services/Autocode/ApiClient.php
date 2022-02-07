@@ -129,16 +129,17 @@ class ApiClient implements InfiniteInterface
         return Medal::all();
     }
 
-    public function serviceRecord(Player $player): ?ServiceRecord
+    public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord
     {
         $response = $this->pendingRequest->get('stats/service-record/multiplayer', [
             'gamertag' => $player->gamertag,
-            'filter' => Filter::MATCHMADE_RANKED,
+            'filter' => (string)$filter->value,
         ]);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
             $data['_leaf']['player'] = $player;
+            $data['_leaf']['filter'] = $filter->toMode();
             ServiceRecord::fromHaloDotApi($data);
         }
 

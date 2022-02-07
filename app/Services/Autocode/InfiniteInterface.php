@@ -7,6 +7,7 @@ use App\Models\Csr;
 use App\Models\Game;
 use App\Models\Player;
 use App\Models\ServiceRecord;
+use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,5 +18,5 @@ interface InfiniteInterface
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
     public function match(string $matchUuid): ?Game;
     public function metadataMedals(): Collection;
-    public function serviceRecord(Player $player): ?ServiceRecord;
+    public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord;
 }
