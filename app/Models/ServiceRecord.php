@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\Mode;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
+use App\Services\Autocode\Enums\Filter;
+use BenSampo\Enum\Traits\CastsEnums;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +18,7 @@ use Illuminate\Support\Collection;
 /**
  * @property int $id
  * @property int $player_id
+ * @property Filter $mode
  * @property float $kd
  * @property float $kda
  * @property int $total_score
@@ -58,7 +62,7 @@ use Illuminate\Support\Collection;
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasMedals, HasAccuracy;
+    use HasFactory, HasMedals, HasAccuracy, CastsEnums;
 
     public $guarded = [
         'id'
@@ -67,6 +71,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public $casts = [
         'total_matches' => 'int',
         'medals' => 'array',
+    ];
+
+    public array $enumCasts = [
+        'mode' => Mode::class
     ];
 
     public $touches = [
@@ -145,13 +153,17 @@ class ServiceRecord extends Model implements HasHaloDotApi
     {
         /** @var Player $player */
         $player = Arr::get($payload, '_leaf.player');
+        /** @var Mode $mode */
+        $mode = Arr::get($payload, '_leaf.filter');
 
         /** @var ServiceRecord $serviceRecord */
         $serviceRecord = ServiceRecord::query()
             ->where('player_id', $player->id)
+            ->where('mode', $mode)
             ->firstOrNew();
 
         $serviceRecord->player()->associate($player);
+        $serviceRecord->mode = $mode;
         $serviceRecord->kd = Arr::get($payload, 'data.core.kdr');
         $serviceRecord->kda = Arr::get($payload, 'data.core.kda');
         $serviceRecord->total_score = Arr::get($payload, 'data.core.total_score');
