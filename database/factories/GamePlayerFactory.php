@@ -6,6 +6,7 @@ namespace Database\Factories;
 use App\Enums\Outcome;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\GameTeam;
 use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,6 +25,7 @@ class GamePlayerFactory extends Factory
     {
         return [
             'player_id' => Player::factory(),
+            'game_team_id' => GameTeam::factory(),
             'game_id' => Game::factory(),
             'pre_csr' => $this->faker->numberBetween(600, 1500),
             'post_csr' => $this->faker->numberBetween(600, 1500),
