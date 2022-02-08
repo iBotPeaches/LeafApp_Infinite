@@ -7,9 +7,11 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasOutcome;
 use Database\Factories\GameTeamFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
 /**
@@ -24,8 +26,10 @@ use Illuminate\Support\Arr;
  * @property float $mmr
  * @property int $final_score
  * @property-read Game $game
+ * @property-read GamePlayer[]|Collection $players
  * @property-read string $color
  * @property-read string $tooltip_color
+ * @property-read float $csr
  * @method static GameTeamFactory factory(...$parameters)
  */
 class GameTeam extends Model implements HasHaloDotApi
@@ -45,6 +49,11 @@ class GameTeam extends Model implements HasHaloDotApi
             'Cobra' => 'is-danger',
             default => 'is-dark',
         };
+    }
+
+    public function getCsrAttribute(): float
+    {
+        return (float)$this->players->avg('pre_csr');
     }
 
     public function getTooltipColorAttribute(): string
@@ -96,5 +105,10 @@ class GameTeam extends Model implements HasHaloDotApi
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function players(): HasMany
+    {
+        return $this->hasMany(GamePlayer::class);
     }
 }
