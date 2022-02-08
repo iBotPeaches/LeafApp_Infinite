@@ -9,6 +9,7 @@
             <livewire:update-game-panel :game="$game" />
         @endif
         <hr />
+        @include('partials.game.export_card')
         @include('partials.game.player-rank-changes')
     </div>
     <div class="column is-four-fifths">
