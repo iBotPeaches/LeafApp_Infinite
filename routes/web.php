@@ -28,6 +28,7 @@ Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name
 Route::redirect('/profile/{player}', '/player/{player}');
 
 // Game
+Route::get('/game/{game}/csv', [GameController::class, 'csv'])->name('gameCsv');
 Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 
 // HCS

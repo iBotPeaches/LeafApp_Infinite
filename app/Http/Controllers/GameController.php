@@ -3,9 +3,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ExportGame;
+use App\Jobs\ExportGameHistory;
 use App\Models\Game;
+use App\Models\Player;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Artesaos\SEOTools\Facades\SEOTools;
+use League\Csv\Writer;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GameController extends Controller
 {
@@ -26,6 +32,24 @@ class GameController extends Controller
 
         return view('pages.game', [
             'game' => $game,
+        ]);
+    }
+
+    public function csv(Game $game): StreamedResponse
+    {
+        /** @var array $data */
+        $data = ExportGame::dispatchSync($game);
+
+        $writer = Writer::createFromString();
+        $writer->insertOne(ExportGame::$header);
+        $writer->insertAll($data);
+
+        $title = Str::slug($game->name . '-export') . '.csv';
+
+        return response()->streamDownload(function () use ($writer) {
+            echo $writer->toString();
+        }, $title, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
     }
 }
