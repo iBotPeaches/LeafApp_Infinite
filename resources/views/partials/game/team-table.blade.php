@@ -9,13 +9,15 @@ $team = $gamePlayers->first()->team;
         {{ $team->name ?? 'Players' }}
         @if ($game->playlist && $game->playlist->is_ranked)
             <span class="is-pulled-right">
-                <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
-                    <span class="is-hidden-mobile">CSR: </span>{{ number_format($gamePlayers->avg('pre_csr'), 2) }}
-                </span>
-                @if ($team && $team->mmr)
-                    | <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
-                        <span class="is-hidden-mobile">MMR: </span>{{ number_format($team->mmr, 2) }}
+                @if ($team)
+                    <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
+                        <span class="is-hidden-mobile">CSR: </span>{{ number_format($team->csr, 2) }}
                     </span>
+                    @if ($team->mmr)
+                        | <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
+                            <span class="is-hidden-mobile">MMR: </span>{{ number_format($team->mmr, 2) }}
+                        </span>
+                    @endif
                 @endif
             </span>
         @endif
