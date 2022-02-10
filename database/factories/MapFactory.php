@@ -5,17 +5,12 @@ namespace Database\Factories;
 
 use App\Models\Map;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Map[]|Map create($attributes = [], ?Map $parent = null)
- * @method Collection|Map[] createMany(iterable $records)
- * @method Map createOne($attributes = [])
- * @method Collection|Map[]|Map make($attributes = [], ?Map $parent = null)
- * @method Map makeOne($attributes = [])
- */
+/** @extends Factory<Map> */
 class MapFactory extends Factory
 {
+    protected $model = Map::class;
+
     public function definition(): array
     {
         return [

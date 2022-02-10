@@ -6,17 +6,12 @@ namespace Database\Factories;
 use App\Models\Championship;
 use App\Models\Matchup;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Matchup[]|Matchup create($attributes = [], ?Matchup $parent = null)
- * @method Collection|Matchup[] createMany(iterable $records)
- * @method Matchup createOne($attributes = [])
- * @method Collection|Matchup[]|Matchup make($attributes = [], ?Matchup $parent = null)
- * @method Matchup makeOne($attributes = [])
- */
+/** @extends Factory<Matchup> */
 class MatchupFactory extends Factory
 {
+    protected $model = Matchup::class;
+
     public function definition(): array
     {
         return [

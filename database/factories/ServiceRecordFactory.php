@@ -8,17 +8,12 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|ServiceRecord[]|ServiceRecord create($attributes = [], ?ServiceRecord $parent = null)
- * @method Collection|ServiceRecord[] createMany(iterable $records)
- * @method ServiceRecord createOne($attributes = [])
- * @method Collection|ServiceRecord[]|ServiceRecord make($attributes = [], ?ServiceRecord $parent = null)
- * @method ServiceRecord makeOne($attributes = [])
- */
+/** @extends Factory<ServiceRecord> */
 class ServiceRecordFactory extends Factory
 {
+    protected $model = ServiceRecord::class;
+
     public function definition(): array
     {
         return [
@@ -59,7 +54,7 @@ class ServiceRecordFactory extends Factory
 
     public function withMedals(): self
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             $medals = Medal::factory()->count(2)->create();
 
             return [

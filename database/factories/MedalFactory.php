@@ -7,17 +7,12 @@ use App\Enums\MedalCategory;
 use App\Enums\MedalType;
 use App\Models\Medal;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Medal[]|Medal create($attributes = [], ?Medal $parent = null)
- * @method Collection|Medal[] createMany(iterable $records)
- * @method Medal createOne($attributes = [])
- * @method Collection|Medal[]|Medal make($attributes = [], ?Medal $parent = null)
- * @method Medal makeOne($attributes = [])
- */
+/** @extends Factory<Medal> */
 class MedalFactory extends Factory
 {
+    protected $model = Medal::class;
+
     public function definition(): array
     {
         return [

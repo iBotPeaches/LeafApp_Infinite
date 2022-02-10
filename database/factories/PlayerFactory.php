@@ -5,17 +5,12 @@ namespace Database\Factories;
 
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Player[]|Player create($attributes = [], ?Player $parent = null)
- * @method Collection|Player[] createMany(iterable $records)
- * @method Player createOne($attributes = [])
- * @method Collection|Player[]|Player make($attributes = [], ?Player $parent = null)
- * @method Player makeOne($attributes = [])
- */
+/** @extends Factory<Player> */
 class PlayerFactory extends Factory
 {
+    protected $model = Player::class;
+
     public function definition(): array
     {
         return [

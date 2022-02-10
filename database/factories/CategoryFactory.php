@@ -5,17 +5,12 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Category[]|Category create($attributes = [], ?Category $parent = null)
- * @method Collection|Category[] createMany(iterable $records)
- * @method Category createOne($attributes = [])
- * @method Collection|Category[]|Category make($attributes = [], ?Category $parent = null)
- * @method Category makeOne($attributes = [])
- */
+/** @extends Factory<Category> */
 class CategoryFactory extends Factory
 {
+    protected $model = Category::class;
+
     public function definition(): array
     {
         return [

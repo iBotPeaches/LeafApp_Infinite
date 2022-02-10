@@ -10,17 +10,12 @@ use App\Models\GameTeam;
 use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|GamePlayer[]|GamePlayer create($attributes = [], ?GamePlayer $parent = null)
- * @method Collection|GamePlayer[] createMany(iterable $records)
- * @method GamePlayer createOne($attributes = [])
- * @method Collection|GamePlayer[]|GamePlayer make($attributes = [], ?GamePlayer $parent = null)
- * @method GamePlayer makeOne($attributes = [])
- */
+/** @extends Factory<GamePlayer> */
 class GamePlayerFactory extends Factory
 {
+    protected $model = GamePlayer::class;
+
     public function definition(): array
     {
         return [
