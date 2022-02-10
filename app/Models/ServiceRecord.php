@@ -56,7 +56,7 @@ use Illuminate\Support\Collection;
  * @property-read string $kd_color
  * @property-read string $kda_color
  * @property-read string $win_percent_color
- * @property-read Collection $hydrated_medals
+ * @property-read Collection<int, Medal> $hydrated_medals
  * @method static ServiceRecordFactory factory(...$parameters)
  */
 class ServiceRecord extends Model implements HasHaloDotApi

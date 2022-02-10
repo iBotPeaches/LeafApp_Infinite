@@ -4,25 +4,18 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\Experience;
-use App\Enums\Input;
-use App\Enums\Queue;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Map;
 use App\Models\Playlist;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Game[]|Game create($attributes = [], ?Game $parent = null)
- * @method Collection|Game[] createMany(iterable $records)
- * @method Game createOne($attributes = [])
- * @method Collection|Game[]|Game make($attributes = [], ?Game $parent = null)
- * @method Game makeOne($attributes = [])
- */
+/** @extends Factory<Game> */
 class GameFactory extends Factory
 {
+    protected $model = Game::class;
+
     public function definition(): array
     {
         return [

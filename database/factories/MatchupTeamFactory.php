@@ -7,17 +7,12 @@ use App\Enums\Outcome;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|MatchupTeam[]|MatchupTeam create($attributes = [], ?MatchupTeam $parent = null)
- * @method Collection|MatchupTeam[] createMany(iterable $records)
- * @method MatchupTeam createOne($attributes = [])
- * @method Collection|MatchupTeam[]|MatchupTeam make($attributes = [], ?MatchupTeam $parent = null)
- * @method MatchupTeam makeOne($attributes = [])
- */
+/** @extends Factory<MatchupTeam> */
 class MatchupTeamFactory extends Factory
 {
+    protected $model = MatchupTeam::class;
+
     public function definition(): array
     {
         $outcome = Outcome::getRandomValue();

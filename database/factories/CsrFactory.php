@@ -7,17 +7,12 @@ use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Collection;
 
-/**
- * @method Collection|Csr[]|Csr create($attributes = [], ?Csr $parent = null)
- * @method Collection|Csr[] createMany(iterable $records)
- * @method Csr createOne($attributes = [])
- * @method Collection|Csr[]|Csr make($attributes = [], ?Csr $parent = null)
- * @method Csr makeOne($attributes = [])
- */
+/** @extends Factory<Csr> */
 class CsrFactory extends Factory
 {
+    protected $model = Csr::class;
+
     public function definition(): array
     {
         return [

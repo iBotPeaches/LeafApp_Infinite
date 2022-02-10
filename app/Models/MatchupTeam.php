@@ -7,7 +7,6 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Traits\HasOutcome;
-use BenSampo\Enum\Traits\CastsEnums;
 use Database\Factories\MatchupTeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +30,7 @@ use Illuminate\Support\Collection;
  */
 class MatchupTeam extends Model implements HasFaceItApi
 {
-    use HasFactory, CastsEnums, HasOutcome;
+    use HasFactory, HasOutcome;
 
     public static string $byeTeamId = 'bye';
 
