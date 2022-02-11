@@ -36,6 +36,7 @@ class PullHaloDataTest extends TestCase
         $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockServicePvpResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockCustomMatchesResponse, 'data.0.details.playlist', null);
         Arr::set($mockCustomMatchesResponse, 'data.1.details.playlist', null);
@@ -49,7 +50,8 @@ class PullHaloDataTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServicePvpResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
