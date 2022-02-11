@@ -190,7 +190,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->assists_driver = Arr::get($payload, 'data.core.breakdowns.assists.driver');
         $serviceRecord->assists_callout = Arr::get($payload, 'data.core.breakdowns.assists.callouts');
 
-        $serviceRecord->medals = collect(Arr::get($payload, 'data.core.breakdowns.medals'))
+        $serviceRecord->medals = collect((array)Arr::get($payload, 'data.core.breakdowns.medals'))
             ->mapWithKeys(function (array $medal) {
                 return [
                     $medal['id'] => $medal['count']

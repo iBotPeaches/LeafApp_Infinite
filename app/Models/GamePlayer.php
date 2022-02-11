@@ -59,7 +59,7 @@ use Illuminate\Support\Collection;
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam $team
- * @property-read Collection $hydrated_medals
+ * @property-read Collection<int, Medal> $hydrated_medals
  * @method static GamePlayerFactory factory(...$parameters)
  */
 class GamePlayer extends Model implements HasHaloDotApi
@@ -141,7 +141,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists_driver = Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver');
         $gamePlayer->assists_callout = Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts');
 
-        $gamePlayer->medals = collect(Arr::get($payload, $prefix . 'stats.core.breakdowns.medals'))
+        $gamePlayer->medals = collect((array)Arr::get($payload, $prefix . 'stats.core.breakdowns.medals'))
             ->mapWithKeys(function (array $medal) {
                 return [
                     $medal['id'] => $medal['count']
