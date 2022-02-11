@@ -32,4 +32,12 @@ final class Mode extends Enum
             default => null
         };
     }
+
+    public function toPlayerRelation(): string
+    {
+        return match ($this->value) {
+            self::MATCHMADE_PVP => 'serviceRecordPvp',
+            default => 'serviceRecord'
+        };
+    }
 }
