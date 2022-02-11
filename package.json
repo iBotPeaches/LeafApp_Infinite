@@ -13,7 +13,7 @@
         "@creativebulma/bulma-divider": "^1.1.0",
         "@creativebulma/bulma-tooltip": "^1.2.0",
         "@fortawesome/fontawesome-free": "^5.15.4",
-        "axios": "^0.21",
+        "axios": "^0.25",
         "bulma": "^0.9.3",
         "laravel-mix": "^6.0.6",
         "laravel-mix-purgecss": "^6.0.0",
