@@ -5,7 +5,7 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @include('partials.player.toggle_service_mode')
+            <livewire:player-toggle-panel />
             @include('partials.player.player-card')
             @if (in_array($type, ['matches', 'custom']))
                 <div class="notification">
