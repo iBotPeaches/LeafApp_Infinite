@@ -7,10 +7,13 @@ use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
+use App\Jobs\PullServiceReport;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
+use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
+use App\Support\Session\ModeSession;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -34,7 +37,8 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
+            PullServiceReport::class,
         ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -75,13 +79,15 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullServiceReport::class);
     }
 
     public function testAutomaticallyPullingXuidIfMissing(): void
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
+            PullServiceReport::class,
         ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -119,13 +125,15 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullServiceReport::class);
     }
 
     public function testAutomaticallyRemovingOldAgentIfXuidMoved(): void
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
+            PullServiceReport::class,
         ]);
 
         $xuid = $this->faker->numerify('################');
@@ -174,13 +182,15 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullServiceReport::class);
     }
 
     public function testAutomaticallyUnmarkedPrivateIfValidRecord(): void
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
+            PullServiceReport::class,
         ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -216,6 +226,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullServiceReport::class);
     }
 
     public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
@@ -226,6 +237,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -259,6 +271,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Queue::assertPushed(PullMatchHistory::class, function (PullMatchHistory $job) {
             return Mode::CUSTOM()->is($job->mode);
+        });
+
+        Queue::assertPushed(PullServiceReport::class, function (PullServiceReport $job) {
+            return Filter::MATCHMADE_PVP()->is($job->filter);
         });
     }
 
@@ -313,6 +329,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockServicePvpResponse = (new MockServiceRecordService())->success($gamertag);
         $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
         Http::fakeSequence()
@@ -321,6 +338,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServicePvpResponse, Response::HTTP_OK)
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -336,6 +354,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
             ->assertEmittedTo($event, '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
     }
 
     public function validPageDataProvider(): array
