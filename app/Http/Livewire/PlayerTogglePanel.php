@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
-use App\Enums\Mode;
 use App\Support\Session\ModeSession;
-use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Livewire\Component;
 
