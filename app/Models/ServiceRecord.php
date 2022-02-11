@@ -6,7 +6,6 @@ use App\Enums\Mode;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
-use BenSampo\Enum\Traits\CastsEnums;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,7 +60,7 @@ use Illuminate\Support\Collection;
  */
 class ServiceRecord extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasMedals, HasAccuracy, CastsEnums;
+    use HasFactory, HasMedals, HasAccuracy;
 
     public $guarded = [
         'id'
@@ -70,10 +69,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public $casts = [
         'total_matches' => 'int',
         'medals' => 'array',
-    ];
-
-    public array $enumCasts = [
-        'mode' => Mode::class
+        'mode' => Mode::class,
     ];
 
     public $touches = [
