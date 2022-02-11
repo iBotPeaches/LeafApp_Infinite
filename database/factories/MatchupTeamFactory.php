@@ -28,7 +28,7 @@ class MatchupTeamFactory extends Factory
 
     public function bye(): Factory
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             return [
                 'faceit_id' => MatchupTeam::$byeTeamId,
                 'name' => 'bye'
