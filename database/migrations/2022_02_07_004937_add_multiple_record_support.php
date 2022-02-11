@@ -12,7 +12,7 @@ class AddMultipleRecordSupport extends Migration
     {
         Schema::table('service_records', function (Blueprint $table) {
             $table->tinyInteger('mode')
-                ->default(Filter::MATCHMADE_RANKED()->toNumerical())
+                ->default(Filter::MATCHMADE_RANKED()->toMode()->value)
                 ->after('player_id');
 
             $table->unique(['player_id', 'mode']);
