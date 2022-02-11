@@ -20,7 +20,7 @@ class PlayerFactory extends Factory
     {
         return [
             'xuid' => $this->faker->numerify('################'),
-            'gamertag' => $this->faker->word,
+            'gamertag' => $this->faker->word . $this->faker->unixTime,
             'service_tag' => $this->faker->lexify,
             'is_private' => false,
             'emblem_url' => $this->faker->url,
