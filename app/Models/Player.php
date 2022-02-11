@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
+use App\Jobs\PullServiceReport;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
 use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
+use App\Support\Session\ModeSession;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,6 +35,7 @@ use Illuminate\Support\Arr;
  * @property-read Game[]|Collection $games
  * @property-read Csr[]|Collection $csrs
  * @property-read ServiceRecord $serviceRecord
+ * @property-read ServiceRecord $serviceRecordPvp
  * @method static PlayerFactory factory(...$parameters)
  */
 class Player extends Model implements HasHaloDotApi
@@ -104,7 +107,14 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
-        $client->serviceRecord($this, Filter::MATCHMADE_RANKED());
+        $mode = ModeSession::get();
+        if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED())) {
+            $client->serviceRecord($this, Filter::MATCHMADE_RANKED());
+            PullServiceReport::dispatch($this, Filter::MATCHMADE_PVP());
+        } elseif ($mode->is(\App\Enums\Mode::MATCHMADE_PVP())) {
+            $client->serviceRecord($this, Filter::MATCHMADE_PVP());
+            PullServiceReport::dispatch($this, Filter::MATCHMADE_RANKED());
+        }
 
         // Dispatch an async update for the appearance
         PullAppearance::dispatch($this);
@@ -122,6 +132,12 @@ class Player extends Model implements HasHaloDotApi
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_RANKED);
+    }
+
+    public function serviceRecordPvp(): HasOne
+    {
+        return $this->hasOne(ServiceRecord::class)
+            ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
     }
 
     public function csrs(): HasMany
