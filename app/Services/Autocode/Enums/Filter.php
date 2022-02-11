@@ -25,11 +25,7 @@ final class Filter extends Enum
     {
         return match ((string)$this->value) {
             self::MATCHMADE_PVP => Mode::MATCHMADE_PVP(),
-            self::MATCHMADE_SOCIAL => Mode::MATCHMADE_SOCIAL(),
-            self::MATCHMADE_RANKED => Mode::MATCHMADE_RANKED(),
-            self::MATCHMADE_BOTS => Mode::MATCHMADE_BOTS(),
-            self::CUSTOM => Mode::CUSTOM(),
-            default => null
+            default => Mode::MATCHMADE_RANKED()
         };
     }
 }
