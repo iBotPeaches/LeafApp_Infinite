@@ -11,11 +11,6 @@
         @if ($player->is_private)
             @include('partials.global.account_private')
         @else
-            <article class="message">
-                <div class="message-body">
-                    Currently only showing medals from Ranked Matchmaking. Soon for all PVP.
-                </div>
-            </article>
             @foreach ($medals as $medal)
                 <article class="tile is-flex">
                     <figure class="media-left">
