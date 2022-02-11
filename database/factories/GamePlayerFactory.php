@@ -61,7 +61,7 @@ class GamePlayerFactory extends Factory
 
     public function withMedals(): self
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function () {
             // @phpstan-ignore-next-line
             $medals = Medal::all()->isEmpty()
                 ? Medal::factory()->count(2)->create()
