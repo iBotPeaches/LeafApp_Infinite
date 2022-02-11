@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\Mode;
 use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
@@ -22,6 +23,7 @@ class ServiceRecordFactory extends Factory
     {
         return [
             'player_id' => Player::factory(),
+            'mode' => Mode::MATCHMADE_RANKED,
             'kd' => $this->faker->numerify('#.##'),
             'kda' => $this->faker->numerify('#.##'),
             'total_score' => $this->faker->numerify('#####'),
