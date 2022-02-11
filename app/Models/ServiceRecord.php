@@ -6,7 +6,6 @@ use App\Enums\Mode;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
-use App\Services\Autocode\Enums\Filter;
 use BenSampo\Enum\Traits\CastsEnums;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +17,7 @@ use Illuminate\Support\Collection;
 /**
  * @property int $id
  * @property int $player_id
- * @property Filter $mode
+ * @property Mode $mode
  * @property float $kd
  * @property float $kda
  * @property int $total_score
