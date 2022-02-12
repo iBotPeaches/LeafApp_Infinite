@@ -52,7 +52,8 @@
             "@php artisan key:generate --ansi"
         ],
         "coverage": [
-            "@php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-html=output"
+            "@putenv XDEBUG_MODE=coverage",
+            "@php artisan test --coverage --min=100 --coverage-html=output"
         ]
     },
     "extra": {
