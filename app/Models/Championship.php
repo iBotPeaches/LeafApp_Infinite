@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Enums\Bracket;
+use App\Enums\ChampionshipType;
 use App\Models\Contracts\HasFaceItApi;
 use App\Services\FaceIt\Enums\Region;
 use Carbon\Carbon;
@@ -20,10 +21,10 @@ use Illuminate\Support\Str;
  * @property string $faceit_id
  * @property string $name
  * @property Region $region
+ * @property ChampionshipType $type
  * @property Carbon $started_at
  * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
- * @property-read bool $is_ffa
  * @property-read bool $has_championship
  * @method static ChampionshipFactory factory(...$parameters)
  */
@@ -40,7 +41,8 @@ class Championship extends Model implements HasFaceItApi
     ];
 
     public $casts = [
-        'region' => Region::class
+        'region' => Region::class,
+        'type' => ChampionshipType::class
     ];
 
     public $timestamps = false;
@@ -60,6 +62,19 @@ class Championship extends Model implements HasFaceItApi
         $this->attributes['region'] = $region->value;
     }
 
+    public function setTypeAttribute(string $value): void
+    {
+        $type = is_numeric($value)
+            ? ChampionshipType::fromValue((int) $value)
+            : ChampionshipType::coerce($value);
+
+        if (empty($type)) {
+            throw new \InvalidArgumentException('Invalid Type Enum (' . $value . ')');
+        }
+
+        $this->attributes['type'] = $type->value;
+    }
+
     public function setStartedAtAttribute(string $value): void
     {
         $this->attributes['started_at'] = Carbon::createFromTimestampMsUTC($value);
@@ -70,14 +85,10 @@ class Championship extends Model implements HasFaceItApi
         return 'https://www.faceit.com/en/championship/' . $this->faceit_id . '/' . $this->name;
     }
 
-    public function getIsFfaAttribute(): bool
-    {
-        return Str::contains($this->name, 'FFA');
-    }
-
     public function getHasChampionshipAttribute(): bool
     {
-        return $this->matchups()->where('group', Bracket::GRAND()->toNumerical())->exists();
+        return $this->matchups()->where('group', Bracket::GRAND()->toNumerical())->exists()
+            && $this->type->is(ChampionshipType::DOUBLE_ELIM());
     }
 
     public static function fromFaceItApi(array $payload): ?self
@@ -93,6 +104,7 @@ class Championship extends Model implements HasFaceItApi
 
         $championship->name = Arr::get($payload, 'name');
         $championship->region = Arr::get($payload, 'region');
+        $championship->type = Arr::get($payload, 'type');
         $championship->started_at = Arr::get($payload, 'championship_start');
 
         if ($championship->isDirty()) {
