@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
 
+use App\Enums\ChampionshipType;
 use App\Enums\Outcome;
 use App\Models\Championship;
 use App\Models\Matchup;
@@ -52,7 +53,7 @@ class HcsMatchupPageTest extends TestCase
         Http::fake();
 
         $championship = Championship::factory()->createOne([
-            'name' => 'FFA'
+            'type' => ChampionshipType::STAGE
         ]);
 
         $matchup = Matchup::factory()

@@ -50,7 +50,7 @@ class PullChampionshipTest extends TestCase
         $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
         $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
-        Arr::set($mockChampionshipResponse, 'name', 'HCS FFA 1');
+        Arr::set($mockChampionshipResponse, 'type', 'stage');
         // TODO - Make setting players per team easier, this changes 4 to 1.
         $match1Player = Arr::get($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster.0');
         Arr::set($mockChampionshipBracketResponse, 'items.0.teams.faction1.roster', []);
@@ -67,6 +67,29 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::SUCCESS);
 
         Queue::assertPushed(FindPlayersFromTeam::class);
+    }
+
+    public function testValidDataPullWithInvalidType(): void
+    {
+        // Expectations
+        $this->expectException(InvalidArgumentException::class);
+
+        // Arrange
+        $championshipId = $this->faker->uuid;
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Arr::set($mockChampionshipResponse, 'type', 'INVALID-TYPE');
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
+
+        // Act & Assert
+        $this->artisan('app:championship ' . $championshipId)
+            ->assertExitCode(CommandAlias::FAILURE);
     }
 
     public function testValidDataPullWithInvalidRegion(): void
