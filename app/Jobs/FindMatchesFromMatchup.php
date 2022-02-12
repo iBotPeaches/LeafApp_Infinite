@@ -9,6 +9,7 @@ use App\Models\Pivots\MatchupGame;
 use App\Models\Player;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
+use App\Services\FaceIt\ApiClient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,7 +42,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
         // 2 - Load their custom history to have latest
         $players->each(function (Player $player) {
-            //$this->client->matches($player, Mode::CUSTOM());
+            $this->client->matches($player, Mode::CUSTOM());
         });
 
         // 3 - Pick a player with visible customs to iterate
@@ -58,6 +59,7 @@ class FindMatchesFromMatchup implements ShouldQueue
                 })
                 ->cursor()
                 ->filter(function (Game $game) use ($playerIds) {
+                    // 4 - Find matches that fit criteria of all step 1 folks
                     $gamePlayerIds = $game->players->pluck('player_id');
                     $diffPlayerIds = array_diff($playerIds->toArray(), $gamePlayerIds->toArray());
 
@@ -78,7 +80,5 @@ class FindMatchesFromMatchup implements ShouldQueue
                     $this->processedGameIds[] = $game->id;
                 });
         });
-
-        // 4 - Find matches that fit criteria of all step 1 folks
     }
 }

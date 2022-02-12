@@ -2,7 +2,6 @@
 /** @var string $color */
 /** @var App\Models\MatchupTeam $team */
 ?>
-<<<<<<< HEAD
 @if ($championship->type->isFfa())
     <div class="columns">
         <div class="column">
