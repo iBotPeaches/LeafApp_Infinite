@@ -53,15 +53,8 @@ jobs:
       - name: Create SQLite database
         run: touch database/database.sqlite
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: php artisan test --without-tty --parallel -p2 --coverage-html=output --coverage-clover=output.xml
-
-      - name: Code Coverage Check
-        uses: sourcetoad/phpunit-coverage-action@v1
-        with:
-          clover_report_path: output.xml
-          min_coverage_percent: 100
-          fail_build_on_under: true
+      - name: Execute tests (With Coverage) via PHPUnit
+        run: php artisan test --without-tty --coverage --min=100 --parallel -p2 --coverage-html=output
 
       - uses: actions/upload-artifact@v2
         if: failure()
