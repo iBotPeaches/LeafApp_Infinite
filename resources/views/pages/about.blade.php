@@ -6,10 +6,10 @@
         <div class="column">
             <article class="message is-dark">
                 <div class="message-header">
-                    <p>What about customs?</p>
+                    <p>What about the roadmap?</p>
                 </div>
                 <div class="message-body">
-                    Leaf is not interested in those as of now. Only matchmade games.
+                    Right here on <a href="https://github.com/iBotPeaches/LeafApp_Infinite/issues">GitHub</a>.
                 </div>
             </article>
             <article class="message is-dark">
@@ -45,7 +45,7 @@
                     <p>What powers my service record?</p>
                 </div>
                 <div class="message-body">
-                    The current iteration only keeps the results scoped to ranked playlists.
+                    The current iteration have a toggle between PVP (All) or Ranked.
                 </div>
             </article>
             <article class="message is-dark">
@@ -53,7 +53,7 @@
                     <p>My stats won't work!</p>
                 </div>
                 <div class="message-body">
-                    You are probably not sharing match made stats. Check the Accessibility tab.
+                    You are probably not sharing matchmaking stats. Check the Accessibility tab.
                 </div>
             </article>
             <div class="divider"></div>
