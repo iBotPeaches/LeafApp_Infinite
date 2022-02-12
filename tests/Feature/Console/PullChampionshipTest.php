@@ -19,7 +19,8 @@ class PullChampionshipTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidDataPull(): void
+    /** @dataProvider championshipTypeDataProvider */
+    public function testValidDataPull(string $type): void
     {
         // Arrange
         Queue::fake();
@@ -27,6 +28,8 @@ class PullChampionshipTest extends TestCase
         $mockChampionshipResponse = (new MockChampionshipService())->success();
         $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
         $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Arr::set($mockChampionshipResponse, 'type', $type);
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -113,5 +116,20 @@ class PullChampionshipTest extends TestCase
         // Act & Assert
         $this->artisan('app:championship ' . $championshipId)
             ->assertExitCode(CommandAlias::FAILURE);
+    }
+
+    public function championshipTypeDataProvider(): array
+    {
+        return [
+            [
+                'type' => 'roundRobin',
+            ],
+            [
+                'type' => 'doubleElimination'
+            ],
+            [
+                'type' => 'stage',
+            ],
+        ];
     }
 }
