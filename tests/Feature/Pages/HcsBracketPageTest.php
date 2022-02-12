@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Pages;
 
 use App\Enums\Bracket;
+use App\Enums\ChampionshipType;
 use App\Models\Championship;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
@@ -81,14 +82,28 @@ class HcsBracketPageTest extends TestCase
                 'round' => 1,
                 'group' => Bracket::WINNERS,
                 'attributes' => [
-                    'name' => 'FFA'
+                    'type' => ChampionshipType::STAGE
                 ]
             ],
             [
                 'round' => 2,
                 'group' => Bracket::LOSERS,
                 'attributes' => [
-                    'name' => 'FFA'
+                    'type' => ChampionshipType::STAGE
+                ]
+            ],
+            [
+                'round' => 2,
+                'group' => Bracket::POOL_D,
+                'attributes' => [
+                    'type' => ChampionshipType::ROUND_ROBIN
+                ]
+            ],
+            [
+                'round' => 1,
+                'group' => Bracket::OTHER,
+                'attributes' => [
+                    'type' => ChampionshipType::ROUND_ROBIN
                 ]
             ]
         ];
