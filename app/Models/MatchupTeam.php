@@ -73,7 +73,7 @@ class MatchupTeam extends Model implements HasFaceItApi
             ]);
 
         $team->matchup()->associate($matchup);
-        $team->name = (string) $matchup->championship->is_ffa
+        $team->name = (string) $matchup->championship->type->isFfa()
             ? Arr::get($payload, 'roster.0.game_player_name', Arr::get($payload, 'name'))
             : Arr::get($payload, 'name');
         $team->points = (int)Arr::get($matchupPayload, 'results.score.' . $teamInternalId, 0);
