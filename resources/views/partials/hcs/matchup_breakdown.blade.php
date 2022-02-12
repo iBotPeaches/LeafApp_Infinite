@@ -2,7 +2,7 @@
 /** @var string $color */
 /** @var App\Models\MatchupTeam $team */
 ?>
-@if ($championship->is_ffa)
+@if ($championship->type->isFfa())
     @include('partials.hcs.team_snippet.ffa')
 @else
     <div class="columns">
