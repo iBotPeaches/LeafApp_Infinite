@@ -13,9 +13,14 @@ trait HasMedals
 {
     public function getHydratedMedalsAttribute(): Collection
     {
+        static $allMedals = null;
+        if (is_null($allMedals)) {
+            $allMedals = Medal::all();
+        }
+
         $medals = $this->medals;
 
-        return Medal::all()->map(function (Medal $medal) use ($medals) {
+        return $allMedals->map(function (Medal $medal) use ($medals) {
             $medal['count'] = $medals[$medal->id] ?? 0;
             return $medal;
         })->reject(function (Medal $medal) {
