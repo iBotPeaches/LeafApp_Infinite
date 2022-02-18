@@ -29,8 +29,9 @@
                 @if ($game->playlist?->is_ranked)
                     <th>Level</th>
                 @endif
-                <th>Kills</th>
-                <th>Deaths</th>
+                <th><abbr title="Kills">K</abbr></th>
+                <th><abbr title="Deaths">D</abbr></th>
+                <th><abbr title="Assists">A</abbr></th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
                 <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
@@ -84,6 +85,7 @@
                     @endif
                     <td>{{ $gamePlayer->kills }}</td>
                     <td>{{ $gamePlayer->deaths }}</td>
+                    <td>{{ $gamePlayer->assists }}</td>
                     <td class="{{ $gamePlayer->getKdColor() }}">
                         {{ $gamePlayer->kd }}
                     </td>
