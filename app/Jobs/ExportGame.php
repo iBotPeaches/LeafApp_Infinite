@@ -56,6 +56,8 @@ class ExportGame implements ShouldQueue
 
     public function handle(): array
     {
+        $this->game->load('players.team.players');
+
         foreach ($this->game->players->sortBy('outcome') as $gamePlayer) {
             $perfectMedal = $gamePlayer->hydrated_medals->firstWhere('name', 'Perfect');
             $team = $gamePlayer->team;
