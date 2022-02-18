@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Jobs\ExportGame;
-use App\Jobs\ExportGameHistory;
 use App\Models\Game;
-use App\Models\Player;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Artesaos\SEOTools\Facades\SEOTools;
