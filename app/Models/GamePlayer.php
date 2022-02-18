@@ -76,6 +76,7 @@ class GamePlayer extends Model implements HasHaloDotApi
     public $with = [
         'game',
         'player',
+        'team',
     ];
 
     public $touches = [

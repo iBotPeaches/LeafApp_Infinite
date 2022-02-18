@@ -8,6 +8,7 @@ use App\Services\FaceIt\TournamentInterface;
 use App\Services\FaceIt\ApiClient as FaceItApiClient;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
 use App\Services\XboxApi\XboxInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Model::preventLazyLoading(! app()->isProduction());
+
         $this->app->singleton(InfiniteInterface::class, function ($app) {
             return new HaloApiClient($app['config']['services']['autocode']);
         });

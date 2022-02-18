@@ -13,8 +13,8 @@
         @include('partials.game.player-rank-changes')
     </div>
     <div class="column is-four-fifths">
-        @foreach ($groupedGamePlayers as $gamePlayers)
-            @include('partials.game.team-table')
+        @foreach ($groupedGamePlayers as $teamId => $gamePlayers)
+            @include('partials.game.team-table', ['team' => $game->findTeamFromId($teamId)])
         @endforeach
         @if (! $game->outdated)
             <div class="divider">Medals</div>

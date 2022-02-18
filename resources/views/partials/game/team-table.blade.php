@@ -2,7 +2,6 @@
 /** @var App\Models\Game $game */
 /** @var App\Models\GamePlayer[] $gamePlayers */
 /** @var App\Models\GameTeam $team */
-$team = $gamePlayers->first()->team;
 ?>
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">

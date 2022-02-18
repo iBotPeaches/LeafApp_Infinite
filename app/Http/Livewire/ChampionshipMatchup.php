@@ -15,6 +15,8 @@ class ChampionshipMatchup extends Component
 
     public function render(): View
     {
+        $this->matchup->load('matchupTeams.players');
+
         return view('livewire.championship-matchup', [
             'championship' => $this->championship,
             'matchup' => $this->matchup
