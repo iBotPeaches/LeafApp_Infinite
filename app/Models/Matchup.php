@@ -45,6 +45,10 @@ class Matchup extends Model implements HasFaceItApi
         'championship_id',
     ];
 
+    public $with = [
+        'matchupTeams'
+    ];
+
     public $timestamps = false;
 
     public function getRouteKeyName(): string
