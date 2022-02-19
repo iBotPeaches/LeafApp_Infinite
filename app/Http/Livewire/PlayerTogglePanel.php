@@ -17,6 +17,7 @@ class PlayerTogglePanel extends Component
 
         $this->emitTo(OverviewPage::class, '$refresh');
         $this->emitTo(MedalsPage::class, '$refresh');
+        $this->emitTo(MedalsLeaderboard::class, '$refresh');
     }
 
     public function mount(): void
