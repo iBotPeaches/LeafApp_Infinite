@@ -24,6 +24,7 @@ class ApiClient implements InfiniteInterface
     {
         $this->pendingRequest = Http::asJson()
             ->baseUrl($config['domain'] . '/infinite@'. $config['version'])
+            ->timeout(180)
             ->withToken($config['key']);
     }
 
