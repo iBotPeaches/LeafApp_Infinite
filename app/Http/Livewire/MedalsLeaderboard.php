@@ -35,7 +35,7 @@ class MedalsLeaderboard extends Component
             ->selectRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) as value,
                 mode, total_seconds_played, player_id')
             ->where('mode', $modeSession->value)
-            ->havingRaw('value > 0')
+            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) > 0')
             ->orderByRaw('value DESC')
             ->paginate(15);
 
