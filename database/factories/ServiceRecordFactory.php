@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\MedalType;
 use App\Enums\Mode;
 use App\Models\Medal;
 use App\Models\Player;
@@ -55,7 +56,15 @@ class ServiceRecordFactory extends Factory
     public function withMedals(): self
     {
         return $this->state(function () {
-            $medals = Medal::factory()->count(2)->create();
+            $medals = Medal::factory()
+                ->sequence(
+                    ['type' => MedalType::LEGENDARY],
+                    ['type' => MedalType::MYTHIC],
+                    ['type' => MedalType::HEROIC],
+                    ['type' => MedalType::NORMAL],
+                )
+                ->count(4)
+                ->create();
 
             return [
                 // @phpstan-ignore-next-line
