@@ -1,1 +1,12 @@
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+
 $footer-padding: 3rem 1.5rem 2rem;
+
+$orange: #ff8606;
+$orange-invert: findColorInvert($orange);
+
+$purple: #9400ff;
+$purple-invert: findColorInvert($purple);
+
+$custom-colors: ("orange": ($orange, $orange-invert), "purple": ($purple, $purple-invert));
