@@ -7,6 +7,7 @@
         <div class="column">
             <livewire:player-toggle-panel />
             @include('partials.leaderboard.medal.medal-card')
+            @include('partials.leaderboard.medal.notice')
         </div>
         <div class="column is-three-quarters">
             <livewire:medals-leaderboard :medal="$medal" />
