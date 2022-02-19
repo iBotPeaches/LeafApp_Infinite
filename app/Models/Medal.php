@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
  * @property MedalType $type
  * @property string $thumbnail_url
  * @property-read string $image
+ * @property-read string $color
  * @method static MedalFactory factory(...$parameters)
  */
 class Medal extends Model implements HasHaloDotApi
@@ -65,6 +66,16 @@ class Medal extends Model implements HasHaloDotApi
     public function getImageAttribute(): string
     {
         return asset('images/medals/' . $this->id . '.png');
+    }
+
+    public function getColorAttribute(): string
+    {
+        return match ((int) $this->type->value) {
+            MedalType::LEGENDARY => 'orange',
+            MedalType::MYTHIC => 'purple',
+            MedalType::HEROIC => 'info',
+            default => 'primary'
+        };
     }
 
     public static function fromHaloDotApi(array $payload): ?self
