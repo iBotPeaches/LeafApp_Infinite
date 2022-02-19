@@ -87,11 +87,11 @@ class ExportGame implements ShouldQueue
                 $gamePlayer->getRawOriginal('score'),
                 $perfectMedal->count ?? 0,
                 $gamePlayer->medal_count,
-                $team->outcome->description,
-                $team->rank,
-                $team->score,
-                $team->mmr,
-                $team->csr,
+                $team?->outcome?->description,
+                $team?->rank,
+                $team?->score,
+                $team?->mmr,
+                $team?->csr,
             ];
         }
 
