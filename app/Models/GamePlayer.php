@@ -58,7 +58,7 @@ use Illuminate\Support\Collection;
  * @property array $medals
  * @property-read Player $player
  * @property-read Game $game
- * @property-read GameTeam $team
+ * @property-read GameTeam|null $team
  * @property-read Collection<int, Medal> $hydrated_medals
  * @method static GamePlayerFactory factory(...$parameters)
  */
