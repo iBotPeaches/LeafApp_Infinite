@@ -3,9 +3,9 @@
 ?>
 <section class="mt-3 card">
     <header class="card-header">
-        <p class="card-header-title">
+        <div class="card-header-title">
             Random Medal
-        </p>
+        </div>
     </header>
     <div class="card-content">
         <figure class="media-left">
@@ -15,7 +15,9 @@
         </figure>
         <div class="media-content">
             <div class="content">
-                <strong>{{ $medal->name }}</strong>
+                <a href="{{ route('medalLeaderboard', [$medal]) }}">
+                    <strong>{{ $medal->name }}</strong>
+                </a>
                 <i>{{ $medal->description }}</i>
             </div>
         </div>
