@@ -23,7 +23,7 @@ use App\Http\Controllers\HcsController;
 Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit');
 
 // Leaderboard
-Route::get('/leaderboard/medals/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
+Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Player
 Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
