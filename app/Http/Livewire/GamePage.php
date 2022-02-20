@@ -25,7 +25,7 @@ class GamePage extends Component
     {
         $this->game->load('teams.players');
 
-        $groupedPlayers = $this->game->players->groupBy('team.internal_team_id');
+        $groupedPlayers = $this->game->players->groupBy('game_team_id', true);
 
         if (! $this->game->outdated) {
             $this->game->players->each(function (GamePlayer $gamePlayer) {
