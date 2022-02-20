@@ -101,7 +101,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         // The individual match endpoint returns all players, so it keyed by player, thus doesn't need "player"
         $prefix = Arr::has($payload, 'player') ? 'player.' : null;
         if (empty($prefix)) {
-            $team = $game->findTeamFromId(Arr::get($payload, 'team.id'));
+            $team = $game->findTeamFromInternalId(Arr::get($payload, 'team.id'));
             $gamePlayer->team()->associate($team);
         }
 

@@ -14,7 +14,7 @@
     </div>
     <div class="column is-four-fifths">
         @foreach ($groupedGamePlayers as $teamId => $gamePlayers)
-            @include('partials.game.team-table', ['team' => $game->findTeamFromId($teamId)])
+            @include('partials.game.team-table', ['team' => $game->findTeamFromTeamId($teamId)])
         @endforeach
         @if (! $game->outdated)
             <div class="divider">Medals</div>

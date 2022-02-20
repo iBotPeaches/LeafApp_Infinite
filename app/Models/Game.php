@@ -113,9 +113,14 @@ class Game extends Model implements HasHaloDotApi
         $client->match($this->uuid);
     }
 
-    public function findTeamFromId(int|string $id): ?GameTeam
+    public function findTeamFromInternalId(int|string $id): ?GameTeam
     {
         return $this->teams->firstWhere('internal_team_id', $id);
+    }
+
+    public function findTeamFromTeamId(int|string $id): ?GameTeam
+    {
+        return $this->teams->firstWhere('id', $id);
     }
 
     public static function fromHaloDotApi(array $payload): ?self
