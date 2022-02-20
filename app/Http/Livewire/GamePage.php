@@ -23,7 +23,9 @@ class GamePage extends Component
 
     public function render(): View
     {
-        $groupedPlayers = $this->game->players->groupBy('game_team_id');
+        $this->game->load('teams.players');
+
+        $groupedPlayers = $this->game->players->groupBy('team.internal_team_id');
 
         if (! $this->game->outdated) {
             $this->game->players->each(function (GamePlayer $gamePlayer) {
