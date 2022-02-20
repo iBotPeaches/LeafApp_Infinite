@@ -20,7 +20,7 @@ class PullMatchupGame extends Command
             ->where('faceit_id', $matchupId)
             ->firstOrFail();
 
-        FindMatchesFromMatchup::dispatchSync($matchup);
+        FindMatchesFromMatchup::dispatch($matchup);
 
         return CommandAlias::SUCCESS;
     }
