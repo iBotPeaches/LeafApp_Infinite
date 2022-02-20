@@ -8,7 +8,7 @@ require 'contrib/yarn.php';
 
 set('application', 'Leafapp');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
-set('php_fpm_version', '8.1');
+set('php_fpm_service', 'ea-php81-php-fpm');
 
 host('prod')
     ->set('remote_user', 'leafapp')
