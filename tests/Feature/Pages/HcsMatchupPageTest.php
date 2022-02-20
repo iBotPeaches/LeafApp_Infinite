@@ -6,8 +6,11 @@ namespace Tests\Feature\Pages;
 use App\Enums\ChampionshipType;
 use App\Enums\Outcome;
 use App\Models\Championship;
+use App\Models\Game;
+use App\Models\GamePlayer;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
+use App\Models\Pivots\MatchupGame;
 use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,6 +73,12 @@ class HcsMatchupPageTest extends TestCase
             'outcome' => Outcome::LOSS,
             'matchup_id' => $matchup->id,
         ]);
+
+        $matchupGame = MatchupGame::factory()
+            ->for(Game::factory()->has(GamePlayer::factory(), 'players'))
+            ->createOne([
+                'matchup_id' => $matchup->id
+            ]);
 
         // Act
         $response = $this->get(route('matchup', [$matchup->championship, $matchup]));
