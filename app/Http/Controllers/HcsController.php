@@ -30,6 +30,8 @@ class HcsController extends Controller
 
     public function matchup(Championship $championship, Matchup $matchup): View
     {
+        $matchup->load('matchupTeams.players');
+
         SEOTools::setTitle($matchup->title);
         SEOTools::setDescription($matchup->description);
 

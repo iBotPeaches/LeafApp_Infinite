@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
@@ -27,6 +28,7 @@ use Illuminate\Support\Arr;
  * @property Carbon $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
+ * @property-read Game[]|Collection $games
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read string $score
@@ -49,6 +51,11 @@ class Matchup extends Model implements HasFaceItApi
         'matchupTeams'
     ];
 
+    public $dates = [
+        'started_at',
+        'ended_at'
+    ];
+
     public $timestamps = false;
 
     public function getRouteKeyName(): string
@@ -56,14 +63,14 @@ class Matchup extends Model implements HasFaceItApi
         return 'faceit_id';
     }
 
-    public function setStartedAtAttribute(string $value): void
+    public function setStartedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['started_at'] = Carbon::createFromTimestamp($value);
+        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
-    public function setEndedAtAttribute(string $value): void
+    public function setEndedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['ended_at'] = Carbon::createFromTimestamp($value);
+        $this->attributes['ended_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
     public function getWinnerAttribute(): ?MatchupTeam
@@ -147,5 +154,10 @@ class Matchup extends Model implements HasFaceItApi
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class);
+    }
+
+    public function games(): BelongsToMany
+    {
+        return $this->belongsToMany(Game::class, 'matchup_game');
     }
 }
