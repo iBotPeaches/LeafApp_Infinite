@@ -63,14 +63,14 @@ class Matchup extends Model implements HasFaceItApi
         return 'faceit_id';
     }
 
-    public function setStartedAtAttribute(string $value): void
+    public function setStartedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['started_at'] = Carbon::createFromTimestamp($value);
+        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
-    public function setEndedAtAttribute(string $value): void
+    public function setEndedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['ended_at'] = Carbon::createFromTimestamp($value);
+        $this->attributes['ended_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
     public function getWinnerAttribute(): ?MatchupTeam
