@@ -28,7 +28,7 @@
                             <span class="tag is-light">@th($matchupTeam->points) place</span>
                         </div>
                         <div class="is-pulled-left">
-                            @if (isset($aggregateStats[$player->id]))
+                            @if (Arr::has($aggregateStats, $player?->id))
                                 @include('partials.hcs.stat_breakdown.ffa', ['stats' => $aggregateStats[$player->id]])
                             @endif
                         </div>

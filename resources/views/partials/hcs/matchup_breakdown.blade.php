@@ -5,7 +5,7 @@
 @if ($championship->type->isFfa())
     <div class="columns">
         <div class="column">
-            <h3 class="title is-3">Games</h3>
+            <h3 class="title is-3">Game(s)</h3>
             @include('partials.hcs.game_breakdown.ffa')
         </div>
         <div class="column">
