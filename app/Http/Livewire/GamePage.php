@@ -27,18 +27,16 @@ class GamePage extends Component
 
         $groupedPlayers = $this->game->players->groupBy('game_team_id', true);
 
-        if (! $this->game->outdated) {
-            $this->game->players->each(function (GamePlayer $gamePlayer) {
-                $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
-                    $this->medals[$medal->id]['medal'] = $medal;
+        $this->game->players->each(function (GamePlayer $gamePlayer) {
+            $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
+                $this->medals[$medal->id]['medal'] = $medal;
 
-                    // Pass on our medal specific count and attach to the specific gamePlayer
-                    $gamePlayer['medal_' . $medal->id] = $medal['count'];
+                // Pass on our medal specific count and attach to the specific gamePlayer
+                $gamePlayer['medal_' . $medal->id] = $medal['count'];
 
-                    $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
-                });
+                $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
             });
-        }
+        });
 
         foreach ($this->medals as &$medal) {
             usort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
