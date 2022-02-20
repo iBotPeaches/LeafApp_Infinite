@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\QueueName;
 use App\Models\Game;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
@@ -9,7 +10,6 @@ use App\Models\Pivots\MatchupGame;
 use App\Models\Player;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
-use App\Services\FaceIt\ApiClient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +28,7 @@ class FindMatchesFromMatchup implements ShouldQueue
     public function __construct(Matchup $matchup)
     {
         $this->matchup = $matchup;
+        $this->onQueue(QueueName::HCS);
     }
 
     public function handle(): void
@@ -42,7 +43,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
         // 2 - Load their custom history to have latest
         $players->each(function (Player $player) {
-            $this->client->matches($player, Mode::CUSTOM());
+            $this->client?->matches($player, Mode::CUSTOM());
         });
 
         // 3 - Pick a player with visible customs to iterate
