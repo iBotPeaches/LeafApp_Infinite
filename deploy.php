@@ -3,6 +3,7 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
+require 'contrib/php-fpm.php';
 require 'contrib/yarn.php';
 
 set('application', 'Leafapp');
