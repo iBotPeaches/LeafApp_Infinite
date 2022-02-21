@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Csr;
@@ -20,6 +21,7 @@ class CsrFactory extends Factory
             'queue' => Queue::getRandomValue(),
             'input' => Input::getRandomValue(),
             'season' => 1,
+            'mode' => CompetitiveMode::getRandomValue(),
             'csr' => 1225,
             'matches_remaining' => 0,
             'tier' => 'Diamond',
@@ -28,8 +30,6 @@ class CsrFactory extends Factory
             'next_tier' => 'Diamond',
             'next_sub_tier' => 5,
             'next_csr' => 1500,
-            'season_tier' => 'Diamond',
-            'season_sub_tier' => 4,
         ];
     }
 }
