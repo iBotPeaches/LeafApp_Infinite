@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasHaloDotApi;
@@ -20,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property Queue|null $queue
  * @property Input|null $input
  * @property int $season
+ * @property CompetitiveMode $mode
  * @property int $csr
  * @property int $matches_remaining
  * @property string $tier
@@ -28,8 +30,6 @@ use Illuminate\Support\Arr;
  * @property string $next_tier
  * @property int $next_sub_tier
  * @property int $next_csr
- * @property string $season_tier
- * @property int $season_sub_tier
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
@@ -52,7 +52,8 @@ class Csr extends Model implements HasHaloDotApi
         'csr' => 'int',
         'next_csr' => 'int',
         'input' => Input::class,
-        'queue' => Queue::class
+        'queue' => Queue::class,
+        'mode' => CompetitiveMode::class,
     ];
 
     public $touches = [
@@ -188,9 +189,6 @@ class Csr extends Model implements HasHaloDotApi
             $csr->next_tier = Arr::get($playlist, 'response.current.next_tier');
             $csr->next_sub_tier = ((int)Arr::get($playlist, 'response.current.next_sub_tier')) - 1;
             $csr->next_csr = Arr::get($playlist, 'response.current.next_tier_start');
-
-            $csr->season_tier = Arr::get($playlist, 'response.season.tier');
-            $csr->season_sub_tier = Arr::get($playlist, 'response.season.sub_tier');
 
             if ($csr->isDirty()) {
                 $csr->saveOrFail();
