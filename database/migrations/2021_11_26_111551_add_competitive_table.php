@@ -14,7 +14,7 @@ class AddCompetitiveTable extends Migration
             $table->foreignIdFor(Player::class)->constrained()->cascadeOnDelete();
             $table->tinyInteger('queue')->unsigned();
             $table->tinyInteger('input')->unsigned();
-            $table->tinyInteger('season')->unsigned();
+            $table->tinyInteger('season')->unsigned()->nullable();
 
             $table->mediumInteger('csr')->unsigned()->nullable();
             $table->tinyInteger('matches_remaining')->unsigned()->default(0);
