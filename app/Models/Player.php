@@ -128,6 +128,14 @@ class Player extends Model implements HasHaloDotApi
             ->get();
     }
 
+    public function allTime(): Collection
+    {
+        return $this->csrs()
+            ->whereNull('season')
+            ->orderByDesc('csr')
+            ->get();
+    }
+
     public function serviceRecord(): HasOne
     {
         return $this->hasOne(ServiceRecord::class)
