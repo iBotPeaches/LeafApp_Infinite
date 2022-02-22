@@ -24,19 +24,20 @@ class GamePage extends Component
     public function render(): View
     {
         $this->game->load('teams.players');
-
         $groupedPlayers = $this->game->players->groupBy('game_team_id', true);
 
-        $this->game->players->each(function (GamePlayer $gamePlayer) {
-            $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
-                $this->medals[$medal->id]['medal'] = $medal;
+        if (! $this->game->outdated) {
+            $this->game->players->each(function (GamePlayer $gamePlayer) {
+                $gamePlayer->hydrated_medals->each(function (Medal $medal) use ($gamePlayer) {
+                    $this->medals[$medal->id]['medal'] = $medal;
 
-                // Pass on our medal specific count and attach to the specific gamePlayer
-                $gamePlayer['medal_' . $medal->id] = $medal['count'];
+                    // Pass on our medal specific count and attach to the specific gamePlayer
+                    $gamePlayer['medal_' . $medal->id] = $medal['count'];
 
-                $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
+                    $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
+                });
             });
-        });
+        }
 
         foreach ($this->medals as &$medal) {
             usort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
@@ -44,9 +45,8 @@ class GamePage extends Component
             });
         }
 
-        // TODO - When API returns difficulty again, order by that
         usort($this->medals, function (array $a, array $b) {
-            return Arr::get($a, 'medal.type') <=> Arr::get($b, 'medal.type');
+            return Arr::get($a, 'medal.type.value') <=> Arr::get($b, 'medal.type.value');
         });
 
         return view('livewire.game-page', [
