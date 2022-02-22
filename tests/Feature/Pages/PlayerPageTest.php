@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
 
+use App\Enums\CompetitiveMode;
+use App\Enums\Input;
+use App\Enums\Queue;
+use App\Models\Csr;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use Illuminate\Support\Facades\Http;
@@ -98,6 +102,27 @@ class PlayerPageTest extends TestCase
         Http::fake();
 
         Player::factory()
+            ->has(Csr::factory()->state(function () {
+                return [
+                    'queue' => Queue::OPEN,
+                    'mode' => CompetitiveMode::SEASON,
+                    'input' => Input::CROSSPLAY,
+                    'next_csr' => 1500,
+                    'tier_start_csr' => 1450,
+                    'csr' => 1499
+                ];
+            }))
+            ->has(Csr::factory()->state(function () {
+                return [
+                    'queue' => Queue::OPEN,
+                    'mode' => CompetitiveMode::ALL_TIME,
+                    'season' => null,
+                    'input' => Input::CROSSPLAY,
+                    'next_csr' => 1500,
+                    'tier_start_csr' => 1450,
+                    'csr' => 1499
+                ];
+            }))
             ->createOne([
                 'gamertag' => $gamertag
             ]);
