@@ -18,15 +18,10 @@ class CompetitivePage extends Component
 
     public function render(): View
     {
-        $ranked = $this->player->ranked(1)
-            ->groupBy('mode.value', true)
-            ->sortKeys(SORT_ASC);
-
-        $allTime = $this->player->allTime();
-
         return view('livewire.competitive-page', [
-            'ranked' => $ranked,
-            'allTime' => $allTime,
+            'current' => $this->player->currentRanked(),
+            'season' => $this->player->seasonHighRanked(),
+            'allTime' => $this->player->allTimeRanked(),
         ]);
     }
 }
