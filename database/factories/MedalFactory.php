@@ -16,6 +16,7 @@ class MedalFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => $this->faker->numerify('#########'),
             'name' => $this->faker->word,
             'description' => $this->faker->word,
             'category' => MedalCategory::getRandomValue(),
