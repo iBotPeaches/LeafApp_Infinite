@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks\Csrs;
 
+use App\Enums\CompetitiveMode;
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
 
@@ -45,6 +46,26 @@ class MockCsrAllService extends BaseMock
             'additional' => [
                 'gamertag' => $gamertag,
                 'season' => $season
+            ]
+        ];
+    }
+
+    public function malformed(): array
+    {
+        return [
+            'data' => [
+                [
+                    'queue' => 'open',
+                    'input' => 'crossplay',
+                    'response' => [
+                        CompetitiveMode::SEASON => $this->playlistResponse(),
+                        'c0rrent' => $this->playlistResponse(),
+                    ]
+                ],
+            ],
+            'additional' => [
+                'gamertag' => '',
+                'season' => ''
             ]
         ];
     }
