@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:5.7
+      maria:
+        image: mariadb:10.6
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: leafapp_test
@@ -62,7 +62,7 @@ jobs:
 
       - name: Execute tests (With Coverage) via PHPUnit
         env:
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: ${{ job.services.maria.ports[3306] }}
         run: php artisan test --without-tty --coverage --min=100 --parallel -p2 --coverage-html=output
 
       - uses: actions/upload-artifact@v2
