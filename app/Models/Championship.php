@@ -75,9 +75,9 @@ class Championship extends Model implements HasFaceItApi
         $this->attributes['type'] = $type->value;
     }
 
-    public function setStartedAtAttribute(string $value): void
+    public function setStartedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['started_at'] = Carbon::createFromTimestampMsUTC($value);
+        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestampMsUTC($value);
     }
 
     public function getFaceitUrlAttribute(): string
