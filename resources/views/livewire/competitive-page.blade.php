@@ -26,7 +26,9 @@
                 </span>
             </h5>
             @foreach ($season as $playlist)
-                @include('partials.player.csr-minimal-card-row')
+                @if ($playlist->hasNextRank())
+                    @include('partials.player.csr-minimal-card-row')
+                @endif
             @endforeach
         </div>
         <div class="column">
@@ -37,7 +39,9 @@
                 </span>
             </h5>
             @foreach ($allTime as $playlist)
-                @include('partials.player.csr-minimal-card-row')
+                @if ($playlist->hasNextRank())
+                    @include('partials.player.csr-minimal-card-row')
+                @endif
             @endforeach
         </div>
     </div>
