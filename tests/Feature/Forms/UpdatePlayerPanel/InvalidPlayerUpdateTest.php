@@ -107,6 +107,33 @@ class InvalidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
+    public function testCrashingOutIfNewCompetitiveModeInCsr(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->malformed();
+        $mockMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
+    }
+
     public function testCrashingOutIfNewQueueModeInMatchHistory(): void
     {
         // Arrange

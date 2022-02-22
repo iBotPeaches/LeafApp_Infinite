@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasHaloDotApi;
@@ -13,13 +14,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use InvalidArgumentException;
 
 /**
  * @property int $id
  * @property int $player_id
  * @property Queue|null $queue
  * @property Input|null $input
- * @property int $season
+ * @property int|null $season
+ * @property CompetitiveMode $mode
  * @property int $csr
  * @property int $matches_remaining
  * @property string $tier
@@ -28,8 +31,6 @@ use Illuminate\Support\Arr;
  * @property string $next_tier
  * @property int $next_sub_tier
  * @property int $next_csr
- * @property string $season_tier
- * @property int $season_sub_tier
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
@@ -52,7 +53,8 @@ class Csr extends Model implements HasHaloDotApi
         'csr' => 'int',
         'next_csr' => 'int',
         'input' => Input::class,
-        'queue' => Queue::class
+        'queue' => Queue::class,
+        'mode' => CompetitiveMode::class,
     ];
 
     public $touches = [
@@ -62,6 +64,13 @@ class Csr extends Model implements HasHaloDotApi
     public function setCsrAttribute(?int $csr): void
     {
         $this->attributes['csr'] = $csr === -1 ? null : $csr;
+    }
+
+    public function setModeAttribute(string $value): void
+    {
+        $mode = is_numeric($value) ? CompetitiveMode::fromValue((int) $value) : CompetitiveMode::coerce($value);
+
+        $this->attributes['mode'] = $mode?->value;
     }
 
     public function getRankAttribute(): string
@@ -162,38 +171,49 @@ class Csr extends Model implements HasHaloDotApi
                 );
             }
 
-            /** @var Csr $csr */
-            $csr = Csr::query()
-                ->where('player_id', $player->id)
-                ->where('season', $season)
-                ->where('queue', $queue->value)
-                ->where('input', $input->value)
-                ->firstOrNew();
+            foreach (Arr::get($playlist, 'response') as $key => $playlistMode) {
+                $mode = CompetitiveMode::coerce($key);
+                if (empty($mode)) {
+                    throw new InvalidArgumentException('Mode (' . $key . ') is unknown.');
+                }
 
-            $csr->player()->associate($player);
-            $csr->season = $season;
-            $csr->queue = $queue;
-            $csr->input = $input;
-            $csr->csr = Arr::get($playlist, 'response.current.value');
-            $csr->matches_remaining = Arr::get($playlist, 'response.current.measurement_matches_remaining');
+                $playlistSeason = $season;
+                if ($mode->is(CompetitiveMode::ALL_TIME())) {
+                    $playlistSeason = null;
+                }
 
-            // Subtracting 1 from `sub_tier` and `next_sub_tier` is because Autocode 0.3.8
-            // Turned these from indexes to levels. This is more sane, but entire codebase expects indexes
-            // Old data would become invalid and this is easier for now. For future, we should one-off migrate all
-            // data in database to +1, then remove the -1 below.
-            $csr->tier = Arr::get($playlist, 'response.current.tier');
-            $csr->tier_start_csr = Arr::get($playlist, 'response.current.tier_start');
-            $csr->sub_tier = ((int)Arr::get($playlist, 'response.current.sub_tier')) - 1;
+                /** @var Csr $csr */
+                $csr = Csr::query()
+                    ->where('player_id', $player->id)
+                    ->where('season', $playlistSeason)
+                    ->where('mode', $mode->value)
+                    ->where('queue', $queue->value)
+                    ->where('input', $input->value)
+                    ->firstOrNew();
 
-            $csr->next_tier = Arr::get($playlist, 'response.current.next_tier');
-            $csr->next_sub_tier = ((int)Arr::get($playlist, 'response.current.next_sub_tier')) - 1;
-            $csr->next_csr = Arr::get($playlist, 'response.current.next_tier_start');
+                $csr->player()->associate($player);
+                $csr->season = $playlistSeason;
+                $csr->mode = $mode;
+                $csr->queue = $queue;
+                $csr->input = $input;
+                $csr->csr = Arr::get($playlistMode, 'value');
+                $csr->matches_remaining = Arr::get($playlistMode, 'measurement_matches_remaining');
 
-            $csr->season_tier = Arr::get($playlist, 'response.season.tier');
-            $csr->season_sub_tier = Arr::get($playlist, 'response.season.sub_tier');
+                // Subtracting 1 from `sub_tier` and `next_sub_tier` is because Autocode 0.3.8
+                // Turned these from indexes to levels. This is more sane, but entire codebase expects indexes
+                // Old data would become invalid and this is easier for now. For future, we should one-off migrate all
+                // data in database to +1, then remove the -1 below.
+                $csr->tier = Arr::get($playlistMode, 'tier');
+                $csr->tier_start_csr = Arr::get($playlistMode, 'tier_start');
+                $csr->sub_tier = ((int)Arr::get($playlistMode, 'sub_tier')) - 1;
 
-            if ($csr->isDirty()) {
-                $csr->saveOrFail();
+                $csr->next_tier = Arr::get($playlistMode, 'next_tier');
+                $csr->next_sub_tier = ((int)Arr::get($playlistMode, 'next_sub_tier')) - 1;
+                $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
+
+                if ($csr->isDirty()) {
+                    $csr->saveOrFail();
+                }
             }
         }
 

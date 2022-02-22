@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Bracket;
+use App\Enums\CompetitiveMode;
 use App\Enums\Experience;
 use App\Enums\Input;
 use App\Enums\Outcome;
@@ -46,4 +47,9 @@ return [
         Bracket::WINNERS => 'Winners',
         Bracket::LOSERS => 'Losers',
     ],
+    CompetitiveMode::class => [
+        CompetitiveMode::CURRENT => 'Current',
+        CompetitiveMode::SEASON => 'Season',
+        CompetitiveMode::ALL_TIME => 'All Time',
+    ]
 ];

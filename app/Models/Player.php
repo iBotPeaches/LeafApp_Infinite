@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CompetitiveMode;
 use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
@@ -120,10 +121,28 @@ class Player extends Model implements HasHaloDotApi
         PullAppearance::dispatch($this);
     }
 
-    public function ranked(int $season = 1): Collection
+    public function currentRanked(int $season = 1): Collection
     {
         return $this->csrs()
             ->where('season', $season)
+            ->where('mode', CompetitiveMode::CURRENT)
+            ->orderByDesc('csr')
+            ->get();
+    }
+
+    public function seasonHighRanked(int $season = 1): Collection
+    {
+        return $this->csrs()
+            ->where('season', $season)
+            ->where('mode', CompetitiveMode::SEASON)
+            ->orderByDesc('csr')
+            ->get();
+    }
+
+    public function allTimeRanked(): Collection
+    {
+        return $this->csrs()
+            ->whereNull('season')
             ->orderByDesc('csr')
             ->get();
     }

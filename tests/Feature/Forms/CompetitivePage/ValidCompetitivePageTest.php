@@ -48,8 +48,9 @@ class ValidCompetitivePageTest extends TestCase
             }))
             ->createOne();
 
-        /** @var Csr[] $ranked */
-        $ranked = $player->ranked(1);
+        /** @var Csr[] $current */
+        $current = $player->currentRanked(1);
+
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [
@@ -57,9 +58,11 @@ class ValidCompetitivePageTest extends TestCase
         ]);
 
         // Assert
-        $livewire->assertViewHas('ranked');
+        $livewire->assertViewHas('current');
+        $livewire->assertViewHas('season');
+        $livewire->assertViewHas('allTime');
 
-        foreach ($ranked as $playlist) {
+        foreach ($current as $playlist) {
             $livewire->assertSee($playlist->title);
             $livewire->assertSee($playlist->icon, false);
             $livewire->assertSee($playlist->toCsrObject()->url());
@@ -96,7 +99,7 @@ class ValidCompetitivePageTest extends TestCase
             ->createOne();
 
         /** @var Csr[] $ranked */
-        $ranked = $player->ranked(1);
+        $ranked = $player->currentRanked(1);
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [
@@ -104,7 +107,9 @@ class ValidCompetitivePageTest extends TestCase
         ]);
 
         // Assert
-        $livewire->assertViewHas('ranked');
+        $livewire->assertViewHas('current');
+        $livewire->assertViewHas('season');
+        $livewire->assertViewHas('allTime');
 
         foreach ($ranked as $playlist) {
             $livewire->assertSee($playlist->title);

@@ -18,10 +18,10 @@ class CompetitivePage extends Component
 
     public function render(): View
     {
-        $ranked = $this->player->ranked(1);
-
         return view('livewire.competitive-page', [
-            'ranked' => $ranked
+            'current' => $this->player->currentRanked(),
+            'season' => $this->player->seasonHighRanked(),
+            'allTime' => $this->player->allTimeRanked(),
         ]);
     }
 }
