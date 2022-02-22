@@ -13,6 +13,16 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
 
+    services:
+      maria:
+        image: mariadb10.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: leafapp_test
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - uses: actions/checkout@v2
       - name: Copy .env
@@ -50,10 +60,9 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse
 
-      - name: Create SQLite database
-        run: touch database/database.sqlite
-
       - name: Execute tests (With Coverage) via PHPUnit
+        env:
+          DB_PORT: ${{ job.services.maria.ports[3306] }}
         run: php artisan test --without-tty --coverage --min=100 --parallel -p2 --coverage-html=output
 
       - uses: actions/upload-artifact@v2
