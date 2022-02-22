@@ -56,10 +56,10 @@ class MockCsrAllService extends BaseMock
             'measurement_matches_remaining' => 0,
             'tier' => $this->faker->randomElement(['Gold', 'Diamond', 'Onyx', 'Unranked']),
             'tier_start' => $this->faker->numerify('####'),
-            'sub_tier' => $this->faker->numberBetween(0, 5),
+            'sub_tier' => $this->faker->numberBetween(1, 5),
             'next_tier' => $this->faker->randomElement(['Diamond', 'Onyx', '']),
             'next_tier_start' => $this->faker->numerify('####'),
-            'next_sub_tier' => $this->faker->numberBetween(0, 5),
+            'next_sub_tier' => $this->faker->numberBetween(1, 5),
             'initial_measurement_matches' => 10,
             'tier_image_url' => $this->faker->imageUrl
         ];

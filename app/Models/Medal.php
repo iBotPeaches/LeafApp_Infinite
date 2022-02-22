@@ -37,6 +37,8 @@ class Medal extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
+    public $incrementing = false;
+
     public function setCategoryAttribute(string $value): void
     {
         $category = is_numeric($value)
