@@ -69,11 +69,8 @@ class Csr extends Model implements HasHaloDotApi
     public function setModeAttribute(string $value): void
     {
         $mode = is_numeric($value) ? CompetitiveMode::fromValue((int) $value) : CompetitiveMode::coerce($value);
-        if (empty($mode)) {
-            throw new \InvalidArgumentException('Invalid Mode Enum (' . $value . ')');
-        }
 
-        $this->attributes['mode'] = $mode->value;
+        $this->attributes['mode'] = $mode?->value;
     }
 
     public function getRankAttribute(): string
