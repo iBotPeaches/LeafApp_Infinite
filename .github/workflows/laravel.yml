@@ -15,7 +15,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql5.8
+        image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: leafapp_test
