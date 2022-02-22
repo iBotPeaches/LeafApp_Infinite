@@ -21,7 +21,7 @@ class CsrFactory extends Factory
             'queue' => Queue::getRandomValue(),
             'input' => Input::getRandomValue(),
             'season' => 1,
-            'mode' => CompetitiveMode::getRandomValue(),
+            'mode' => CompetitiveMode::CURRENT,
             'csr' => 1225,
             'matches_remaining' => 0,
             'tier' => 'Diamond',
