@@ -133,6 +133,11 @@ class Csr extends Model implements HasHaloDotApi
         return $this->next_csr > 0;
     }
 
+    public function hasPlacementsDone(): bool
+    {
+        return $this->matches_remaining <= 0;
+    }
+
     public function getRankPercentColor(): string
     {
         if ($this->next_csr === 0) {

@@ -27,7 +27,7 @@
                 </span>
                 </h5>
                 @foreach ($season as $playlist)
-                    @if ($playlist->hasNextRank())
+                    @if ($playlist->hasPlacementsDone())
                         @include('partials.player.csr-minimal-card-row')
                     @endif
                 @endforeach
@@ -40,7 +40,7 @@
                 </span>
                 </h5>
                 @foreach ($allTime as $playlist)
-                    @if ($playlist->hasNextRank())
+                    @if ($playlist->hasPlacementsDone())
                         @include('partials.player.csr-minimal-card-row')
                     @endif
                 @endforeach
