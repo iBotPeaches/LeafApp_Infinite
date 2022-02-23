@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdatePlayerPanel;
 
+use App\Enums\CompetitiveMode;
+use App\Enums\Input;
 use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
 use App\Jobs\PullServiceReport;
+use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
@@ -206,10 +209,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
-        $player = Player::factory()->createOne([
-            'gamertag' => $gamertag,
-            'is_private' => true
-        ]);
+        $player = Player::factory()
+            ->has(Csr::factory()->state(function () {
+                return [
+                    'queue' => \App\Enums\Queue::OPEN,
+                    'mode' => CompetitiveMode::ALL_TIME,
+                    'season' => null,
+                    'input' => Input::CROSSPLAY,
+                    'next_csr' => 1500,
+                    'tier_start_csr' => 1500,
+                    'csr' => 9999
+                ];
+            }))
+            ->createOne([
+                'gamertag' => $gamertag,
+                'is_private' => true
+            ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
