@@ -45,7 +45,8 @@ class ApiClient implements InfiniteInterface
     {
         $response = $this->pendingRequest->get('stats/csrs', [
             'gamertag' => $player->gamertag,
-            'season' => 1
+            'season' => 1,
+            'version' => 2
         ]);
 
         if ($response->throw()->successful()) {
