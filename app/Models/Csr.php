@@ -196,12 +196,20 @@ class Csr extends Model implements HasHaloDotApi
                     ->where('input', $input->value)
                     ->firstOrNew();
 
+                // Due to an HaloDotAPI issue(?) - the `season` parameter is nulled out during mid-season reset.
+                // This keeps the value for allTime or season if the newer value is less.
+                // You can only go up with `season` or `allTime`.
+                $newCsrValue = Arr::get($playlistMode, 'value');
+                if ($mode->isNot(CompetitiveMode::CURRENT()) && $csr->csr > $newCsrValue) {
+                    continue;
+                }
+
                 $csr->player()->associate($player);
                 $csr->season = $playlistSeason;
                 $csr->mode = $mode;
                 $csr->queue = $queue;
                 $csr->input = $input;
-                $csr->csr = Arr::get($playlistMode, 'value');
+                $csr->csr = $newCsrValue;
                 $csr->matches_remaining = Arr::get($playlistMode, 'measurement_matches_remaining');
 
                 // Subtracting 1 from `sub_tier` and `next_sub_tier` is because Autocode 0.3.8
