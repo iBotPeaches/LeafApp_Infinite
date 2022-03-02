@@ -35,6 +35,10 @@ return [
         'domain' => env('AUTOCODE_DOMAIN', 'https://halo.api.stdlib.com'),
         'version' => env('AUTOCODE_VERSION', '0.3.9'),
         'cooldown' => env('AUTOCODE_COOLDOWN', 120),
+        'competitive' => [
+            'season' => env('AUTOCODE_CURRENT_SEASON', 1),
+            'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 2),
+        ]
     ],
 
     'xboxapi' => [
