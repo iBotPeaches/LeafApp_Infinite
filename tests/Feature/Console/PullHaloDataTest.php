@@ -46,6 +46,7 @@ class PullHaloDataTest extends TestCase
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomMatchesResponse, Response::HTTP_OK)
