@@ -17,6 +17,9 @@
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./database/factories</directory>
         </include>
+        <exclude>
+            <file>./app/Console/Kernel.php</file>
+        </exclude>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
