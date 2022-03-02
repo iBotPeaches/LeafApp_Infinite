@@ -31,6 +31,7 @@ use Illuminate\Support\Arr;
  * @property boolean $is_private
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
+ * @property string $last_csr_key
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Game[]|Collection $games
@@ -93,9 +94,12 @@ class Player extends Model implements HasHaloDotApi
 
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
+        $seasonNumber = (int)config('services.autocode.competitive.season');
+        $seasonVersion = (int)config('services.autocode.competitive.version');
+
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
-        $client->competitive($this);
+        $client->competitive($this, $seasonNumber, $seasonVersion);
 
         if (in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE])) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
