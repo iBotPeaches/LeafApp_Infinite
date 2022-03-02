@@ -18,7 +18,8 @@
                 </div>
                 <div class="message-body">
                     The <a href="https://github.com/iBotPeaches/LeafApp_Infinite/issues">GitHub</a> will handle it all or
-                    <a href="https://twitter.com/iBotPeaches">tweet me</a>.
+                    <a href="https://twitter.com/iBotPeaches">tweet me</a> or
+                    <a target="_blank" href="https://discordapp.com/users/iBotPeaches#1569">discord me</a>.
                 </div>
             </article>
             <div class="divider"></div>
