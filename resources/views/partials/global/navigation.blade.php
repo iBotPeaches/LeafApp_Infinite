@@ -27,6 +27,11 @@
                     <a target="_blank" href="https://github.com/iBotPeaches/LeafApp_Infinite" class="button is-info">
                         <strong>GitHub</strong>
                     </a>
+                    @guest
+                        <a href="{{ route('googleRedirect') }}" class="button is-danger">
+                            <strong>Google</strong>
+                        </a>
+                    @endguest
                     <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" class="button is-warning">
                         <i class="fas fa-coffee"></i>
                     </a>
