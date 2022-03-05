@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property int $id
- * @property int $player_id
+ * @property int|null $player_id
  * @property string $google_id
  * @property Carbon $created_at
  * @property Carbon $updated_at

@@ -9,6 +9,7 @@ use App\Jobs\ExportGameHistory;
 use App\Models\Player;
 use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -50,7 +51,7 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function link(LinkableRequest $request, Player $player)
+    public function link(LinkableRequest $request, Player $player): RedirectResponse
     {
         /** @var User $user */
         $user = $request->user();
@@ -60,7 +61,7 @@ class PlayerController extends Controller
         return redirect()->route('player', $player);
     }
 
-    public function unlink(LinkableRequest $request, Player $player)
+    public function unlink(LinkableRequest $request, Player $player): RedirectResponse
     {
         /** @var User $user */
         $user = $request->user();
