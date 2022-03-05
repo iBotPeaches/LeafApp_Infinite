@@ -22,7 +22,7 @@ class PullHistoricCompetitive extends Command
             ->where('last_csr_key', '<>', $csrKey)
             ->orWhereNull('last_csr_key')
             ->orderByDesc('id')
-            ->limit(10)
+            ->limit(rand(35, 60))
             ->cursor()
             ->each(function (Player $player) use ($csrKey) {
                 PullCompetitiveHistory::dispatch($player);
