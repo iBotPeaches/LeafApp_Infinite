@@ -10,6 +10,10 @@
             @if (in_array($type, ['matches', 'custom']))
                 <div class="notification">
                     <a class="is-small" href="{{ route('historyCsv', [$player]) }}">export to csv</a>
+
+                    @if (in_array($type, ['custom']))
+                        <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
+                    @endif
                 </div>
             @endif
             @if ($player->is_private)
