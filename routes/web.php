@@ -42,4 +42,5 @@ Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/legal', [HomeController::class, 'legal'])->name('legal');
 Route::get('/', [HomeController::class, 'index'])->name('home');
