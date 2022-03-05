@@ -9,6 +9,7 @@ use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\ServiceRecord;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -21,10 +22,16 @@ class PlayerPageTest extends TestCase
         // Arrange
         Http::fake();
 
-        Player::factory()
+        $player = Player::factory()
             ->createOne([
                 'gamertag' => $gamertag
             ]);
+
+        $user = User::factory()
+            ->hasPlayer($player)
+            ->createOne();
+
+        $this->actingAs($user);
 
         // Act
         $response = $this->get('/player/' . urlencode($gamertag) . '/matches');
@@ -33,6 +40,46 @@ class PlayerPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('game-history-table');
         $response->assertSeeLivewire('update-player-panel');
+    }
+
+    public function testLinkingProfile(): void
+    {
+        // Arrange
+        Http::fake();
+
+        /** @var Player $player */
+        $player = Player::factory()->createOne();
+        $user = User::factory()
+            ->hasPlayer($player)
+            ->createOne();
+
+        $this->actingAs($user);
+
+        // Act
+        $response = $this->post('/player/' . urlencode($player->gamertag) . '/link');
+
+        // Assert
+        $response->assertRedirect();
+    }
+
+    public function testUnlinkingProfile(): void
+    {
+        // Arrange
+        Http::fake();
+
+        /** @var Player $player */
+        $player = Player::factory()->createOne();
+        $user = User::factory()
+            ->hasPlayer($player)
+            ->createOne();
+
+        $this->actingAs($user);
+
+        // Act
+        $response = $this->post('/player/' . urlencode($player->gamertag) . '/unlink');
+
+        // Assert
+        $response->assertRedirect();
     }
 
     /** @dataProvider gamertagDataProvider */
