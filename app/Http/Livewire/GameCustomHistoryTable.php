@@ -14,10 +14,24 @@ class GameCustomHistoryTable extends Component
 
     public Player $player;
 
+    public bool $isScrimEditor = false;
+    public array $scrimGameIds = [];
+
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
+        'toggleScrimMode',
     ];
+
+    public function toggleScrimMode(): void
+    {
+        $this->isScrimEditor = !$this->isScrimEditor;
+    }
+
+    public function updatedScrimGameIds(): void
+    {
+        $this->emitTo(ScrimTogglePanel::class, 'syncGameIds', $this->scrimGameIds);
+    }
 
     public function paginationView(): string
     {
@@ -27,6 +41,7 @@ class GameCustomHistoryTable extends Component
     public function render(): View
     {
         return view('livewire.game-custom-history-table', [
+            'isScrimEditor' => $this->isScrimEditor,
             'games' => $this->player
                 ->games()
                 ->with(['map', 'category'])
