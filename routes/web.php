@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\BaseAuthController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,8 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Player
+Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');
+Route::post('/player/{player}/unlink', [PlayerController::class, 'unlink'])->name('playerUnlink');
 Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
 Route::pattern('type', 'overview|medals|competitive|matches|custom');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
@@ -39,6 +43,11 @@ Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 Route::get('/hcs/{championship}/matchup/{matchup}', [HcsController::class, 'matchup'])->name('matchup');
 Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])->name('championship');
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
+
+// Auth
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('googleRedirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('googleCallback');
+Route::post('/auth/logout', [BaseAuthController::class, 'logout'])->name('logout');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');

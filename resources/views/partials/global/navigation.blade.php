@@ -13,6 +13,11 @@
 
     <div id="navbar" class="navbar-menu">
         <div class="navbar-start">
+            @if (Auth::user() && Auth::user()->player)
+                <a href="{{ route('player', Auth::user()->player) }}" class="navbar-item">
+                    <i class="fa fa-user"></i>&nbsp;{{ Auth::user()->player->gamertag }}
+                </a>
+            @endif
             <a href="{{ route('championships') }}" class="navbar-item">
                 HCS
             </a>
@@ -27,6 +32,20 @@
                     <a target="_blank" href="https://github.com/iBotPeaches/LeafApp_Infinite" class="button is-info">
                         <strong>GitHub</strong>
                     </a>
+                    @guest
+                        <a href="{{ route('googleRedirect') }}" class="button is-danger">
+                            <strong>Google</strong>
+                        </a>
+                    @endguest
+                    @auth
+                        <a href="{{ route('logout') }}" class="button is-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    @endauth
                     <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" class="button is-warning">
                         <i class="fas fa-coffee"></i>
                     </a>

@@ -53,6 +53,13 @@ Additionally, register webhooks for the following events:
 
 Finally, create a security header called `X-Cat-Dog` and set it to a random value that you add to env.
 
+#### Google OAuth
+Used for marking an account as "you" and supporting making "scrims".
+
+ * `GOOGLE_CLIENT_ID` - The clientId
+ * `GOOGLE_CLIENT_SECRET` - the clientSecret
+ * `GOOGLE_REDIRECT` - The URL to redirect to
+
 ### Dependencies
 
 #### Node
@@ -71,3 +78,4 @@ Finally, create a security header called `X-Cat-Dog` and set it to a random valu
 7. DBAL - https://github.com/doctrine/dbal - MIT
 8. SEOTools - https://github.com/artesaos/seotools - MIT
 9. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
+10. Socialite - https://github.com/laravel/socialite - MIT
