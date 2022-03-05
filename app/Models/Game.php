@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
@@ -36,6 +37,7 @@ use Illuminate\Support\Arr;
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
+ * @property-read Scrim[]|Collection $scrims
  * @property-read boolean $outdated
  * @property-read string $name
  * @property-read string $description
@@ -214,5 +216,10 @@ class Game extends Model implements HasHaloDotApi
     {
         return $this->hasMany(GameTeam::class)
             ->orderBy('rank');
+    }
+
+    public function scrims(): BelongsToMany
+    {
+        return $this->belongsToMany(Scrim::class);
     }
 }
