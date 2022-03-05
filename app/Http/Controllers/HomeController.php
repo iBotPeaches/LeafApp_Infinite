@@ -36,4 +36,9 @@ class HomeController extends Controller
     {
         return view('pages.about');
     }
+
+    public function legal(): View
+    {
+        return view('pages.legal');
+    }
 }
