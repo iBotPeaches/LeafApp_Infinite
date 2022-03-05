@@ -18,6 +18,9 @@
                 </div>
             @endif
             <livewire:update-player-panel :player="$player" :type="$type" />
+            @auth
+                @include('partials.player.linkable-card')
+            @endauth
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
