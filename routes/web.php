@@ -29,8 +29,8 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Scrim
-Route::pattern('type', 'overview');
-Route::get('/scrims/{scrim}/{type?}', [ScrimController::class, 'show'])->name('scrim');
+Route::pattern('scrimType', 'overview|matches|players');
+Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->name('scrim');
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
 // Player
