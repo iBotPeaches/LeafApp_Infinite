@@ -10,7 +10,12 @@ use Illuminate\View\View;
 
 class ScrimController extends Controller
 {
-    public function index(Request $request, Scrim $scrim, string $type = ScrimTab::OVERVIEW): View
+    public function index(): View
+    {
+        return view('pages.scrims');
+    }
+
+    public function show(Request $request, Scrim $scrim, string $type = ScrimTab::OVERVIEW): View
     {
         return view('pages.scrim', [
             'scrim' => $scrim,
