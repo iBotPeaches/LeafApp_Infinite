@@ -14,5 +14,11 @@
             @include('partials.scrim.navigation')
         </div>
     </div>
-    @include('partials.scrim.tabs.' . $type, ['scrim' => $scrim])
+    @if ($scrim->is_complete)
+        @include('partials.scrim.tabs.' . $type, ['scrim' => $scrim])
+    @else
+        <div class="notification is-info">
+            This scrim is still processing. This is not yet automatic. So just refresh in a few seconds.
+        </div>
+    @endif
 @endsection
