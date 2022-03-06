@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('scrims', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->boolean('is_complete')->default(false);
+            $table->text('status_message')->nullable(true);
             $table->timestamps();
         });
 
