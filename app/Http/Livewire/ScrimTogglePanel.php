@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Scrim;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -23,7 +24,7 @@ class ScrimTogglePanel extends Component
         $this->gameIds = $gameIds;
     }
 
-    public function createScrim()
+    public function createScrim(): bool|RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -33,6 +34,8 @@ class ScrimTogglePanel extends Component
         }
 
         $this->emitTo(GameCustomHistoryTable::class, 'toggleScrimMode');
+
+        return true;
     }
 
     public function render(): View
