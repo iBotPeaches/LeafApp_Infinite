@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Enums\Experience;
+use App\Enums\Outcome;
 use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
-use App\Models\Traits\HasPlaylist;
 use App\Services\Autocode\Enums\PlayerType;
 use App\Services\Autocode\InfiniteInterface;
 use Carbon\Carbon;
@@ -41,6 +41,9 @@ use Illuminate\Support\Arr;
  * @property-read boolean $outdated
  * @property-read string $name
  * @property-read string $description
+ * @property-read GameTeam|null $winner
+ * @property-read GameTeam|null $loser
+ * @property-read string $score
  * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
@@ -123,6 +126,21 @@ class Game extends Model implements HasHaloDotApi
     public function findTeamFromTeamId(int|string $id): ?GameTeam
     {
         return $this->teams->firstWhere('id', $id);
+    }
+
+    public function getWinnerAttribute(): ?GameTeam
+    {
+        return $this->teams->firstWhere('outcome', Outcome::WIN());
+    }
+
+    public function getLoserAttribute(): ?GameTeam
+    {
+        return $this->teams->firstWhere('outcome', Outcome::LOSS());
+    }
+
+    public function getScoreAttribute(): string
+    {
+        return $this->winner?->final_score . '-' . $this->loser?->final_score;
     }
 
     public static function fromHaloDotApi(array $payload): ?self
