@@ -15,12 +15,12 @@ class ScrimController extends Controller
         return view('pages.scrims');
     }
 
-    public function show(Request $request, Scrim $scrim, string $type = ScrimTab::OVERVIEW): View
+    public function show(Request $request, Scrim $scrim, string $scrimType = ScrimTab::OVERVIEW): View
     {
         return view('pages.scrim', [
             'scrim' => $scrim,
             'user' => $request->user(),
-            'type' => $type
+            'type' => $scrimType
         ]);
     }
 }
