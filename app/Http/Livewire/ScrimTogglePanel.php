@@ -5,10 +5,10 @@ namespace App\Http\Livewire;
 
 use App\Models\Scrim;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class ScrimTogglePanel extends Component
 {
@@ -24,7 +24,7 @@ class ScrimTogglePanel extends Component
         $this->gameIds = $gameIds;
     }
 
-    public function createScrim(): bool|RedirectResponse
+    public function createScrim(): bool|Redirector
     {
         /** @var User $user */
         $user = Auth::user();
