@@ -16,7 +16,7 @@
                 <tr>
                     <td>
                         <a href="{{ route('scrim', [$scrim]) }}">
-                            this links to scrim
+                            Scrim {{ $scrim->id }}
                         </a>
                     </td>
                     <td>
