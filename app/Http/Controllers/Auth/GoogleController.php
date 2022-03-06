@@ -29,7 +29,7 @@ class GoogleController extends Controller
             ]);
 
         $user->saveOrFail();
-        Auth::login($user);
+        Auth::login($user, true);
 
         if ($user->player) {
             return redirect()->route('player', [$user->player]);
