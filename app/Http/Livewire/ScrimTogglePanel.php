@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
+use App\Jobs\ProcessScrim;
 use App\Models\Scrim;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,8 @@ class ScrimTogglePanel extends Component
         $user = Auth::user();
         if (count($this->gameIds) > 0) {
             $scrim = Scrim::createScrimWithGames($user, $this->gameIds);
+            ProcessScrim::dispatch($scrim);
+
             return redirect()->route('scrim', $scrim);
         }
 
