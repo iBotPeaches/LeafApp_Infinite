@@ -13,6 +13,8 @@ use Illuminate\Support\Collection;
 /**
  * @property int $id
  * @property int $user_id
+ * @property boolean $is_complete
+ * @property string $status_message
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read User $user
