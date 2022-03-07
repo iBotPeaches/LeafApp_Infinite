@@ -7,6 +7,7 @@ use App\Enums\Input;
 use App\Enums\Outcome;
 use App\Enums\PlayerTab;
 use App\Enums\Queue;
+use App\Enums\ScrimTab;
 use App\Services\FaceIt\Enums\Region;
 
 return [
@@ -27,6 +28,9 @@ return [
         PlayerTab::OVERVIEW => 'Overview',
         PlayerTab::COMPETITIVE => 'Competitive',
         PlayerTab::MATCHES => 'Matches'
+    ],
+    ScrimTab::class => [
+        ScrimTab::OVERVIEW => 'Overview',
     ],
     Input::class => [
         Input::CROSSPLAY => 'CrossPlay',

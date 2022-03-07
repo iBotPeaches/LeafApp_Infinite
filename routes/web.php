@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\BaseAuthController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\ScrimController;
 use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -26,6 +27,11 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 
 // Leaderboard
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
+
+// Scrim
+Route::pattern('scrimType', 'overview|matches|players');
+Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->name('scrim');
+Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
 // Player
 Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');

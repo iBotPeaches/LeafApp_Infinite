@@ -15,6 +15,19 @@ use Tests\TestCase;
 
 class ValidCustomGameHistoryTableTest extends TestCase
 {
+    public function testToggleScrimMode(): void
+    {
+        // Arrange
+        $player = Player::factory()->createOne();
+
+        // Act & Assert
+        Livewire::test(GameCustomHistoryTable::class, [
+            'player' => $player
+        ])
+            ->call('toggleScrimMode')
+            ->assertSet('isScrimEditor', true);
+    }
+
     public function testValidResponseFromHaloDotApi(): void
     {
         // Arrange
@@ -52,7 +65,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
             ->assertSee($game->personal->kd)
             ->assertSee($game->personal->kda)
             ->assertSee($game->personal->accuracy)
-            ->assertSee($game->personal->score)
+            ->assertSee($game->personal->formatted_score)
             ->assertSee($game->personal->rank)
             ->assertSee($game->occurred_at->diffForHumans());
     }

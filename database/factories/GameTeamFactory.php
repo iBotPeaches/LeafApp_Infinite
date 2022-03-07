@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\Outcome;
 use App\Models\Game;
 use App\Models\GameTeam;
+use App\Models\MatchupTeam;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<GameTeam> */
