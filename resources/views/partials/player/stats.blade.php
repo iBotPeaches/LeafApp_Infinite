@@ -23,7 +23,7 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Total Matches</p>
-                <p class="title">{{ $serviceRecord->total_matches }}</p>
+                <p class="title">{{ number_format($serviceRecord->total_matches) }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
