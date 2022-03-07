@@ -25,7 +25,7 @@ class ScrimTogglePanel extends Component
         $this->gameIds = $gameIds;
     }
 
-    public function createScrim(): bool|Redirector
+    public function createScrim(): void
     {
         /** @var User $user */
         $user = Auth::user();
@@ -33,12 +33,10 @@ class ScrimTogglePanel extends Component
             $scrim = Scrim::createScrimWithGames($user, $this->gameIds);
             ProcessScrim::dispatch($scrim);
 
-            return redirect()->route('scrim', $scrim);
+            $this->redirectRoute('scrim', $scrim);
         }
 
         $this->emitTo(GameCustomHistoryTable::class, 'toggleScrimMode');
-
-        return true;
     }
 
     public function render(): View
