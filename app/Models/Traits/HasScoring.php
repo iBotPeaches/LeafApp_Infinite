@@ -11,9 +11,9 @@ use function number_format;
  */
 trait HasScoring
 {
-    public function getFormattedScoreAttribute(int $value): string
+    public function getFormattedScoreAttribute(): string
     {
-        return number_format($value);
+        return number_format($this->score);
     }
 
     public function getVictoryColor(): string
