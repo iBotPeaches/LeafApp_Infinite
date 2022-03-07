@@ -73,6 +73,11 @@
                                                 class="has-tooltip-arrow {{ $gamePlayer->team->tooltip_color ?? '' }}"
                                                 data-tooltip="CSR: {{ $gamePlayer->pre_csr }} ({{ $gamePlayer->csr_change }})"
                                             >
+                                                @if ($gamePlayer->pre_csr > 1500)
+                                                    <span class="has-text-weight-light">
+                                                        {{ number_format($gamePlayer->pre_csr) }}
+                                                    </span>
+                                                @endif
                                                 {{ $gamePlayer->level }}
                                             </span>
                                         @else
