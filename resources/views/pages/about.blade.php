@@ -39,6 +39,14 @@
                     In time we will retroactively pull that data in.
                 </div>
             </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>What is "scrims" feature?</p>
+                </div>
+                <div class="message-body">
+                    It allows logged-in users to specify custom games to combine for stats.
+                </div>
+            </article>
         </div>
         <div class="column">
             <article class="message is-dark">
@@ -72,6 +80,14 @@
                 </div>
                 <div class="message-body">
                     Our system attempts to automatically find the matches in a matchup. Sometimes its wrong.
+                </div>
+            </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>What does Google login do?</p>
+                </div>
+                <div class="message-body">
+                    Allows you to remember who you are as well as making scrims.
                 </div>
             </article>
         </div>
