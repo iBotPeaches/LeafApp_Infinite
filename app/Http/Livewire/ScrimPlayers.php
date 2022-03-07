@@ -13,7 +13,7 @@ class ScrimPlayers extends Component
 {
     public Scrim $scrim;
 
-    public array $mergedStats;
+    public array $mergedStats = [];
 
     public function render(): View
     {
