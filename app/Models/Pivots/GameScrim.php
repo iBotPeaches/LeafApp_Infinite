@@ -5,6 +5,7 @@ namespace App\Models\Pivots;
 
 use App\Models\Game;
 use App\Models\Scrim;
+use Database\Factories\Pivots\GameScrimFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $game_id
  * @property-read Scrim $scrim
  * @property-read Game $game
+ * @method static GameScrimFactory factory(...$parameters)
  */
 class GameScrim extends Pivot
 {

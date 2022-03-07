@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ScrimFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,7 @@ use Illuminate\Support\Collection;
  * @property Carbon $updated_at
  * @property-read User $user
  * @property-read Game[]|Collection<int,Game> $games
+ * @method static ScrimFactory factory(...$parameters)
  */
 class Scrim extends Model
 {
