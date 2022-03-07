@@ -26,11 +26,13 @@ class GameScrim extends Pivot
 
     public $timestamps = false;
 
+    /** @codeCoverageIgnore */
     public function scrim(): BelongsTo
     {
         return $this->belongsTo(Scrim::class);
     }
 
+    /** @codeCoverageIgnore */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
