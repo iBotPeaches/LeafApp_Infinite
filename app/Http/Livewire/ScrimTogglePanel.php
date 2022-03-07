@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\Redirector;
 
 class ScrimTogglePanel extends Component
 {
