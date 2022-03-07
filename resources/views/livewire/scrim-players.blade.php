@@ -44,13 +44,13 @@
                 <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
                     {{ number_format($gamePlayer->accuracy, 2) }}%
                 </td>
-                <td>{{ number_format($gamePlayer->score) }}</td>
+                <td>{{ $gamePlayer->formatted_score }}</td>
                 <td>
-                    {{ $gamePlayer->rank }}
+                    {{ number_format($gamePlayer->rank, 1) }}
                     @if (!$gamePlayer->was_at_end)
                         <span class="tag is-danger">
-                                <abbr title="Did Not Finish (Quit/Crashed)">DNF</abbr>
-                            </span>
+                            <abbr title="Did Not Finish (Quit/Crashed)">DNF</abbr>
+                        </span>
                     @endif
                 </td>
             </tr>
