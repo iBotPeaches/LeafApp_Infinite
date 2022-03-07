@@ -1,5 +1,5 @@
 @if ($user->player && $player->id === $user->player->id)
-    <a class="button is-fullwidth is-small is-danger" href="{{ route('playerUnlink', $player) }}" onclick="event.preventDefault(); document.getElementById('unlink-form').submit();">
+    <a class="button is-fullwidth is-small is-light is-danger" href="{{ route('playerUnlink', $player) }}" onclick="event.preventDefault(); document.getElementById('unlink-form').submit();">
         This is not me.
     </a>
 
