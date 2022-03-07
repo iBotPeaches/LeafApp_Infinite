@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('remember_token', 64)->after('google_id');
+            $table->string('remember_token', 64)->after('google_id')->nullable(true);
         });
     }
 
