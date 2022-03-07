@@ -49,7 +49,7 @@
                     <td class="has-background-{{ $game->personal->accuracy_color }}-light">
                         {{ $game->personal->accuracy }}%
                     </td>
-                    <td>{{ $game->personal->score }}</td>
+                    <td>{{ $game->personal->formatted_score }}</td>
                     <td>{{ $game->personal->rank }}</td>
                     <td>{{ $game->occurred_at->diffForHumans() }}</td>
                     @if ($isScrimEditor)

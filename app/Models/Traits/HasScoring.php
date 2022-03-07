@@ -6,9 +6,12 @@ namespace App\Models\Traits;
 use App\Enums\Outcome;
 use function number_format;
 
+/**
+ * @property-read string $formatted_score
+ */
 trait HasScoring
 {
-    public function getScoreAttribute(int $value): string
+    public function getFormattedScoreAttribute(int $value): string
     {
         return number_format($value);
     }

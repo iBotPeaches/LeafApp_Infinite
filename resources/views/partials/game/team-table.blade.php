@@ -95,7 +95,7 @@
                     <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
                         {{ $gamePlayer->accuracy }}%
                     </td>
-                    <td>{{ $gamePlayer->score }}</td>
+                    <td>{{ $gamePlayer->formatted_score }}</td>
                     <td>
                         {{ $gamePlayer->rank }}
                         @if (!$gamePlayer->was_at_end)
