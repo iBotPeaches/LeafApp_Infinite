@@ -28,6 +28,7 @@ class GameCustomHistoryTable extends Component
         $this->isScrimEditor = !$this->isScrimEditor;
     }
 
+    /** @codeCoverageIgnore */
     public function updatedScrimGameIds(): void
     {
         $this->emitTo(ScrimTogglePanel::class, 'syncGameIds', $this->scrimGameIds);
