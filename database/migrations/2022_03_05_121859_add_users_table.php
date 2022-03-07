@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Player::class)->nullable(true)->constrained()->nullOnDelete();
-            $table->string('google_id', 32);
+            $table->string('google_id', 32)->nullable(true);
             $table->timestamps();
         });
     }
