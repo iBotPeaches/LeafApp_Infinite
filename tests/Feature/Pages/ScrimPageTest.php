@@ -36,7 +36,7 @@ class ScrimPageTest extends TestCase
         $response->assertSeeLivewire('scrim-overview');
     }
 
-    public function testLoadingScrimMatchesPageWithData(): void
+    public function testLoadingScrimMatchesPageWithDataAsFfa(): void
     {
         // Arrange
         Http::fake();
@@ -46,7 +46,31 @@ class ScrimPageTest extends TestCase
         ]);
         GameScrim::factory()->createOne([
             'scrim_id' => $scrim->id,
-            'game_id' => Game::factory()->has(GameTeam::factory(), 'teams')
+            'game_id' => Game::factory()->state(['is_ffa' => true])->has(GameTeam::factory(), 'teams')
+        ]);
+
+        // Act
+        $response = $this->get(route('scrim', [
+            $scrim,
+            'matches'
+        ]));
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('scrim-matches');
+    }
+
+    public function testLoadingScrimMatchesPageWithDataAsTeam(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $scrim = Scrim::factory()->createOne([
+            'is_complete' => true
+        ]);
+        GameScrim::factory()->createOne([
+            'scrim_id' => $scrim->id,
+            'game_id' => Game::factory()->state(['is_ffa' => false])->has(GameTeam::factory(), 'teams')
         ]);
 
         // Act
