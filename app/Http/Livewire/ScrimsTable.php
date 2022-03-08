@@ -20,7 +20,7 @@ class ScrimsTable extends Component
     public function render(): View
     {
         $scrims = Scrim::query()
-            ->with('user')
+            ->with('user.player')
             ->orderByDesc('created_at')
             ->paginate();
 
