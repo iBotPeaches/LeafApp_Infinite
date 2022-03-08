@@ -8,9 +8,11 @@ $winningPlayer = $game->players->sortBy('rank')->first();
         <a href="{{ route('game', [$game]) }}">
             {{ $game->map->name }}
         </a>
-        <span class="is-pulled-right">
-            <span class="tag is-light">{{ $winningPlayer->kills }}</span>
-        </span>
+        @if ($winningPlayer)
+            <span class="is-pulled-right">
+                <span class="tag is-light">{{ $winningPlayer->kills }}</span>
+            </span>
+        @endif
     </p>
     <p class="subtitle">
         {{ $game->category->name }}
