@@ -14,6 +14,7 @@ class ScrimMatches extends Component
     public function render(): View
     {
         $this->scrim->load([
+            'games.players',
             'games.teams.players',
             'games.category',
             'games.map',
