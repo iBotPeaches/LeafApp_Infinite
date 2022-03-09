@@ -51,6 +51,7 @@ Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'ch
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Auth
+Route::redirect('/login', '/auth/google/redirect')->name('login');
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('googleRedirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('googleCallback');
 Route::post('/auth/logout', [BaseAuthController::class, 'logout'])->name('logout');
