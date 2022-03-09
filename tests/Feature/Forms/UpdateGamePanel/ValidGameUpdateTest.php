@@ -41,6 +41,37 @@ class ValidGameUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function testValidResponseFromAllHaloDotApiServicesForUnresolvedGamer(): void
+    {
+        // Arrange
+        Queue::fake();
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag2 = '???';
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        $game = Game::factory()->createOne([
+            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdateGamePanel::class, [
+            'game' => $game,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Game updated!')
+            ->assertEmittedTo('game-page', '$refresh');
+
+        $this->assertDatabaseMissing('players', [
+            'gamertag' => $gamertag2
+        ]);
+
+        Queue::assertPushed(PullAppearance::class);
+    }
+
     public function testValidResponseFromAllHaloDotApiServicesForABot(): void
     {
         // Arrange
