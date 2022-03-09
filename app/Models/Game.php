@@ -190,12 +190,21 @@ class Game extends Model implements HasHaloDotApi
 
         if (Arr::has($payload, 'players')) {
             foreach (Arr::get($payload, 'players', []) as $playerData) {
+                $gamertag = Arr::get($playerData, 'gamertag');
+
                 // TODO - No idea if non-players are in games.
                 if (Arr::get($playerData, 'type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
                     continue;
                 }
 
-                $player = Player::fromGamertag(Arr::get($playerData, 'gamertag'));
+                // Skip unresolved users from upstream API. We will force the game not yet updated to
+                // re-process later.
+                if ($gamertag === '???') {
+                    $game->was_pulled = false;
+                    continue;
+                }
+
+                $player = Player::fromGamertag($gamertag);
                 if (! $player->exists) {
                     $player->saveOrFail();
                     PullAppearance::dispatch($player);
