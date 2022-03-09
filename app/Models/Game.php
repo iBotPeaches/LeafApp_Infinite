@@ -201,6 +201,7 @@ class Game extends Model implements HasHaloDotApi
                 // re-process later.
                 if ($gamertag === '???') {
                     $game->was_pulled = false;
+                    $game->saveOrFail();
                     continue;
                 }
 

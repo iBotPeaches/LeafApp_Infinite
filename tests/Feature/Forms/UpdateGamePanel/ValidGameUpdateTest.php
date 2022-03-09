@@ -69,6 +69,11 @@ class ValidGameUpdateTest extends TestCase
             'gamertag' => $gamertag2
         ]);
 
+        $this->assertDatabaseHas('games', [
+            'id' => $game->id,
+            'was_pulled' => false
+        ]);
+
         Queue::assertPushed(PullAppearance::class);
     }
 
