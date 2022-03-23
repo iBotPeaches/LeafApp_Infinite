@@ -145,7 +145,7 @@ class Game extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         $gameId = Arr::get($payload, 'id');
-        $category = Category::fromHaloDotApi(Arr::get($payload, 'details.category'));
+        $category = Category::fromHaloDotApi(Arr::get($payload, 'details.gamevariant'));
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
 
         // Customs do not have a Playlist

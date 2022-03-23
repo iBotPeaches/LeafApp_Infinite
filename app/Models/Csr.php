@@ -196,9 +196,8 @@ class Csr extends Model implements HasHaloDotApi
                     ->where('input', $input->value)
                     ->firstOrNew();
 
-                // Due to an HaloDotAPI issue(?) - the `season` parameter is nulled out during mid-season reset.
+                // Due to an older HaloDotAPI issue(?) - the `season` parameter is nulled out during mid-season reset.
                 // This keeps the value for allTime or season if the newer value is less.
-                // You can only go up with `season` or `allTime`.
                 $newCsrValue = Arr::get($playlistMode, 'value');
                 if ($mode->isNot(CompetitiveMode::CURRENT()) && $csr->csr > $newCsrValue) {
                     continue;

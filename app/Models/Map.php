@@ -27,7 +27,7 @@ class Map extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $mapId = Arr::get($payload, 'asset.id', Arr::get($payload, 'id'));
+        $mapId = Arr::get($payload, 'id', Arr::get($payload, 'properties.level_id'));
 
         /** @var Map $map */
         $map = self::query()
@@ -37,7 +37,7 @@ class Map extends Model implements HasHaloDotApi
             ]);
 
         $map->name = Arr::get($payload, 'name');
-        $map->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url', Arr::get($payload, 'thumbnail_url'));
+        $map->thumbnail_url = Arr::get($payload, 'thumbnail_url', Arr::get($payload, 'asset.thumbnail_url'));
 
         if ($map->isDirty()) {
             $map->saveOrFail();
