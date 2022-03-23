@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\MedalType;
+use App\Enums\MedalDifficulty;
 use App\Enums\Mode;
 use App\Models\Medal;
 use App\Models\Player;
@@ -58,10 +58,10 @@ class ServiceRecordFactory extends Factory
         return $this->state(function () {
             $medals = Medal::factory()
                 ->sequence(
-                    ['type' => MedalType::LEGENDARY],
-                    ['type' => MedalType::MYTHIC],
-                    ['type' => MedalType::HEROIC],
-                    ['type' => MedalType::NORMAL],
+                    ['type' => MedalDifficulty::LEGENDARY],
+                    ['type' => MedalDifficulty::MYTHIC],
+                    ['type' => MedalDifficulty::HEROIC],
+                    ['type' => MedalDifficulty::NORMAL],
                 )
                 ->count(4)
                 ->create();

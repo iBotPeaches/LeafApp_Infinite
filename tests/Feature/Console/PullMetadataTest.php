@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
-use App\Enums\MedalCategory;
 use App\Enums\MedalType;
+use App\Enums\MedalDifficulty;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -23,8 +23,8 @@ class PullMetadataTest extends TestCase
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockMetadataResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMetadataResponse, 'data.2.category', MedalCategory::MODE);
-        Arr::set($mockMetadataResponse, 'data.3.type', MedalType::LEGENDARY);
+        Arr::set($mockMetadataResponse, 'data.2.category', MedalType::MODE);
+        Arr::set($mockMetadataResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
 
         Http::fakeSequence()->push($mockMetadataResponse, Response::HTTP_OK);
 
