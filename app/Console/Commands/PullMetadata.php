@@ -22,6 +22,10 @@ class PullMetadata extends Command
     public function handle(): int
     {
         $this->client->metadataMedals();
+        $this->client->metadataMaps();
+        $this->client->metadataTeams();
+        $this->client->metadataPlaylists();
+        $this->client->metadataCategories();
 
         return CommandAlias::SUCCESS;
     }
