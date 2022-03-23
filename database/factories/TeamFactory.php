@@ -14,7 +14,7 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            'internal_id' => $this->faker->unique()->randomNumber(1),
+            'internal_id' => random_int(1, 20),
             'name' => $this->faker->word,
             'emblem_url' => $this->faker->imageUrl,
         ];
