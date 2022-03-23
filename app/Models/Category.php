@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property string $uuid
- * @property string $version
  * @property string $name
  * @property string $thumbnail_url
  * @method static CategoryFactory factory(...$parameters)
@@ -38,7 +37,6 @@ class Category extends Model implements HasHaloDotApi
             ]);
 
         $category->name = Arr::get($payload, 'name');
-        $category->version = Arr::get($payload, 'asset.version');
         $category->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
 
         if ($category->isDirty()) {

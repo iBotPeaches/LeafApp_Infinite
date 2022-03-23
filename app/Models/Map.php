@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property string $uuid
- * @property string $version
  * @property string $name
  * @property string $thumbnail_url
  * @method static MapFactory factory(...$parameters)
@@ -28,7 +27,7 @@ class Map extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $mapId = Arr::get($payload, 'asset.id');
+        $mapId = Arr::get($payload, 'asset.id', Arr::get($payload, 'id'));
 
         /** @var Map $map */
         $map = self::query()
@@ -38,7 +37,6 @@ class Map extends Model implements HasHaloDotApi
             ]);
 
         $map->name = Arr::get($payload, 'name');
-        $map->version = Arr::get($payload, 'asset.version');
         $map->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
 
         if ($map->isDirty()) {
