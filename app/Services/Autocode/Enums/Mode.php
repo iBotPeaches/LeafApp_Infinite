@@ -19,9 +19,9 @@ final class Mode extends Enum
     public function getLastGameIdVariable(): string
     {
         return match ($this->value) {
-            self::MATCHMADE => 'last_game_id_pulled',
             self::CUSTOM => 'last_custom_game_id_pulled',
-            self::LAN => 'last_lan_game_id_pulled'
+            self::LAN => 'last_lan_game_id_pulled',
+            default => 'last_game_id_pulled',
         };
     }
 }

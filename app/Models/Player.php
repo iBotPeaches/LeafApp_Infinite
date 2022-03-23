@@ -115,7 +115,7 @@ class Player extends Model implements HasHaloDotApi
 
         $mode = ModeSession::get();
         if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED())) {
-            $client->serviceRecord($this, Filter::MATCHMADE_RANKED());
+            $client->serviceRecord($this, Filter::MATCHMADE());
             PullServiceReport::dispatch($this, Filter::MATCHMADE_PVP());
         } elseif ($mode->is(\App\Enums\Mode::MATCHMADE_PVP())) {
             $client->serviceRecord($this, Filter::MATCHMADE_PVP());
