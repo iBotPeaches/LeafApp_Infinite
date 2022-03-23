@@ -10,6 +10,7 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Services\Autocode\Enums\Filter;
+use App\Services\Autocode\Enums\Language;
 use App\Services\Autocode\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
@@ -64,16 +65,15 @@ class ApiClient implements InfiniteInterface
         $count = $perPage;
         $offset = 0;
         $firstPulledGameId = null;
-        $lastGameIdVariable = $mode->is(Mode::MATCHMADE()) ? 'last_game_id_pulled' : 'last_custom_game_id_pulled';
+        $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
             $response = $this->pendingRequest->post('stats/matches/list', [
                 'gamertag' => $player->gamertag,
-                'limit' => [
-                    'count' => $perPage,
-                    'offset' => $offset
-                ],
-                'mode' => (string)$mode->value
+                'type' => (string)$mode->value,
+                'language' => Language::US,
+                'count' => $perPage,
+                'offset' => $offset,
             ]);
 
             if ($response->throw()->successful()) {
