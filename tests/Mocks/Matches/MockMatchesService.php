@@ -25,6 +25,9 @@ class MockMatchesService extends BaseMock
                                     'id' => $this->faker->uuid,
                                     'version' => $this->faker->uuid,
                                     'thumbnail_url' => $this->faker->url
+                                ],
+                                'properties' => [
+                                    'category_id' => $this->faker->numberBetween(0, 20),
                                 ]
                             ],
                             'map' => [
@@ -33,6 +36,9 @@ class MockMatchesService extends BaseMock
                                     'id' => $this->faker->uuid,
                                     'version' => $this->faker->uuid,
                                     'thumbnail_url' => $this->faker->url
+                                ],
+                                'properties' => [
+                                    'level_id' => $this->faker->numberBetween(0, 10),
                                 ]
                             ],
                             'playlist' => [
@@ -88,6 +94,25 @@ class MockMatchesService extends BaseMock
                             ],
                             'rank' => $this->faker->numerify('#'),
                             'outcome' => $this->faker->randomElement(['win', 'loss', 'draw']),
+                            'progression' => [
+                                'csr' => [
+                                    'pre_match' => [
+                                        'value' => $this->faker->numberBetween(-1, 1400),
+                                        'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
+                                        'sub_tier' => $this->faker->numberBetween(0, 5),
+                                        'initial_measurement_matches' => 10,
+                                        'measurement_matches_remaining' => 0
+                                    ],
+                                    'post_match' => [
+                                        'value' => $this->faker->numberBetween(1000, 1400),
+                                        'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
+                                        'tier_start' => 1200,
+                                        'sub_tier' => $this->faker->numberBetween(0, 5),
+                                        'initial_measurement_matches' => 10,
+                                        'measurement_matches_remaining' => 0
+                                    ]
+                                ]
+                            ],
                         ],
                         'experience' => $this->faker->randomElement(['arena', 'btb']),
                         'played_at' => now()->toIso8601ZuluString(),
