@@ -31,6 +31,7 @@ use Illuminate\Support\Arr;
  * @property boolean $is_private
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
+ * @property int|null $last_lan_game_id_pulled
  * @property string $last_csr_key
  * @property string $emblem_url
  * @property string $backdrop_url
