@@ -3,12 +3,16 @@ declare(strict_types=1);
 
 namespace App\Services\Autocode;
 
+use App\Models\Category;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Map;
 use App\Models\Medal;
 use App\Models\Player;
+use App\Models\Playlist;
 use App\Models\ServiceRecord;
+use App\Models\Team;
 use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Language;
 use App\Services\Autocode\Enums\Mode;
@@ -121,7 +125,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMedals(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/medals/list')->throw();
+        $response = $this->pendingRequest->get('metadata/multiplayer/medals')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $medal) {
@@ -129,6 +133,54 @@ class ApiClient implements InfiniteInterface
         }
 
         return Medal::all();
+    }
+
+    public function metadataMaps(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/multiplayer/maps')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $map) {
+            Map::fromHaloDotApi($map);
+        }
+
+        return Map::all();
+    }
+
+    public function metadataTeams(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/multiplayer/teams')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $team) {
+            Team::fromHaloDotApi($team);
+        }
+
+        return Team::all();
+    }
+
+    public function metadataPlaylists(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/multiplayer/playlists')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $playlist) {
+            Playlist::fromHaloDotApi($playlist);
+        }
+
+        return Playlist::all();
+    }
+
+    public function metadataCategories(): Collection
+    {
+        $response = $this->pendingRequest->get('metadata/multiplayer/gamevariants')->throw();
+
+        $data = $response->json();
+        foreach (Arr::get($data, 'data') as $category) {
+            Category::fromHaloDotApi($category);
+        }
+
+        return Category::all();
     }
 
     public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord

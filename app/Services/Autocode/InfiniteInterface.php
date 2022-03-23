@@ -18,5 +18,9 @@ interface InfiniteInterface
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
     public function match(string $matchUuid): ?Game;
     public function metadataMedals(): Collection;
+    public function metadataMaps(): Collection;
+    public function metadataTeams(): Collection;
+    public function metadataPlaylists(): Collection;
+    public function metadataCategories(): Collection;
     public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord;
 }
