@@ -10,7 +10,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Metadata\MockCategoriesService;
+use Tests\Mocks\Metadata\MockMapsService;
 use Tests\Mocks\Metadata\MockMedalsService;
+use Tests\Mocks\Metadata\MockPlaylistsService;
+use Tests\Mocks\Metadata\MockTeamsService;
 use Tests\TestCase;
 
 class PullMetadataTest extends TestCase
@@ -20,36 +24,26 @@ class PullMetadataTest extends TestCase
     public function testValidDataPull(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockMetadataResponse = (new MockMedalsService())->success();
+        $mockMedalsResponse = (new MockMedalsService())->success();
+        $mockMapsResponse = (new MockMapsService())->success();
+        $mockTeamsResponse = (new MockTeamsService())->success();
+        $mockPlaylistResponse = (new MockPlaylistsService())->success();
+        $mockCategoriesResponse = (new MockCategoriesService())->success();
 
-        Arr::set($mockMetadataResponse, 'data.2.category', MedalType::MODE);
-        Arr::set($mockMetadataResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
+        Arr::set($mockMedalsResponse, 'data.2.category', MedalType::MODE);
+        Arr::set($mockMedalsResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
 
-        Http::fakeSequence()->push($mockMetadataResponse, Response::HTTP_OK);
+        Http::fakeSequence()
+            ->push($mockMedalsResponse, Response::HTTP_OK)
+            ->push($mockMapsResponse, Response::HTTP_OK)
+            ->push($mockTeamsResponse, Response::HTTP_OK)
+            ->push($mockPlaylistResponse, Response::HTTP_OK)
+            ->push($mockCategoriesResponse, Response::HTTP_OK);
 
         // Act & Assert
         $this
             ->artisan('app:pull-metadata')
             ->assertExitCode(CommandAlias::SUCCESS);
-    }
-
-    public function testInvalidPullNewCategory(): void
-    {
-        // Expectations
-        $this->expectException(\InvalidArgumentException::class);
-
-        // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockMetadataResponse = (new MockMedalsService())->success();
-
-        Arr::set($mockMetadataResponse, 'data.0.category', 'invalid-category');
-        Http::fakeSequence()->push($mockMetadataResponse, Response::HTTP_OK);
-
-        // Act & Assert
-        $this
-            ->artisan('app:pull-metadata')
-            ->assertExitCode(CommandAlias::FAILURE);
     }
 
     public function testInvalidPullNewType(): void
@@ -58,11 +52,27 @@ class PullMetadataTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockMetadataResponse = (new MockMedalsService())->success();
+        $mockMedalsResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMetadataResponse, 'data.0.difficulty', 'invalid-type');
-        Http::fakeSequence()->push($mockMetadataResponse, Response::HTTP_OK);
+        Arr::set($mockMedalsResponse, 'data.0.type', 'invalid-category');
+        Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        $this
+            ->artisan('app:pull-metadata')
+            ->assertExitCode(CommandAlias::FAILURE);
+    }
+
+    public function testInvalidPullNewDifficulty(): void
+    {
+        // Expectations
+        $this->expectException(\InvalidArgumentException::class);
+
+        // Arrange
+        $mockMedalsResponse = (new MockMedalsService())->success();
+
+        Arr::set($mockMedalsResponse, 'data.0.difficulty', 'invalid-type');
+        Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
 
         // Act & Assert
         $this
