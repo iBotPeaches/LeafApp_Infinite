@@ -48,7 +48,7 @@ class ApiClient implements InfiniteInterface
 
     public function competitive(Player $player, int $season = 1, int $version = 2): ?Csr
     {
-        $response = $this->pendingRequest->get('stats/csrs', [
+        $response = $this->pendingRequest->get('stats/players/csrs', [
             'gamertag' => $player->gamertag,
             'season' => $season,
             'version' => $version
