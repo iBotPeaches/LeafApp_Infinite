@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::table('players', function (Blueprint $table) {
             $table
                 ->foreignIdFor(Game::class, 'last_lan_game_id_pulled')
-                ->after('last_custom_id_pulled')
+                ->after('last_custom_game_id_pulled')
                 ->nullable(true)
                 ->constrained('games', 'id');
         });
