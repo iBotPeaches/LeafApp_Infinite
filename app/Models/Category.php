@@ -27,7 +27,7 @@ class Category extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = Arr::get($payload, 'asset.id');
+        $categoryId = (string)Arr::get($payload, 'id');
 
         /** @var Category $category */
         $category = self::query()
@@ -37,7 +37,7 @@ class Category extends Model implements HasHaloDotApi
             ]);
 
         $category->name = Arr::get($payload, 'name');
-        $category->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
+        $category->thumbnail_url = Arr::get($payload, 'thumbnail_url');
 
         if ($category->isDirty()) {
             $category->saveOrFail();

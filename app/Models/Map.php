@@ -37,7 +37,7 @@ class Map extends Model implements HasHaloDotApi
             ]);
 
         $map->name = Arr::get($payload, 'name');
-        $map->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
+        $map->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url', Arr::get($payload, 'thumbnail_url'));
 
         if ($map->isDirty()) {
             $map->saveOrFail();
