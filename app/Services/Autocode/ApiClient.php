@@ -68,7 +68,7 @@ class ApiClient implements InfiniteInterface
         $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
-            $response = $this->pendingRequest->post('stats/matches/list', [
+            $response = $this->pendingRequest->post('stats/players/matches', [
                 'gamertag' => $player->gamertag,
                 'type' => (string)$mode->value,
                 'language' => Language::US,
@@ -78,10 +78,10 @@ class ApiClient implements InfiniteInterface
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $count = count(Arr::get($data, 'data', []));
+                $count = (int)Arr::get($data, 'additional.count');
                 $offset += $perPage;
 
-                foreach (Arr::get($data, 'data') as $gameData) {
+                foreach (Arr::get($data, 'data.matches') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
