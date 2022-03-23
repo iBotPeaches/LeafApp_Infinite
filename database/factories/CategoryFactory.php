@@ -15,7 +15,6 @@ class CategoryFactory extends Factory
     {
         return [
             'uuid' => $this->faker->unique()->uuid,
-            'version' => $this->faker->unique()->uuid,
             'name' => $this->faker->word,
             'thumbnail_url' => $this->faker->imageUrl,
         ];
