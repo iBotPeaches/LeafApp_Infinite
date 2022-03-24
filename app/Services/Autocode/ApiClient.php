@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Autocode;
 
+use App\Enums\Mode as SystemMode;
 use App\Models\Category;
 use App\Models\Csr;
 use App\Models\Game;
@@ -86,6 +87,7 @@ class ApiClient implements InfiniteInterface
                 $offset += $perPage;
 
                 foreach (Arr::get($data, 'data.matches') as $gameData) {
+                    $gameData['_leaf']['mode'] = $mode;
                     $game = Game::fromHaloDotApi((array)$gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
@@ -185,16 +187,22 @@ class ApiClient implements InfiniteInterface
 
     public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord
     {
-        $response = $this->pendingRequest->get('stats/service-record/multiplayer', [
+        $response = $this->pendingRequest->get('stats/players/service-record/multiplayer', [
             'gamertag' => $player->gamertag,
             'filter' => (string)$filter->value,
         ]);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
-            $data['_leaf']['player'] = $player;
-            $data['_leaf']['filter'] = $filter->toMode();
-            ServiceRecord::fromHaloDotApi($data);
+
+            foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
+                $item = Arr::get($data, 'data.records.' . $filter->toHistorySlug());
+                $item['_leaf']['player'] = $player;
+                $item['_leaf']['filter'] = $filter;
+                $item['_leaf']['privacy'] = Arr::get($data, 'data.privacy');
+
+                ServiceRecord::fromHaloDotApi($item);
+            }
         }
 
         return $player->serviceRecord;
