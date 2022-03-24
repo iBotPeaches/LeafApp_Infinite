@@ -25,7 +25,7 @@ final class Filter extends Enum
     {
         return match ((string)$this->value) {
             self::PVP => Mode::MATCHMADE_PVP(),
-            default=> Mode::MATCHMADE_RANKED()
+            default => Mode::MATCHMADE_RANKED()
         };
     }
 }
