@@ -113,14 +113,7 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
-        $mode = ModeSession::get();
-        if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED())) {
-            $client->serviceRecord($this, Filter::MATCHMADE());
-            PullServiceReport::dispatch($this, Filter::MATCHMADE_PVP());
-        } elseif ($mode->is(\App\Enums\Mode::MATCHMADE_PVP())) {
-            $client->serviceRecord($this, Filter::MATCHMADE_PVP());
-            PullServiceReport::dispatch($this, Filter::MATCHMADE_RANKED());
-        }
+        $client->serviceRecord($this, Filter::MATCHMADE());
 
         // Dispatch an async update for the appearance
         PullAppearance::dispatch($this);
