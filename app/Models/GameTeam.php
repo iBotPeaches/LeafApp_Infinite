@@ -17,6 +17,7 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property int $game_id
+ * @property int $team_id
  * @property int $internal_team_id
  * @property string $name
  * @property string $emblem_url
@@ -26,6 +27,7 @@ use Illuminate\Support\Arr;
  * @property float $mmr
  * @property int $final_score
  * @property-read Game $game
+ * @property-read Team $team
  * @property-read GamePlayer[]|Collection $players
  * @property-read string $color
  * @property-read string $tooltip_color
@@ -105,6 +107,11 @@ class GameTeam extends Model implements HasHaloDotApi
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function players(): HasMany
