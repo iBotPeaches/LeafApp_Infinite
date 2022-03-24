@@ -27,7 +27,7 @@ class Map extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $mapId = Arr::get($payload, 'id', Arr::get($payload, 'properties.level_id'));
+        $mapId = Arr::get($payload, 'level_id', Arr::get($payload, 'properties.level_id'));
 
         /** @var Map $map */
         $map = self::query()

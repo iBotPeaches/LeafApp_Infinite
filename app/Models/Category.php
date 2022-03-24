@@ -27,7 +27,7 @@ class Category extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = (string)Arr::get($payload, 'id', Arr::get($payload, 'properties.category_id'));
+        $categoryId = (string)Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
 
         /** @var Category $category */
         $category = self::query()
@@ -37,7 +37,9 @@ class Category extends Model implements HasHaloDotApi
             ]);
 
         $category->name = Arr::get($payload, 'name');
-        $category->thumbnail_url = Arr::get($payload, 'thumbnail_url',
+        $category->thumbnail_url = Arr::get(
+            $payload,
+            'thumbnail_url',
             Arr::get($payload, 'asset.thumbnail_url')
         );
 
