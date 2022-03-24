@@ -32,7 +32,7 @@ class MockMapsService extends BaseMock
     private function map(): array
     {
         return [
-            'id' => $this->faker->numberBetween(1, 500),
+            'level_id' => $this->faker->numberBetween(1, 500),
             'name' => $this->faker->word,
             'thumbnail_url' => $this->faker->imageUrl()
         ];
