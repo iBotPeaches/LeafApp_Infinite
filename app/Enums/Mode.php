@@ -28,4 +28,12 @@ final class Mode extends Enum
             default => 'serviceRecord'
         };
     }
+
+    public function toHistorySlug(): string
+    {
+        return match ($this->value) {
+            self::MATCHMADE_PVP => 'pvp',
+            default => 'ranked'
+        };
+    }
 }
