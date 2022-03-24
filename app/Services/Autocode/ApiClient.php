@@ -92,7 +92,9 @@ class ApiClient implements InfiniteInterface
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
-                    $gameData['_leaf']['player'] = Player::fromGamertag(Arr::get($data, 'additional.gamertag'));
+                    $gameData['_leaf']['player'] = Player::fromGamertag(
+                        Arr::get($data, 'additional.parameters.gamertag')
+                    );
                     $gameData['_leaf']['game'] = $game;
 
                     GamePlayer::fromHaloDotApi($gameData);
