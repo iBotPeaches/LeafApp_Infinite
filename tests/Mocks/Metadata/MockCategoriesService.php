@@ -32,7 +32,7 @@ class MockCategoriesService extends BaseMock
     private function category(): array
     {
         return [
-            'id' => $this->faker->randomNumber(1),
+            'category_id' => $this->faker->randomNumber(1),
             'name' => $this->faker->word,
             'thumbnail_url' => $this->faker->imageUrl,
         ];
