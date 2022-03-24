@@ -7,6 +7,7 @@ use App\Enums\Outcome;
 use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\Enums\PlayerType;
 use App\Services\Autocode\InfiniteInterface;
 use Carbon\Carbon;
@@ -15,7 +16,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
@@ -25,6 +25,7 @@ use Illuminate\Support\Arr;
  * @property int $category_id
  * @property int $map_id
  * @property boolean $is_ffa
+ * @property boolean $is_lan
  * @property boolean $is_scored
  * @property Experience $experience
  * @property Carbon $occurred_at
@@ -154,6 +155,9 @@ class Game extends Model implements HasHaloDotApi
             $playlist = Playlist::fromHaloDotApi($playlistData);
         }
 
+        /** @var Mode $mode */
+        $mode = Arr::get($payload, '_leaf.mode');
+
         /** @var Game $game */
         $game = self::query()
             ->where('uuid', $gameId)
@@ -167,6 +171,7 @@ class Game extends Model implements HasHaloDotApi
             $game->playlist()->associate($playlist);
         }
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
+        $game->is_lan = $mode->is(Mode::LAN());
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
         $game->occurred_at = Arr::get($payload, 'played_at');
