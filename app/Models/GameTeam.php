@@ -19,8 +19,6 @@ use Illuminate\Support\Arr;
  * @property int $game_id
  * @property int $team_id
  * @property int $internal_team_id
- * @property string $name
- * @property string $emblem_url
  * @property Outcome $outcome
  * @property int $rank
  * @property int $score
@@ -28,7 +26,8 @@ use Illuminate\Support\Arr;
  * @property int $final_score
  * @property-read Game $game
  * @property-read Team $team
- * @property-read GamePlayer[]|Collection $players
+ * @property-read GamePlayer[]|Collection<int, GamePlayer> $players
+ * @property-read string $name
  * @property-read string $color
  * @property-read string $tooltip_color
  * @property-read float $csr
@@ -44,13 +43,22 @@ class GameTeam extends Model implements HasHaloDotApi
         'outcome' => Outcome::class
     ];
 
+    public $with = [
+        'team'
+    ];
+
     public function getColorAttribute(): string
     {
-        return match ($this->name) {
-            'Eagle' => 'is-info',
-            'Cobra' => 'is-danger',
+        return match ($this->internal_team_id) {
+            0 => 'is-info',
+            1 => 'is-danger',
             default => 'is-dark',
         };
+    }
+
+    public function getNameAttribute(): string
+    {
+        return $this->team->name;
     }
 
     public function getCsrAttribute(): float
@@ -58,11 +66,16 @@ class GameTeam extends Model implements HasHaloDotApi
         return (float)$this->players->avg('pre_csr');
     }
 
+    public function getEmblemUrlAttribute(): string
+    {
+        return asset('images/teams/'. $this->internal_team_id . '.png');
+    }
+
     public function getTooltipColorAttribute(): string
     {
-        return match ($this->name) {
-            'Eagle' => 'has-tooltip-info',
-            'Cobra' => 'has-tooltip-danger',
+        return match ($this->internal_team_id) {
+            0 => 'has-tooltip-info',
+            1 => 'has-tooltip-danger',
             default => 'has-tooltip-dark',
         };
     }
@@ -82,12 +95,10 @@ class GameTeam extends Model implements HasHaloDotApi
 
         $gameTeam->game()->associate($game);
         $gameTeam->internal_team_id = $internalTeamId;
-        $gameTeam->name = Arr::get($payload, 'team.name');
-        $gameTeam->emblem_url = Arr::get($payload, 'team.emblem_url');
         $gameTeam->outcome = Arr::get($payload, 'outcome');
         $gameTeam->rank = Arr::get($payload, 'rank');
         $gameTeam->mmr = Arr::get($payload, 'team.skill.mmr');
-        $gameTeam->score = Arr::get($payload, 'stats.core.score');
+        $gameTeam->score = Arr::get($payload, 'stats.core.scores.personal');
 
         // We are going to check what type of category this is to extract the mode specific final value
         $key = match ($game->category->name) {
