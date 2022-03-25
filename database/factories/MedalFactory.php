@@ -19,9 +19,8 @@ class MedalFactory extends Factory
             'id' => $this->faker->numerify('#########'),
             'name' => $this->faker->word,
             'description' => $this->faker->word,
-            'category' => MedalType::getRandomValue(),
-            'type' => MedalDifficulty::getRandomValue(),
-            'thumbnail_url' => $this->faker->imageUrl,
+            'type' => MedalType::getRandomValue(),
+            'difficulty' => MedalDifficulty::getRandomValue(),
         ];
     }
 }
