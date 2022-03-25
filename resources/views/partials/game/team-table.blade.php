@@ -9,9 +9,11 @@
         @if ($game->playlist && $game->playlist->is_ranked)
             <span class="is-pulled-right">
                 @if ($team)
-                    <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
-                        <span class="is-hidden-mobile">CSR: </span>{{ number_format($team->csr, 2) }}
-                    </span>
+                    @if ($team->csr > 0)
+                        <span class="has-tooltip-arrow" data-tooltip="Team Competitive Skill Rank">
+                            <span class="is-hidden-mobile">CSR: </span>{{ number_format($team->csr, 2) }}
+                        </span>
+                    @endif
                     @if ($team->mmr)
                         | <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
                             <span class="is-hidden-mobile">MMR: </span>{{ number_format($team->mmr, 2) }}
