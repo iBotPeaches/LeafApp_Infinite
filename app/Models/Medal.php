@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
  * @property string $description
  * @property MedalType $type
  * @property MedalDifficulty $difficulty
- * @property string $thumbnail_url
  * @property-read string $image
  * @property-read string $color
  * @method static MedalFactory factory(...$parameters)
@@ -31,8 +30,8 @@ class Medal extends Model implements HasHaloDotApi
     ];
 
     public $casts = [
-        'category' => MedalType::class,
-        'type' => MedalDifficulty::class,
+        'type' => MedalType::class,
+        'difficulty' => MedalDifficulty::class,
     ];
 
     public $timestamps = false;
@@ -94,7 +93,6 @@ class Medal extends Model implements HasHaloDotApi
         $medal->description = Arr::get($payload, 'description');
         $medal->type = Arr::get($payload, 'type', 'unknown');
         $medal->difficulty = Arr::get($payload, 'difficulty');
-        $medal->thumbnail_url = Arr::get($payload, 'image_urls.small');
 
         if ($medal->isDirty()) {
             $medal->saveOrFail();
