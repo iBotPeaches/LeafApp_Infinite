@@ -45,7 +45,7 @@ class GamePage extends Component
         }
 
         usort($this->medals, function (array $a, array $b) {
-            return Arr::get($a, 'medal.type.value') <=> Arr::get($b, 'medal.type.value');
+            return Arr::get($a, 'medal.difficulty.value') <=> Arr::get($b, 'medal.difficulty.value');
         });
 
         return view('livewire.game-page', [
