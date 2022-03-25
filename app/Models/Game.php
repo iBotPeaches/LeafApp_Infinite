@@ -155,7 +155,7 @@ class Game extends Model implements HasHaloDotApi
             $playlist = Playlist::fromHaloDotApi($playlistData);
         }
 
-        /** @var Mode $mode */
+        /** @var Mode|null $mode */
         $mode = Arr::get($payload, '_leaf.mode');
 
         /** @var Game $game */
@@ -171,7 +171,7 @@ class Game extends Model implements HasHaloDotApi
             $game->playlist()->associate($playlist);
         }
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
-        $game->is_lan = $mode->is(Mode::LAN());
+        $game->is_lan ??= $mode->is(Mode::LAN());
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
         $game->occurred_at = Arr::get($payload, 'played_at');
@@ -195,16 +195,16 @@ class Game extends Model implements HasHaloDotApi
 
         if (Arr::has($payload, 'players')) {
             foreach (Arr::get($payload, 'players', []) as $playerData) {
-                $gamertag = Arr::get($playerData, 'gamertag');
+                $gamertag = Arr::get($playerData, 'details.name');
 
-                // TODO - No idea if non-players are in games.
-                if (Arr::get($playerData, 'type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
+                // Skip non-players. We don't support bots yet. - iBotPeaches/LeafApp_Infinite/issues/93
+                if (Arr::get($playerData, 'details.type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
                     continue;
                 }
 
                 // Skip unresolved users from upstream API. We will force the game not yet updated to
                 // re-process later.
-                if ($gamertag === '???') {
+                if ((bool)Arr::get($playerData, 'details.resolved') === false) {
                     $game->was_pulled = false;
                     $game->saveOrFail();
                     continue;
