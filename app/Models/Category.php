@@ -7,6 +7,7 @@ use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -36,7 +37,7 @@ class Category extends Model implements HasHaloDotApi
                 'uuid' => $categoryId
             ]);
 
-        $category->name = Arr::get($payload, 'name');
+        $category->name = Str::after(Arr::get($payload, 'name'), ':');
         $category->thumbnail_url = Arr::get(
             $payload,
             'thumbnail_url',
