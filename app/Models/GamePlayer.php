@@ -115,7 +115,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->was_inprogress_join = Arr::get($payload, $prefix . 'participation.joined_in_progress', false);
         $gamePlayer->kd = Arr::get($payload, $prefix . 'stats.core.kdr');
         $gamePlayer->kda = Arr::get($payload, $prefix . 'stats.core.kda');
-        $gamePlayer->score = Arr::get($payload, $prefix . 'stats.core.score', 0);
+        $gamePlayer->score = Arr::get($payload, $prefix . 'stats.core.scores.personal', 0);
         $gamePlayer->kills = Arr::get($payload, $prefix . 'stats.core.summary.kills');
         $gamePlayer->deaths = Arr::get($payload, $prefix . 'stats.core.summary.deaths');
         $gamePlayer->assists = Arr::get($payload, $prefix . 'stats.core.summary.assists');
