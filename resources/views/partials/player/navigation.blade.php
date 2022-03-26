@@ -34,7 +34,7 @@
                 <span>Customs</span>
             </a>
         </li>
-        @if ($player->faceitPlayers)
+        @if ($player->faceitPlayers->count() > 0)
             <li class="<?= $type === App\Enums\PlayerTab::LAN ? 'is-active' : null; ?>">
                 <a href="<?= route('player', [$player, App\Enums\PlayerTab::LAN]); ?>">
                     <span class="icon"><i class="fa fa-compact-disc"></i></span>
