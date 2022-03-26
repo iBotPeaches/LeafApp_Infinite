@@ -49,7 +49,6 @@ class ValidGameHistoryTableTest extends TestCase
             ->assertSee($game->personal->kd)
             ->assertSee($game->personal->kda)
             ->assertSee($game->personal->accuracy)
-            ->assertSee($game->personal->formatted_score)
             ->assertSee($game->personal->rank)
             ->assertSee($game->occurred_at->diffForHumans());
     }

@@ -26,7 +26,7 @@ class PullMatchupGameTest extends TestCase
         $mockHistoryResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyHistoryResponse = (new MockMatchesService())->empty($gamertag);
 
-        Arr::set($mockHistoryResponse, 'data.0.details.playlist', null);
+        Arr::set($mockHistoryResponse, 'data.matches.0.details.playlist', null);
 
         Http::fakeSequence()
             ->push($mockHistoryResponse, Response::HTTP_OK)

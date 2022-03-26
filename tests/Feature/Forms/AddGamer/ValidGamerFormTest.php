@@ -20,7 +20,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockResponse, 'additional.gamertag');
+        $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
 
         Http::fake([
             '*' => Http::response($mockResponse, Response::HTTP_OK)
@@ -44,7 +44,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
@@ -68,7 +68,7 @@ class ValidGamerFormTest extends TestCase
         // Arrange
         Config::set('services.xboxapi.enabled', false);
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK);
@@ -84,7 +84,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
@@ -102,7 +102,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockResponse, 'additional.gamertag');
+        $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
         Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);

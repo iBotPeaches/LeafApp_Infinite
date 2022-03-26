@@ -46,14 +46,16 @@ class ValidGameUpdateTest extends TestCase
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = '???';
+        $gamertag2 = 'test';
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+
+        Arr::set($mockMatchResponse, 'data.0.match.players.1.details.resolved', false);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -85,13 +87,13 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.players.1.type', PlayerType::BOT);
+        Arr::set($mockMatchResponse, 'data.0.match.players.1.details.type', PlayerType::BOT);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -114,16 +116,16 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.playlist.properties.queue', null);
-        Arr::set($mockMatchResponse, 'data.details.playlist.properties.input', null);
-        Arr::set($mockMatchResponse, 'data.players.0.progression.csr.pre_match.value', -1);
-        Arr::set($mockMatchResponse, 'data.players.0.progression.csr.post_match.value', -1);
+        Arr::set($mockMatchResponse, 'data.0.match.details.playlist.properties.queue', null);
+        Arr::set($mockMatchResponse, 'data.0.match.details.playlist.properties.input', null);
+        Arr::set($mockMatchResponse, 'data.0.match.players.0.progression.csr.pre_match.value', -1);
+        Arr::set($mockMatchResponse, 'data.0.match.players.0.progression.csr.post_match.value', -1);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -150,7 +152,7 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -173,13 +175,13 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.category.name', 'Slayer');
+        Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Slayer');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -202,13 +204,13 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.category.name', 'CTF');
+        Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'CTF');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -231,13 +233,13 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.category.name', 'Oddball');
+        Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Oddball');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -260,13 +262,13 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.details.category.name', 'Strongholds');
+        Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Strongholds');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
         ]);
 
         // Act & Assert
@@ -298,7 +300,7 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockAppearance2Response, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.match.id')
         ]);
 
         // Act & Assert
