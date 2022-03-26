@@ -13,7 +13,7 @@ trait HasScoring
 {
     public function getFormattedScoreAttribute(): string
     {
-        return number_format($this->score);
+        return number_format((int)$this->score);
     }
 
     public function getVictoryColor(): string
