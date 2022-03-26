@@ -97,7 +97,7 @@ class GameTeam extends Model implements HasHaloDotApi
         $gameTeam->internal_team_id = $internalTeamId;
         $gameTeam->outcome = Arr::get($payload, 'outcome');
         $gameTeam->rank = Arr::get($payload, 'rank');
-        $gameTeam->mmr = Arr::get($payload, 'team.skill.mmr');
+        $gameTeam->mmr = Arr::get($payload, 'stats.mmr');
         $gameTeam->score = Arr::get($payload, 'stats.core.scores.personal');
 
         // We are going to check what type of category this is to extract the mode specific final value
