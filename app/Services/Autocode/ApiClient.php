@@ -36,7 +36,7 @@ class ApiClient implements InfiniteInterface
 
     public function appearance(string $gamertag): ?Player
     {
-        $response = $this->pendingRequest->get('appearance', [
+        $response = $this->pendingRequest->get('appearance/players/spartan-id', [
             'gamertag' => $gamertag
         ]);
 
