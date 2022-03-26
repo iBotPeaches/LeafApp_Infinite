@@ -9,12 +9,13 @@ use Tests\TestCase;
 class GameTeamModelTest extends TestCase
 {
     /** @dataProvider teamColorDataProvider */
-    public function testColorFromTeamName(string $name, string $expected): void
+    public function testColorFromTeamName(int $internalId, string $expected): void
     {
         // Arrange
+        /** @var GameTeam $gameTeam */
         $gameTeam = GameTeam::factory()
             ->make([
-                'name' => $name
+                'internal_team_id' => $internalId
             ]);
 
         // Act & Assert
@@ -26,15 +27,15 @@ class GameTeamModelTest extends TestCase
     {
         return [
             [
-                'name' => 'Eagle',
+                'internal_team_id' => 0,
                 'expected' => 'info'
             ],
             [
-                'name' => 'Cobra',
+                'internal_team_id' => 1,
                 'expected' => 'danger'
             ],
             [
-                'name' => 'AAAA',
+                'internal_team_id' => 99,
                 'expected' => 'dark'
             ]
         ];
