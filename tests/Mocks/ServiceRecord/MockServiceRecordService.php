@@ -30,7 +30,7 @@ class MockServiceRecordService extends BaseMock
                 ],
                 'parameters' => [
                     'gamertag' => $gamertag,
-                    'filter' => Filter::MATCHMADE_RANKED
+                    'filter' => Filter::MATCHMADE
                 ]
             ]
         ];
@@ -118,20 +118,20 @@ class MockServiceRecordService extends BaseMock
                     'personal' => $this->faker->numerify('######'),
                     'points' => $this->faker->numerify('######'),
                 ],
-                'matches' => [
-                    'outcomes' => [
-                        'wins' => $this->faker->numberBetween(0, 25),
-                        'draws' => $this->faker->numberBetween(0, 25),
-                        'losses' => $this->faker->numberBetween(0, 25),
-                        'left' => $this->faker->numberBetween(0, 25),
-                    ],
-                    'total' => $this->faker->numberBetween(0, 25)
-                ],
-                'time_played' => [
-                    'seconds' => $this->faker->numerify('######'),
-                    'human' => ''
-                ]
             ],
+            'matches' => [
+                'outcomes' => [
+                    'wins' => $this->faker->numberBetween(0, 25),
+                    'draws' => $this->faker->numberBetween(0, 25),
+                    'losses' => $this->faker->numberBetween(0, 25),
+                    'left' => $this->faker->numberBetween(0, 25),
+                ],
+                'total' => $this->faker->numberBetween(0, 25)
+            ],
+            'time_played' => [
+                'seconds' => $this->faker->numerify('######'),
+                'human' => ''
+            ]
         ];
     }
 }
