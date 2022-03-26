@@ -105,16 +105,22 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
         } elseif ($type === PlayerTab::MATCHES) {
-            $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
+            $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
         } elseif ($type === PlayerTab::CUSTOM) {
-            $client->matches($this, Mode::CUSTOM(), $forceUpdate);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            $client->matches($this, Mode::CUSTOM(), $forceUpdate);
         }
 
         // Only pull LAN events for those who have a linked HCS profile.
         if ($this->faceitPlayers->count() > 0) {
-            PullMatchHistory::dispatch($this, Mode::LAN());
+            if ($type === PlayerTab::LAN) {
+                PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+                PullMatchHistory::dispatch($this, Mode::CUSTOM());
+                $client->matches($this, Mode::LAN(), $forceUpdate);
+            } else {
+                PullMatchHistory::dispatch($this, Mode::LAN());
+            }
         }
 
         $client->serviceRecord($this, Filter::MATCHMADE());

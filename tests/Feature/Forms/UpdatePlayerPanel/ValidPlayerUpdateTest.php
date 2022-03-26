@@ -375,6 +375,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
@@ -383,11 +384,16 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
         ]);
 
         // Act & Assert
@@ -421,6 +427,10 @@ class ValidPlayerUpdateTest extends TestCase
             'custom' => [
                 'type' => PlayerTab::CUSTOM,
                 'event' => 'game-custom-history-table',
+            ],
+            'lan' => [
+                'type' => PlayerTab::LAN,
+                'event' => 'game-lan-history-table',
             ]
         ];
     }
