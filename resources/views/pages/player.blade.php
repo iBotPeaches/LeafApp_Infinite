@@ -7,7 +7,7 @@
         <div class="column">
             <livewire:player-toggle-panel />
             @include('partials.player.player-card')
-            @if (in_array($type, ['matches', 'custom']))
+            @if (in_array($type, ['matches', 'custom', 'lan']))
                 <div class="notification">
                     <a class="is-small" href="{{ route('historyCsv', [$player]) }}">export to csv</a>
 
