@@ -71,7 +71,7 @@ class Medal extends Model implements HasHaloDotApi
 
     public function getColorAttribute(): string
     {
-        return match ((int) $this->type->value) {
+        return match ((int) $this->difficulty->value) {
             MedalDifficulty::LEGENDARY => 'orange',
             MedalDifficulty::MYTHIC => 'purple',
             MedalDifficulty::HEROIC => 'info',
