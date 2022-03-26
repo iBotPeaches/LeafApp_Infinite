@@ -115,7 +115,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->was_inprogress_join ??= Arr::get($payload, $prefix . 'participation.joined_in_progress', false);
         $gamePlayer->kd = Arr::get($payload, $prefix . 'stats.core.kdr');
         $gamePlayer->kda = Arr::get($payload, $prefix . 'stats.core.kda');
-        $gamePlayer->score ??= Arr::get($payload, $prefix . 'stats.core.scores.personal', 0);
+        $gamePlayer->score ??= Arr::get($payload, $prefix . 'stats.core.scores.personal');
         $gamePlayer->kills = Arr::get($payload, $prefix . 'stats.core.summary.kills');
         $gamePlayer->deaths = Arr::get($payload, $prefix . 'stats.core.summary.deaths');
         $gamePlayer->assists = Arr::get($payload, $prefix . 'stats.core.summary.assists');
@@ -141,12 +141,14 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists_driver ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver');
         $gamePlayer->assists_callout ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts');
 
-        $gamePlayer->medals ??= collect((array)Arr::get($payload, $prefix . 'stats.core.breakdowns.medals', []))
-            ->mapWithKeys(function (array $medal) {
-                return [
-                    $medal['id'] => $medal['count']
-                ];
-            })->toArray();
+        if (Arr::has($payload, 'stats.core.breakdowns.medals')) {
+            $gamePlayer->medals = collect((array)Arr::get($payload, $prefix . 'stats.core.breakdowns.medals'))
+                ->mapWithKeys(function (array $medal) {
+                    return [
+                        $medal['id'] => $medal['count']
+                    ];
+                })->toArray();
+        }
 
         if ($gamePlayer->isDirty()) {
             $gamePlayer->saveOrFail();
