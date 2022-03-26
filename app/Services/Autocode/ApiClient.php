@@ -47,12 +47,11 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function competitive(Player $player, int $season = 1, int $version = 2): ?Csr
+    public function competitive(Player $player, int $season = 1): ?Csr
     {
         $response = $this->pendingRequest->get('stats/players/csrs', [
             'gamertag' => $player->gamertag,
-            'season' => $season,
-            'version' => $version
+            'season' => $season
         ]);
 
         if ($response->throw()->successful()) {

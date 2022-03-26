@@ -96,11 +96,10 @@ class Player extends Model implements HasHaloDotApi
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
         $seasonNumber = (int)config('services.autocode.competitive.season');
-        $seasonVersion = (int)config('services.autocode.competitive.version');
 
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
-        $client->competitive($this, $seasonNumber, $seasonVersion);
+        $client->competitive($this, $seasonNumber);
 
         if (in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE])) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());

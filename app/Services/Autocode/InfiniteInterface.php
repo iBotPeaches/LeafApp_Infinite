@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 interface InfiniteInterface
 {
     public function appearance(string $gamertag): ?Player;
-    public function competitive(Player $player, int $season = 1, int $version = 2): ?Csr;
+    public function competitive(Player $player, int $season = 1): ?Csr;
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
     public function match(string $matchUuid): ?Game;
     public function metadataMedals(): Collection;
