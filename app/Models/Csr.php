@@ -161,7 +161,7 @@ class Csr extends Model implements HasHaloDotApi
     {
         /** @var Player $player */
         $player = Arr::get($payload, 'player');
-        $season = (int) Arr::get($payload, 'additional.season');
+        $season = (int) Arr::get($payload, 'additional.parameters.season');
 
         foreach (Arr::get($payload, 'data') as $playlist) {
             $queueName = Arr::get($playlist, 'queue');
