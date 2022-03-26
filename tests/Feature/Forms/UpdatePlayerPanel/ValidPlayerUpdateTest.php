@@ -9,12 +9,10 @@ use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullServiceReport;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
-use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Support\Session\ModeSession;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -281,8 +279,6 @@ class ValidPlayerUpdateTest extends TestCase
         Queue::assertPushed(PullMatchHistory::class, function (PullMatchHistory $job) {
             return Mode::CUSTOM()->is($job->mode);
         });
-
-        Queue::assertNotPushed(PullServiceReport::class);
     }
 
     public function testInitialPageLoadDeferredFromApiCalls(): void
