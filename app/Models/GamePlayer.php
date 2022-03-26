@@ -30,7 +30,7 @@ use Illuminate\Support\Collection;
  * @property boolean $was_inprogress_join
  * @property float $kd
  * @property float $kda
- * @property int $score
+ * @property int|null $score
  * @property int $kills
  * @property int $deaths
  * @property int $assists
@@ -45,16 +45,16 @@ use Illuminate\Support\Collection;
  * @property int $shots_landed
  * @property int $shots_missed
  * @property float $accuracy
- * @property int $rounds_won
- * @property int $rounds_lost
- * @property int $rounds_tied
- * @property int $kills_melee
- * @property int $kills_grenade
- * @property int $kills_headshot
- * @property int $kills_power
- * @property int $assists_emp
- * @property int $assists_driver
- * @property int $assists_callout
+ * @property int|null $rounds_won
+ * @property int|null $rounds_lost
+ * @property int|null $rounds_tied
+ * @property int|null $kills_melee
+ * @property int|null $kills_grenade
+ * @property int|null $kills_headshot
+ * @property int|null $kills_power
+ * @property int|null $assists_emp
+ * @property int|null $assists_driver
+ * @property int|null $assists_callout
  * @property array $medals
  * @property-read Player $player
  * @property-read Game $game
@@ -121,8 +121,8 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists = Arr::get($payload, $prefix . 'stats.core.summary.assists');
         $gamePlayer->betrayals = Arr::get($payload, $prefix . 'stats.core.summary.betrayals');
         $gamePlayer->suicides = Arr::get($payload, $prefix . 'stats.core.summary.suicides');
-        $gamePlayer->vehicle_destroys ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.destroys', 0);
-        $gamePlayer->vehicle_hijacks ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.hijacks', 0);
+        $gamePlayer->vehicle_destroys ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.destroys');
+        $gamePlayer->vehicle_hijacks ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.hijacks');
         $gamePlayer->medal_count = Arr::get($payload, $prefix . 'stats.core.summary.medals');
         $gamePlayer->damage_taken = Arr::get($payload, $prefix . 'stats.core.damage.taken');
         $gamePlayer->damage_dealt = Arr::get($payload, $prefix . 'stats.core.damage.dealt');
@@ -130,16 +130,16 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->shots_landed = Arr::get($payload, $prefix . 'stats.core.shots.landed');
         $gamePlayer->shots_missed = Arr::get($payload, $prefix . 'stats.core.shots.missed');
         $gamePlayer->accuracy = Arr::get($payload, $prefix . 'stats.core.shots.accuracy');
-        $gamePlayer->rounds_won ??= Arr::get($payload, $prefix . 'stats.core.rounds.won', 0);
-        $gamePlayer->rounds_lost ??= Arr::get($payload, $prefix . 'stats.core.rounds.lost', 0);
-        $gamePlayer->rounds_tied ??= Arr::get($payload, $prefix . 'stats.core.rounds.tied', 0);
-        $gamePlayer->kills_melee ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.melee', 0);
-        $gamePlayer->kills_grenade ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.grenades', 0);
-        $gamePlayer->kills_headshot ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.headshots', 0);
-        $gamePlayer->kills_power ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.power_weapons', 0);
-        $gamePlayer->assists_emp ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.emp', 0);
-        $gamePlayer->assists_driver ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver', 0);
-        $gamePlayer->assists_callout ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts', 0);
+        $gamePlayer->rounds_won ??= Arr::get($payload, $prefix . 'stats.core.rounds.won');
+        $gamePlayer->rounds_lost ??= Arr::get($payload, $prefix . 'stats.core.rounds.lost');
+        $gamePlayer->rounds_tied ??= Arr::get($payload, $prefix . 'stats.core.rounds.tied');
+        $gamePlayer->kills_melee ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.melee');
+        $gamePlayer->kills_grenade ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.grenades');
+        $gamePlayer->kills_headshot ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.headshots');
+        $gamePlayer->kills_power ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.kills.power_weapons');
+        $gamePlayer->assists_emp ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.emp');
+        $gamePlayer->assists_driver ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver');
+        $gamePlayer->assists_callout ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts');
 
         $gamePlayer->medals ??= collect((array)Arr::get($payload, $prefix . 'stats.core.breakdowns.medals', []))
             ->mapWithKeys(function (array $medal) {
