@@ -84,6 +84,9 @@ class UpdatePlayerPanel extends Component
             case PlayerTab::CUSTOM:
                 $this->emitTo(GameCustomHistoryTable::class, '$refresh');
                 break;
+            case PlayerTab::LAN:
+                $this->emitTo(GameLanHistoryTable::class, '$refresh');
+                break;
         }
     }
 }
