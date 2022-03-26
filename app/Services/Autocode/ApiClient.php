@@ -18,7 +18,6 @@ use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Language;
 use App\Services\Autocode\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -117,7 +116,7 @@ class ApiClient implements InfiniteInterface
             ->get();
     }
 
-    public function match(string $matchUuid): SupportCollection
+    public function match(string $matchUuid): ?Game
     {
         $response = $this->pendingRequest->get('stats/matches', [
             'ids' => Arr::wrap($matchUuid)
@@ -125,12 +124,12 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
 
-        $matches = collect();
+        $lastMatch = null;
         foreach (Arr::get($data, 'data') as $match) {
-            $matches->add(Game::fromHaloDotApi((array)Arr::get($match, 'match', [])));
+            $lastMatch = Game::fromHaloDotApi((array)Arr::get($match, 'match', []));
         }
 
-        return $matches;
+        return $lastMatch;
     }
 
     public function metadataMedals(): Collection
