@@ -107,7 +107,7 @@ CREATE TABLE `game_players` (
   `was_inprogress_join` tinyint(1) NOT NULL DEFAULT 0,
   `kd` double(8,4) NOT NULL,
   `kda` double(8,4) NOT NULL,
-  `score` mediumint(8) NOT NULL,
+  `score` mediumint(8) DEFAULT NULL,
   `kills` smallint(5) unsigned NOT NULL,
   `deaths` smallint(5) unsigned NOT NULL,
   `assists` smallint(5) unsigned NOT NULL,
