@@ -5,6 +5,7 @@ namespace Tests\Feature\Pages;
 
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\GameTeam;
 use App\Models\Playlist;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Http;
@@ -97,6 +98,10 @@ class GamePageTest extends TestCase
             ))
             ->count(4)
             ->create();
+
+        GameTeam::factory()
+            ->for($game)
+            ->createOne();
 
         // Act
         $response = $this->get('/game/' . $game->uuid);
