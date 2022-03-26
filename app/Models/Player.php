@@ -6,14 +6,13 @@ use App\Enums\CompetitiveMode;
 use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullServiceReport;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
 use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
-use App\Support\Session\ModeSession;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,8 +34,9 @@ use Illuminate\Support\Arr;
  * @property string $last_csr_key
  * @property string $emblem_url
  * @property string $backdrop_url
- * @property-read Game[]|Collection $games
- * @property-read Csr[]|Collection $csrs
+ * @property-read Collection<int, Game> $games
+ * @property-read Collection<int, Csr> $csrs
+ * @property-read Collection<int, MatchupPlayer> $faceitPlayers
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @method static PlayerFactory factory(...$parameters)
@@ -113,6 +113,11 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
+        // Only pull LAN events for those who have a linked HCS profile.
+        if ($this->faceitPlayers->count() > 0) {
+            PullMatchHistory::dispatch($this, Mode::LAN());
+        }
+
         $client->serviceRecord($this, Filter::MATCHMADE());
 
         // Dispatch an async update for the appearance
@@ -160,6 +165,11 @@ class Player extends Model implements HasHaloDotApi
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
+    }
+
+    public function faceitPlayers(): BelongsToMany
+    {
+        return $this->belongsToMany(MatchupPlayer::class);
     }
 
     public function games(): BelongsToMany
