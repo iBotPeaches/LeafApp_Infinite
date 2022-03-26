@@ -73,7 +73,7 @@ class Player extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $player = self::fromGamertag(Arr::get($payload, 'additional.gamertag'));
+        $player = self::fromGamertag(Arr::get($payload, 'additional.parameters.gamertag'));
 
         $player->service_tag = Arr::get($payload, 'data.service_tag');
         $player->emblem_url = Arr::get($payload, 'data.emblem_url');
