@@ -30,7 +30,6 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `thumbnail_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -103,44 +102,58 @@ CREATE TABLE `game_players` (
   `post_csr` mediumint(8) unsigned DEFAULT NULL,
   `rank` tinyint(3) unsigned NOT NULL,
   `outcome` smallint(5) unsigned NOT NULL,
-  `was_at_start` tinyint(1) NOT NULL DEFAULT 1,
-  `was_at_end` tinyint(1) NOT NULL DEFAULT 1,
-  `was_inprogress_join` tinyint(1) NOT NULL DEFAULT 0,
+  `was_at_start` tinyint(1) DEFAULT NULL,
+  `was_at_end` tinyint(1) DEFAULT NULL,
+  `was_inprogress_join` tinyint(1) DEFAULT NULL,
   `kd` double(8,4) NOT NULL,
   `kda` double(8,4) NOT NULL,
-  `score` mediumint(8) NOT NULL,
+  `score` mediumint(8) DEFAULT NULL,
   `kills` smallint(5) unsigned NOT NULL,
   `deaths` smallint(5) unsigned NOT NULL,
   `assists` smallint(5) unsigned NOT NULL,
   `betrayals` smallint(5) unsigned NOT NULL,
   `suicides` smallint(5) unsigned NOT NULL,
-  `vehicle_destroys` smallint(5) unsigned NOT NULL,
-  `vehicle_hijacks` smallint(5) unsigned NOT NULL,
+  `vehicle_destroys` smallint(5) unsigned DEFAULT NULL,
+  `vehicle_hijacks` smallint(5) unsigned DEFAULT NULL,
   `medal_count` smallint(5) unsigned NOT NULL,
-  `damage_taken` smallint(5) unsigned NOT NULL,
-  `damage_dealt` mediumint(7) unsigned NOT NULL,
+  `damage_taken` mediumint(8) unsigned NOT NULL,
+  `damage_dealt` mediumint(8) unsigned NOT NULL,
   `shots_fired` smallint(5) unsigned NOT NULL,
   `shots_landed` smallint(5) unsigned NOT NULL,
   `shots_missed` smallint(5) unsigned NOT NULL,
   `accuracy` double(5,2) NOT NULL,
-  `rounds_won` smallint(5) unsigned NOT NULL,
-  `rounds_lost` smallint(5) unsigned NOT NULL,
-  `rounds_tied` smallint(5) unsigned NOT NULL,
-  `kills_melee` smallint(5) unsigned NOT NULL,
-  `kills_grenade` smallint(5) unsigned NOT NULL,
-  `kills_headshot` smallint(5) unsigned NOT NULL,
-  `kills_power` smallint(5) unsigned NOT NULL,
-  `assists_emp` smallint(5) unsigned NOT NULL,
-  `assists_driver` smallint(5) unsigned NOT NULL,
-  `assists_callout` smallint(5) unsigned NOT NULL,
-  `medals` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `rounds_won` smallint(5) unsigned DEFAULT NULL,
+  `rounds_lost` smallint(5) unsigned DEFAULT NULL,
+  `rounds_tied` smallint(5) unsigned DEFAULT NULL,
+  `kills_melee` smallint(5) unsigned DEFAULT NULL,
+  `kills_grenade` smallint(5) unsigned DEFAULT NULL,
+  `kills_headshot` smallint(5) unsigned DEFAULT NULL,
+  `kills_power` smallint(5) unsigned DEFAULT NULL,
+  `assists_emp` smallint(5) unsigned DEFAULT NULL,
+  `assists_driver` smallint(5) unsigned DEFAULT NULL,
+  `assists_callout` smallint(5) unsigned DEFAULT NULL,
+  `medals` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`medals`)),
   PRIMARY KEY (`id`),
+  KEY `game_players_player_id_foreign` (`player_id`),
   KEY `game_players_game_id_foreign` (`game_id`),
   KEY `game_players_game_team_id_foreign` (`game_team_id`),
-  KEY `game_players_player_id_foreign` (`player_id`),
   CONSTRAINT `game_players_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
   CONSTRAINT `game_players_game_team_id_foreign` FOREIGN KEY (`game_team_id`) REFERENCES `game_teams` (`id`),
   CONSTRAINT `game_players_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `game_scrim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_scrim` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `scrim_id` bigint(20) unsigned NOT NULL,
+  `game_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `game_scrim_scrim_id_foreign` (`scrim_id`),
+  KEY `game_scrim_game_id_foreign` (`game_id`),
+  CONSTRAINT `game_scrim_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `game_scrim_scrim_id_foreign` FOREIGN KEY (`scrim_id`) REFERENCES `scrims` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `game_teams`;
@@ -149,9 +162,8 @@ DROP TABLE IF EXISTS `game_teams`;
 CREATE TABLE `game_teams` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `game_id` bigint(20) unsigned NOT NULL,
+  `team_id` bigint(20) unsigned DEFAULT NULL,
   `internal_team_id` tinyint(3) unsigned NOT NULL,
-  `name` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emblem_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `outcome` tinyint(3) unsigned NOT NULL,
   `rank` tinyint(3) unsigned NOT NULL,
   `score` mediumint(9) NOT NULL,
@@ -159,7 +171,9 @@ CREATE TABLE `game_teams` (
   `final_score` mediumint(8) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `game_teams_game_id_internal_team_id_unique` (`game_id`,`internal_team_id`),
-  CONSTRAINT `game_teams_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`)
+  KEY `game_teams_team_id_foreign` (`team_id`),
+  CONSTRAINT `game_teams_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
+  CONSTRAINT `game_teams_team_id_foreign` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `games`;
@@ -172,11 +186,12 @@ CREATE TABLE `games` (
   `map_id` bigint(20) unsigned NOT NULL,
   `playlist_id` bigint(20) unsigned DEFAULT NULL,
   `is_ffa` tinyint(1) NOT NULL,
+  `is_lan` tinyint(1) NOT NULL DEFAULT 0,
   `is_scored` tinyint(1) NOT NULL,
   `experience` tinyint(4) NOT NULL,
   `occurred_at` datetime NOT NULL,
   `duration_seconds` int(11) NOT NULL,
-  `version` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.3',
+  `version` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.3',
   `was_pulled` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `games_uuid_unique` (`uuid`),
@@ -209,7 +224,6 @@ DROP TABLE IF EXISTS `maps`;
 CREATE TABLE `maps` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `thumbnail_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -285,9 +299,8 @@ CREATE TABLE `medals` (
   `id` int(10) unsigned NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` tinyint(3) unsigned NOT NULL,
-  `type` tinyint(3) unsigned NOT NULL,
-  `thumbnail_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `difficulty` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -312,6 +325,7 @@ CREATE TABLE `players` (
   `is_private` tinyint(1) NOT NULL DEFAULT 0,
   `last_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
   `last_custom_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
+  `last_lan_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
   `last_csr_key` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `emblem_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `backdrop_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -322,8 +336,10 @@ CREATE TABLE `players` (
   UNIQUE KEY `players_xuid_unique` (`xuid`),
   KEY `players_last_game_id_pulled_foreign` (`last_game_id_pulled`),
   KEY `players_last_custom_game_id_pulled_foreign` (`last_custom_game_id_pulled`),
+  KEY `players_last_lan_game_id_pulled_foreign` (`last_lan_game_id_pulled`),
   CONSTRAINT `players_last_custom_game_id_pulled_foreign` FOREIGN KEY (`last_custom_game_id_pulled`) REFERENCES `games` (`id`),
-  CONSTRAINT `players_last_game_id_pulled_foreign` FOREIGN KEY (`last_game_id_pulled`) REFERENCES `games` (`id`)
+  CONSTRAINT `players_last_game_id_pulled_foreign` FOREIGN KEY (`last_game_id_pulled`) REFERENCES `games` (`id`),
+  CONSTRAINT `players_last_lan_game_id_pulled_foreign` FOREIGN KEY (`last_lan_game_id_pulled`) REFERENCES `games` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `playlists`;
@@ -332,13 +348,27 @@ DROP TABLE IF EXISTS `playlists`;
 CREATE TABLE `playlists` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `thumbnail_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_ranked` tinyint(1) NOT NULL,
   `queue` tinyint(3) unsigned DEFAULT NULL,
   `input` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `scrims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scrims` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `is_complete` tinyint(1) NOT NULL DEFAULT 0,
+  `status_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `scrims_user_id_foreign` (`user_id`),
+  CONSTRAINT `scrims_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `service_records`;
@@ -378,13 +408,38 @@ CREATE TABLE `service_records` (
   `assists_emp` smallint(5) unsigned NOT NULL,
   `assists_driver` smallint(5) unsigned NOT NULL,
   `assists_callout` smallint(5) unsigned NOT NULL,
-  `medals` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `medals` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`medals`)),
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `service_records_player_id_mode_unique` (`player_id`,`mode`),
-  KEY `service_records_player_id_foreign` (`player_id`),
   CONSTRAINT `service_records_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `teams`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teams` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `internal_id` tinyint(4) NOT NULL,
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emblem_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` bigint(20) unsigned DEFAULT NULL,
+  `google_id` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_player_id_foreign` (`player_id`),
+  CONSTRAINT `users_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -394,50 +449,61 @@ CREATE TABLE `service_records` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
-INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
-INSERT INTO `migrations` VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
-INSERT INTO `migrations` VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
-INSERT INTO `migrations` VALUES (5,'2021_11_20_135838_add_players_table',2);
-INSERT INTO `migrations` VALUES (6,'2021_11_20_142006_add_metadata_tables',2);
-INSERT INTO `migrations` VALUES (7,'2021_11_21_175835_add_matches_table',2);
-INSERT INTO `migrations` VALUES (8,'2021_11_24_104219_fix_unsigned_nature_of_score',3);
-INSERT INTO `migrations` VALUES (9,'2021_11_25_111532_add_xuid_to_players',4);
-INSERT INTO `migrations` VALUES (10,'2021_11_26_111551_add_competitive_table',5);
-INSERT INTO `migrations` VALUES (11,'2021_11_26_163918_add_ranked_to_games',5);
-INSERT INTO `migrations` VALUES (12,'2021_11_26_165929_add_service_record',5);
-INSERT INTO `migrations` VALUES (13,'2021_11_27_111516_add_is_private_to_players',6);
-INSERT INTO `migrations` VALUES (14,'2021_11_28_185710_drop_useless_tables',7);
-INSERT INTO `migrations` VALUES (15,'2021_11_28_234442_add_start_tier_to_csr',7);
-INSERT INTO `migrations` VALUES (16,'2021_11_29_123143_create_jobs_table',8);
-INSERT INTO `migrations` VALUES (17,'2021_11_30_105825_add_unique_to_uuid_games',9);
-INSERT INTO `migrations` VALUES (18,'2021_11_30_105922_add_unique_to_metadata',9);
-INSERT INTO `migrations` VALUES (19,'2021_12_11_160822_create_game_teams_table',10);
-INSERT INTO `migrations` VALUES (20,'2021_12_11_170733_add_internal_team_id_to_game_players',10);
-INSERT INTO `migrations` VALUES (21,'2021_12_14_010203_add_missing_fields_to_game',10);
-INSERT INTO `migrations` VALUES (22,'2021_12_14_111623_add_version_to_game',11);
-INSERT INTO `migrations` VALUES (23,'2021_12_14_115208_add_was_pulled_bool_to_games',12);
-INSERT INTO `migrations` VALUES (24,'2021_12_15_113038_add_playlist_table',13);
-INSERT INTO `migrations` VALUES (25,'2021_12_15_113623_drop_unused_game_columns',13);
-INSERT INTO `migrations` VALUES (26,'2021_12_15_115237_add_playlist_id_to_games',13);
-INSERT INTO `migrations` VALUES (27,'2021_12_15_115906_drop_is_ranked_from_games',13);
-INSERT INTO `migrations` VALUES (28,'2021_12_15_120331_add_partipation_columns',13);
-INSERT INTO `migrations` VALUES (29,'2021_12_25_124053_add_medals_to_service_record',14);
-INSERT INTO `migrations` VALUES (30,'2021_12_25_124732_create_medals_table',14);
-INSERT INTO `migrations` VALUES (31,'2021_12_28_103825_add_csr_to_game_players',15);
-INSERT INTO `migrations` VALUES (32,'2022_01_08_122126_add_last_game_id_to_players',16);
-INSERT INTO `migrations` VALUES (33,'2022_01_09_115837_add_final_score_to_teams',17);
-INSERT INTO `migrations` VALUES (34,'2022_01_15_152306_drop_image_url_from_csrs',18);
-INSERT INTO `migrations` VALUES (35,'2022_01_15_202728_add_medals_to_game_players',18);
-INSERT INTO `migrations` VALUES (36,'2022_01_15_214941_create_cache_table',18);
-INSERT INTO `migrations` VALUES (37,'2022_01_23_200035_add_faceit_championship',19);
-INSERT INTO `migrations` VALUES (38,'2022_01_24_111258_add_matchups',19);
-INSERT INTO `migrations` VALUES (39,'2022_02_01_235047_add_mmr_to_gameteam',20);
-INSERT INTO `migrations` VALUES (40,'2022_02_06_112708_add_game_id_to_players',21);
-INSERT INTO `migrations` VALUES (41,'2022_02_06_164854_create_matchup_games',22);
-INSERT INTO `migrations` VALUES (42,'2022_02_07_004937_add_multiple_record_support',22);
-INSERT INTO `migrations` VALUES (43,'2022_02_12_112013_add_type_to_championship',22);
-INSERT INTO `migrations` VALUES (44,'2022_02_21_105933_tweak_csr_for_all_modes',22);
-INSERT INTO `migrations` VALUES (45,'2022_02_21_112301_remove_fk_csrs',22);
-INSERT INTO `migrations` VALUES (46,'2022_02_21_113039_remake_csr_fks',23);
-INSERT INTO `migrations` VALUES (47,'2022_03_02_115047_add_csr_key_to_players',24);
+INSERT INTO `migrations` VALUES (1,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` VALUES (2,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` VALUES (3,'2021_11_20_135838_add_players_table',1);
+INSERT INTO `migrations` VALUES (4,'2021_11_20_142006_add_metadata_tables',1);
+INSERT INTO `migrations` VALUES (5,'2021_11_21_175835_add_matches_table',1);
+INSERT INTO `migrations` VALUES (6,'2021_11_24_104219_fix_unsigned_nature_of_score',1);
+INSERT INTO `migrations` VALUES (7,'2021_11_25_111532_add_xuid_to_players',1);
+INSERT INTO `migrations` VALUES (8,'2021_11_26_111551_add_competitive_table',1);
+INSERT INTO `migrations` VALUES (9,'2021_11_26_163918_add_ranked_to_games',1);
+INSERT INTO `migrations` VALUES (10,'2021_11_26_165929_add_service_record',1);
+INSERT INTO `migrations` VALUES (11,'2021_11_27_111516_add_is_private_to_players',1);
+INSERT INTO `migrations` VALUES (12,'2021_11_28_185710_drop_useless_tables',1);
+INSERT INTO `migrations` VALUES (13,'2021_11_28_234442_add_start_tier_to_csr',1);
+INSERT INTO `migrations` VALUES (14,'2021_11_29_123143_create_jobs_table',1);
+INSERT INTO `migrations` VALUES (15,'2021_11_30_105825_add_unique_to_uuid_games',1);
+INSERT INTO `migrations` VALUES (16,'2021_11_30_105922_add_unique_to_metadata',1);
+INSERT INTO `migrations` VALUES (17,'2021_12_11_160822_create_game_teams_table',1);
+INSERT INTO `migrations` VALUES (18,'2021_12_11_170733_add_internal_team_id_to_game_players',1);
+INSERT INTO `migrations` VALUES (19,'2021_12_14_010203_add_missing_fields_to_game',1);
+INSERT INTO `migrations` VALUES (20,'2021_12_14_111623_add_version_to_game',1);
+INSERT INTO `migrations` VALUES (21,'2021_12_14_115208_add_was_pulled_bool_to_games',1);
+INSERT INTO `migrations` VALUES (22,'2021_12_15_113038_add_playlist_table',1);
+INSERT INTO `migrations` VALUES (23,'2021_12_15_113623_drop_unused_game_columns',1);
+INSERT INTO `migrations` VALUES (24,'2021_12_15_115237_add_playlist_id_to_games',1);
+INSERT INTO `migrations` VALUES (25,'2021_12_15_115906_drop_is_ranked_from_games',1);
+INSERT INTO `migrations` VALUES (26,'2021_12_15_120331_add_partipation_columns',1);
+INSERT INTO `migrations` VALUES (27,'2021_12_25_124053_add_medals_to_service_record',1);
+INSERT INTO `migrations` VALUES (28,'2021_12_25_124732_create_medals_table',1);
+INSERT INTO `migrations` VALUES (29,'2021_12_28_103825_add_csr_to_game_players',1);
+INSERT INTO `migrations` VALUES (30,'2022_01_08_122126_add_last_game_id_to_players',1);
+INSERT INTO `migrations` VALUES (31,'2022_01_09_115837_add_final_score_to_teams',1);
+INSERT INTO `migrations` VALUES (32,'2022_01_15_152306_drop_image_url_from_csrs',1);
+INSERT INTO `migrations` VALUES (33,'2022_01_15_202728_add_medals_to_game_players',1);
+INSERT INTO `migrations` VALUES (34,'2022_01_15_214941_create_cache_table',1);
+INSERT INTO `migrations` VALUES (35,'2022_01_23_200035_add_faceit_championship',1);
+INSERT INTO `migrations` VALUES (36,'2022_01_24_111258_add_matchups',1);
+INSERT INTO `migrations` VALUES (37,'2022_02_01_235047_add_mmr_to_gameteam',1);
+INSERT INTO `migrations` VALUES (38,'2022_02_06_112708_add_game_id_to_players',1);
+INSERT INTO `migrations` VALUES (39,'2022_02_06_164854_create_matchup_games',1);
+INSERT INTO `migrations` VALUES (40,'2022_02_07_004937_add_multiple_record_support',1);
+INSERT INTO `migrations` VALUES (41,'2022_02_12_112013_add_type_to_championship',1);
+INSERT INTO `migrations` VALUES (42,'2022_02_21_105933_tweak_csr_for_all_modes',1);
+INSERT INTO `migrations` VALUES (43,'2022_02_21_112301_remove_fk_csrs',1);
+INSERT INTO `migrations` VALUES (44,'2022_02_21_113039_remake_csr_fks',1);
+INSERT INTO `migrations` VALUES (45,'2022_03_02_115047_add_csr_key_to_players',1);
+INSERT INTO `migrations` VALUES (46,'2022_03_05_121859_add_users_table',1);
+INSERT INTO `migrations` VALUES (47,'2022_03_05_140233_add_scrim_tables',1);
+INSERT INTO `migrations` VALUES (48,'2022_03_06_015134_add_remember_token_to_users',1);
+INSERT INTO `migrations` VALUES (49,'2022_03_09_110315_correct_questionmark_gamertags',1);
+INSERT INTO `migrations` VALUES (50,'2022_03_22_221818_add_last_lan_game_id_pulled',1);
+INSERT INTO `migrations` VALUES (51,'2022_03_23_095041_drop_version_from_metadata',1);
+INSERT INTO `migrations` VALUES (52,'2022_03_23_095607_add_team_model',1);
+INSERT INTO `migrations` VALUES (53,'2022_03_23_101009_rename_medal_tables',1);
+INSERT INTO `migrations` VALUES (54,'2022_03_24_102807_expand_length_of_game_version',1);
+INSERT INTO `migrations` VALUES (55,'2022_03_24_103210_move_team_to_game_team',1);
+INSERT INTO `migrations` VALUES (56,'2022_03_24_104012_drop_team_info_from_game_team',1);
+INSERT INTO `migrations` VALUES (57,'2022_03_24_110213_add_is_local_to_game',1);
+INSERT INTO `migrations` VALUES (58,'2022_03_25_105934_drop_image_from_medals',1);

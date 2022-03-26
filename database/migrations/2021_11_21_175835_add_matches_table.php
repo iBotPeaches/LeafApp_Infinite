@@ -36,15 +36,15 @@ class AddMatchesTable extends Migration
             $table->unsignedSmallInteger('outcome');
             $table->double('kd', 8, 4);
             $table->double('kda', 8, 4);
-            $table->mediumInteger('score');
+            $table->mediumInteger('score')->nullable(true);
 
             $table->unsignedSmallInteger('kills');
             $table->unsignedSmallInteger('deaths');
             $table->unsignedSmallInteger('assists');
             $table->unsignedSmallInteger('betrayals');
             $table->unsignedSmallInteger('suicides');
-            $table->unsignedSmallInteger('vehicle_destroys');
-            $table->unsignedSmallInteger('vehicle_hijacks');
+            $table->unsignedSmallInteger('vehicle_destroys')->nullable(true);
+            $table->unsignedSmallInteger('vehicle_hijacks')->nullable(true);
             $table->unsignedSmallInteger('medal_count');
             $table->unsignedMediumInteger('damage_taken');
             $table->unsignedMediumInteger('damage_dealt');
@@ -53,18 +53,18 @@ class AddMatchesTable extends Migration
             $table->unsignedSmallInteger('shots_missed');
 
             $table->double('accuracy', 5, 2);
-            $table->unsignedSmallInteger('rounds_won');
-            $table->unsignedSmallInteger('rounds_lost');
-            $table->unsignedSmallInteger('rounds_tied');
+            $table->unsignedSmallInteger('rounds_won')->nullable(true);
+            $table->unsignedSmallInteger('rounds_lost')->nullable(true);
+            $table->unsignedSmallInteger('rounds_tied')->nullable(true);
 
-            $table->unsignedSmallInteger('kills_melee');
-            $table->unsignedSmallInteger('kills_grenade');
-            $table->unsignedSmallInteger('kills_headshot');
-            $table->unsignedSmallInteger('kills_power');
+            $table->unsignedSmallInteger('kills_melee')->nullable(true);
+            $table->unsignedSmallInteger('kills_grenade')->nullable(true);
+            $table->unsignedSmallInteger('kills_headshot')->nullable(true);
+            $table->unsignedSmallInteger('kills_power')->nullable(true);
 
-            $table->unsignedSmallInteger('assists_emp');
-            $table->unsignedSmallInteger('assists_driver');
-            $table->unsignedSmallInteger('assists_callout');
+            $table->unsignedSmallInteger('assists_emp')->nullable(true);
+            $table->unsignedSmallInteger('assists_driver')->nullable(true);
+            $table->unsignedSmallInteger('assists_callout')->nullable(true);
         });
     }
 

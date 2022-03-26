@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace Database\Factories;
 
-use App\Enums\MedalCategory;
 use App\Enums\MedalType;
+use App\Enums\MedalDifficulty;
 use App\Models\Medal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,9 +19,8 @@ class MedalFactory extends Factory
             'id' => $this->faker->numerify('#########'),
             'name' => $this->faker->word,
             'description' => $this->faker->word,
-            'category' => MedalCategory::getRandomValue(),
             'type' => MedalType::getRandomValue(),
-            'thumbnail_url' => $this->faker->imageUrl,
+            'difficulty' => MedalDifficulty::getRandomValue(),
         ];
     }
 }

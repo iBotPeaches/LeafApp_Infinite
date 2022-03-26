@@ -16,7 +16,6 @@
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
                 <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
-                <th><abbr title="Ordered by Points">Score</abbr></th>
                 <th>Rank</th>
                 <th>Date</th>
             </tr>
@@ -54,7 +53,6 @@
                     <td class="has-background-{{ $game->personal->accuracy_color }}-light">
                         {{ $game->personal->accuracy }}%
                     </td>
-                    <td>{{ $game->personal->formatted_score }}</td>
                     <td>{{ $game->personal->rank }}</td>
                     <td>{{ $game->occurred_at->diffForHumans() }}</td>
                 </tr>

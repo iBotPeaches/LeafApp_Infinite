@@ -35,24 +35,26 @@ class PullHaloDataTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockServicePvpResponse = (new MockServiceRecordService())->success($gamertag);
 
         Arr::set($mockCustomMatchesResponse, 'data.0.details.playlist', null);
         Arr::set($mockCustomMatchesResponse, 'data.1.details.playlist', null);
 
-        $matchmakingGameUuid = Arr::get($mockMatchesResponse, 'data.0.id');
-        $customGameUuid = Arr::get($mockCustomMatchesResponse, 'data.0.id');
+        $matchmakingGameUuid = Arr::get($mockMatchesResponse, 'data.matches.0.id');
+        $customGameUuid = Arr::get($mockCustomMatchesResponse, 'data.matches.0.id');
+        $lanGameUuid = Arr::get($mockLanMatchesResponse, 'data.matches.0.id');
 
         Http::fakeSequence()
-            ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServicePvpResponse, Response::HTTP_OK);
+            ->push($mockLanMatchesResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -65,11 +67,13 @@ class PullHaloDataTest extends TestCase
 
         $lastMatchmakingGame = Game::query()->firstWhere('uuid', $matchmakingGameUuid);
         $lastCustomGame = Game::query()->firstWhere('uuid', $customGameUuid);
+        $lastLanGame = Game::query()->firstWhere('uuid', $lanGameUuid);
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
             'last_game_id_pulled' => $lastMatchmakingGame?->id,
-            'last_custom_game_id_pulled' => $lastCustomGame?->id
+            'last_custom_game_id_pulled' => $lastCustomGame?->id,
+            'last_lan_game_id_pulled' => $lastLanGame?->id
         ]);
     }
 }

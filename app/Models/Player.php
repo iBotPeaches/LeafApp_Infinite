@@ -6,14 +6,13 @@ use App\Enums\CompetitiveMode;
 use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullServiceReport;
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
 use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
-use App\Support\Session\ModeSession;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,11 +30,13 @@ use Illuminate\Support\Arr;
  * @property boolean $is_private
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
+ * @property int|null $last_lan_game_id_pulled
  * @property string $last_csr_key
  * @property string $emblem_url
  * @property string $backdrop_url
- * @property-read Game[]|Collection $games
- * @property-read Csr[]|Collection $csrs
+ * @property-read Collection<int, Game> $games
+ * @property-read Collection<int, Csr> $csrs
+ * @property-read Collection<int, MatchupPlayer> $faceitPlayers
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @method static PlayerFactory factory(...$parameters)
@@ -72,7 +73,7 @@ class Player extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $player = self::fromGamertag(Arr::get($payload, 'additional.gamertag'));
+        $player = self::fromGamertag(Arr::get($payload, 'additional.parameters.gamertag'));
 
         $player->service_tag = Arr::get($payload, 'data.service_tag');
         $player->emblem_url = Arr::get($payload, 'data.emblem_url');
@@ -95,11 +96,10 @@ class Player extends Model implements HasHaloDotApi
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
         $seasonNumber = (int)config('services.autocode.competitive.season');
-        $seasonVersion = (int)config('services.autocode.competitive.version');
 
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
-        $client->competitive($this, $seasonNumber, $seasonVersion);
+        $client->competitive($this, $seasonNumber);
 
         if (in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE])) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
@@ -112,14 +112,12 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
         }
 
-        $mode = ModeSession::get();
-        if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED())) {
-            $client->serviceRecord($this, Filter::MATCHMADE_RANKED());
-            PullServiceReport::dispatch($this, Filter::MATCHMADE_PVP());
-        } elseif ($mode->is(\App\Enums\Mode::MATCHMADE_PVP())) {
-            $client->serviceRecord($this, Filter::MATCHMADE_PVP());
-            PullServiceReport::dispatch($this, Filter::MATCHMADE_RANKED());
+        // Only pull LAN events for those who have a linked HCS profile.
+        if ($this->faceitPlayers->count() > 0) {
+            PullMatchHistory::dispatch($this, Mode::LAN());
         }
+
+        $client->serviceRecord($this, Filter::MATCHMADE());
 
         // Dispatch an async update for the appearance
         PullAppearance::dispatch($this);
@@ -166,6 +164,11 @@ class Player extends Model implements HasHaloDotApi
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
+    }
+
+    public function faceitPlayers(): HasMany
+    {
+        return $this->hasMany(MatchupPlayer::class);
     }
 
     public function games(): BelongsToMany

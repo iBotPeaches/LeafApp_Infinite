@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 /**
  * @property int $id
  * @property string $uuid
- * @property string $version
  * @property string $name
  * @property string $thumbnail_url
  * @property boolean $is_ranked
@@ -59,7 +58,6 @@ class Playlist extends Model implements HasHaloDotApi
             ]);
 
         $playlist->name = Arr::get($payload, 'name');
-        $playlist->version = Arr::get($payload, 'asset.version');
         $playlist->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
         $playlist->is_ranked = Arr::get($payload, 'properties.ranked');
         $playlist->queue = Arr::get($payload, 'properties.queue');

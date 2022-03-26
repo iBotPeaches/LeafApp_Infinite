@@ -7,6 +7,7 @@ use App\Enums\Outcome;
 use App\Jobs\PullAppearance;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\PersonalResult;
+use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\Enums\PlayerType;
 use App\Services\Autocode\InfiniteInterface;
 use Carbon\Carbon;
@@ -15,7 +16,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 
@@ -25,6 +25,7 @@ use Illuminate\Support\Arr;
  * @property int $category_id
  * @property int $map_id
  * @property boolean $is_ffa
+ * @property boolean $is_lan
  * @property boolean $is_scored
  * @property Experience $experience
  * @property Carbon $occurred_at
@@ -145,7 +146,7 @@ class Game extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         $gameId = Arr::get($payload, 'id');
-        $category = Category::fromHaloDotApi(Arr::get($payload, 'details.category'));
+        $category = Category::fromHaloDotApi(Arr::get($payload, 'details.gamevariant'));
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
 
         // Customs do not have a Playlist
@@ -153,6 +154,9 @@ class Game extends Model implements HasHaloDotApi
         if ($playlistData) {
             $playlist = Playlist::fromHaloDotApi($playlistData);
         }
+
+        /** @var Mode|null $mode */
+        $mode = Arr::get($payload, '_leaf.mode');
 
         /** @var Game $game */
         $game = self::query()
@@ -167,6 +171,7 @@ class Game extends Model implements HasHaloDotApi
             $game->playlist()->associate($playlist);
         }
         $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
+        $game->is_lan ??= $mode && $mode->is(Mode::LAN());
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
         $game->occurred_at = Arr::get($payload, 'played_at');
@@ -190,16 +195,16 @@ class Game extends Model implements HasHaloDotApi
 
         if (Arr::has($payload, 'players')) {
             foreach (Arr::get($payload, 'players', []) as $playerData) {
-                $gamertag = Arr::get($playerData, 'gamertag');
+                $gamertag = Arr::get($playerData, 'details.name');
 
-                // TODO - No idea if non-players are in games.
-                if (Arr::get($playerData, 'type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
+                // Skip non-players. We don't support bots yet. - iBotPeaches/LeafApp_Infinite/issues/93
+                if (Arr::get($playerData, 'details.type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
                     continue;
                 }
 
                 // Skip unresolved users from upstream API. We will force the game not yet updated to
                 // re-process later.
-                if ($gamertag === '???') {
+                if ((bool)Arr::get($playerData, 'details.resolved') === false) {
                     $game->was_pulled = false;
                     $game->saveOrFail();
                     continue;

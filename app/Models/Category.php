@@ -7,11 +7,11 @@ use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
  * @property string $uuid
- * @property string $version
  * @property string $name
  * @property string $thumbnail_url
  * @method static CategoryFactory factory(...$parameters)
@@ -28,7 +28,7 @@ class Category extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = Arr::get($payload, 'asset.id');
+        $categoryId = (string)Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
 
         /** @var Category $category */
         $category = self::query()
@@ -37,9 +37,12 @@ class Category extends Model implements HasHaloDotApi
                 'uuid' => $categoryId
             ]);
 
-        $category->name = Arr::get($payload, 'name');
-        $category->version = Arr::get($payload, 'asset.version');
-        $category->thumbnail_url = Arr::get($payload, 'asset.thumbnail_url');
+        $category->name = Str::after(Arr::get($payload, 'name'), ':');
+        $category->thumbnail_url = Arr::get(
+            $payload,
+            'thumbnail_url',
+            Arr::get($payload, 'asset.thumbnail_url')
+        );
 
         if ($category->isDirty()) {
             $category->saveOrFail();

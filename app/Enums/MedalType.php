@@ -7,15 +7,31 @@ use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static LEGENDARY()
- * @method static static MYTHIC()
- * @method static static HEROIC()
- * @method static static NORMAL()
+ * @method static static MODE()
+ * @method static static KILLING_SPREE()
+ * @method static static PROFICIENCY()
+ * @method static static SKILL()
+ * @method static static STYLE()
+ * @method static static MULTIKILL()
+ * @method static static UNKNOWN()
  */
 final class MedalType extends Enum implements LocalizedEnum
 {
-    const LEGENDARY = 1;
-    const MYTHIC = 2;
-    const HEROIC = 3;
-    const NORMAL = 4;
+    const MODE = 1;
+    const KILLING_SPREE = 2;
+    const PROFICIENCY = 3;
+    const SKILL = 4;
+    const STYLE = 5;
+    const MULTIKILL = 6;
+    const UNKNOWN = 99;
+
+    public static function coerce($enumKeyOrValue): ?Enum
+    {
+        $enumKeyOrValue = match ($enumKeyOrValue) {
+            'KILLING-SPREE' => self::KILLING_SPREE,
+            default => $enumKeyOrValue
+        };
+
+        return parent::coerce($enumKeyOrValue);
+    }
 }

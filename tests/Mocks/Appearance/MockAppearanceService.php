@@ -14,12 +14,14 @@ class MockAppearanceService extends BaseMock
     {
         return [
             'data' => [
-                'service_tag' => $this->faker->lexify('????'),
                 'emblem_url' => $this->faker->imageUrl,
                 'backdrop_image_url' => $this->faker->imageUrl,
+                'service_tag' => $this->faker->lexify('????'),
             ],
             'additional' => [
-                'gamertag' => $gamertag ?? $this->faker->word
+                'parameters' => [
+                    'gamertag' => $gamertag ?? $this->faker->word
+                ]
             ]
         ];
     }

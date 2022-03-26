@@ -14,7 +14,7 @@
                     <div class="content">
                         <strong>{{ $team->name }}</strong>
                         @if (! $game->outdated)
-                            <span class="is-pulled-right tag {{ $team->color }}">{{ $team->final_score }}</span>
+                            <span class="is-pulled-right tag {{ $team->color }}">{{ $team->final_score ?? '?' }}</span>
                         @endif
                     </div>
                 </div>
