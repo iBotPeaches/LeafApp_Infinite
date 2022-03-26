@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\MedalDifficulty;
 use App\Enums\Outcome;
 use App\Models\Game;
 use App\Models\GamePlayer;
@@ -64,7 +65,12 @@ class GamePlayerFactory extends Factory
         return $this->state(function () {
             // @phpstan-ignore-next-line
             $medals = Medal::all()->isEmpty()
-                ? Medal::factory()->count(2)->create()
+                ? Medal::factory()->count(5)->sequence(
+                    ['difficulty' => MedalDifficulty::LEGENDARY],
+                    ['difficulty' => MedalDifficulty::MYTHIC],
+                    ['difficulty' => MedalDifficulty::HEROIC],
+                    ['difficulty' => MedalDifficulty::NORMAL]
+                )->create()
                 : Medal::all();
 
             return [

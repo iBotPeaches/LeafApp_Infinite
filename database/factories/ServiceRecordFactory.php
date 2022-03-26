@@ -58,12 +58,12 @@ class ServiceRecordFactory extends Factory
         return $this->state(function () {
             $medals = Medal::factory()
                 ->sequence(
-                    ['type' => MedalDifficulty::LEGENDARY],
-                    ['type' => MedalDifficulty::MYTHIC],
-                    ['type' => MedalDifficulty::HEROIC],
-                    ['type' => MedalDifficulty::NORMAL],
+                    ['difficulty' => MedalDifficulty::LEGENDARY],
+                    ['difficulty' => MedalDifficulty::MYTHIC],
+                    ['difficulty' => MedalDifficulty::HEROIC],
+                    ['difficulty' => MedalDifficulty::NORMAL],
                 )
-                ->count(4)
+                ->count(8)
                 ->create();
 
             return [
