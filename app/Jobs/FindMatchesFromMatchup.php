@@ -13,7 +13,6 @@ use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -53,7 +52,7 @@ class FindMatchesFromMatchup implements ShouldQueue
                 ->games()
                 ->with('players')
                 ->whereDoesntHave('playlist')
-                ->where(function (BelongsToMany $query): void {
+                ->where(function (Builder $query): void {
                     $query
                         ->whereDate('occurred_at', $this->matchup->started_at->subDay())
                         ->orWhereDate('occurred_at', $this->matchup->started_at)
