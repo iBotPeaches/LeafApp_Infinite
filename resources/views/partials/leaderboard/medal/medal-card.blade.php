@@ -12,7 +12,7 @@
             {{ $medal->description }}
         </p>
         <span class="tag is-{{ $medal->color }}">
-            {{ $medal->type->description }}
+            {{ $medal->difficulty->description }}
         </span>
     </div>
 </div>
