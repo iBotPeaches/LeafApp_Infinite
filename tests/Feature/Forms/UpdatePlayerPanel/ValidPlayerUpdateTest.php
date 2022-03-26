@@ -12,6 +12,7 @@ use App\Jobs\PullMatchHistory;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Services\Autocode\Enums\Mode;
 use App\Support\Session\ModeSession;
@@ -322,6 +323,49 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function testValidResponseFromAllHaloDotApiServicesAsFaceItPlayer(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockLanMatchesResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockAppearanceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
+
+        $this->assertDatabaseCount('service_records', 2);
+    }
+
     /** @dataProvider validPageDataProvider */
     public function testValidResponseFromAllHaloDotApiServices(string $type, string $event): void
     {
@@ -332,7 +376,6 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockServicePvpResponse = (new MockServiceRecordService())->success($gamertag);
         $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
         Http::fakeSequence()
@@ -341,7 +384,6 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServicePvpResponse, Response::HTTP_OK)
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
