@@ -11,14 +11,17 @@ class AddPartipationColumns extends Migration
         Schema::table('game_players', function (Blueprint $table) {
             $table->boolean('was_at_start')
                 ->after('outcome')
+                ->nullable()
                 ->default(true);
 
             $table->boolean('was_at_end')
                 ->after('was_at_start')
+                ->nullable()
                 ->default(true);
 
             $table->boolean('was_inprogress_join')
                 ->after('was_at_end')
+                ->nullable()
                 ->default(false);
         });
     }

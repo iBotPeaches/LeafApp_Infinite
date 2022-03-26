@@ -25,9 +25,9 @@ use Illuminate\Support\Collection;
  * @property int $post_csr
  * @property int $rank
  * @property Outcome $outcome
- * @property boolean $was_at_start
- * @property boolean $was_at_end
- * @property boolean $was_inprogress_join
+ * @property boolean|null $was_at_start
+ * @property boolean|null $was_at_end
+ * @property boolean|null $was_inprogress_join
  * @property float $kd
  * @property float $kda
  * @property int|null $score
@@ -110,9 +110,9 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->post_csr = Arr::get($payload, $prefix . 'progression.csr.post_match.value');
         $gamePlayer->rank = Arr::get($payload, $prefix . 'rank');
         $gamePlayer->outcome = Arr::get($payload, $prefix . 'outcome');
-        $gamePlayer->was_at_start ??= Arr::get($payload, $prefix . 'participation.presence.beginning', true);
-        $gamePlayer->was_at_end ??= Arr::get($payload, $prefix . 'participation.presence.completion', true);
-        $gamePlayer->was_inprogress_join ??= Arr::get($payload, $prefix . 'participation.joined_in_progress', false);
+        $gamePlayer->was_at_start ??= Arr::get($payload, $prefix . 'participation.presence.beginning');
+        $gamePlayer->was_at_end ??= Arr::get($payload, $prefix . 'participation.presence.completion');
+        $gamePlayer->was_inprogress_join ??= Arr::get($payload, $prefix . 'participation.joined_in_progress');
         $gamePlayer->kd = Arr::get($payload, $prefix . 'stats.core.kdr');
         $gamePlayer->kda = Arr::get($payload, $prefix . 'stats.core.kda');
         $gamePlayer->score ??= Arr::get($payload, $prefix . 'stats.core.scores.personal');
