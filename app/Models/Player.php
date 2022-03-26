@@ -167,9 +167,9 @@ class Player extends Model implements HasHaloDotApi
         return $this->hasMany(Csr::class);
     }
 
-    public function faceitPlayers(): BelongsToMany
+    public function faceitPlayers(): HasMany
     {
-        return $this->belongsToMany(MatchupPlayer::class);
+        return $this->hasMany(MatchupPlayer::class);
     }
 
     public function games(): BelongsToMany
