@@ -103,7 +103,7 @@ class GameTeam extends Model implements HasHaloDotApi
         // We are going to check what type of category this is to extract the mode specific final value
         $key = match ($game->category->name) {
             'Oddball' => 'stats.core.rounds.won',
-            default => 'stats.core.points',
+            default => 'stats.core.scores.points',
         };
 
         $gameTeam->final_score = Arr::get($payload, $key);
