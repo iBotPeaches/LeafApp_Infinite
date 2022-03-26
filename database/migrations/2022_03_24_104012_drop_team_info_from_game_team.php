@@ -17,6 +17,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        throw new Exception('Reversing this migration is not supported.');
+        throw new BadMethodCallException('Reversing this migration is not supported.');
     }
 };
