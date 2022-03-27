@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Jobs;
 
+use App\Enums\Experience;
+use App\Enums\PlayerTab;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,15 +45,17 @@ class ExportGameHistory implements ShouldQueue
     protected array $data = [];
 
     public Player $player;
+    public string $playerTab;
 
-    public function __construct(Player $player)
+    public function __construct(Player $player, string $playerTab)
     {
         $this->player = $player;
+        $this->playerTab = $playerTab;
     }
 
     public function handle(): array
     {
-        GamePlayer::query()
+        $query = GamePlayer::query()
             ->with([
                 'player',
                 'game.map',
@@ -59,8 +63,30 @@ class ExportGameHistory implements ShouldQueue
                 'game.playlist',
             ])
             ->join('games', 'games.id', '=', 'game_players.game_id')
-            ->join('playlists', 'playlists.id', '=', 'games.playlist_id')
-            ->where('player_id', '=', $this->player->id)
+            ->leftJoin('playlists', 'playlists.id', '=', 'games.playlist_id')
+            ->where('player_id', '=', $this->player->id);
+
+        // Swap type of matches exported based on type
+        switch ($this->playerTab) {
+            case PlayerTab::OVERVIEW:
+            case PlayerTab::COMPETITIVE:
+            case PlayerTab::MEDALS:
+            case PlayerTab::MATCHES:
+                $query->whereNotNull('games.playlist_id');
+                break;
+
+            case PlayerTab::CUSTOM:
+                $query->where('games.experience', Experience::CUSTOM);
+                $query->where('games.is_lan', false);
+                break;
+
+            case PlayerTab::LAN:
+                $query->where('games.experience', Experience::CUSTOM);
+                $query->where('games.is_lan', true);
+                break;
+        }
+
+        $query
             ->orderBy('games.occurred_at')
             ->cursor()
             ->each(function (GamePlayer $gamePlayer) {

@@ -36,8 +36,8 @@ Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 // Player
 Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');
 Route::post('/player/{player}/unlink', [PlayerController::class, 'unlink'])->name('playerUnlink');
-Route::get('/player/{player}/matches/csv', [PlayerController::class, 'csv'])->name('historyCsv');
 Route::pattern('type', 'overview|medals|competitive|matches|custom|lan');
+Route::get('/player/{player}/matches/csv/{type}', [PlayerController::class, 'csv'])->name('historyCsv');
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
 

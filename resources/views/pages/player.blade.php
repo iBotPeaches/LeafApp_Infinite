@@ -9,7 +9,7 @@
             @include('partials.player.player-card')
             @if (in_array($type, ['matches', 'custom', 'lan']))
                 <div class="notification">
-                    <a class="is-small" href="{{ route('historyCsv', [$player]) }}">export to csv</a>
+                    <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}">export to csv</a>
 
                     @if (in_array($type, ['custom']))
                         <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
