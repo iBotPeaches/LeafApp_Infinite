@@ -33,16 +33,22 @@ class PlayerController extends Controller
         ]);
     }
 
-    public function csv(Player $player): StreamedResponse
+    public function csv(Player $player, string $playerType): StreamedResponse
     {
         /** @var array $data */
-        $data = ExportGameHistory::dispatchSync($player);
-
+        $data = ExportGameHistory::dispatchSync($player, $playerType);
         $writer = Writer::createFromString();
         $writer->insertOne(ExportGameHistory::$header);
         $writer->insertAll($data);
 
-        $title = Str::slug($player->gamertag . '-InfiniteMatchHistory') . '.csv';
+        $suffix = match ($playerType) {
+            PlayerTab::MATCHES => 'MatchHistory',
+            PlayerTab::CUSTOM => 'CustomHistory',
+            PlayerTab::LAN => 'LanHistory',
+            default => 'OtherHistory'
+        };
+
+        $title = Str::slug($player->gamertag . '-Infinite-' . $suffix) . '.csv';
 
         return response()->streamDownload(function () use ($writer) {
             echo $writer->toString();
