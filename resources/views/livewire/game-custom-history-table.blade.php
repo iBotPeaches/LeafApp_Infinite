@@ -49,7 +49,9 @@
                         {{ $game->personal->accuracy }}%
                     </td>
                     <td>{{ $game->personal->rank }}</td>
-                    <td>{{ $game->occurred_at->diffForHumans() }}</td>
+                    <td>
+                        @include('partials.player.date-link', ['date' => $game->occurred_at])
+                    </td>
                     @if ($isScrimEditor)
                         <td>
                             <input type="checkbox" wire:model="scrimGameIds" value="{{ $game->id }}">
