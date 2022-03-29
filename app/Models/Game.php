@@ -156,7 +156,7 @@ class Game extends Model implements HasHaloDotApi
         }
 
         /** @var Mode|null $mode */
-        $mode = Arr::get($payload, '_leaf.mode');
+        $mode = Mode::coerce(Arr::get($payload, 'type'));
 
         /** @var Game $game */
         $game = self::query()
