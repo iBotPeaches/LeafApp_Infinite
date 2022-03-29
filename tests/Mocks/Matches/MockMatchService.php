@@ -263,6 +263,7 @@ class MockMatchService extends BaseMock
                             $this->playerBlock($randomCategoryName, $gamertag2),
                         ],
                         'experience' => $this->faker->randomElement(['arena', 'btb']),
+                        'type' => $this->faker->randomElement(['local', 'custom', 'matchmaking']),
                         'played_at' => now()->toIso8601ZuluString(),
                         'duration' => [
                             'seconds' => $this->faker->numerify('###'),

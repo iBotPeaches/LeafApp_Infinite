@@ -86,7 +86,6 @@ class ApiClient implements InfiniteInterface
                 $offset += $perPage;
 
                 foreach (Arr::get($data, 'data.matches') as $gameData) {
-                    $gameData['_leaf']['mode'] = $mode;
                     $game = Game::fromHaloDotApi((array)$gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
