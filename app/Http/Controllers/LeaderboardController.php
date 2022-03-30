@@ -9,6 +9,11 @@ use Illuminate\View\View;
 
 class LeaderboardController extends Controller
 {
+    public function list(): View
+    {
+        return view('pages.medal-leaderboards');
+    }
+
     public function medal(Medal $medal): View
     {
         SEOTools::setTitle($medal->name . ' Leaderboards');

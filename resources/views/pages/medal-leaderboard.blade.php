@@ -5,6 +5,7 @@
 @section('content')
     <div class="columns">
         <div class="column">
+            @include('partials.leaderboard.medal.breadcrumbs')
             <livewire:player-toggle-panel />
             @include('partials.leaderboard.medal.medal-card')
             @include('partials.leaderboard.medal.notice')
