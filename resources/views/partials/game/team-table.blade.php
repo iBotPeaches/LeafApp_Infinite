@@ -6,7 +6,7 @@
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
         {{ $team->name ?? 'Players' }}
-        @if ($game->playlist && $game->playlist->is_ranked)
+        @if ($game->playlist)
             <span class="is-pulled-right">
                 @if ($team)
                     @if ($team->csr > 0)
@@ -14,8 +14,11 @@
                             <span class="is-hidden-mobile">CSR: </span>{{ number_format($team->csr, 2) }}
                         </span>
                     @endif
+                    @if ($team->csr > 0 && $team->mmr)
+                        |
+                    @endif
                     @if ($team->mmr)
-                        | <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
+                        <span class="has-tooltip-arrow" data-tooltip="Team MatchMaking Ratio">
                             <span class="is-hidden-mobile">MMR: </span>{{ number_format($team->mmr, 2) }}
                         </span>
                     @endif
