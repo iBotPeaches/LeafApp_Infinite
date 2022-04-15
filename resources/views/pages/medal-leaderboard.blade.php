@@ -6,8 +6,8 @@
     <div class="columns">
         <div class="column">
             @include('partials.leaderboard.medal.breadcrumbs')
-            <livewire:player-toggle-panel />
             @include('partials.leaderboard.medal.medal-card')
+            <livewire:player-toggle-panel />
             @include('partials.leaderboard.medal.notice')
         </div>
         <div class="column is-three-quarters">
