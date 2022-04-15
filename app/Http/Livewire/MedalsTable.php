@@ -20,7 +20,7 @@ class MedalsTable extends Component
     public function render(): View
     {
         $medals = Medal::query()
-            ->orderByDesc('name')
+            ->orderBy('name')
             ->paginate(15);
 
         return view('livewire.medals-table', [
