@@ -26,6 +26,7 @@ use App\Http\Controllers\HcsController;
 Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit');
 
 // Leaderboard
+Route::get('/leaderboards/medal', [LeaderboardController::class, 'list'])->name('medalLeaderboards');
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Scrim
