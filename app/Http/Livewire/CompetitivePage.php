@@ -18,10 +18,17 @@ class CompetitivePage extends Component
 
     public function render(): View
     {
+        $latestMmr = $this->player->games()
+            ->whereNotNull('mmr')
+            ->where('games.is_ffa', true)
+            ->orderByDesc('games.occurred_at')
+            ->first();
+
         return view('livewire.competitive-page', [
             'current' => $this->player->currentRanked(),
             'season' => $this->player->seasonHighRanked(),
             'allTime' => $this->player->allTimeRanked(),
+            'latestMmr' => $latestMmr
         ]);
     }
 }

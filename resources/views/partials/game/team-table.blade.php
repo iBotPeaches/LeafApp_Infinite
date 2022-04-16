@@ -34,6 +34,9 @@
                 @if ($game->playlist?->is_ranked)
                     <th>Level</th>
                 @endif
+                @if ($game->is_ffa)
+                    <th><abbr title="Team MatchMaking Ratio">MMR</abbr></th>
+                @endif
                 <th><abbr title="Kills">K</abbr></th>
                 <th><abbr title="Deaths">D</abbr></th>
                 <th><abbr title="Assists">A</abbr></th>
@@ -92,6 +95,13 @@
                                 </div>
                             </article>
                         </td>
+                    @endif
+                    @if ($game->is_ffa)
+                        @if ($gamePlayer->mmr)
+                            <td>{{ number_format($gamePlayer->mmr, 0) }}</td>
+                        @else
+                            <td>-</td>
+                        @endif
                     @endif
                     <td>{{ $gamePlayer->kills }}</td>
                     <td>{{ $gamePlayer->deaths }}</td>

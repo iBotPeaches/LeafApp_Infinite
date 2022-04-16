@@ -31,6 +31,7 @@ use Illuminate\Support\Collection;
  * @property float $kd
  * @property float $kda
  * @property int|null $score
+ * @property float|null $mmr
  * @property int $kills
  * @property int $deaths
  * @property int $assists
@@ -100,7 +101,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         // The individual match endpoint returns all players, so it keyed by player, thus doesn't need "player"
         $prefix = Arr::has($payload, 'player') ? 'player.' : null;
         if (empty($prefix)) {
-            $team = $game->findTeamFromInternalId(Arr::get($payload, 'team.id'));
+            $team = $game->findTeamFromInternalId((string)Arr::get($payload, 'team.id'));
             $gamePlayer->team()->associate($team);
         }
 
@@ -116,6 +117,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->kd = Arr::get($payload, $prefix . 'stats.core.kdr');
         $gamePlayer->kda = Arr::get($payload, $prefix . 'stats.core.kda');
         $gamePlayer->score ??= Arr::get($payload, $prefix . 'stats.core.scores.personal');
+        $gamePlayer->mmr ??= Arr::get($payload, $prefix . 'stats.mmr');
         $gamePlayer->kills = Arr::get($payload, $prefix . 'stats.core.summary.kills');
         $gamePlayer->deaths = Arr::get($payload, $prefix . 'stats.core.summary.deaths');
         $gamePlayer->assists = Arr::get($payload, $prefix . 'stats.core.summary.assists');
