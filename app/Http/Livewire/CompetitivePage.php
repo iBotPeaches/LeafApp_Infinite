@@ -20,6 +20,7 @@ class CompetitivePage extends Component
     {
         $latestMmr = $this->player->games()
             ->whereNotNull('mmr')
+            ->where('games.is_ffa', true)
             ->orderByDesc('games.occurred_at')
             ->first();
 
