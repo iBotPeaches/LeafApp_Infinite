@@ -98,7 +98,7 @@
                     @endif
                     @if ($game->is_ffa)
                         @if ($gamePlayer->mmr)
-                            <td>{{ number_format($gamePlayer->mmr, 2) }}</td>
+                            <td>{{ number_format($gamePlayer->mmr, 0) }}</td>
                         @else
                             <td>-</td>
                         @endif
