@@ -12,6 +12,8 @@ use App\Models\ServiceRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Appearance\MockAppearanceService;
+use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\TestCase;
 
 class PlayerPageTest extends TestCase
@@ -40,6 +42,22 @@ class PlayerPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('game-history-table');
         $response->assertSeeLivewire('update-player-panel');
+    }
+
+    public function testProfileLoadingIfNoAppearance(): void
+    {
+        // Arrange
+        $gamertag = 'TESTGAMERTAG';
+
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK);
+
+        // Act
+        $response = $this->get('/player/' . urlencode($gamertag));
+
+        // Assert
+        $response->assertOk();
     }
 
     public function testLinkingProfile(): void
