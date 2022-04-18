@@ -17,6 +17,7 @@ use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -56,14 +57,25 @@ class Player extends Model implements HasHaloDotApi
 
     public function resolveRouteBinding($value, $field = null): ?Model
     {
-        return $this->query()
-            ->where('gamertag', urldecode($value))
-            ->firstOrFail();
+        $gamertag = urldecode($value);
+
+        try {
+            return $this->query()
+                ->where('gamertag', $gamertag)
+                ->firstOrFail();
+        } catch (ModelNotFoundException) {
+            /** @var InfiniteInterface $client */
+            $client = resolve(InfiniteInterface::class);
+            $client->appearance($gamertag);
+
+            return $this->query()
+                ->where('gamertag', $gamertag)
+                ->first();
+        }
     }
 
     public static function fromGamertag(string $gamertag): self
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([
