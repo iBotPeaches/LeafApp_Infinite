@@ -27,7 +27,7 @@ class MockMatchesService extends BaseMock
                                     'thumbnail_url' => $this->faker->url
                                 ],
                                 'properties' => [
-                                    'category_id' => $this->faker->numberBetween(0, 20),
+                                    'category_id' => 1,
                                 ]
                             ],
                             'map' => [
@@ -133,7 +133,7 @@ class MockMatchesService extends BaseMock
                                     'thumbnail_url' => $this->faker->url
                                 ],
                                 'properties' => [
-                                    'category_id' => $this->faker->numberBetween(0, 20),
+                                    'category_id' => 1,
                                 ]
                             ],
                             'map' => [
