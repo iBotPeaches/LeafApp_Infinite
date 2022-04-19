@@ -35,6 +35,7 @@ use Illuminate\Support\Arr;
  * @property-read Category $category
  * @property-read Map $map
  * @property-read Playlist|null $playlist
+ * @property-read Gamevariant|null $gamevariant
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
@@ -55,6 +56,7 @@ class Game extends Model implements HasHaloDotApi
         'category_id',
         'map_id',
         'playlist_id',
+        'gamevariant_id',
     ];
 
     public $dates = [
@@ -69,6 +71,7 @@ class Game extends Model implements HasHaloDotApi
         'category',
         'map',
         'playlist',
+        'gamevariant',
     ];
 
     public $timestamps = false;
@@ -145,9 +148,14 @@ class Game extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
+        $categoryPayload = Arr::get($payload, 'details.gamevariant');
+
         $gameId = Arr::get($payload, 'id');
-        $category = Category::fromHaloDotApi(Arr::get($payload, 'details.gamevariant'));
+        $category = Category::firstWhere('uuid', Arr::get($categoryPayload, 'properties.category_id'))
+            ?? Category::fromHaloDotApi($categoryPayload);
+
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
+        $gamevariant = Gamevariant::fromHaloDotApi($categoryPayload);
 
         // Customs do not have a Playlist
         $playlistData = Arr::get($payload, 'details.playlist');
@@ -167,6 +175,7 @@ class Game extends Model implements HasHaloDotApi
 
         $game->category()->associate($category);
         $game->map()->associate($map);
+        $game->gamevariant()->associate($gamevariant);
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
@@ -232,6 +241,11 @@ class Game extends Model implements HasHaloDotApi
     public function map(): BelongsTo
     {
         return $this->belongsTo(Map::class);
+    }
+
+    public function gamevariant(): BelongsTo
+    {
+        return $this->belongsTo(Gamevariant::class);
     }
 
     public function playlist(): BelongsTo
