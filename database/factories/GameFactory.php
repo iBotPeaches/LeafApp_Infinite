@@ -6,6 +6,7 @@ namespace Database\Factories;
 use App\Enums\Experience;
 use App\Models\Category;
 use App\Models\Game;
+use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Models\Playlist;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ class GameFactory extends Factory
             'category_id' => Category::factory(),
             'map_id' => Map::factory(),
             'playlist_id' => Playlist::factory(),
+            'gamevariant_id' => Gamevariant::factory(),
             'is_ffa' => $this->faker->boolean,
             'is_scored' => $this->faker->boolean,
             'experience' => Experience::getRandomValue(),
