@@ -32,7 +32,8 @@ class GoogleController extends Controller
         Auth::login($user, true);
 
         if ($user->player) {
-            return redirect()->route('player', [$user->player]);
+            $playerRoute = route('player', [$user->player]);
+            return redirect()->intended($playerRoute);
         }
 
         return redirect()->to('/');
