@@ -41,6 +41,11 @@ class ExportGameHistory implements ShouldQueue
         'Score',
         'Perfects',
         'Medals',
+        'TeamOutcome',
+        'TeamRank',
+        'TeamScore',
+        'TeamMMR',
+        'TeamCSR',
     ];
 
     protected array $data = [];
@@ -92,6 +97,7 @@ class ExportGameHistory implements ShouldQueue
             ->cursor()
             ->each(function (GamePlayer $gamePlayer) {
                 $perfectMedal = $gamePlayer->hydrated_medals->firstWhere('name', 'Perfect');
+                $team = $gamePlayer->team;
 
                 $this->data[] = [
                     $gamePlayer->game->occurred_at->toDateTimeString(),
@@ -117,7 +123,12 @@ class ExportGameHistory implements ShouldQueue
                     $gamePlayer->suicides,
                     $gamePlayer->getRawOriginal('score'),
                     $perfectMedal->count ?? 0,
-                    $gamePlayer->medal_count
+                    $gamePlayer->medal_count,
+                    $team?->outcome?->description,
+                    $team?->rank,
+                    $team?->score,
+                    $team?->mmr,
+                    $team?->csr,
                 ];
             });
 
