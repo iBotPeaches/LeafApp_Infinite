@@ -32,7 +32,7 @@ class MockMatchService extends BaseMock
                                     'thumbnail_url' => $this->faker->url
                                 ],
                                 'properties' => [
-                                    'category_id' => $this->faker->randomNumber(1)
+                                    'category_id' => 1
                                 ],
                             ],
                             'map' => [
