@@ -33,11 +33,14 @@ use Illuminate\Support\Arr;
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
  * @property string $last_csr_key
+ * @property float|null $mmr
+ * @property int $mmr_game_id
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
+ * @property-read Game|null $mmrGame
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @method static PlayerFactory factory(...$parameters)
@@ -177,6 +180,11 @@ class Player extends Model implements HasHaloDotApi
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
+    }
+
+    public function mmrGame(): HasOne
+    {
+        return $this->hasOne(Game::class, 'mmr_game_id');
     }
 
     public function csrs(): HasMany
