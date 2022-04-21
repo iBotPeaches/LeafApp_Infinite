@@ -63,6 +63,20 @@ class ApiClient implements InfiniteInterface
         return $player->csrs->first();
     }
 
+    public function mmr(Player $player): Player
+    {
+        $response = $this->pendingRequest->get('stats/players/mmr', [
+            'gamertag' => $player->gamertag
+        ]);
+
+        if ($response->throw()->successful()) {
+            $data = $response->json();
+            $player->mmr ??= Arr::get($data, 'data.value');
+        }
+
+        return $player;
+    }
+
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection
     {
         $perPage = 25;
