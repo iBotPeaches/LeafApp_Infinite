@@ -2217,16 +2217,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.8.1",
+            "version": "v9.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9f468689964ac80b674a2fe71a56baa7e9e20493"
+                "reference": "4d5a07640891b772188d7737348886a0222737d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9f468689964ac80b674a2fe71a56baa7e9e20493",
-                "reference": "9f468689964ac80b674a2fe71a56baa7e9e20493",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4d5a07640891b772188d7737348886a0222737d8",
+                "reference": "4d5a07640891b772188d7737348886a0222737d8",
                 "shasum": ""
             },
             "require": {
@@ -2392,7 +2392,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-04-12T15:43:03+00:00"
+            "time": "2022-04-19T15:01:23+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -8214,16 +8214,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.5.6",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1"
+                "reference": "7fb7e2e1e9f3d59a26a413b2d3d5e47f0edb75ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
-                "reference": "799dd8c2d2c9c704bb55d2078078cb970cf0f6d1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7fb7e2e1e9f3d59a26a413b2d3d5e47f0edb75ac",
+                "reference": "7fb7e2e1e9f3d59a26a413b2d3d5e47f0edb75ac",
                 "shasum": ""
             },
             "require": {
@@ -8249,7 +8249,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.5.6"
+                "source": "https://github.com/phpstan/phpstan/tree/1.5.7"
             },
             "funding": [
                 {
@@ -8269,7 +8269,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-15T11:13:37+00:00"
+            "time": "2022-04-20T12:20:27+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
