@@ -5,7 +5,10 @@ namespace App\Models;
 use App\Enums\CompetitiveMode;
 use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
+use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
+use App\Jobs\PullMmr;
+use App\Jobs\PullServiceRecord;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
@@ -18,6 +21,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -114,34 +118,46 @@ class Player extends Model implements HasHaloDotApi
 
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
-        $client->competitive($this, $seasonNumber);
 
-        if (in_array($type, [PlayerTab::OVERVIEW, PlayerTab::COMPETITIVE])) {
-            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
-            PullMatchHistory::dispatch($this, Mode::CUSTOM());
-        } elseif ($type === PlayerTab::MATCHES) {
-            PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
-        } elseif ($type === PlayerTab::CUSTOM) {
-            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
-            $client->matches($this, Mode::CUSTOM(), $forceUpdate);
-        }
+        PullAppearance::dispatch($this);
 
         // Only pull LAN events for those who have a linked HCS profile.
-        if ($this->faceitPlayers->count() > 0) {
-            if ($type === PlayerTab::LAN) {
-                PullMatchHistory::dispatch($this, Mode::MATCHMADE());
-                PullMatchHistory::dispatch($this, Mode::CUSTOM());
-                $client->matches($this, Mode::LAN(), $forceUpdate);
-            } else {
-                PullMatchHistory::dispatch($this, Mode::LAN());
-            }
+        if ($this->faceitPlayers->count() > 0 && $type !== PlayerTab::LAN) {
+            PullMatchHistory::dispatch($this, Mode::LAN());
         }
 
-        $client->serviceRecord($this, Filter::MATCHMADE());
-
-        // Dispatch an async update for the appearance
-        PullAppearance::dispatch($this);
+        if ($type === PlayerTab::OVERVIEW) {
+            PullCompetitive::dispatch($this);
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+            PullMmr::dispatch($this);
+            $client->serviceRecord($this, Filter::MATCHMADE());
+        } elseif ($type === PlayerTab::COMPETITIVE) {
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+            PullServiceRecord::dispatch($this);
+            $client->competitive($this, $seasonNumber);
+            $client->mmr($this);
+        } elseif ($type === PlayerTab::MATCHES) {
+            PullCompetitive::dispatch($this);
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+            PullMmr::dispatch($this);
+            PullServiceRecord::dispatch($this);
+            $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
+        } elseif ($type === PlayerTab::CUSTOM) {
+            PullCompetitive::dispatch($this);
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            PullMmr::dispatch($this);
+            PullServiceRecord::dispatch($this);
+            $client->matches($this, Mode::CUSTOM(), $forceUpdate);
+        } elseif ($type === PlayerTab::LAN) {
+            PullCompetitive::dispatch($this);
+            PullMatchHistory::dispatch($this, Mode::MATCHMADE());
+            PullMatchHistory::dispatch($this, Mode::CUSTOM());
+            PullMmr::dispatch($this);
+            PullServiceRecord::dispatch($this);
+            $client->matches($this, Mode::LAN(), $forceUpdate);
+        }
     }
 
     public function currentRanked(int $season = 1): Collection
@@ -182,9 +198,9 @@ class Player extends Model implements HasHaloDotApi
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
     }
 
-    public function mmrGame(): HasOne
+    public function mmrGame(): BelongsTo
     {
-        return $this->hasOne(Game::class, 'mmr_game_id');
+        return $this->belongsTo(Game::class, 'mmr_game_id');
     }
 
     public function csrs(): HasMany
