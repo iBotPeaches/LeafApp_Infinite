@@ -8,7 +8,10 @@ use App\Enums\Input;
 use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
+use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
+use App\Jobs\PullMmr;
+use App\Jobs\PullServiceRecord;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
@@ -21,12 +24,13 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
+use Tests\Mocks\Matches\MockMatchService;
+use Tests\Mocks\Mmr\MockMmrService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
 use Tests\Mocks\Xuid\MockXuidService;
 use Tests\TestCase;
@@ -40,13 +44,11 @@ class ValidPlayerUpdateTest extends TestCase
         // Arrange
         Bus::fake([
             PullAppearance::class,
+            PullCompetitive::class,
+            PullMatchHistory::class,
+            PullMmr::class
         ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
@@ -56,11 +58,6 @@ class ValidPlayerUpdateTest extends TestCase
         Arr::set($mockServiceResponse, 'data.records.ranked.core.scores.personal', 0);
 
         Http::fakeSequence()
-            ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockCustomMatchesResponse, Response::HTTP_OK)
-            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -82,6 +79,9 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullCompetitive::class);
+        Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
+        Bus::assertDispatched(PullMmr::class);
     }
 
     public function testAutomaticallyPullingXuidIfMissing(): void
@@ -95,6 +95,8 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
@@ -104,6 +106,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -141,6 +145,8 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
 
@@ -150,6 +156,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $oldPlayer = Player::factory()->createOne([
@@ -194,6 +202,8 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Http::fakeSequence()
@@ -201,6 +211,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()
@@ -240,17 +252,19 @@ class ValidPlayerUpdateTest extends TestCase
     public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
     {
         // Arrange
-        Queue::fake();
+        Bus::fake([
+            PullAppearance::class,
+            PullCompetitive::class,
+            PullMatchHistory::class,
+            PullMmr::class,
+            PullServiceRecord::class
+        ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
         Http::fakeSequence()
-            ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockMatchesResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -277,9 +291,12 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Profile updated!')
             ->assertEmitted('$refresh');
 
-        Queue::assertPushed(PullMatchHistory::class, function (PullMatchHistory $job) {
+        Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullMatchHistory::class, function (PullMatchHistory $job) {
             return Mode::CUSTOM()->is($job->mode);
         });
+        Bus::assertDispatched(PullMmr::class);
+        Bus::assertDispatched(PullServiceRecord::class);
     }
 
     public function testInitialPageLoadDeferredFromApiCalls(): void
@@ -327,24 +344,28 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
-        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
 
         Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanMatchesResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockLanMatchesResponse, Response::HTTP_OK)
-            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockAppearanceResponse, Response::HTTP_OK);
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -366,27 +387,30 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    /** @dataProvider validPageDataProvider */
-    public function testValidResponseFromAllHaloDotApiServices(string $type, string $event): void
+    public function testValidResponseFromAllHaloDotApiServicesAsOverview(): void
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
 
         Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockAppearanceResponse, Response::HTTP_OK);
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -399,39 +423,197 @@ class ValidPlayerUpdateTest extends TestCase
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
-            'type' => $type,
+            'type' => PlayerTab::OVERVIEW,
             'runUpdate' => true
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo($event, '$refresh');
+            ->assertEmittedTo('overview-page', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function validPageDataProvider(): array
+    public function testValidResponseFromAllHaloDotApiServicesAsCompetitive(): void
     {
-        return [
-            'overview' => [
-                'type' => PlayerTab::OVERVIEW,
-                'event' => 'overview-page',
-            ],
-            'competitive' => [
-                'type' => PlayerTab::COMPETITIVE,
-                'event' => 'competitive-page',
-            ],
-            'matches' => [
-                'type' => PlayerTab::MATCHES,
-                'event' => 'game-history-table',
-            ],
-            'custom' => [
-                'type' => PlayerTab::CUSTOM,
-                'event' => 'game-custom-history-table',
-            ],
-            'lan' => [
-                'type' => PlayerTab::LAN,
-                'event' => 'game-lan-history-table',
-            ]
-        ];
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::COMPETITIVE,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('competitive-page', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
+    }
+
+    public function testValidResponseFromAllHaloDotApiServicesAsMatches(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::MATCHES,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('game-history-table', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
+    }
+
+    public function testValidResponseFromAllHaloDotApiServicesAsCustomMatches(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::CUSTOM,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('game-custom-history-table', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
+    }
+
+    public function testValidResponseFromAllHaloDotApiServicesAsLanMatches(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::LAN,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('game-lan-history-table', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
     }
 }

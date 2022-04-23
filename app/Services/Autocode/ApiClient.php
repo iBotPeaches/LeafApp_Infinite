@@ -63,6 +63,30 @@ class ApiClient implements InfiniteInterface
         return $player->csrs->first();
     }
 
+    public function mmr(Player $player): Player
+    {
+        $response = $this->pendingRequest->get('stats/players/mmr', [
+            'gamertag' => $player->gamertag
+        ]);
+
+        if ($response->throw()->successful()) {
+            $data = $response->json();
+            $player->mmr ??= Arr::get($data, 'data.value');
+
+            // Pull out the game uuid and use it if we have it.
+            // Otherwise query API to pull game.
+            $matchUuid = Arr::get($data, 'data.match.id');
+            $match = Game::query()
+                ->where('uuid', $matchUuid)
+                ->first();
+
+            $player->mmrGame()->associate($match ?? $this->match($matchUuid));
+            $player->saveOrFail();
+        }
+
+        return $player;
+    }
+
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection
     {
         $perPage = 25;
