@@ -5,6 +5,9 @@
 ?>
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
+        @if ($team)
+            <img class="is-16x16 image is-inline-block" src="{{ $team->emblem_url }}">
+        @endif
         {{ $team->name ?? 'Players' }}
         @if ($game->playlist)
             <span class="is-pulled-right">
