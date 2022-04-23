@@ -23,6 +23,7 @@ use Illuminate\Support\Arr;
  * @property int $rank
  * @property int $score
  * @property float $mmr
+ * @property float|null $winning_percent
  * @property int $final_score
  * @property-read Game $game
  * @property-read Team $team
@@ -98,6 +99,7 @@ class GameTeam extends Model implements HasHaloDotApi
         $gameTeam->outcome = Arr::get($payload, 'outcome');
         $gameTeam->rank = Arr::get($payload, 'rank');
         $gameTeam->mmr = Arr::get($payload, 'stats.mmr');
+        $gameTeam->winning_percent = Arr::get($payload, 'odds.winning');
         $gameTeam->score = Arr::get($payload, 'stats.core.scores.personal');
 
         // We are going to check what type of category this is to extract the mode specific final value
