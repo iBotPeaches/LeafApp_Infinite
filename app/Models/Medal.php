@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
  * @property MedalDifficulty $difficulty
  * @property-read string $image
  * @property-read string $color
+ * @property-read string $tooltip_color
  * @method static MedalFactory factory(...$parameters)
  */
 class Medal extends Model implements HasHaloDotApi
@@ -76,6 +77,16 @@ class Medal extends Model implements HasHaloDotApi
             MedalDifficulty::MYTHIC => 'purple',
             MedalDifficulty::HEROIC => 'info',
             default => 'primary'
+        };
+    }
+
+    public function getTooltipColorAttribute(): string
+    {
+        return match ((int) $this->difficulty->value) {
+            MedalDifficulty::LEGENDARY => 'has-tooltip-orange',
+            MedalDifficulty::MYTHIC => 'has-tooltip-purple',
+            MedalDifficulty::HEROIC => 'has-tooltip-info',
+            default => 'has-tooltip-success'
         };
     }
 

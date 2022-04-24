@@ -6,9 +6,11 @@
             </p>
         </figure>
         <div class="media-content">
-            <div class="content">
-                <span class="has-tooltip-arrow" data-tooltip="{{ $medal['medal']->description }}">
-                    <strong style="white-space: nowrap">
+            <div class="content" difficulty="{{ $medal['medal']->difficulty->value }}">
+                <span class="has-tooltip-arrow {{ $medal['medal']->tooltip_color }}"
+                      data-tooltip="{{ $medal['medal']->difficulty->description }} - {{ $medal['medal']->description }}">
+
+                    <strong style="white-space: nowrap" class="has-text-{{ $medal['medal']->color }}">
                         {{ $medal['medal']->name }}
                     </strong>
                 </span>
