@@ -111,4 +111,43 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('game-page');
         $response->assertDontSeeLivewire('update-game-panel');
     }
+
+    public function testLoadingGamePageWithUpToDateGameAlongsidePerformances(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $game = Game::factory()
+            ->createOne([
+                'version' => config('services.autocode.version'),
+                'was_pulled' => true
+            ]);
+
+        GamePlayer::factory()
+            ->for($game)
+            ->state(new Sequence(
+                ['kills' => 1, 'expected_kills' => 2],
+                ['kills' => 2, 'expected_kills' => 1],
+                ['kills' => 2, 'expected_kills' => 2],
+                ['kills' => 1, 'expected_kills' => null],
+                ['deaths' => 1, 'expected_deaths' => 2],
+                ['deaths' => 2, 'expected_deaths' => 1],
+                ['deaths' => 2, 'expected_deaths' => 2],
+                ['deaths' => 1, 'expected_deaths' => null],
+            ))
+            ->count(8)
+            ->create();
+
+        GameTeam::factory()
+            ->for($game)
+            ->createOne();
+
+        // Act
+        $response = $this->get('/game/' . $game->uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-page');
+        $response->assertDontSeeLivewire('update-game-panel');
+    }
 }
