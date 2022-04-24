@@ -6,14 +6,14 @@
             </p>
         </figure>
         <div class="media-content">
-            <div class="content" difficulty="{{ $medal['medal']->difficulty->value }}">
-                <span class="has-tooltip-arrow {{ $medal['medal']->tooltip_color }}"
+            <div class="content">
+                <a href="{{ route('medalLeaderboard', $medal['medal']) }}" class="has-tooltip-arrow {{ $medal['medal']->tooltip_color }}"
                       data-tooltip="{{ $medal['medal']->difficulty->description }} - {{ $medal['medal']->description }}">
 
                     <strong style="white-space: nowrap" class="has-text-{{ $medal['medal']->color }}">
                         {{ $medal['medal']->name }}
                     </strong>
-                </span>
+                </a>
                 <div class="my-1 field is-grouped is-grouped-multiline">
                     @foreach ($medal['players'] as $gamePlayer)
                         <div class="control">

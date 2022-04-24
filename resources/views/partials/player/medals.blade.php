@@ -8,10 +8,16 @@
         <div class="media-content">
             <div class="content">
                 <p>
-                    <span class="has-tooltip-arrow" data-tooltip="{{ $medal->description }}">
-                        <strong style="white-space: nowrap">
+                    <span
+                        class="has-tooltip-arrow has-tooltip-arrow {{ $medal->tooltip_color }}"
+                        data-tooltip="{{ $medal->description }}"
+                    >
+                        <a href="{{ route('medalLeaderboard', [$medal]) }}"
+                           style="white-space: nowrap"
+                           class="has-text-dark"
+                        >
                             {{ $medal->name }}
-                        </strong>
+                        </a>
                     </span>
                     <span class="is-clipped" style="display: block;">
                         {{ $medal->count }}

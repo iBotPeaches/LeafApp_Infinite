@@ -21,7 +21,10 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <a href="{{ route('medalLeaderboard', [$medal]) }}">
+                                <a
+                                    href="{{ route('medalLeaderboard', [$medal]) }}"
+                                    class="has-text-{{ $medal->color }}"
+                                >
                                     <strong style="white-space: nowrap">
                                         {{ $medal->name }}
                                     </strong>
