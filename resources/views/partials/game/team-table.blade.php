@@ -106,8 +106,18 @@
                             <td>-</td>
                         @endif
                     @endif
-                    <td>{{ $gamePlayer->kills }}</td>
-                    <td>{{ $gamePlayer->deaths }}</td>
+                    <td class="{{ $gamePlayer->getExpectedKillsColor() }}">
+                        {{ $gamePlayer->kills }}
+                        @if (!is_null($gamePlayer->expected_kills))
+                            @include('partials.game.expected_kills_icon')
+                        @endif
+                    </td>
+                    <td class="{{ $gamePlayer->getExpectedDeathsColor() }}">
+                        {{ $gamePlayer->deaths }}
+                        @if (!is_null($gamePlayer->expected_deaths))
+                            @include('partials.game.expected_deaths_icon')
+                        @endif
+                    </td>
                     <td>{{ $gamePlayer->assists }}</td>
                     <td class="{{ $gamePlayer->getKdColor() }}">
                         {{ $gamePlayer->kd }}
