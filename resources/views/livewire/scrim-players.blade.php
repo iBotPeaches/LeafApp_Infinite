@@ -9,6 +9,8 @@
             <th><abbr title="Kills / Deaths">KD</abbr></th>
             <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
             <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
+            <th><abbr title="Damage Dealt">Dmg. Dealt</abbr></th>
+            <th><abbr title="Damage Taken">Dmg. Taken</abbr></th>
             <th><abbr title="Ordered by Points">Avg Score</abbr></th>
             <th>Avg Rank</th>
         </tr>
@@ -43,6 +45,12 @@
                 </td>
                 <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
                     {{ number_format($gamePlayer->accuracy, 2) }}%
+                </td>
+                <td>
+                    {{ number_format($gamePlayer->damageDealt, 0) }}
+                </td>
+                <td>
+                    {{ number_format($gamePlayer->damageTaken, 0) }}
                 </td>
                 <td>{{ $gamePlayer->formatted_score }}</td>
                 <td>

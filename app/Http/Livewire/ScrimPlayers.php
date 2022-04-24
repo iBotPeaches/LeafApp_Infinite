@@ -39,6 +39,8 @@ class ScrimPlayers extends Component
                     $this->mergedStats[$playerId]['accuracy'] += $gamePlayer->accuracy;
                     $this->mergedStats[$playerId]['score'] += $gamePlayer->score;
                     $this->mergedStats[$playerId]['rank'] += $gamePlayer->rank;
+                    $this->mergedStats[$playerId]['damageDealt'] += $gamePlayer->damage_dealt;
+                    $this->mergedStats[$playerId]['damageTaken'] += $gamePlayer->damage_taken;
                 }
             });
         });
