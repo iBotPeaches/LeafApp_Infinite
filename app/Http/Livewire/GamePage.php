@@ -39,13 +39,19 @@ class GamePage extends Component
         }
 
         foreach ($this->medals as &$medal) {
-            usort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
+            uasort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
                 return Arr::get($b, 'medal_' . $medal['medal']->id) <=> Arr::get($a, 'medal_' . $medal['medal']->id);
             });
         }
 
-        usort($this->medals, function (array $a, array $b) {
-            return Arr::get($a, 'medal.difficulty.value') <=> Arr::get($b, 'medal.difficulty.value');
+        uasort($this->medals, function (array $a, array $b) {
+            $aDifficulty = Arr::get($a, 'medal.difficulty');
+            $bDifficulty = Arr::get($b, 'medal.difficulty');
+
+            if ($aDifficulty->value === $bDifficulty->value) {
+                return Arr::get($a, 'medal.name') <=> Arr::get($b, 'medal.name');
+            }
+            return $aDifficulty <=> $bDifficulty;
         });
 
         return view('livewire.game-page', [
