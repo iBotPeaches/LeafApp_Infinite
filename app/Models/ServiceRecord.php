@@ -161,7 +161,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->mode = $mode;
         $serviceRecord->kd = (float) Arr::get($payload, 'core.kdr');
         $serviceRecord->kda = (float) Arr::get($payload, 'core.kda');
-        $serviceRecord->total_score = Arr::get($payload, 'core.scores.personal');
+        $serviceRecord->total_score = (int) Arr::get($payload, 'core.scores.personal');
         $serviceRecord->total_matches = Arr::get($payload, 'matches.total');
         $serviceRecord->matches_won = Arr::get($payload, 'matches.outcomes.wins');
         $serviceRecord->matches_lost = Arr::get($payload, 'matches.outcomes.losses');
