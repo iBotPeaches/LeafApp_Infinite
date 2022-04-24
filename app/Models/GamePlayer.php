@@ -9,6 +9,7 @@ use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
 use App\Models\Traits\HasMedals;
 use App\Models\Traits\HasOutcome;
+use App\Models\Traits\HasPerformance;
 use App\Models\Traits\HasScoring;
 use Database\Factories\GamePlayerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,6 +57,8 @@ use Illuminate\Support\Collection;
  * @property int|null $assists_emp
  * @property int|null $assists_driver
  * @property int|null $assists_callout
+ * @property int|null $expected_kills
+ * @property int|null $expected_deaths
  * @property array $medals
  * @property-read Player $player
  * @property-read Game $game
@@ -65,7 +68,7 @@ use Illuminate\Support\Collection;
  */
 class GamePlayer extends Model implements HasHaloDotApi
 {
-    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals, HasAccuracy;
+    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals, HasAccuracy, HasPerformance;
 
     public $casts = [
         'medals' => 'array',
@@ -142,6 +145,8 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists_emp ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.emp');
         $gamePlayer->assists_driver ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.driver');
         $gamePlayer->assists_callout ??= Arr::get($payload, $prefix . 'stats.core.breakdowns.assists.callouts');
+        $gamePlayer->expected_kills ??= Arr::get($payload, $prefix . 'performances.kills.expected');
+        $gamePlayer->expected_deaths ??= Arr::get($payload, $prefix . 'performances.deaths.expected');
 
         if (Arr::has($payload, 'stats.core.breakdowns.medals')) {
             $gamePlayer->medals = collect((array)Arr::get($payload, $prefix . 'stats.core.breakdowns.medals'))
