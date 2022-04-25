@@ -20,7 +20,7 @@
                         </a>
                     </span>
                     <span class="is-clipped" style="display: block;">
-                        {{ $medal->count }}
+                        {{ number_format($medal->count, 0) }}
                     </span>
                 </p>
             </div>
