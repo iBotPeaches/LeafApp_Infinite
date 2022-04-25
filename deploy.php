@@ -25,6 +25,7 @@ task('deploy', [
     'artisan:migrate',
     'yarn:install',
     'yarn:run:prod',
+    'app:version:file',
     'deploy:publish',
     'php-fpm:reload',
     'artisan:queue:restart',
@@ -33,6 +34,10 @@ task('deploy', [
 task('yarn:run:prod', function () {
     cd('{{release_or_current_path}}');
     run('yarn run prod');
+});
+
+task('app:version:file', function () {
+    upload('VERSION', '{{release_or_current_path}}/VERSION');
 });
 
 after('deploy:failed', 'deploy:unlock');
