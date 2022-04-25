@@ -181,7 +181,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->shots_fired = Arr::get($payload, 'core.shots.fired');
         $serviceRecord->shots_landed = Arr::get($payload, 'core.shots.landed');
         $serviceRecord->shots_missed = Arr::get($payload, 'core.shots.missed');
-        $serviceRecord->accuracy = Arr::get($payload, 'core.shots.accuracy');
+        $serviceRecord->accuracy = (float) Arr::get($payload, 'core.shots.accuracy');
         $serviceRecord->kills_melee = Arr::get($payload, 'core.breakdowns.kills.melee');
         $serviceRecord->kills_grenade = Arr::get($payload, 'core.breakdowns.kills.grenades');
         $serviceRecord->kills_headshot = Arr::get($payload, 'core.breakdowns.kills.headshots');
