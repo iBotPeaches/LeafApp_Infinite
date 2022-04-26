@@ -1,7 +1,7 @@
 <?php
 /** @var Carbon\CarbonImmutable $date */
 ?>
-@if ($date->diffInDays() > 21)
+@if ($date->diffInRealHours() > 24)
     {{ $date->toFormattedDateString() }}
 @else
     {{ $date->diffForHumans() }}
