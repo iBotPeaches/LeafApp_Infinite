@@ -29,8 +29,9 @@
                 <i>Custom Game</i>
             @endif
             <br />
-            <time datetime="{{ $game->occurred_at->toIso8601ZuluString() }}">
-                {{ $game->occurred_at->diffForHumans() }}
+            <br />
+            <time class="local-date" datetime="{{ $game->occurred_at->toIso8601ZuluString() }}">
+                {{ $game->occurred_at->toDayDateTimeString() }} (UTC)
             </time>
         </div>
     </div>
