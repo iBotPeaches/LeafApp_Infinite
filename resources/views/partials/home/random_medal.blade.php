@@ -15,7 +15,7 @@
         </figure>
         <div class="media-content">
             <div class="content">
-                <a href="{{ route('medalLeaderboard', [$medal]) }}" class="has-text-{{ $medal->color }}">
+                <a href="{{ route('medalLeaderboard', [$medal]) }}" class="{{ $medal->text_color }}">
                     <strong>{{ $medal->name }}</strong>
                 </a>
                 <i>{{ $medal->description }}</i>

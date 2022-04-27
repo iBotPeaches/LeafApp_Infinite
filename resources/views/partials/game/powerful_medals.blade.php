@@ -10,7 +10,7 @@
                 <a href="{{ route('medalLeaderboard', $medal['medal']) }}" class="has-tooltip-arrow {{ $medal['medal']->tooltip_color }}"
                       data-tooltip="{{ $medal['medal']->difficulty->description }} - {{ $medal['medal']->description }}">
 
-                    <strong style="white-space: nowrap" class="has-text-{{ $medal['medal']->color }}">
+                    <strong style="white-space: nowrap" class="{{ $medal['medal']->text_color }}">
                         {{ $medal['medal']->name }}
                     </strong>
                 </a>

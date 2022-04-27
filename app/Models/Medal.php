@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
  * @property-read string $image
  * @property-read string $color
  * @property-read string $tooltip_color
+ * @property-read string $text_color
  * @method static MedalFactory factory(...$parameters)
  */
 class Medal extends Model implements HasHaloDotApi
@@ -88,6 +89,11 @@ class Medal extends Model implements HasHaloDotApi
             MedalDifficulty::HEROIC => 'has-tooltip-info',
             default => 'has-tooltip-success'
         };
+    }
+
+    public function getTextColorAttribute(): string
+    {
+        return 'has-text-' . $this->color;
     }
 
     public static function fromHaloDotApi(array $payload): ?self
