@@ -197,8 +197,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
                 ];
             })->toArray();
 
-        // If we get no time played or score. We are going to assume account is private.
-        if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
+        if (Arr::get($payload, '_leaf.privacy.public') === false) {
             $serviceRecord->player->is_private = true;
         } elseif ($serviceRecord->player->is_private) {
             $serviceRecord->player->is_private = false;
@@ -208,7 +207,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
             $serviceRecord->player->saveOrFail();
         }
 
-        if ($serviceRecord->isDirty()) {
+        if ($serviceRecord->isDirty() && !$serviceRecord->player->is_private) {
             $serviceRecord->saveOrFail();
         }
 

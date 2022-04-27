@@ -85,7 +85,7 @@ class ApiClient implements InfiniteInterface
                 ->where('uuid', $matchUuid)
                 ->first();
 
-            $player->mmrGame()->associate($match ?? $this->match($matchUuid));
+            $player->mmrGame()->associate($match ?? $matchUuid ? $this->match($matchUuid) : null);
             $player->saveOrFail();
         }
 
