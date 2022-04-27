@@ -65,6 +65,11 @@ class ApiClient implements InfiniteInterface
 
     public function mmr(Player $player): Player
     {
+        // HACK - Reset MMR to beta 1.3.0
+        $config = config('services.autocode');
+        $this->pendingRequest->baseUrl($config['domain'] . '/infinite@'. 'beta-1-3-0');
+        // END HACK
+
         $response = $this->pendingRequest->get('stats/players/mmr', [
             'gamertag' => $player->gamertag
         ]);
