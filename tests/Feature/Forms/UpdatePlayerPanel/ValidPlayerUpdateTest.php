@@ -52,10 +52,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
-        Arr::set($mockServiceResponse, 'data.records.pvp.time_played.seconds', 0);
-        Arr::set($mockServiceResponse, 'data.records.pvp.core.scores.personal', 0);
-        Arr::set($mockServiceResponse, 'data.records.ranked.time_played.seconds', 0);
-        Arr::set($mockServiceResponse, 'data.records.ranked.core.scores.personal', 0);
+        Arr::set($mockServiceResponse, 'data.privacy.public', false);
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_OK);
