@@ -23,7 +23,7 @@
                             <p>
                                 <a
                                     href="{{ route('medalLeaderboard', [$medal]) }}"
-                                    class="has-text-{{ $medal->color }}"
+                                    class="{{ $medal->text_color }}"
                                 >
                                     <strong style="white-space: nowrap">
                                         {{ $medal->name }}

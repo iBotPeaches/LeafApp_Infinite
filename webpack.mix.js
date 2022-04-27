@@ -16,7 +16,14 @@ mix
     .sass('resources/sass/app.scss', 'public/css')
     .purgeCss({
         extend: {
-            safelist: { deep: [/is-orange/, /is-purple/] },
+            safelist: { deep: [
+                /is-orange/,
+                /is-purple/,
+                /has-text-orange/,
+                /has-text-purple/,
+                /has-text-info/,
+                /has-text-primary/
+                ]},
         },
     })
     .version();
