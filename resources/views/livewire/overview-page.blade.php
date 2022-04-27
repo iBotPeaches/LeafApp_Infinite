@@ -3,9 +3,13 @@
 /** @var App\Models\Player $player */
 ?>
 @if (empty($serviceRecord))
-    <div class="notification is-warning">
-        No Service Record yet! Hold tight!
-    </div>
+    @if ($player->is_private)
+        @include('partials.global.account_private')
+    @else
+        <div class="notification is-warning">
+            No Service Record yet! Hold tight!
+        </div>
+    @endif
 @else
     @if ($player->is_private)
         @include('partials.global.account_private')
