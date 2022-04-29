@@ -81,6 +81,50 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullMmr::class);
     }
 
+    public function testSkippingMmrIfApiIsReturningNull(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullAppearance::class,
+            PullMatchHistory::class,
+            PullServiceRecord::class,
+        ]);
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMmrResponse = (new MockMmrService())->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        /** @var Player $player */
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+            'mmr' => 1234,
+            'mmr_game_id' => Game::factory()
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::COMPETITIVE,
+            'runUpdate' => true
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('competitive-page', '$refresh');
+
+        Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
+        Bus::assertDispatched(PullServiceRecord::class);
+
+        $player->refresh();
+        $this->assertEquals(1234, $player->mmr);
+        $this->assertNotNull($player->mmr_game_id);
+    }
+
     public function testAutomaticallyPullingXuidIfMissing(): void
     {
         // Arrange

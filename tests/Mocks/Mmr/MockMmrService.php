@@ -10,7 +10,7 @@ class MockMmrService extends BaseMock
 {
     use HasErrorFunctions;
 
-    public function success(string $gamertag, int $season = 1): array
+    public function success(string $gamertag): array
     {
         return [
             'data' => [
@@ -20,8 +20,22 @@ class MockMmrService extends BaseMock
                 ]
             ],
             'additional' => [
-                'gamertag' => $gamertag,
-                'season' => $season
+                'gamertag' => $gamertag
+            ]
+        ];
+    }
+
+    public function empty(string $gamertag): array
+    {
+        return [
+            'data' => [
+                'value' => null,
+                'match' => [
+                    'id' => null
+                ]
+            ],
+            'additional' => [
+                'gamertag' => $gamertag
             ]
         ];
     }

@@ -76,7 +76,12 @@ class ApiClient implements InfiniteInterface
 
         if ($response->throw()->successful()) {
             $data = $response->json();
-            $player->mmr ??= Arr::get($data, 'data.value');
+            $mmr = Arr::get($data, 'data.value');
+
+            if (is_null($mmr)) {
+                return $player;
+            }
+            $player->mmr = $mmr;
 
             // Pull out the game uuid and use it if we have it.
             // Otherwise query API to pull game.
