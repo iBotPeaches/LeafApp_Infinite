@@ -2,6 +2,17 @@
     <div class="control has-icons-left">
         <div class="select is-medium is-fullwidth">
             <span class="icon is-large is-left">
+                <i class="fas fa-box"></i>
+            </span>
+            <select wire:model="season">
+                <option value="1">Season 1</option>
+                <option value="2">Season 2</option>
+            </select>
+        </div>
+    </div>
+    <div class="control has-icons-left mt-3">
+        <div class="select is-medium is-fullwidth">
+            <span class="icon is-large is-left">
                 <i class="fas fa-globe"></i>
             </span>
             <select wire:model="playerType" wire:change="onChange">

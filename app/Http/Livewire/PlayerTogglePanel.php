@@ -10,6 +10,7 @@ use Livewire\Component;
 class PlayerTogglePanel extends Component
 {
     public int $playerType;
+    public int $season;
 
     public function onChange(): void
     {
@@ -23,12 +24,14 @@ class PlayerTogglePanel extends Component
     public function mount(): void
     {
         $this->playerType = (int)ModeSession::get()->value;
+        $this->season = (int)config('services.autocode.competitive.season');
     }
 
     public function render(): View
     {
         return view('livewire.player-toggle-panel', [
-            'playerType' => $this->playerType
+            'playerType' => $this->playerType,
+            'season' => $this->season
         ]);
     }
 }
