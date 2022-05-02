@@ -81,6 +81,40 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullMmr::class);
     }
 
+    public function testAutomaticallySkippingServiceRecordIfUnplayedSeason(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullAppearance::class,
+            PullCompetitive::class,
+            PullMatchHistory::class,
+            PullMmr::class
+        ]);
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockServiceResponse = (new MockServiceRecordService())->error403();
+
+        Http::fakeSequence()
+            ->push($mockServiceResponse, Response::HTTP_FORBIDDEN);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
+
+        Bus::assertDispatched(PullAppearance::class);
+        Bus::assertDispatched(PullCompetitive::class);
+        Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
+        Bus::assertDispatched(PullMmr::class);
+    }
+
     public function testSkippingMmrIfApiIsReturningNull(): void
     {
         // Arrange

@@ -67,6 +67,7 @@ Used for marking an account as "you" and supporting making "scrims".
 2. FontAwesome - https://github.com/FortAwesome/Font-Awesome - Font Awesome Free License
 3. Bulma-Dividers - https://github.com/CreativeBulma/bulma-divider - MIT
 4. Bulma-Tooltip - https://github.com/CreativeBulma/bulma-tooltip - MIT
+5. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
 
 #### PHP
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 

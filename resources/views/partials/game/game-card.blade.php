@@ -2,7 +2,17 @@
 /** @var App\Models\Game $game */
 ?>
 <div class="card mb-3">
-    <div class="card-image">
+    <div class="card-image has-ribbon">
+        @if ($game->season_number)
+            <div class="ribbon is-small is-primary">
+                <span
+                    class="has-tooltip-success has-tooltip-arrow has-tooltip-bottom"
+                    data-tooltip="{{ __('seasons.' . $game->season_number) }}"
+                >
+                    Season {{ $game->season_number }}
+                </span>
+            </div>
+        @endif
         <figure class="image is-4by3">
             <img src="{{ $game->map->thumbnail_url }}" alt="{{ $game->map->name }}">
         </figure>

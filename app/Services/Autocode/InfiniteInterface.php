@@ -23,5 +23,5 @@ interface InfiniteInterface
     public function metadataTeams(): Collection;
     public function metadataPlaylists(): Collection;
     public function metadataCategories(): Collection;
-    public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord;
+    public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord;
 }

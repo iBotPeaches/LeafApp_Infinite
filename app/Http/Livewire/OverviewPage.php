@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Player;
 use App\Support\Session\ModeSession;
+use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -20,9 +21,10 @@ class OverviewPage extends Component
     public function render(): View
     {
         $serviceRecordType = ModeSession::get()->toPlayerRelation();
+        $season = SeasonSession::get();
 
         return view('livewire.overview-page', [
-            'serviceRecord' => $this->player->$serviceRecordType
+            'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first()
         ]);
     }
 }
