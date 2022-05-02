@@ -5,7 +5,7 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @if (in_array($type, ['overview', 'medals', 'competitive']))
+            @if (in_array($type, ['overview', 'medals']))
                 <livewire:player-toggle-panel />
             @endif
             @include('partials.player.player-card')
