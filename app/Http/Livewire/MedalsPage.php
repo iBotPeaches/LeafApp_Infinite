@@ -6,6 +6,7 @@ namespace App\Http\Livewire;
 use App\Models\Medal;
 use App\Models\Player;
 use App\Support\Session\ModeSession;
+use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -21,9 +22,10 @@ class MedalsPage extends Component
     public function render(): View
     {
         $serviceRecordType = ModeSession::get()->toPlayerRelation();
+        $season = SeasonSession::get();
 
-        $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecordType) {
-            $medal['count'] = $this->player->$serviceRecordType->medals[$medal->id] ?? 0;
+        $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecordType, $season) {
+            $medal['count'] = $this->player->$serviceRecordType()->ofSeason($season)->first()->medals[$medal->id] ?? 0;
             return $medal;
         })->sortBy('name');
 

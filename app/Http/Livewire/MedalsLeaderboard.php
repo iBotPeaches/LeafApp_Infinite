@@ -6,6 +6,7 @@ namespace App\Http\Livewire;
 use App\Models\Medal;
 use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;
+use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,12 +30,14 @@ class MedalsLeaderboard extends Component
     public function render(): View
     {
         $modeSession = ModeSession::get();
+        $seasonSession = SeasonSession::get();
 
         $results = ServiceRecord::query()
             ->with('player')
             ->selectRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) as value,
                 mode, total_seconds_played, player_id')
             ->where('mode', $modeSession->value)
+            ->where('season_number', $seasonSession)
             ->whereRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) > 0')
             ->orderByRaw('value DESC')
             ->paginate(15);

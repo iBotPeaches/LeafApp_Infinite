@@ -5,6 +5,10 @@
     @if ($results->isEmpty())
         <div class="notification is-warning">
             Oops. No one with this medal in this category yet.
+            <br /><br />
+            <span class="is-size-7">
+                or this Season doesn't have enough data.
+            </span>
         </div>
     @else
         <div class="table-container">
