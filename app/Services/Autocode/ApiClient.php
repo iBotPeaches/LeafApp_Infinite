@@ -14,13 +14,13 @@ use App\Models\Player;
 use App\Models\Playlist;
 use App\Models\ServiceRecord;
 use App\Models\Team;
-use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Language;
 use App\Services\Autocode\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ApiClient implements InfiniteInterface
 {
@@ -230,6 +230,12 @@ class ApiClient implements InfiniteInterface
             'gamertag' => $player->gamertag,
             'season' => $season,
         ]);
+
+        // If we have a 403 - Chances are its because season x is not available.
+        // This is recoverable. Just return and say its okay (because its empty and ok)
+        if ($response->status() === ResponseAlias::HTTP_FORBIDDEN) {
+            return $player->serviceRecord;
+        }
 
         if ($response->throw()->successful()) {
             $data = $response->json();
