@@ -3,6 +3,11 @@ $version = App\Support\System\VersionHelper::getVersionString();
 ?>
 <footer class="footer mt-auto">
     <div class="content has-text-centered">
+        @if (config('services.autocode.warning_message'))
+            <div class="notification is-warning">
+                {{ config('services.autocode.warning_message') }}
+            </div>
+        @endif
         <p>
             <strong>Leaf</strong>
             @if ($version)

@@ -1,4 +1,7 @@
-<nav class="navbar is-fixed-top is-success" role="navigation" aria-label="main navigation">
+<?php
+    $color = is_null(config('services.autocode.warning_message')) ? 'is-success' : 'is-warning';
+?>
+<nav class="navbar is-fixed-top {{ $color }}" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="{{ url('/') }}">
             Leaf
