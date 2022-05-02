@@ -38,7 +38,8 @@ return [
         'competitive' => [
             'season' => env('AUTOCODE_CURRENT_SEASON', 1),
             'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 2),
-        ]
+        ],
+        'warning_message' => env('AUTOCODE_WARNING_MESSAGE')
     ],
 
     'xboxapi' => [
