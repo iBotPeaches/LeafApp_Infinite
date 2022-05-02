@@ -10,11 +10,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('games', function (Blueprint $table) {
-            $table->tinyInteger('season_number')
+            $table->tinyInteger('season_number', false, true)
                 ->after('duration_seconds')
                 ->nullable();
 
-            $table->tinyInteger('season_version')
+            $table->tinyInteger('season_version', false, true)
                 ->after('season_number')
                 ->nullable();
         });
