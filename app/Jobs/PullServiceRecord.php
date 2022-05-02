@@ -41,6 +41,6 @@ class PullServiceRecord implements ShouldQueue
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->serviceRecord($this->player);
+        $client->serviceRecord($this->player, (int)config('services.autocode.competitive.season'));
     }
 }
