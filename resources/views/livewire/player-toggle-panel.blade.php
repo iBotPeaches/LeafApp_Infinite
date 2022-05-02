@@ -4,7 +4,7 @@
             <span class="icon is-large is-left">
                 <i class="fas fa-box"></i>
             </span>
-            <select wire:model="season">
+            <select wire:model="season" wire:change="onSeasonChange">
                 <option value="1">Season 1</option>
                 <option value="2">Season 2</option>
             </select>
