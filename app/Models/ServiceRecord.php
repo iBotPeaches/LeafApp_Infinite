@@ -7,6 +7,7 @@ use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
 use Database\Factories\ServiceRecordFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -217,5 +218,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
+    }
+
+    public function scopeOfSeason(Builder $query, int $season): Builder
+    {
+        return $query->where('season_number', $season);
     }
 }
