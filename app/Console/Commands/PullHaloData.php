@@ -37,7 +37,7 @@ class PullHaloData extends Command
         $this->client->matches($player, Mode::MATCHMADE(), true);
         $this->client->matches($player, Mode::CUSTOM(), true);
         $this->client->matches($player, Mode::LAN(), true);
-        $this->client->serviceRecord($player, Filter::MATCHMADE());
+        $this->client->serviceRecord($player);
 
         return CommandAlias::SUCCESS;
     }

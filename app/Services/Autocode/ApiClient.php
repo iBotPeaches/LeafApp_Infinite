@@ -224,11 +224,11 @@ class ApiClient implements InfiniteInterface
         return Category::all();
     }
 
-    public function serviceRecord(Player $player, Filter $filter): ?ServiceRecord
+    public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
     {
-        $response = $this->pendingRequest->get('stats/players/service-record/multiplayer', [
+        $response = $this->pendingRequest->get('stats/players/service-record/multiplayer/matchmade', [
             'gamertag' => $player->gamertag,
-            'filter' => (string)$filter->value,
+            'season' => $season,
         ]);
 
         if ($response->throw()->successful()) {

@@ -131,7 +131,7 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);
-            $client->serviceRecord($this, Filter::MATCHMADE());
+            $client->serviceRecord($this);
         } elseif ($type === PlayerTab::COMPETITIVE) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
