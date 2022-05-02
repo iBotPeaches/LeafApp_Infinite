@@ -30,6 +30,8 @@ use Illuminate\Support\Arr;
  * @property Experience $experience
  * @property Carbon $occurred_at
  * @property int $duration_seconds
+ * @property int|null $season_number
+ * @property int|null $season_version
  * @property string $version
  * @property boolean $was_pulled
  * @property-read Category $category
@@ -185,6 +187,8 @@ class Game extends Model implements HasHaloDotApi
         $game->experience = Arr::get($payload, 'experience');
         $game->occurred_at = Arr::get($payload, 'played_at');
         $game->duration_seconds = Arr::get($payload, 'duration.seconds');
+        $game->season_number = Arr::get($payload, 'season.id');
+        $game->season_version = Arr::get($payload, 'season.version');
         $game->version = config('services.autocode.version');
 
         if (Arr::has($payload, 'teams.details')) {
