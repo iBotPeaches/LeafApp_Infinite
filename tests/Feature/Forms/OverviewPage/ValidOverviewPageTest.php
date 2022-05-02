@@ -8,6 +8,7 @@ use App\Http\Livewire\OverviewPage;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;
+use App\Support\Session\SeasonSession;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -28,6 +29,7 @@ class ValidOverviewPageTest extends TestCase
 
         // Act & Assert
         ModeSession::set($attributes['mode']);
+        SeasonSession::set(1);
         Livewire::test(OverviewPage::class, [
             'player' => $player
         ])
