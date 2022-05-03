@@ -22,7 +22,7 @@
     @else
         <div>
             @include('partials.player.stats')
-            @if ($serviceRecord->medals)
+            @if ($serviceRecord->medal_count > 0)
                 @include('partials.player.medal-groups')
             @endif
         </div>

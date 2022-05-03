@@ -222,6 +222,12 @@ class ServiceRecord extends Model implements HasHaloDotApi
 
     public function scopeOfSeason(Builder $query, int $season): Builder
     {
+        // If we are using -1 - that is all seasons combined. Swap to VIEW
+        // Which has the merged results of that mode.
+        if ($season === -1) {
+            return $query->from('merged_service_records', 'service_records');
+        }
+
         return $query->where('season_number', $season);
     }
 }
