@@ -20,6 +20,8 @@ class PullXuid implements ShouldQueue
 
     public int $tries = 1;
 
+    public int $retryAfter = 0;
+
     public function __construct(Player $player)
     {
         $this->player = $player;
