@@ -46,6 +46,8 @@ class MockServiceRecordService extends BaseMock
                     'assists' => $this->faker->numberBetween(1, 25),
                     'betrayals' => $this->faker->numberBetween(0, 5),
                     'suicides' => $this->faker->numberBetween(0, 5),
+                    'spawns' => $this->faker->numberBetween(0, 5),
+                    'max_killing_spree' => $this->faker->numberBetween(0, 5),
                     'vehicles' => [
                         'destroys' => $this->faker->numberBetween(0, 2),
                         'hijacks' => $this->faker->numberBetween(0, 2),
@@ -114,6 +116,10 @@ class MockServiceRecordService extends BaseMock
                 ],
                 'kda' => $this->faker->randomFloat(2, 0, 10),
                 'kdr' => $this->faker->randomFloat(2, 0, 10),
+                'average_life_duration' => [
+                    'seconds' => $this->faker->numberBetween(45, 60),
+                    'human' => ''
+                ],
                 'scores' => [
                     'personal' => $this->faker->numerify('######'),
                     'points' => $this->faker->numerify('######'),
