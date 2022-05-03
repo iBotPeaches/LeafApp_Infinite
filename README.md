@@ -8,15 +8,16 @@ _Another hobby stat site for another Halo game_
 
 ### Setup
 1. PHP8.1
-2. Node + Yarn installed
-3. [Composer](https://getcomposer.org/) installed.
-4. `cp .env.example .env`
-5. `composer install`
-6. `yarn install`
-7. `php artisan key:generate`
-8. `php artisan migrate`
-9. `yarn run dev`
-10. `php artisan serve`
+1. Node + Yarn installed
+1. MariaDB 10.4+
+1. [Composer](https://getcomposer.org/) installed.
+1. `cp .env.example .env`
+1. `composer install`
+1. `yarn install`
+1. `php artisan key:generate`
+1. `php artisan migrate`
+1. `yarn run dev`
+1. `php artisan serve`
 
 ### Contributions
  * Code must pass phpcs. (`./vendor/bin/phpcs`)
