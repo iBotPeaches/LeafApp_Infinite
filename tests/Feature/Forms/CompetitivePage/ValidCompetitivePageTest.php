@@ -49,7 +49,7 @@ class ValidCompetitivePageTest extends TestCase
             ->createOne();
 
         /** @var Csr[] $current */
-        $current = $player->currentRanked(1);
+        $current = $player->currentRanked();
 
 
         // Act
@@ -99,7 +99,7 @@ class ValidCompetitivePageTest extends TestCase
             ->createOne();
 
         /** @var Csr[] $ranked */
-        $ranked = $player->currentRanked(1);
+        $ranked = $player->currentRanked();
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [

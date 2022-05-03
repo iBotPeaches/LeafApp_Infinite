@@ -115,7 +115,7 @@ class Player extends Model implements HasHaloDotApi
 
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
-        $seasonNumber = (int)config('services.autocode.competitive.season');
+        $seasonNumber = SeasonSession::get();
 
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
@@ -132,7 +132,7 @@ class Player extends Model implements HasHaloDotApi
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);
-            $client->serviceRecord($this, SeasonSession::get());
+            $client->serviceRecord($this, $seasonNumber);
         } elseif ($type === PlayerTab::COMPETITIVE) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
@@ -161,19 +161,19 @@ class Player extends Model implements HasHaloDotApi
         }
     }
 
-    public function currentRanked(int $season = 1): Collection
+    public function currentRanked(): Collection
     {
         return $this->csrs()
-            ->where('season', $season)
+            ->where('season', config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::CURRENT)
             ->orderByDesc('csr')
             ->get();
     }
 
-    public function seasonHighRanked(int $season = 1): Collection
+    public function seasonHighRanked(): Collection
     {
         return $this->csrs()
-            ->where('season', $season)
+            ->where('season', config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::SEASON)
             ->orderByDesc('csr')
             ->get();

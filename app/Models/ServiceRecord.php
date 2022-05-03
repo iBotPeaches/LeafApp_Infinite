@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
  * @property int $id
  * @property int $player_id
  * @property Mode $mode
+ * @property int|null $season_number
  * @property float $kd
  * @property float $kda
  * @property int $total_score
@@ -151,15 +152,18 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $player = Arr::get($payload, '_leaf.player');
         /** @var Mode $mode */
         $mode = Arr::get($payload, '_leaf.filter');
+        $season = Arr::get($payload, '_leaf.season');
 
         /** @var ServiceRecord $serviceRecord */
         $serviceRecord = ServiceRecord::query()
             ->where('player_id', $player->id)
             ->where('mode', $mode)
+            ->where('season_number', $season)
             ->firstOrNew();
 
         $serviceRecord->player()->associate($player);
         $serviceRecord->mode = $mode;
+        $serviceRecord->season_number = $season;
         $serviceRecord->kd = (float) Arr::get($payload, 'core.kdr');
         $serviceRecord->kda = (float) Arr::get($payload, 'core.kda');
         $serviceRecord->total_score = (int) Arr::get($payload, 'core.scores.personal');

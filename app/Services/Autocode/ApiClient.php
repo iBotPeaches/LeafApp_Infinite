@@ -47,11 +47,11 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function competitive(Player $player, int $season = 1): ?Csr
+    public function competitive(Player $player, ?int $season = null): ?Csr
     {
         $response = $this->pendingRequest->get('stats/players/csrs', [
             'gamertag' => $player->gamertag,
-            'season' => $season
+            'season' => $season ?? (int)config('services.autocode.competitive.season')
         ]);
 
         if ($response->throw()->successful()) {
@@ -65,11 +65,6 @@ class ApiClient implements InfiniteInterface
 
     public function mmr(Player $player): Player
     {
-        // HACK - Reset MMR to beta 1.3.0
-        $config = config('services.autocode');
-        $this->pendingRequest->baseUrl($config['domain'] . '/infinite@'. 'beta-1-3-0');
-        // END HACK
-
         $response = $this->pendingRequest->get('stats/players/mmr', [
             'gamertag' => $player->gamertag
         ]);
@@ -244,6 +239,7 @@ class ApiClient implements InfiniteInterface
                 $item = Arr::get($data, 'data.records.' . $filter->toHistorySlug());
                 $item['_leaf']['player'] = $player;
                 $item['_leaf']['filter'] = $filter;
+                $item['_leaf']['season'] = $season;
                 $item['_leaf']['privacy'] = Arr::get($data, 'data.privacy');
 
                 ServiceRecord::fromHaloDotApi($item);
