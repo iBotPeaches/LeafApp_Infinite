@@ -14,7 +14,7 @@
             </div>
         @endif
         <figure class="image is-4by3">
-            <img src="{{ $game->map->thumbnail_url }}" alt="{{ $game->map->name }}">
+            <img src="{{ $game->map->image }}" alt="{{ $game->map->name }}">
         </figure>
     </div>
     <div class="card-content">

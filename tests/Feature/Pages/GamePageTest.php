@@ -81,6 +81,7 @@ class GamePageTest extends TestCase
         Http::fake();
 
         $game = Game::factory()
+            ->forMap(['name' => 'Bazaar'])
             ->forPlaylist(['name' => 'Unknown', 'is_ranked' => true])
             ->createOne([
                 'version' => config('services.autocode.version'),
