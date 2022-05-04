@@ -161,19 +161,19 @@ class Player extends Model implements HasHaloDotApi
         }
     }
 
-    public function currentRanked(): Collection
+    public function currentRanked(?int $season = null): Collection
     {
         return $this->csrs()
-            ->where('season', config('services.autocode.competitive.season'))
+            ->where('season', $season ?? config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::CURRENT)
             ->orderByDesc('csr')
             ->get();
     }
 
-    public function seasonHighRanked(): Collection
+    public function seasonHighRanked(?int $season = null): Collection
     {
         return $this->csrs()
-            ->where('season', config('services.autocode.competitive.season'))
+            ->where('season', $season ?? config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::SEASON)
             ->orderByDesc('csr')
             ->get();
