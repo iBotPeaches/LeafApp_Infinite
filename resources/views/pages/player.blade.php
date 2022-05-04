@@ -5,8 +5,8 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @if (in_array($type, ['overview', 'medals']))
-                <livewire:player-toggle-panel />
+            @if (in_array($type, ['overview', 'medals', 'competitive']))
+                <livewire:player-toggle-panel :type="$type" />
             @endif
             @include('partials.player.player-card')
             @if (in_array($type, ['matches', 'custom', 'lan']))

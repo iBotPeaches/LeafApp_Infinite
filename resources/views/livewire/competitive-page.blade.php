@@ -11,7 +11,7 @@
         @if ($current)
             <article class="panel is-primary">
                 <p class="panel-heading">
-                    Competitive Play (Current)
+                    Competitive Play ({{ $isCurrentSeason ? 'Current' : 'Previous' }})
                 </p>
                 <div class="panel-block is-block">
                     <div class="columns is-centered">

@@ -11,6 +11,7 @@ use Livewire\Component;
 class PlayerTogglePanel extends Component
 {
     public int $playerType;
+    public string $type;
     public int $season;
 
     public function onChange(): void
@@ -44,5 +45,6 @@ class PlayerTogglePanel extends Component
         $this->emitTo(OverviewPage::class, '$refresh');
         $this->emitTo(MedalsPage::class, '$refresh');
         $this->emitTo(MedalsLeaderboard::class, '$refresh');
+        $this->emitTo(CompetitivePage::class, '$refresh');
     }
 }

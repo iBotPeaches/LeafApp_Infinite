@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Http\Livewire;
 
 use App\Models\Player;
+use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -24,11 +25,14 @@ class CompetitivePage extends Component
             ->orderByDesc('games.occurred_at')
             ->first();
 
+        $season = SeasonSession::get();
+
         return view('livewire.competitive-page', [
-            'current' => $this->player->currentRanked(),
-            'season' => $this->player->seasonHighRanked(),
+            'current' => $this->player->currentRanked($season),
+            'season' => $this->player->seasonHighRanked($season),
             'allTime' => $this->player->allTimeRanked(),
-            'latestMmr' => $latestMmr
+            'latestMmr' => $latestMmr,
+            'isCurrentSeason' => $season === (int)config('services.autocode.competitive.season')
         ]);
     }
 }
