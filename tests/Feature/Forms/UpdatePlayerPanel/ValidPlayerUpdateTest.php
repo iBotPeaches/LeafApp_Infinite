@@ -19,6 +19,7 @@ use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Services\Autocode\Enums\Mode;
 use App\Support\Session\ModeSession;
+use App\Support\Session\SeasonSession;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -399,7 +400,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::fake();
         $player = Player::factory()->createOne();
 
-        $cacheKey = 'player-profile-' . $player->id . md5($player->gamertag);
+        $cacheKey = 'player-profile-' . $player->id . SeasonSession::get() . md5($player->gamertag);
         Cache::put($cacheKey, true);
 
         // Act & Assert
