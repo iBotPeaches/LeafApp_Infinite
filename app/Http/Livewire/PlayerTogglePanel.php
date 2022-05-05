@@ -46,5 +46,8 @@ class PlayerTogglePanel extends Component
         $this->emitTo(MedalsPage::class, '$refresh');
         $this->emitTo(MedalsLeaderboard::class, '$refresh');
         $this->emitTo(CompetitivePage::class, '$refresh');
+
+        // We will refresh the UpdatePlayerPanel so someone swapping between seasons can immediatly get a stat update.
+        $this->emitTo(UpdatePlayerPanel::class, '$refresh');
     }
 }

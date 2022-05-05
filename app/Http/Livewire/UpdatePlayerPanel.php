@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\PlayerTab;
 use App\Models\Player;
+use App\Support\Session\SeasonSession;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,11 @@ class UpdatePlayerPanel extends Component
     public string $type;
     public bool $runUpdate = false;
 
+    // @phpstan-ignore-next-line
+    public $listeners = [
+        '$refresh'
+    ];
+
     public function processUpdate(): void
     {
         $this->runUpdate = true;
@@ -28,7 +34,7 @@ class UpdatePlayerPanel extends Component
         $color = 'is-success';
         $message = 'Profile updated!';
 
-        $cacheKey = 'player-profile-' . $this->player->id . md5($this->player->gamertag);
+        $cacheKey = 'player-profile-' . $this->player->id . SeasonSession::get() . md5($this->player->gamertag);
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
