@@ -95,7 +95,7 @@ class Player extends Model implements HasHaloDotApi
         return $value;
     }
 
-    public function getBackdropUrlAttribute(?string $value): string
+    public function getBackdropUrlAttribute(?string $value): ?string
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($value);
 

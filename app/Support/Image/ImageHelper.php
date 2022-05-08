@@ -9,7 +9,7 @@ class ImageHelper
 {
     public static function getInternalFilenameFromAutocode(?string $url): ?string
     {
-        $parsedUrl = (string)parse_url($url, PHP_URL_QUERY);
+        $parsedUrl = (string)parse_url((string)$url, PHP_URL_QUERY);
         parse_str($parsedUrl, $result);
 
         $hash = $result['hash'] ?? null;

@@ -42,8 +42,8 @@ class PullAppearance implements ShouldQueue
         $client = resolve(InfiniteInterface::class);
 
         $player = $client->appearance($this->player->gamertag);
-        $emblemUrl = $player->getRawOriginal('emblem_url');
-        $backdropUrl = $player->getRawOriginal('backdrop_url');
+        $emblemUrl = $player?->getRawOriginal('emblem_url');
+        $backdropUrl = $player?->getRawOriginal('backdrop_url');
 
         $emblem = $this->getStoragePathFromUrl($emblemUrl, 'emblems');
         $this->downloadIfMissing($emblem, $emblemUrl);
@@ -59,7 +59,9 @@ class PullAppearance implements ShouldQueue
                 /** @var ImageInterface $client */
                 $client = resolve(ImageInterface::class);
 
-                Storage::put($filename, FileUtils::getFileContents($client->optimize($url)));
+                Storage::put($filename, (string)FileUtils::getFileContents(
+                    $client->optimize($url)
+                ));
             }
         }
     }
