@@ -61,4 +61,9 @@ return [
         'redirect' => env('GOOGLE_REDIRECT'),
     ],
 
+    'tinify' => [
+        'key' => env('IMAGE_OPTIMIZE_KEY'),
+        'domain' => env('IMAGE_DOMAIN', 'https://api.tinify.com'),
+    ],
+
 ];
