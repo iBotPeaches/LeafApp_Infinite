@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -47,6 +48,7 @@ use Illuminate\Support\Arr;
  * @property-read GameTeam|null $winner
  * @property-read GameTeam|null $loser
  * @property-read string $score
+ * @property-read string $duration
  * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
@@ -113,6 +115,14 @@ class Game extends Model implements HasHaloDotApi
             return true;
         }
         return $this->version !== config('services.autocode.version');
+    }
+
+    public function getDurationAttribute(): string
+    {
+        $minutes = intdiv($this->duration_seconds, 60);
+        $seconds = $this->duration_seconds % 60;
+
+        return $minutes . 'min' . ', ' . $seconds . ' ' . Str::plural('sec', $seconds);
     }
 
     public function updateFromHaloDotApi(): void
