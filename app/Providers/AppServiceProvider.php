@@ -6,6 +6,8 @@ use App\Services\Autocode\ApiClient as HaloApiClient;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\FaceIt\TournamentInterface;
 use App\Services\FaceIt\ApiClient as FaceItApiClient;
+use App\Services\Tinify\ImageInterface;
+use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
 use App\Services\XboxApi\XboxInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(TournamentInterface::class, function ($app) {
             return new FaceItApiClient($app['config']['services']['faceit']);
+        });
+
+        $this->app->singleton(ImageInterface::class, function ($app) {
+            return new ImageApiClient($app['config']['services']['tinify']);
         });
 
         // @codeCoverageIgnoreStart
