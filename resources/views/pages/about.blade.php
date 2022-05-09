@@ -22,13 +22,21 @@
                     <a target="_blank" href="https://discordapp.com/users/iBotPeaches#1569">discord me</a>.
                 </div>
             </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>What about all my seasons combined?</p>
+                </div>
+                <div class="message-body">
+                    Coming soon. It was easier to split Season 1 and 2 in the beginning.
+                </div>
+            </article>
             <div class="divider"></div>
             <article class="message is-dark">
                 <div class="message-header">
                     <p>Why are some players missing in HCS?</p>
                 </div>
                 <div class="message-body">
-                    They failed to put their correct gamertag in FaceIt. Blame them.
+                    They failed to put their correct gamertag in FaceIt.
                 </div>
             </article>
             <article class="message is-dark">
@@ -54,7 +62,7 @@
                     <p>What powers my service record?</p>
                 </div>
                 <div class="message-body">
-                    The current iteration have a toggle between PVP (All) or Ranked.
+                    The current iteration have a toggle between PVP (All) or Ranked as well as Season.
                 </div>
             </article>
             <article class="message is-dark">
@@ -63,6 +71,14 @@
                 </div>
                 <div class="message-body">
                     You are probably not sharing matchmaking stats. Check the Accessibility tab.
+                </div>
+            </article>
+            <article class="message is-dark">
+                <div class="message-header">
+                    <p>MMR/CSR is missing / "wrong" from this game.</p>
+                </div>
+                <div class="message-body">
+                    This sucks I know, but it seems its all on 343's APIs for this. Nothing I can fix.
                 </div>
             </article>
             <div class="divider"></div>
@@ -79,7 +95,7 @@
                     <p>The games associated with a matchup are wrong!</p>
                 </div>
                 <div class="message-body">
-                    Our system attempts to automatically find the matches in a matchup. Sometimes its wrong.
+                    Our system attempts to find the matches in a match-up. Sometimes its wrong.
                 </div>
             </article>
             <article class="message is-dark">
