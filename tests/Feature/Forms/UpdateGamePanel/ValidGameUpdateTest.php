@@ -291,8 +291,8 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = $this->faker->word . $this->faker->numerify;
 
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
-        $mockAppearance2Response = (new MockAppearanceService())->success($gamertag2);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockAppearance2Response = (new MockAppearanceService())->invalidSuccess($gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK)
