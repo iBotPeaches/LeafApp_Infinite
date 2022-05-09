@@ -12,15 +12,15 @@
     "devDependencies": {
         "@creativebulma/bulma-divider": "^1.1.0",
         "@creativebulma/bulma-tooltip": "^1.2.0",
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "axios": "^0.25",
-        "bulma": "^0.9.3",
+        "@fortawesome/fontawesome-free": "^6.1.1",
+        "axios": "^0.27",
+        "bulma": "^0.9.4",
         "bulma-ribbon": "^0.1.1",
-        "laravel-mix": "^6.0.6",
+        "laravel-mix": "^6.0.43",
         "laravel-mix-purgecss": "^6.0.0",
-        "lodash": "^4.17.19",
-        "resolve-url-loader": "^4.0.0",
-        "sass": "^1.43.4",
-        "sass-loader": "^12.1.0"
+        "lodash": "^4.17.21",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.51.0",
+        "sass-loader": "^12.6.0"
     }
 }
