@@ -52,9 +52,9 @@ class PullAppearance implements ShouldQueue
         $this->downloadIfMissing($backdrop, $backdropUrl);
     }
 
-    private function downloadIfMissing(?string $filename, string $url): void
+    private function downloadIfMissing(?string $filename, ?string $url): void
     {
-        if ($filename) {
+        if ($filename && $url) {
             if (! Storage::exists($filename)) {
                 /** @var ImageInterface $client */
                 $client = resolve(ImageInterface::class);
@@ -66,7 +66,7 @@ class PullAppearance implements ShouldQueue
         }
     }
 
-    private function getStoragePathFromUrl(string $url, string $type): ?string
+    private function getStoragePathFromUrl(?string $url, string $type): ?string
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($url);
         return $filename !== null ? 'public/images/' . $type . '/' . $filename : null;
