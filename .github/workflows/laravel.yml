@@ -54,6 +54,9 @@ jobs:
       - name: Asset Packaging
         run: yarn run dev
 
+      - name: Asset Storage Link
+        run: php artisan storage:link
+
       - name: PHPCS
         run: vendor/bin/phpcs
 

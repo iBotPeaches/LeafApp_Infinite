@@ -58,8 +58,13 @@ Finally, create a security header called `X-Cat-Dog` and set it to a random valu
 Used for marking an account as "you" and supporting making "scrims".
 
  * `GOOGLE_CLIENT_ID` - The clientId
- * `GOOGLE_CLIENT_SECRET` - the clientSecret
+ * `GOOGLE_CLIENT_SECRET` - The clientSecret
  * `GOOGLE_REDIRECT` - The URL to redirect to
+
+#### Tinify
+Used for optimizing images that come from backdrops and emblems.
+ * `IMAGE_OPTIMIZE_KEY` - The key for API use.
+ * `IMAGE_DOMAIN` - The domain for API Service
 
 ### Dependencies
 

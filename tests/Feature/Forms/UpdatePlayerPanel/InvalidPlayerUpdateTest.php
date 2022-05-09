@@ -56,7 +56,7 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);

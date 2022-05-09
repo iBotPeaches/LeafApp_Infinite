@@ -23,6 +23,7 @@ task('deploy', [
     'artisan:view:cache',
     'artisan:config:cache',
     'artisan:migrate',
+    'artisan:storage:link',
     'yarn:install',
     'yarn:run:prod',
     'app:version:file',

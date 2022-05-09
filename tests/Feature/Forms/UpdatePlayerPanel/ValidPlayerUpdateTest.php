@@ -420,7 +420,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -467,7 +467,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -513,7 +513,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -559,7 +559,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -605,7 +605,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -651,7 +651,7 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word . $this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);

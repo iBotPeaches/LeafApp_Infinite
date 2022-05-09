@@ -12,10 +12,10 @@ use App\Jobs\PullServiceRecord;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
-use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
+use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -80,6 +82,28 @@ class Player extends Model implements HasHaloDotApi
                 ->where('gamertag', $gamertag)
                 ->first();
         }
+    }
+
+    public function getEmblemUrlAttribute(?string $value): ?string
+    {
+        $filename = ImageHelper::getInternalFilenameFromAutocode($value);
+
+        if ($filename && File::exists(public_path('storage/images/emblems/' . $filename))) {
+            return asset('storage/images/emblems/' . $filename);
+        }
+
+        return $value;
+    }
+
+    public function getBackdropUrlAttribute(?string $value): ?string
+    {
+        $filename = ImageHelper::getInternalFilenameFromAutocode($value);
+
+        if (File::exists(public_path('storage/images/backdrops/' . $filename))) {
+            return asset('storage/images/backdrops/' . $filename);
+        }
+
+        return $value;
     }
 
     public static function fromGamertag(string $gamertag): self

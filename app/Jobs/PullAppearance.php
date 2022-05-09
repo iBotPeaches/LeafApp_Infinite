@@ -3,15 +3,19 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Adapters\FileUtilInterface;
 use App\Enums\QueueName;
 use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
+use App\Services\Tinify\ImageInterface;
+use App\Support\Image\ImageHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class PullAppearance implements ShouldQueue
 {
@@ -37,6 +41,34 @@ class PullAppearance implements ShouldQueue
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->appearance($this->player->gamertag);
+        $player = $client->appearance($this->player->gamertag);
+        $emblemUrl = $player?->getRawOriginal('emblem_url');
+        $backdropUrl = $player?->getRawOriginal('backdrop_url');
+
+        $emblem = $this->getStoragePathFromUrl($emblemUrl, 'emblems');
+        $this->downloadIfMissing($emblem, $emblemUrl);
+
+        $backdrop = $this->getStoragePathFromUrl($backdropUrl, 'backdrops');
+        $this->downloadIfMissing($backdrop, $backdropUrl);
+    }
+
+    private function downloadIfMissing(?string $filename, ?string $url): void
+    {
+        if ($filename && $url) {
+            if (! Storage::exists($filename)) {
+                /** @var ImageInterface $client */
+                $client = resolve(ImageInterface::class);
+
+                Storage::put($filename, (string)resolve(FileUtilInterface::class)->getFileContents(
+                    $client->optimize($url)
+                ));
+            }
+        }
+    }
+
+    private function getStoragePathFromUrl(?string $url, string $type): ?string
+    {
+        $filename = ImageHelper::getInternalFilenameFromAutocode($url);
+        return $filename !== null ? 'public/images/' . $type . '/' . $filename : null;
     }
 }
