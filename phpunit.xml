@@ -18,6 +18,7 @@
             <directory suffix=".php">./database/factories</directory>
         </include>
         <exclude>
+            <directory>./app/Adapters</directory>
             <file>./app/Console/Kernel.php</file>
         </exclude>
     </coverage>
