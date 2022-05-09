@@ -18,8 +18,13 @@ class PlayerFactory extends Factory
             'gamertag' => $this->faker->word . $this->faker->unixTime,
             'service_tag' => $this->faker->lexify,
             'is_private' => false,
-            'emblem_url' => $this->faker->url,
-            'backdrop_url' => $this->faker->url
+            'emblem_url' => $this->assetUrl('test-image.png'),
+            'backdrop_url' => $this->assetUrl('test-image2.png')
         ];
+    }
+
+    private function assetUrl(string $imageName): string
+    {
+        return 'https://assets.halo.autocode.gg/externals/infinite/cms-images/?hash=' . base64_encode($imageName);
     }
 }
