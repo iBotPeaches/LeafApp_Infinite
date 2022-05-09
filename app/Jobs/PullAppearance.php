@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Adapters\FileUtils;
+use App\Adapters\FileUtilInterface;
 use App\Enums\QueueName;
 use App\Models\Player;
 use App\Services\Autocode\InfiniteInterface;
@@ -59,7 +59,7 @@ class PullAppearance implements ShouldQueue
                 /** @var ImageInterface $client */
                 $client = resolve(ImageInterface::class);
 
-                Storage::put($filename, (string)FileUtils::getFileContents(
+                Storage::put($filename, (string)resolve(FileUtilInterface::class)->getFileContents(
                     $client->optimize($url)
                 ));
             }
