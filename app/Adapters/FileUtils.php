@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace App\Adapters;
 
-class FileUtils
+class FileUtils implements FileUtilInterface
 {
-    public static function getFileContents(?string $url): string|false
+    public function getFileContents(?string $url): string|false
     {
         return file_get_contents((string)$url);
     }

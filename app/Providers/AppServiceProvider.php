@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Adapters\FileUtilInterface;
+use App\Adapters\FileUtils;
 use App\Services\Autocode\ApiClient as HaloApiClient;
 use App\Services\Autocode\InfiniteInterface;
 use App\Services\FaceIt\TournamentInterface;
@@ -42,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // @codeCoverageIgnoreStart
+        $this->app->bind(FileUtilInterface::class, FileUtils::class);
+
         Blade::directive('th', function ($expression) {
             return "<?php echo (new NumberFormatter('en_US', NumberFormatter::ORDINAL))->format({$expression}); ?>";
         });
