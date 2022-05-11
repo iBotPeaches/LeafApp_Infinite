@@ -22,7 +22,9 @@
             <div class="media-content">
                 <p class="title is-4">{{ $game->map->name }}</p>
                 <p class="subtitle is-6">
-                    {{ $game->category->name }}
+                    <span class="has-tooltip-arrow" data-tooltip="{{ $game->gamevariant->name ?? 'Unknown Gametype' }}">
+                        {{ $game->category->name }}
+                    </span>
                     @if ($game->playlist)
                         - {{ $game->playlist->name }}
                         @if ($game->playlist->is_ranked)
