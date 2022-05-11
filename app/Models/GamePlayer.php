@@ -134,7 +134,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->shots_fired = Arr::get($payload, $prefix . 'stats.core.shots.fired');
         $gamePlayer->shots_landed = Arr::get($payload, $prefix . 'stats.core.shots.landed');
         $gamePlayer->shots_missed = Arr::get($payload, $prefix . 'stats.core.shots.missed');
-        $gamePlayer->accuracy = Arr::get($payload, $prefix . 'stats.core.shots.accuracy');
+        $gamePlayer->accuracy = min((float)Arr::get($payload, $prefix . 'stats.core.shots.accuracy'), 100);
         $gamePlayer->rounds_won ??= Arr::get($payload, $prefix . 'stats.core.rounds.won');
         $gamePlayer->rounds_lost ??= Arr::get($payload, $prefix . 'stats.core.rounds.lost');
         $gamePlayer->rounds_tied ??= Arr::get($payload, $prefix . 'stats.core.rounds.tied');
