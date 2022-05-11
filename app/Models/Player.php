@@ -99,7 +99,7 @@ class Player extends Model implements HasHaloDotApi
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($value);
 
-        if (File::exists(public_path('storage/images/backdrops/' . $filename))) {
+        if ($filename && File::exists(public_path('storage/images/backdrops/' . $filename))) {
             return asset('storage/images/backdrops/' . $filename);
         }
 
