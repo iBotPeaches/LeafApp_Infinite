@@ -11,9 +11,14 @@
         @if ($current)
             <article class="panel is-primary">
                 <p class="panel-heading">
-                    Competitive Play ({{ $isCurrentSeason ? 'Current' : 'Previous' }})
+                    Competitive Play ({{ $isCurrentSeason || $isAllSeasons ? 'Current' : 'Previous' }})
                 </p>
                 <div class="panel-block is-block">
+                    @if ($isAllSeasons)
+                        <div class="notification is-dark">
+                            Showing current season since "All Seasons" is useless in this view.
+                        </div>
+                    @endif
                     <div class="columns is-centered">
                         @foreach ($current as $playlist)
                             @include('partials.player.csr-card-row')
