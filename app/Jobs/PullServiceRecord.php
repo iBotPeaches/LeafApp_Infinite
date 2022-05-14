@@ -5,7 +5,6 @@ namespace App\Jobs;
 
 use App\Enums\QueueName;
 use App\Models\Player;
-use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,17 +21,19 @@ class PullServiceRecord implements ShouldQueue
     public int $timeout = 720;
 
     private Player $player;
+    private int $seasonNumber;
 
-    public function __construct(Player $player)
+    public function __construct(Player $player, ?int $seasonNumber)
     {
         $this->player = $player;
+        $this->seasonNumber = $seasonNumber ?? (int)config('services.autocode.competitive.season');
         $this->onQueue(QueueName::RECORDS);
     }
 
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'records'))->dontRelease()
+            (new WithoutOverlapping($this->player->id . $this->seasonNumber . 'records'))->dontRelease()
         ];
     }
 
@@ -41,6 +42,6 @@ class PullServiceRecord implements ShouldQueue
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->serviceRecord($this->player, (int)config('services.autocode.competitive.season'));
+        $client->serviceRecord($this->player, $this->seasonNumber);
     }
 }
