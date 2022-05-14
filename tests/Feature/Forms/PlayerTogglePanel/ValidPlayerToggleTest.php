@@ -33,14 +33,13 @@ class ValidPlayerToggleTest extends TestCase
         // Arrange
 
         // Act & Assert
-        Livewire::test(PlayerTogglePanel::class, [
-            'season' => 2,
-        ])
+        Livewire::test(PlayerTogglePanel::class)
+            ->set('season', 1)
             ->call('onSeasonChange')
             ->assertEmittedTo('overview-page', '$refresh')
             ->assertEmittedTo('medals-page', '$refresh');
 
         $season = SeasonSession::get();
-        $this->assertEquals(config('services.autocode.competitive.season'), $season);
+        $this->assertEquals(1, $season);
     }
 }

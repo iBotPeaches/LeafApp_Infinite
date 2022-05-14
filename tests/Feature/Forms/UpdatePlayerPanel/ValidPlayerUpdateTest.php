@@ -56,6 +56,7 @@ class ValidPlayerUpdateTest extends TestCase
         Arr::set($mockServiceResponse, 'data.privacy.public', false);
 
         Http::fakeSequence()
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -93,9 +94,11 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
         $gamertag = $this->faker->word . $this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->error403();
+        $mockSuccessfulServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         Http::fakeSequence()
-            ->push($mockServiceResponse, Response::HTTP_FORBIDDEN);
+            ->push($mockServiceResponse, Response::HTTP_FORBIDDEN)
+            ->push($mockSuccessfulServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -184,6 +187,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -234,6 +238,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $oldPlayer = Player::factory()->createOne([
@@ -289,6 +294,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()
@@ -416,6 +422,29 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function testPageLoadDeferredFromApiCallsAsOlderSeason(): void
+    {
+        // Arrange
+        Http::fake();
+        SeasonSession::set(1);
+        $player = Player::factory()->createOne();
+
+        $cacheKey = 'player-profile-' . $player->id . SeasonSession::get() . md5($player->gamertag);
+        Cache::put($cacheKey, true);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => false
+        ])
+            ->call('render')
+            ->assertViewHas('color', 'is-dark')
+            ->assertViewHas('message', 'Season is old. No more updates will happen.');
+
+        Http::assertNothingSent();
+    }
+
     public function testValidResponseFromAllHaloDotApiServicesAsFaceItPlayer(): void
     {
         // Arrange
@@ -441,6 +470,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -486,6 +516,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
@@ -529,6 +560,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
@@ -577,6 +609,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
 
@@ -622,6 +655,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
@@ -669,6 +703,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK);
 
