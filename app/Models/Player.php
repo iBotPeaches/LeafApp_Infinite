@@ -152,7 +152,7 @@ class Player extends Model implements HasHaloDotApi
         }
 
         if ($type === PlayerTab::OVERVIEW) {
-            PullCompetitive::dispatch($this);
+            PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);
@@ -160,33 +160,35 @@ class Player extends Model implements HasHaloDotApi
         } elseif ($type === PlayerTab::COMPETITIVE) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullServiceRecord::dispatch($this);
+            PullServiceRecord::dispatch($this, $seasonNumber);
             $client->competitive($this, $seasonNumber);
             $client->mmr($this);
         } elseif ($type === PlayerTab::MATCHES) {
-            PullCompetitive::dispatch($this);
+            PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this);
+            PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
         } elseif ($type === PlayerTab::CUSTOM) {
-            PullCompetitive::dispatch($this);
+            PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this);
+            PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::CUSTOM(), $forceUpdate);
         } elseif ($type === PlayerTab::LAN) {
-            PullCompetitive::dispatch($this);
+            PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this);
+            PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::LAN(), $forceUpdate);
         }
     }
 
     public function currentRanked(?int $season = null): Collection
     {
+        $season = $season === -1 ? null : $season;
+
         return $this->csrs()
             ->where('season', $season ?? config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::CURRENT)
@@ -196,6 +198,8 @@ class Player extends Model implements HasHaloDotApi
 
     public function seasonHighRanked(?int $season = null): Collection
     {
+        $season = $season === -1 ? null : $season;
+
         return $this->csrs()
             ->where('season', $season ?? config('services.autocode.competitive.season'))
             ->where('mode', CompetitiveMode::SEASON)
