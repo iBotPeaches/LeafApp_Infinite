@@ -14,16 +14,7 @@ class MockServiceRecordService extends BaseMock
     public function success(string $gamertag): array
     {
         return [
-            'data' => [
-                'records' => [
-                    'pvp' => $this->recordStats(),
-                    'ranked' => $this->recordStats(),
-                    'social' => $this->recordStats(),
-                ],
-                'privacy' => [
-                    'public' => true,
-                ],
-            ],
+            'data' => $this->recordStats(),
             'additional' => [
                 'polling' => [
                     'synced_at' => now()->toIso8601ZuluString(),

@@ -32,15 +32,20 @@ class MedalsLeaderboard extends Component
         $modeSession = ModeSession::get();
         $seasonSession = SeasonSession::get();
 
-        $results = ServiceRecord::query()
+        $query = ServiceRecord::query()
             ->with('player')
             ->selectRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) as value,
                 mode, total_seconds_played, player_id')
             ->where('mode', $modeSession->value)
-            ->where('season_number', $seasonSession)
             ->whereRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) > 0')
-            ->orderByRaw('value DESC')
-            ->paginate(15);
+            ->orderByRaw('value DESC');
+
+        if ($seasonSession === -1) {
+            $query->whereNull('season_number');
+        } else {
+            $query->where('season_number', $seasonSession);
+        }
+        $results = $query->paginate(15);
 
         return view('livewire.medals-leaderboard', [
             'results' => $results

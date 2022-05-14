@@ -21,27 +21,27 @@ class PullCompetitive implements ShouldQueue
     public int $timeout = 60;
 
     private Player $player;
+    private int $seasonNumber;
 
-    public function __construct(Player $player)
+    public function __construct(Player $player, ?int $seasonNumber)
     {
         $this->player = $player;
+        $this->seasonNumber = $seasonNumber ?? (int)config('services.autocode.competitive.season');
         $this->onQueue(QueueName::COMPETITIVE);
     }
 
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'competitive'))->dontRelease()
+            (new WithoutOverlapping($this->player->id . $this->seasonNumber . 'competitive'))->dontRelease()
         ];
     }
 
     public function handle(): void
     {
-        $seasonNumber = (int)config('services.autocode.competitive.season');
-
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->competitive($this->player, $seasonNumber);
+        $client->competitive($this->player, $this->seasonNumber);
     }
 }

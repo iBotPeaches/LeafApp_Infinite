@@ -226,6 +226,9 @@ class ServiceRecord extends Model implements HasHaloDotApi
 
     public function scopeOfSeason(Builder $query, int $season): Builder
     {
+        if ($season === -1) {
+            return $query->whereNull('season_number');
+        }
         return $query->where('season_number', $season);
     }
 }

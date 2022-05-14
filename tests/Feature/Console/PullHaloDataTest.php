@@ -60,6 +60,7 @@ class PullHaloDataTest extends TestCase
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockLanMatchesResponse, Response::HTTP_OK)
             ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([

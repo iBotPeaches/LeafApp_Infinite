@@ -29,10 +29,10 @@ final class Mode extends Enum
         };
     }
 
-    public function toHistorySlug(): string
+    public function toUrlSlug(): string
     {
         return match ($this->value) {
-            self::MATCHMADE_PVP => 'pvp',
+            self::MATCHMADE_PVP => 'all',
             default => 'ranked'
         };
     }

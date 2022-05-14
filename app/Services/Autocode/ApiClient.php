@@ -221,29 +221,30 @@ class ApiClient implements InfiniteInterface
 
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
     {
-        $response = $this->pendingRequest->get('stats/players/service-record/multiplayer/matchmade', [
-            'gamertag' => $player->gamertag,
-            'season' => $season,
-        ]);
+        foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
+            $url = 'stats/players/service-record/multiplayer/matchmade/' . $filter->toUrlSlug();
+            $season = $season === -1 ? null : $season;
 
-        // If we have a 403 - Chances are its because season x is not available.
-        // This is recoverable. Just return and say its okay (because its empty and ok)
-        if ($response->status() === ResponseAlias::HTTP_FORBIDDEN) {
-            return $player->serviceRecord;
-        }
+            $response = $this->pendingRequest->get($url, [
+                'gamertag' => $player->gamertag,
+                'season' => $season
+            ]);
 
-        if ($response->throw()->successful()) {
+            // If we have a 403 - Chances are its because season x is not available.
+            // This is recoverable. Just return and say its okay (because its empty and ok)
+            if ($response->status() === ResponseAlias::HTTP_FORBIDDEN) {
+                continue;
+            }
+
             $data = $response->json();
 
-            foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
-                $item = Arr::get($data, 'data.records.' . $filter->toHistorySlug());
-                $item['_leaf']['player'] = $player;
-                $item['_leaf']['filter'] = $filter;
-                $item['_leaf']['season'] = $season;
-                $item['_leaf']['privacy'] = Arr::get($data, 'data.privacy');
+            $item = Arr::get($data, 'data');
+            $item['_leaf']['player'] = $player;
+            $item['_leaf']['filter'] = $filter;
+            $item['_leaf']['season'] = $season;
+            $item['_leaf']['privacy'] = Arr::get($data, 'data.privacy');
 
-                ServiceRecord::fromHaloDotApi($item);
-            }
+            ServiceRecord::fromHaloDotApi($item);
         }
 
         return $player->serviceRecord;

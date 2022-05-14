@@ -34,11 +34,15 @@ class UpdatePlayerPanel extends Component
         $color = 'is-success';
         $message = 'Profile updated!';
 
-        $cacheKey = 'player-profile-' . $this->player->id . SeasonSession::get() . md5($this->player->gamertag);
+        $seasonNumber = SeasonSession::get();
+        $cacheKey = 'player-profile-' . $this->player->id . $seasonNumber . md5($this->player->gamertag);
+        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int)config('services.autocode.competitive.season');
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
-            $message = 'Profile was recently updated (or updating). Check back soon.';
+            $message = $isOlderSeason
+                ? 'Season is old. No more updates will happen.'
+                : 'Profile was recently updated (or updating). Check back soon.';
         } else {
             if (! $this->runUpdate) {
                 return view('livewire.update-player-panel', [
@@ -48,9 +52,10 @@ class UpdatePlayerPanel extends Component
             }
 
             try {
-                DB::transaction(function () use ($cacheKey) {
+                DB::transaction(function () use ($cacheKey, $isOlderSeason) {
                     $cooldownMinutes = (int)config('services.autocode.cooldown');
-                    Cache::put($cacheKey, true, now()->addMinutes($cooldownMinutes));
+                    $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
+                    Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 
                     $this->player->lockForUpdate();
                     $this->player->updateFromHaloDotApi(false, $this->type);
