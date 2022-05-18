@@ -14,7 +14,8 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "league/csv": "^9.8",
-        "livewire/livewire": "^2.7"
+        "livewire/livewire": "^2.7",
+        "spatie/laravel-sitemap": "^6.1"
     },
     "require-dev": {
         "brianium/paratest": "^6.3",
