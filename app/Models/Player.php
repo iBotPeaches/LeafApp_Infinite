@@ -17,6 +17,7 @@ use App\Services\Autocode\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
 use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
+use Carbon\Carbon;
 use Database\Factories\PlayerFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,7 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -44,6 +46,8 @@ use Illuminate\Support\Str;
  * @property int $mmr_game_id
  * @property string $emblem_url
  * @property string $backdrop_url
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
@@ -52,7 +56,7 @@ use Illuminate\Support\Str;
  * @property-read ServiceRecord $serviceRecordPvp
  * @method static PlayerFactory factory(...$parameters)
  */
-class Player extends Model implements HasHaloDotApi
+class Player extends Model implements HasHaloDotApi, Sitemapable
 {
     use HasFactory;
 
@@ -213,6 +217,15 @@ class Player extends Model implements HasHaloDotApi
             ->whereNull('season')
             ->orderByDesc('csr')
             ->get();
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        $url = new Url(route('player', $this));
+        $url->setLastModificationDate($this->updated_at);
+        $url->setChangeFrequency('always');
+
+        return $url;
     }
 
     public function serviceRecord(): HasOne

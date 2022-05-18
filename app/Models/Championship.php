@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -28,7 +30,7 @@ use Illuminate\Support\Str;
  * @property-read bool $has_championship
  * @method static ChampionshipFactory factory(...$parameters)
  */
-class Championship extends Model implements HasFaceItApi
+class Championship extends Model implements HasFaceItApi, Sitemapable
 {
     use HasFactory;
 
@@ -112,6 +114,11 @@ class Championship extends Model implements HasFaceItApi
         }
 
         return $championship;
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        return route('championship', $this);
     }
 
     public function matchups(): HasMany

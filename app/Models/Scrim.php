@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -22,7 +24,7 @@ use Illuminate\Support\Collection;
  * @property-read Game[]|Collection<int,Game> $games
  * @method static ScrimFactory factory(...$parameters)
  */
-class Scrim extends Model
+class Scrim extends Model implements Sitemapable
 {
     use HasFactory;
 
@@ -37,6 +39,15 @@ class Scrim extends Model
         $model->games()->sync($gameIds);
 
         return $model;
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        $url = new Url(route('scrim', $this));
+        $url->setLastModificationDate($this->updated_at);
+        $url->setChangeFrequency('never');
+
+        return $url;
     }
 
     public function user(): BelongsTo
