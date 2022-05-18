@@ -27,7 +27,7 @@
                     <p>What about all my seasons combined?</p>
                 </div>
                 <div class="message-body">
-                    Coming soon. It was easier to split Season 1 and 2 in the beginning.
+                    This is now available. "Merged" Season view includes current + old seasons combined.
                 </div>
             </article>
             <div class="divider"></div>
