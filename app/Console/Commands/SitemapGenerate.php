@@ -50,7 +50,7 @@ class SitemapGenerate extends Command
         $gameIndex = 0;
         Game::query()
             ->withoutEagerLoads()
-            ->chunkById(50000, function (Collection $games) use ($sitemapFolder, &$gameIndex) {
+            ->chunkById(40000, function (Collection $games) use ($sitemapFolder, &$gameIndex) {
                 Sitemap::create()
                     ->add($games)
                     ->writeToFile(sprintf($sitemapFolder . '/sitemap_games_%d.xml', $gameIndex++));
