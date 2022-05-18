@@ -25,9 +25,5 @@ class Kernel extends ConsoleKernel
         $schedule->command(PullMetadata::class)
             ->withoutOverlapping()
             ->twiceDaily();
-
-        $schedule->command(SitemapGenerate::class)
-            ->withoutOverlapping()
-            ->twiceMonthly();
     }
 }

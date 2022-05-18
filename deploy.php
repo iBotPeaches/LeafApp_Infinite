@@ -30,6 +30,7 @@ task('deploy', [
     'deploy:publish',
     'php-fpm:reload',
     'artisan:queue:restart',
+    'app:sitemap',
 ]);
 
 task('yarn:run:prod', function () {
@@ -39,6 +40,11 @@ task('yarn:run:prod', function () {
 
 task('app:version:file', function () {
     upload('VERSION', '{{release_or_current_path}}/VERSION');
+});
+
+task('app:sitemap', function () {
+    cd('{{release_or_current_path}}');
+    run('php artisan sitemap:generate');
 });
 
 after('deploy:failed', 'deploy:unlock');
