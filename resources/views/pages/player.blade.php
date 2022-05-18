@@ -1,6 +1,5 @@
 @extends('layouts.app')
-@section('title', $player->gamertag)
-@section('description', $player->gamertag . ' Halo Infinite Stats')
+@section('title', $player->gamertag . ' - Halo Infinite Stats')
 
 @section('content')
     <div class="columns">
