@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -38,7 +40,7 @@ use Illuminate\Support\Arr;
  * @property-read string $faceitUrl
  * @method static MatchupFactory factory(...$parameters)
  */
-class Matchup extends Model implements HasFaceItApi
+class Matchup extends Model implements HasFaceItApi, Sitemapable
 {
     use HasFactory;
 
@@ -144,6 +146,15 @@ class Matchup extends Model implements HasFaceItApi
         }
 
         return $matchup;
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        $url = new Url(route('matchup', [$this->championship, $this]));
+        $url->setLastModificationDate($this->ended_at);
+        $url->setChangeFrequency('never');
+
+        return $url;
     }
 
     public function championship(): BelongsTo

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -23,7 +25,7 @@ use Illuminate\Support\Str;
  * @property-read string $text_color
  * @method static MedalFactory factory(...$parameters)
  */
-class Medal extends Model implements HasHaloDotApi
+class Medal extends Model implements HasHaloDotApi, Sitemapable
 {
     use HasFactory;
 
@@ -94,6 +96,14 @@ class Medal extends Model implements HasHaloDotApi
     public function getTextColorAttribute(): string
     {
         return 'has-text-' . $this->color;
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        $url = new Url(route('medalLeaderboard', $this));
+        $url->setChangeFrequency('always');
+
+        return $url;
     }
 
     public static function fromHaloDotApi(array $payload): ?self

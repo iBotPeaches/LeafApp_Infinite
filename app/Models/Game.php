@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
@@ -51,7 +53,7 @@ use Illuminate\Support\Str;
  * @property-read string $duration
  * @method static GameFactory factory(...$parameters)
  */
-class Game extends Model implements HasHaloDotApi
+class Game extends Model implements HasHaloDotApi, Sitemapable
 {
     use HasFactory;
 
@@ -245,6 +247,15 @@ class Game extends Model implements HasHaloDotApi
         }
 
         return $game;
+    }
+
+    public function toSitemapTag(): Url|string|array
+    {
+        $url = new Url(route('game', $this));
+        $url->setLastModificationDate($this->occurred_at);
+        $url->setChangeFrequency('never');
+
+        return $url;
     }
 
     public function category(): BelongsTo
