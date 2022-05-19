@@ -18,10 +18,29 @@ $version = App\Support\System\VersionHelper::getVersionString();
                     {{ $version }}
                 </a>
             @endif
-            by <a href="https://twitter.com/iBotPeaches">iBotPeaches</a>. The source code is at
-            <a href="https://github.com/iBotPeaches/LeafApp_Infinite">GitHub</a>.
+            by <a
+                target="_blank"
+                href="https://twitter.com/iBotPeaches"
+                rel="noreferrer"
+            >iBotPeaches</a>
+            (<a
+                target="_blank"
+                href="https://connortumbleson.com"
+                rel="author"
+            >Connor</a>)
 
-            API Data from <a href="https://autocode.com/lib/halo/">HaloDotAPI (Autocode)</a>
+            The <span class="has-tooltip-arrow" data-tooltip="100% Test Coverage!">source code</span> is at
+            <a
+                target="_blank"
+                href="https://github.com/iBotPeaches/LeafApp_Infinite"
+                rel="noreferrer"
+            >GitHub</a>.
+
+            API Data from <a
+                target="_blank"
+                href="https://autocode.com/lib/halo/"
+                rel="noreferrer"
+            >HaloDotAPI (Autocode)</a>
         </p>
     </div>
 </footer>
