@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HcsController;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ use App\Http\Controllers\HcsController;
 
 // Webhook
 Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit');
+
+// Sitemaps
+Route::redirect('sitemap.xml', '/sitemaps/sitemap.xml', Response::HTTP_PERMANENTLY_REDIRECT);
 
 // Leaderboard
 Route::get('/leaderboards/medal', [LeaderboardController::class, 'list'])->name('medalLeaderboards');
