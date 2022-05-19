@@ -49,7 +49,7 @@ class SitemapGenerate extends Command
 
         $matchupIndex = 0;
         Matchup::query()
-            ->withoutEagerLoads()
+            ->with('championship')
             ->chunkById(25000, function (Collection $matchups) use ($sitemapFolder, &$matchupIndex) {
                 Sitemap::create()
                     ->add($matchups)
