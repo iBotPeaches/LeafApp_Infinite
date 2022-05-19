@@ -44,7 +44,7 @@ task('app:version:file', function () {
 
 task('app:sitemap', function () {
     cd('{{release_or_current_path}}');
-    run('php artisan sitemap:generate');
+    artisan('sitemap:generate');
 });
 
 after('deploy:failed', 'deploy:unlock');
