@@ -47,15 +47,6 @@ class SitemapGenerate extends Command
                     ->writeToFile(sprintf($sitemapFolder . '/sitemap_players_%d.xml', $playerIndex++));
             });
 
-        $gameIndex = 0;
-        Game::query()
-            ->withoutEagerLoads()
-            ->chunkById(40000, function (Collection $games) use ($sitemapFolder, &$gameIndex) {
-                Sitemap::create()
-                    ->add($games)
-                    ->writeToFile(sprintf($sitemapFolder . '/sitemap_games_%d.xml', $gameIndex++));
-            });
-
         $matchupIndex = 0;
         Matchup::query()
             ->withoutEagerLoads()
@@ -72,10 +63,6 @@ class SitemapGenerate extends Command
 
         for ($i = 0; $i < $playerIndex; $i++) {
             $sitemapIndex->add(sprintf('/sitemaps/sitemap_players_%d.xml', $i));
-        }
-
-        for ($i = 0; $i < $gameIndex; $i++) {
-            $sitemapIndex->add(sprintf('/sitemaps/sitemap_games_%d.xml', $i));
         }
 
         for ($i = 0; $i < $matchupIndex; $i++) {
