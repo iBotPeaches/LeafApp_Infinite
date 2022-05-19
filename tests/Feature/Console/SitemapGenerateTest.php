@@ -20,7 +20,6 @@ class SitemapGenerateTest extends TestCase
     {
         // Arrange
         Matchup::factory()->createOne();
-        Game::factory()->createOne();
         Scrim::factory()->createOne();
         Medal::factory()->createOne();
         Player::factory()->createOne();
