@@ -27,20 +27,22 @@ $version = App\Support\System\VersionHelper::getVersionString();
                 target="_blank"
                 href="https://connortumbleson.com"
                 rel="author"
-            >Connor</a>)
+            >Connor</a>).
 
-            The <span class="has-tooltip-arrow" data-tooltip="100% Test Coverage!">source code</span> is at
-            <a
-                target="_blank"
-                href="https://github.com/iBotPeaches/LeafApp_Infinite"
-                rel="noreferrer"
-            >GitHub</a>.
+            <span class="is-hidden-mobile">
+                The <span class="has-tooltip-arrow" data-tooltip="100% Test Coverage!">source code</span> is at
+                <a
+                    target="_blank"
+                    href="https://github.com/iBotPeaches/LeafApp_Infinite"
+                    rel="noreferrer"
+                >GitHub</a>.
 
-            API Data from <a
-                target="_blank"
-                href="https://autocode.com/lib/halo/"
-                rel="noreferrer"
-            >HaloDotAPI (Autocode)</a>
+                API Data from <a
+                    target="_blank"
+                    href="https://autocode.com/lib/halo/"
+                    rel="noreferrer"
+                >HaloDotAPI (Autocode)</a>.
+            </span>
         </p>
     </div>
 </footer>
