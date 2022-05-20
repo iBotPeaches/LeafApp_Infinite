@@ -16,7 +16,7 @@
             <span class="is-pulled-right">
                 @foreach ($game->winner->players as $player)
                     <span class="has-tooltip-arrow" data-tooltip="{{ $player->player->gamertag }}">
-                        <img class="image is-inline is-32x32" src="{{ $player->player->emblem_url }}" />
+                        <img class="image is-inline is-32x32" src="{{ $player->player->emblem_url }}" alt="Emblem"/>
                     </span>
                 @endforeach
             </span>

@@ -2,7 +2,7 @@
     <article class="tile">
         <figure class="media-left">
             <p class="image is-48x48">
-                <img src="{{ $medal['medal']->image }}" />
+                <img src="{{ $medal['medal']->image }}" alt="{{ $medal['medal']->name }}"/>
             </p>
         </figure>
         <div class="media-content">

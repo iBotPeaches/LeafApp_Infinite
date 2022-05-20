@@ -20,8 +20,8 @@
     <div class="card-content">
         <div class="media">
             <div class="media-content">
-                <p class="title is-4">{{ $game->map->name }}</p>
-                <p class="subtitle is-6">
+                <h1 class="title is-4">{{ $game->map->name }}</h1>
+                <h2 class="subtitle is-6">
                     <span class="has-tooltip-arrow" data-tooltip="{{ $game->gamevariant->name ?? 'Unknown Gametype' }}">
                         {{ $game->category->name }}
                     </span>
@@ -37,7 +37,7 @@
                     @if ($game->duration_seconds)
                         <span class="tag is-dark">{{ $game->duration }}</span>
                     @endif
-                </p>
+                </h2>
             </div>
         </div>
         <div class="content">

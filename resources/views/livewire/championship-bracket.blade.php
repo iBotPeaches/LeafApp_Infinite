@@ -24,7 +24,7 @@
             @include('partials.hcs.bracket_panel')
             <article class="message is-link">
                 <div class="message-body">
-                    View on <a target="_blank" href="{{ $championship->faceitUrl }}">FaceIt</a>
+                    View on <a target="_blank" href="{{ $championship->faceitUrl }}" rel="nofollow">FaceIt</a>
                 </div>
             </article>
         </div>

@@ -19,7 +19,7 @@ $winningPlayer = $game->players->sortBy('rank')->first();
         @if ($winningPlayer)
             <span class="is-pulled-right">
                 <span class="has-tooltip-arrow" data-tooltip="{{ $winningPlayer->player->gamertag }}">
-                    <img class="image is-inline is-32x32" src="{{ $winningPlayer->player->emblem_url }}" />
+                    <img class="image is-inline is-32x32" src="{{ $winningPlayer->player->emblem_url }}" alt="Emblem" />
                 </span>
             </span>
         @endif

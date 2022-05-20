@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Redirect www to non-www
+    RewriteCond %{HTTP_HOST} ^www\.leafapp\.co$
+    RewriteRule ^/?$ "https\:\/\/leafapp\.co\/" [R=301,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

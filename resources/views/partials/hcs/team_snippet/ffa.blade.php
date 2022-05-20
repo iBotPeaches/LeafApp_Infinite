@@ -10,7 +10,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-32x32">
-                        <img src="{{ $player?->emblem_url ?? '' }}">
+                        <img src="{{ $player?->emblem_url ?? '' }}" alt="Emblem">
                     </figure>
                 </div>
                 <div class="media-content">

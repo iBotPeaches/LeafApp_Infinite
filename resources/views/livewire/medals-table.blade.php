@@ -18,7 +18,7 @@
                         <article class="tile is-flex">
                             <figure class="media-left">
                                 <p class="image is-48x48">
-                                    <img src="{{ $medal->image }}" />
+                                    <img src="{{ $medal->image }}" alt="{{ $medal->name }}" />
                                 </p>
                             </figure>
                             <div class="media-content">

@@ -6,7 +6,7 @@
 <article class="panel {{ $team->color ?? 'is-dark' }}">
     <p class="panel-heading">
         @if ($team)
-            <img class="is-16x16 image is-inline-block" src="{{ $team->emblem_url }}">
+            <img class="is-16x16 image is-inline-block" src="{{ $team->emblem_url }}" alt="Emblem">
         @endif
         {{ $team->name ?? 'Players' }}
         @if ($game->playlist)
@@ -74,7 +74,7 @@
                             <article class="media">
                                 <figure class="media-left">
                                     <p class="image is-32x32">
-                                        <img src="{{ $gamePlayer->level_image }}" />
+                                        <img src="{{ $gamePlayer->level_image }}" alt="{{ $gamePlayer->level }}"/>
                                     </p>
                                 </figure>
                                 <div class="media-content">

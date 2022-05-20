@@ -38,7 +38,12 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a target="_blank" href="https://github.com/iBotPeaches/LeafApp_Infinite" class="button is-info">
+                    <a
+                        target="_blank"
+                        href="https://github.com/iBotPeaches/LeafApp_Infinite"
+                        rel="noreferrer"
+                        class="button is-info"
+                    >
                         <strong>GitHub</strong>
                     </a>
                     @guest

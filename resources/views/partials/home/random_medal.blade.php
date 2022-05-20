@@ -10,7 +10,7 @@
     <div class="card-content">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="{{ $medal->image }}" />
+                <img src="{{ $medal->image }}" alt="{{ $medal->name }}"/>
             </p>
         </figure>
         <div class="media-content">

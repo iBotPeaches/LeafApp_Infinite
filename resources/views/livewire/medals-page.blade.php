@@ -15,7 +15,11 @@
                 <article class="tile is-flex">
                     <figure class="media-left">
                         <p class="image is-48x48">
-                            <img class="{{ $medal->count === 0 ? 'is-greyscale' : '' }}" src="{{ $medal->image }}" />
+                            <img
+                                class="{{ $medal->count === 0 ? 'is-greyscale' : '' }}"
+                                src="{{ $medal->image }}"
+                                alt="{{ $medal->name }}"
+                            />
                         </p>
                     </figure>
                     <div class="media-content">

@@ -17,9 +17,18 @@
                     <p>Feedback? Bugs?</p>
                 </div>
                 <div class="message-body">
-                    The <a href="https://github.com/iBotPeaches/LeafApp_Infinite/issues">GitHub</a> will handle it all or
-                    <a href="https://twitter.com/iBotPeaches">tweet me</a> or
-                    <a target="_blank" href="https://discordapp.com/users/iBotPeaches#1569">discord me</a>.
+                    The <a
+                        target="_blank"
+                        href="https://github.com/iBotPeaches/LeafApp_Infinite/issues"
+                        rel="noreferrer">GitHub</a> will handle it all or
+                    <a
+                        target="_blank"
+                        href="https://twitter.com/iBotPeaches"
+                        rel="noreferrer">tweet me</a> or
+                    <a
+                        target="_blank"
+                        href="https://discordapp.com/users/iBotPeaches#1569"
+                        rel="noreferrer">discord me</a>.
                 </div>
             </article>
             <article class="message is-dark">

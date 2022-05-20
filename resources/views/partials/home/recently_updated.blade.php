@@ -23,7 +23,7 @@
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-32x32">
-                                    <img src="{{ $player->emblem_url }}" />
+                                    <img src="{{ $player->emblem_url }}" alt="{{ $player->gamertag }} Emblem"/>
                                 </p>
                             </figure>
                             <div class="media-content">
