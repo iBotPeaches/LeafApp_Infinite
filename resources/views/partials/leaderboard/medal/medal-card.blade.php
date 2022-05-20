@@ -1,7 +1,7 @@
 <div class="card mb-2">
     <div class="card-image">
         <figure class="image">
-            <img src="{{ $medal->image }}">
+            <img src="{{ $medal->image }}" alt="{{ $medal->name }}">
         </figure>
     </div>
     <div class="card-content">

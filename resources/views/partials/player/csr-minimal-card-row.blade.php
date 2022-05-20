@@ -1,7 +1,7 @@
 <article class="tile is-flex">
     <figure class="media-left">
         <p class="image is-48x48">
-            <img src="{{ $playlist->toCsrObject()->url() }}" />
+            <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}"/>
         </p>
     </figure>
     <div class="media-content">

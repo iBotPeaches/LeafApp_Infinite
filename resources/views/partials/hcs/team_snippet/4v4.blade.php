@@ -21,7 +21,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <img src="{{ $player->emblem_url ?? '' }}">
+                        <img src="{{ $player->emblem_url ?? '' }}" alt="Emblem">
                     </figure>
                 </div>
                 <div class="media-content">

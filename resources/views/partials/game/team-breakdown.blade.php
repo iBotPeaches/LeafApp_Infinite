@@ -7,7 +7,7 @@
             <article class="media">
                 <div class="media-left">
                     <figure class="image is-32x32">
-                        <img src="{{ $team->emblem_url }}" alt="Image">
+                        <img src="{{ $team->emblem_url }}" alt="{{ $team->name }}">
                     </figure>
                 </div>
                 <div class="media-content">
