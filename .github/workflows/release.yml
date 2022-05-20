@@ -28,7 +28,7 @@ jobs:
         with:
           private-key: ${{ secrets.DEPLOY_SECRET_KEY }}
           dep: deploy -vvv
-          deployer-version: "7.0.0-rc.3"
+          deployer-version: "7.0.0-rc.8"
 
       - name: Release
         uses: softprops/action-gh-release@v1
