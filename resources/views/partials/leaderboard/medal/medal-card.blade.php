@@ -5,12 +5,12 @@
         </figure>
     </div>
     <div class="card-content">
-        <p class="title is-4">
+        <h1 class="title is-4">
             {{ $medal->name }}
-        </p>
-        <p class="subtitle is-6">
+        </h1>
+        <h2 class="subtitle is-6">
             {{ $medal->description }}
-        </p>
+        </h2>
         <span class="tag is-{{ $medal->color }}">
             {{ $medal->difficulty->description }}
         </span>

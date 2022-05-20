@@ -12,8 +12,8 @@
                 </figure>
             </div>
             <div class="media-content">
-                <p class="title is-4">{{ $player->gamertag }}</p>
-                <p class="subtitle is-6">{{ $player->service_tag }}</p>
+                <h1 class="title is-4">{{ $player->gamertag }}</h1>
+                <h3 class="subtitle is-6">{{ $player->service_tag }}</h3>
             </div>
         </div>
     </div>

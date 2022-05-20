@@ -5,12 +5,12 @@
 @section('content')
     <section class="hero">
         <div class="hero-body">
-            <p class="title">
+            <h1 class="title">
                 Leaf
-            </p>
-            <p class="subtitle">
+            </h1>
+            <h3 class="subtitle">
                 Tracking Halo Infinite Stats
-            </p>
+            </h3>
         </div>
     </section>
     <div class="columns">
