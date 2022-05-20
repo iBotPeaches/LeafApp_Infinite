@@ -43,7 +43,6 @@ task('app:version:file', function () {
 });
 
 task('app:sitemap', function () {
-    cd('{{release_or_current_path}}');
     artisan('sitemap:generate');
 });
 
