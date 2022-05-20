@@ -38,14 +38,6 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a
-                        target="_blank"
-                        href="https://github.com/iBotPeaches/LeafApp_Infinite"
-                        rel="noreferrer"
-                        class="button is-info"
-                    >
-                        <strong>GitHub</strong>
-                    </a>
                     @guest
                         <a href="{{ route('googleRedirect') }}" class="button is-danger">
                             <strong>Google</strong>
@@ -60,7 +52,7 @@
                             {{ csrf_field() }}
                         </form>
                     @endauth
-                    <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" class="button is-warning">
+                    <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" rel="nofollow" class="button is-warning">
                         <i class="fas fa-coffee"></i>
                     </a>
                 </div>
