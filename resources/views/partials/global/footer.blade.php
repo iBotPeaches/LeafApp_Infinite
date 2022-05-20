@@ -14,6 +14,7 @@ $version = App\Support\System\VersionHelper::getVersionString();
                 <a
                     href="https://github.com/iBotPeaches/LeafApp_Infinite/releases/tag/{{ $version }}"
                     target="_blank"
+                    rel="nofollow"
                 >
                     {{ $version }}
                 </a>
