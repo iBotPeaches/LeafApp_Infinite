@@ -110,8 +110,8 @@ class GamePlayer extends Model implements HasHaloDotApi
 
         $gamePlayer->player()->associate($player);
         $gamePlayer->game()->associate($game);
-        $gamePlayer->pre_csr = Arr::get($payload, $prefix . 'progression.csr.pre_match.value');
-        $gamePlayer->post_csr = Arr::get($payload, $prefix . 'progression.csr.post_match.value');
+        $gamePlayer->pre_csr ??= Arr::get($payload, $prefix . 'progression.csr.pre_match.value');
+        $gamePlayer->post_csr ??= Arr::get($payload, $prefix . 'progression.csr.post_match.value');
         $gamePlayer->rank = Arr::get($payload, $prefix . 'rank');
         $gamePlayer->outcome = Arr::get($payload, $prefix . 'outcome');
         $gamePlayer->was_at_start ??= Arr::get($payload, $prefix . 'participation.presence.beginning');
