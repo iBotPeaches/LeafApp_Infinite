@@ -15,14 +15,20 @@
             <table class="table is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                 <tr>
+                    <th>Place</th>
                     <th>Gamertag</th>
-                    <th>Count</th>
+                    <th>
+                        <img class="image is-32x32" src="{{ $medal->image }}" alt="{{ $medal->name }}">
+                    </th>
                     <th>Time Played (hours)</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($results as $result)
                     <tr>
+                        <td>
+                            @th($result->place)
+                        </td>
                         <td>
                             <article class="media">
                                 <figure class="media-left">
@@ -40,7 +46,7 @@
                             </article>
                         </td>
                         <td>{{ number_format($result->value) }}</td>
-                        <td>{{ $result->time_played }}</td>
+                        <td>{{ number_format($result->time_played) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
