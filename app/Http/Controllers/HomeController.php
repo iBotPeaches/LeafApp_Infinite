@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Medal;
 use App\Models\Player;
+use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -18,7 +21,7 @@ class HomeController extends Controller
                 $query->where('total_score', '>', 0);
             })
             ->orderByDesc('updated_at')
-            ->limit(5)
+            ->limit(9)
             ->get();
 
         $randomMedal = Medal::query()
@@ -26,9 +29,14 @@ class HomeController extends Controller
             ->inRandomOrder()
             ->first();
 
+        $availableAnalytics = Storage::disk('stats')->files();
+        $randomAnalytic = 'App\Support\Analytics\Stats\\' .
+           Str::before($availableAnalytics[array_rand($availableAnalytics)], '.php');
+
         return view('pages.home', [
             'lastUpdated' => $lastUpdated,
-            'medal' => $randomMedal
+            'medal' => $randomMedal,
+            'analytic' => new $randomAnalytic()
         ]);
     }
 
