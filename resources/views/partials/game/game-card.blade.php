@@ -13,7 +13,7 @@
                 </span>
             </div>
         @endif
-        <figure class="image is-4by3">
+        <figure class="image">
             <img src="{{ $game->map->image }}" alt="{{ $game->map->name }}">
         </figure>
     </div>
