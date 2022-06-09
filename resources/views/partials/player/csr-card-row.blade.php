@@ -7,7 +7,7 @@
             </span>
         </div>
         <div class="card-image has-background-light">
-            <figure class="image is-5by4">
+            <figure class="image">
                 <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}">
             </figure>
         </div>
