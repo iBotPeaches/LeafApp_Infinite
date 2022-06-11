@@ -56,9 +56,13 @@
                     <td>
                         <article class="media">
                             <figure class="media-left">
-                                <p class="image is-32x32">
-                                    @include('partials.game.team_emblem_url')
-                                </p>
+                                @if ($gamePlayer->player->is_bot)
+                                    <span class="tag is-dark">BOT</span>
+                                @else
+                                    <p class="image is-32x32">
+                                        @include('partials.game.team_emblem_url')
+                                    </p>
+                                @endif
                             </figure>
                             <div class="media-content">
                                 <div class="content" style="white-space: nowrap">

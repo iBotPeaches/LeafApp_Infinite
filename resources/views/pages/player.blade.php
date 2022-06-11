@@ -22,7 +22,9 @@
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
-            <livewire:update-player-panel :player="$player" :type="$type" />
+            @if (!$player->is_bot)
+                <livewire:update-player-panel :player="$player" :type="$type" />
+            @endif
             @auth
                 @include('partials.player.linkable-card')
             @endauth
