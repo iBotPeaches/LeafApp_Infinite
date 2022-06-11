@@ -23,9 +23,10 @@ class MedalsPage extends Component
     {
         $serviceRecordType = ModeSession::get()->toPlayerRelation();
         $season = SeasonSession::get();
+        $serviceRecord = $this->player->$serviceRecordType()->ofSeason($season)->first();
 
-        $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecordType, $season) {
-            $medal['count'] = $this->player->$serviceRecordType()->ofSeason($season)->first()->medals[$medal->id] ?? 0;
+        $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecord) {
+            $medal['count'] = $serviceRecord->medals[$medal->id] ?? 0;
             return $medal;
         })->sortBy('name');
 
