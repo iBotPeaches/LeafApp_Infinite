@@ -21,6 +21,25 @@ class PullAppearanceTest extends TestCase
 {
     use WithFaker;
 
+    public function testPullAppearanceAsBot(): void
+    {
+        // Arrange
+        Http::fake()->preventStrayRequests();
+
+        $player = Player::factory()->createOne([
+            'is_bot' => true
+        ]);
+
+        // Act
+        PullAppearance::dispatchSync($player);
+
+        // Assert
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'is_bot' => true
+        ]);
+    }
+
     public function testPullingAssetsDownFromWeb(): void
     {
         // Arrange

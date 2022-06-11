@@ -38,6 +38,10 @@ class PullAppearance implements ShouldQueue
 
     public function handle(): void
     {
+        if ($this->player->is_bot) {
+            return;
+        }
+
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 

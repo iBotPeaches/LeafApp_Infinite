@@ -219,15 +219,11 @@ class Game extends Model implements HasHaloDotApi
         if (Arr::has($payload, 'players')) {
             foreach (Arr::get($payload, 'players', []) as $playerData) {
                 $gamertag = Arr::get($playerData, 'details.name');
-
-                // Skip non-players. We don't support bots yet. - iBotPeaches/LeafApp_Infinite/issues/93
-                if (Arr::get($playerData, 'details.type', PlayerType::PLAYER) !== PlayerType::PLAYER) {
-                    continue;
-                }
+                $type = Arr::get($playerData, 'details.type', PlayerType::PLAYER);
 
                 // Skip unresolved users from upstream API. We will force the game not yet updated to
                 // re-process later.
-                if ((bool)Arr::get($playerData, 'details.resolved') === false) {
+                if ($type === PlayerType::PLAYER &&(bool)Arr::get($playerData, 'details.resolved') === false) {
                     $game->was_pulled = false;
                     $game->saveOrFail();
                     continue;
@@ -235,6 +231,7 @@ class Game extends Model implements HasHaloDotApi
 
                 $player = Player::fromGamertag($gamertag);
                 if (! $player->exists) {
+                    $player->is_bot = $type === PlayerType::BOT;
                     $player->saveOrFail();
                     PullAppearance::dispatch($player);
                 }
