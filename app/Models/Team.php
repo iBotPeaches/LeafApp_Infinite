@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 
 /**
  * @property int $id
- * @property string $uuid
+ * @property int $internal_id
  * @property string $name
  * @property string $emblem_url
  * @method static TeamFactory factory(...$parameters)
