@@ -15,6 +15,7 @@ use Database\Factories\GameFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
@@ -83,6 +84,25 @@ class Game extends Model implements HasHaloDotApi
     public function getRouteKeyName(): string
     {
         return 'uuid';
+    }
+
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        $uuid = urldecode($value);
+
+        try {
+            return $this->query()
+                ->where('uuid', $uuid)
+                ->firstOrFail();
+        } catch (ModelNotFoundException) {
+            /** @var InfiniteInterface $client */
+            $client = resolve(InfiniteInterface::class);
+            $client->match($uuid);
+
+            return $this->query()
+                ->where('uuid', $uuid)
+                ->first();
+        }
     }
 
     public function setExperienceAttribute(string $value): void
