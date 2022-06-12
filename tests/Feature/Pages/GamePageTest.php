@@ -3,13 +3,19 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
 
+use App\Jobs\PullAppearance;
+use App\Jobs\PullXuid;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\GameTeam;
 use App\Models\Playlist;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Matches\MockMatchService;
 use Tests\TestCase;
 
 class GamePageTest extends TestCase
@@ -30,6 +36,34 @@ class GamePageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('game-page');
         $response->assertSeeLivewire('update-game-panel');
+    }
+
+    public function testLoadingGamePageWithRawValidUuid(): void
+    {
+        // Arrange
+        Queue::fake([
+            PullAppearance::class,
+            PullXuid::class
+        ]);
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        Team::factory()->createOne(['internal_id' => 0]);
+        Team::factory()->createOne(['internal_id' => 1]);
+
+        $uuid = Arr::get($mockMatchResponse, 'data.0.id');
+
+        // Act
+        $response = $this->get('/game/' . $uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-page');
+
+        Queue::assertPushed(PullAppearance::class);
+        Queue::assertPushed(PullXuid::class);
     }
 
     public function testLoadingGamePageWithOldGame(): void
