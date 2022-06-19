@@ -19,16 +19,17 @@ host('prod')
 
 task('deploy', [
     'deploy:prepare',
+    'artisan:optimize:clear',
     'deploy:vendors',
     'artisan:storage:link',
     'artisan:view:cache',
-    'artisan:config:cache',
     'artisan:migrate',
     'artisan:storage:link',
     'yarn:install',
     'yarn:run:prod',
     'app:version:file',
     'deploy:publish',
+    'artisan:optimize',
     'php-fpm:reload',
     'artisan:queue:restart',
     'app:sitemap',
