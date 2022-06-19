@@ -22,6 +22,7 @@ task('deploy', [
     'artisan:optimize:clear',
     'deploy:vendors',
     'artisan:storage:link',
+    'artisan:view:cache',
     'artisan:migrate',
     'artisan:storage:link',
     'yarn:install',
