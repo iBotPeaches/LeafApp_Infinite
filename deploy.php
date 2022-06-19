@@ -19,9 +19,9 @@ host('prod')
 
 task('deploy', [
     'deploy:prepare',
+    'artisan:optimize:clear',
     'deploy:vendors',
     'artisan:storage:link',
-    'artisan:optimize:clear',
     'artisan:migrate',
     'artisan:storage:link',
     'yarn:install',
