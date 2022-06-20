@@ -27,6 +27,7 @@ task('deploy', [
     'artisan:storage:link',
     'yarn:install',
     'yarn:run:prod',
+    'artisan:horizon:assets',
     'app:version:file',
     'deploy:publish',
     'artisan:optimize',
@@ -45,7 +46,13 @@ task('app:version:file', function () {
 });
 
 task('app:sitemap', function () {
-    artisan('sitemap:generate');
+    cd('{{release_or_current_path}}');
+    run('php artisan sitemap:generate');
+});
+
+task('artisan:horizon:assets', function () {
+    cd('{{release_or_current_path}}');
+    run('php artisan horizon:publish');
 });
 
 after('deploy:failed', 'deploy:unlock');

@@ -87,3 +87,4 @@ Used for optimizing images that come from backdrops and emblems.
 9. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
 10. Socialite - https://github.com/laravel/socialite - MIT
 11. Sitemap - https://github.com/spatie/laravel-sitemap - MIT
+12. Horizon - https://github.com/laravel/horizon - MIT

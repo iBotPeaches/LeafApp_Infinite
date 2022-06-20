@@ -25,5 +25,8 @@ class Kernel extends ConsoleKernel
         $schedule->command(PullMetadata::class)
             ->withoutOverlapping()
             ->twiceDaily();
+
+        $schedule->command('horizon:snapshot')
+            ->everyFiveMinutes();
     }
 }
