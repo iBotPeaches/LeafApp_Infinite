@@ -19,7 +19,6 @@
         "spatie/laravel-sitemap": "^6.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
         "brianium/paratest": "^6.3",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
