@@ -175,7 +175,6 @@ return [
                 QueueName::HCS,
                 QueueName::MATCH_HISTORY,
                 QueueName::RECORDS,
-                QueueName::XUID
             ],
             'balance' => 'auto',
             'maxProcesses' => 1,
@@ -186,13 +185,32 @@ return [
             'timeout' => 500,
             'nice' => 0,
         ],
+        'supervisor-2' => [
+            'connection' => 'redis',
+            'queue' => [
+                QueueName::XUID
+            ],
+            'balance' => 'simple',
+            'maxProcesses' => 1,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 2048,
+            'tries' => 0,
+            'timeout' => 500,
+            'nice' => 0,
+        ],
     ],
 
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'maxProcesses' => 10,
-                'balanceMaxShift' => 1,
+                'maxProcesses' => 20,
+                'balanceMaxShift' => 2,
+                'balanceCooldown' => 3,
+            ],
+            'supervisor-2' => [
+                'maxProcesses' => 1,
+                'balanceMaxShift' => 2,
                 'balanceCooldown' => 3,
             ],
         ],
@@ -200,6 +218,9 @@ return [
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 3,
+            ],
+            'supervisor-2' => [
+                'maxProcesses' => 1,
             ],
         ],
     ],
