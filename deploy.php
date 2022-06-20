@@ -20,7 +20,6 @@ host('prod')
 task('deploy', [
     'deploy:prepare',
     'deploy:vendors',
-    'artisan:optimize:clear',
     'artisan:storage:link',
     'artisan:view:cache',
     'artisan:migrate',
@@ -32,7 +31,7 @@ task('deploy', [
     'deploy:publish',
     'artisan:optimize',
     'php-fpm:reload',
-    'artisan:queue:restart',
+    'artisan:horizon:terminate',
     'app:sitemap',
 ]);
 
