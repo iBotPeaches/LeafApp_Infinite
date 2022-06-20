@@ -19,8 +19,8 @@ host('prod')
 
 task('deploy', [
     'deploy:prepare',
-    'artisan:optimize:clear',
     'deploy:vendors',
+    'artisan:optimize:clear',
     'artisan:storage:link',
     'artisan:view:cache',
     'artisan:migrate',
