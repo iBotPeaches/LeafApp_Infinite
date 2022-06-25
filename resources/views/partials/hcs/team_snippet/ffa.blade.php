@@ -10,7 +10,7 @@
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-32x32">
-                        <img src="{{ $player?->emblem_url ?? '' }}" alt="Emblem">
+                        <img src="{{ $player?->emblem_url ?? asset('images/teams/8.png') }}" alt="Emblem">
                     </figure>
                 </div>
                 <div class="media-content">
