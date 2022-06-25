@@ -54,7 +54,7 @@ class ValidScrimTogglePanelTest extends TestCase
             ->call('createScrim');
 
         Bus::assertDispatchedTimes(PullAppearance::class, 2);
-        Bus::assertDispatchedTimes(PullXuid::class, 4);
+        Bus::assertDispatchedTimes(PullXuid::class, 2);
     }
 
     public function testCreateScrimWithNoGames(): void
