@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 namespace App\Support\Analytics\Stats;
 
+use App\Enums\AnalyticKey;
 use App\Enums\Mode;
-use App\Models\ServiceRecord;
+use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
@@ -16,24 +17,35 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
         return 'Best KDA (50 game min)';
     }
 
+    public function key(): string
+    {
+        return AnalyticKey::BEST_KDA_SR->value;
+    }
+
     public function unit(): string
     {
         return ' KDA';
     }
 
-    public function property(Model $model): string
+    public function property(): string
     {
-        return number_format($model->kda, 2);
+        return 'kda';
     }
 
-    public function result(): ?ServiceRecord
+    public function displayProperty(Analytic $analytic): string
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return number_format($analytic->value, 2);
+    }
+
+    public function results(): ?Collection
+    {
         return $this->builder()
+            ->with(['player'])
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
             ->where('total_matches', '>=', 50)
-            ->orderByDesc('kda')
-            ->first();
+            ->orderByDesc($this->property())
+            ->limit(10)
+            ->get();
     }
 }

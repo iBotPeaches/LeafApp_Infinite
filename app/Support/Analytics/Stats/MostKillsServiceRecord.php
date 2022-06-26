@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 namespace App\Support\Analytics\Stats;
 
+use App\Enums\AnalyticKey;
 use App\Enums\Mode;
-use App\Models\ServiceRecord;
+use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class MostKillsServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
@@ -16,23 +17,34 @@ class MostKillsServiceRecord extends BasePlayerStat implements AnalyticInterface
         return 'Most Kills';
     }
 
+    public function key(): string
+    {
+        return AnalyticKey::MOST_KILLS_SR->value;
+    }
+
     public function unit(): string
     {
         return 'kills';
     }
 
-    public function property(Model $model): string
+    public function property(): string
     {
-        return number_format($model->kills);
+        return 'kills';
     }
 
-    public function result(): ?ServiceRecord
+    public function displayProperty(Analytic $analytic): string
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return number_format($analytic->value);
+    }
+
+    public function results(): ?Collection
+    {
         return $this->builder()
+            ->with(['player'])
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
-            ->orderByDesc('kills')
-            ->first();
+            ->orderByDesc($this->property())
+            ->limit(10)
+            ->get();
     }
 }

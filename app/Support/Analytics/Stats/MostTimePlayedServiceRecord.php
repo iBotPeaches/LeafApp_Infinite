@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 namespace App\Support\Analytics\Stats;
 
+use App\Enums\AnalyticKey;
 use App\Enums\Mode;
-use App\Models\ServiceRecord;
+use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
@@ -16,23 +17,34 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
         return 'Most Time Played';
     }
 
+    public function key(): string
+    {
+        return AnalyticKey::MOST_TIME_PLAYED_SR->value;
+    }
+
     public function unit(): string
     {
         return ' hours';
     }
 
-    public function property(Model $model): string
+    public function property(): string
     {
-        return (string)$model->time_played;
+        return 'total_seconds_played';
     }
 
-    public function result(): ?ServiceRecord
+    public function displayProperty(Analytic $analytic): string
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return number_format(now()->addSeconds((int)$analytic->value)->diffInHours());
+    }
+
+    public function results(): ?Collection
+    {
         return $this->builder()
+            ->with(['player'])
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
-            ->orderByDesc('total_seconds_played')
-            ->first();
+            ->orderByDesc($this->property())
+            ->limit(10)
+            ->get();
     }
 }
