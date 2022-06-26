@@ -40,7 +40,7 @@ class Analytic extends Model
 
     public function getStatAttribute(): AnalyticInterface
     {
-        self::getStatFromEnum(AnalyticKey::tryFrom($this->key));
+        return self::getStatFromEnum(AnalyticKey::tryFrom($this->key));
     }
 
     public static function getStatFromEnum(AnalyticKey $key): AnalyticInterface
