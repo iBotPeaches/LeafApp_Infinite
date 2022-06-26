@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use UnexpectedValueException;
 
 /**
  * @property int $id
@@ -43,7 +44,7 @@ class Analytic extends Model
         return self::getStatFromEnum(AnalyticKey::tryFrom($this->key));
     }
 
-    public static function getStatFromEnum(AnalyticKey $key): AnalyticInterface
+    public static function getStatFromEnum(?AnalyticKey $key): AnalyticInterface
     {
         return match ($key) {
             AnalyticKey::MOST_TIME_PLAYED_SR => new MostTimePlayedServiceRecord(),
@@ -54,6 +55,7 @@ class Analytic extends Model
             AnalyticKey::BEST_ACCURACY_SR => new BestAccuracyServiceRecord(),
             AnalyticKey::BEST_KD_SR => new BestKDServiceRecord(),
             AnalyticKey::BEST_KDA_SR => new BestKDAServiceRecord(),
+            default => throw new UnexpectedValueException('Unknown value in getStatFromEnum')
         };
     }
 

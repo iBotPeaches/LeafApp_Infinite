@@ -42,9 +42,9 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
-    private function handleGamePlayerResults(Collection $gamePlayers): void
+    private function handleGamePlayerResults(?Collection $gamePlayers): void
     {
-        $gamePlayers->each(function (GamePlayer $gamePlayer) {
+        $gamePlayers?->each(function (GamePlayer $gamePlayer) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $gamePlayer->{$this->analytic->property()};
@@ -54,9 +54,9 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
-    private function handleServiceRecordResults(Collection $serviceRecords): void
+    private function handleServiceRecordResults(?Collection $serviceRecords): void
     {
-        $serviceRecords->each(function (ServiceRecord $serviceRecord) {
+        $serviceRecords?->each(function (ServiceRecord $serviceRecord) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $serviceRecord->{$this->analytic->property()};
