@@ -25,7 +25,7 @@ class RefreshAnalytics extends Command
             /** @var AnalyticInterface $analyticClass */
             $analyticClass = new $analytic();
 
-            ProcessAnalytic::dispatch($analyticClass);
+            ProcessAnalytic::dispatchSync($analyticClass);
         }
 
         return CommandAlias::SUCCESS;
