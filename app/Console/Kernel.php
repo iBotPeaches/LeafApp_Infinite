@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(RefreshAnalytics::class)
             ->withoutOverlapping()
-            ->hourly();
+            ->daily();
 
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes();
