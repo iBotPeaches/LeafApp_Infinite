@@ -34,11 +34,14 @@ class ProcessAnalytic implements ShouldQueue
 
             $results = $this->analytic->results();
 
-            match ($this->analytic->type()->value) {
-                AnalyticType::PLAYER => $this->handleServiceRecordResults($results),
-                AnalyticType::GAME => $this->handleGamePlayerResults($results),
-                default => null
-            };
+            switch ($this->analytic->type()) {
+                case AnalyticType::PLAYER():
+                    $this->handleServiceRecordResults($results);
+                    break;
+                case AnalyticType::GAME():
+                    $this->handleGamePlayerResults($results);
+                    break;
+            }
         });
     }
 
