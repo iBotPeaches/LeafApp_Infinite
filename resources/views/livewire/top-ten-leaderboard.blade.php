@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Str;
+
 /** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[] $results */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
 ?>
@@ -14,7 +16,7 @@
                     <tr>
                         <th>Place</th>
                         <th>Gamertag</th>
-                        <th>Value</th>
+                        <th>{{ Str::title($analyticClass->unit()) }}</th>
                     </tr>
                 </thead>
                 <tbody>
