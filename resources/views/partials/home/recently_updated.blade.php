@@ -12,8 +12,7 @@
             <thead>
             <tr>
                 <th>Gamertag</th>
-                <th>Time Played (hours)</th>
-                <th>Avg. Score</th>
+                <th>Tag</th>
             </tr>
             </thead>
             <tbody>
@@ -35,8 +34,7 @@
                             </div>
                         </article>
                     </td>
-                    <td>{{ $player->serviceRecord->time_played }}</td>
-                    <td>{{ number_format($player->serviceRecord->average_score, 2) }}</td>
+                    <td>{{ $player->service_tag }}</td>
                 </tr>
             @endforeach
             </tbody>

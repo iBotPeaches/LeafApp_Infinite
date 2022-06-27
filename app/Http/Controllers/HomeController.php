@@ -18,9 +18,7 @@ class HomeController extends Controller
     {
         $lastUpdated = Player::query()
             ->with('serviceRecord')
-            ->whereHas('serviceRecord', function (Builder $query) {
-                $query->where('total_score', '>', 0);
-            })
+            ->whereNotNull('emblem_url')
             ->orderByDesc('updated_at')
             ->limit(8)
             ->get();
