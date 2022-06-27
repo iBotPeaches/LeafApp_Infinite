@@ -8,6 +8,4 @@
         :bracket="$bracket"
         :round="$round"
     ></livewire:championship-bracket>
-    <br />
-    @include('partials.global.under_construction')
 @endsection
