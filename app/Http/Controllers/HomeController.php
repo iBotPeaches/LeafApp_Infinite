@@ -22,7 +22,7 @@ class HomeController extends Controller
                 $query->where('total_score', '>', 0);
             })
             ->orderByDesc('updated_at')
-            ->limit(9)
+            ->limit(8)
             ->get();
 
         $randomMedal = Medal::query()
