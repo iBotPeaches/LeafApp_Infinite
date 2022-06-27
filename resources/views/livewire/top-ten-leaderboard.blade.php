@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Str;
+use App\Enums\AnalyticType;
 
 /** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[] $results */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
@@ -16,6 +17,9 @@ use Illuminate\Support\Str;
                     <tr>
                         <th>Place</th>
                         <th>Gamertag</th>
+                        @if ($analyticClass->type()->is(AnalyticType::GAME()))
+                            <th>Game</th>
+                        @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
                     </tr>
                 </thead>
@@ -41,6 +45,13 @@ use Illuminate\Support\Str;
                                 </div>
                             </article>
                         </td>
+                        @if ($analyticClass->type()->is(AnalyticType::GAME()))
+                            <td>
+                                <a href="{{ route('game', [$result->game]) }}">
+                                    {{ $result->game->name }}
+                                </a>
+                            </td>
+                        @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
                     </tr>
                 @endforeach
