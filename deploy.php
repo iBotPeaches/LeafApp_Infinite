@@ -33,7 +33,6 @@ task('deploy', [
     'artisan:optimize',
     'php-fpm:reload',
     'artisan:horizon:terminate',
-    'app:sitemap',
 ]);
 
 task('yarn:run:prod', function () {
