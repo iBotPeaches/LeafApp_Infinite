@@ -30,7 +30,9 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 Route::redirect('sitemap.xml', '/sitemaps/sitemap.xml', Response::HTTP_PERMANENTLY_REDIRECT);
 
 // Leaderboard
-Route::get('/leaderboards/medal', [LeaderboardController::class, 'list'])->name('medalLeaderboards');
+Route::get('/leaderboards/top-ten', [LeaderboardController::class, 'topTenList'])->name('topTenLeaderboards');
+Route::get('/leaderboards/top-ten/{key}', [LeaderboardController::class, 'topTen'])->name('topTenLeaderboard');
+Route::get('/leaderboards/medal', [LeaderboardController::class, 'medalList'])->name('medalLeaderboards');
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Scrim

@@ -19,6 +19,7 @@
             @if ($medal)
                 @include('partials.home.random_medal')
             @endif
+            @include('partials.home.random_stat')
         </div>
         <div class="column">
             @include('partials.home.recently_updated')

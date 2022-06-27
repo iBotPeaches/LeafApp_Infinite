@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\PullMetadata;
-use App\Console\Commands\SitemapGenerate;
+use App\Console\Commands\RefreshAnalytics;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +25,10 @@ class Kernel extends ConsoleKernel
         $schedule->command(PullMetadata::class)
             ->withoutOverlapping()
             ->twiceDaily();
+
+        $schedule->command(RefreshAnalytics::class)
+            ->withoutOverlapping()
+            ->hourly();
 
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes();
