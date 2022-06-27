@@ -7,6 +7,4 @@
         :championship="$championship"
         :matchup="$matchup"
     ></livewire:championship-matchup>
-    <br />
-    @include('partials.global.under_construction')
 @endsection

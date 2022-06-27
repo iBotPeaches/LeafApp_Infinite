@@ -4,6 +4,4 @@
 
 @section('content')
     <livewire:championships-table></livewire:championships-table>
-    <br />
-    @include('partials.global.under_construction')
 @endsection
