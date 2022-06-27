@@ -14,6 +14,7 @@ use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use Carbon\Carbon;
+use Database\Factories\AnalyticFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,7 @@ use UnexpectedValueException;
  * @property-read ?Game $game
  * @property-read Player $player
  * @property-read AnalyticInterface $stat
+ * @method static AnalyticFactory factory(...$parameters)
  */
 class Analytic extends Model
 {
