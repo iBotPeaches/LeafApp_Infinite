@@ -1,5 +1,5 @@
 @if ($player->is_bot)
-    <div class="card has-background-success-light mb-2">
+    <div class="card has-background-grey-light mb-2">
         <div class="card-content">
             <h1 class="title is-4">
                 <span class="tag is-dark">BOT</span>&nbsp;{{ $player->gamertag }}
@@ -8,7 +8,7 @@
         </div>
     </div>
 @else
-    <div class="card has-background-success-light mb-2">
+    <div class="card {{ $player->is_cheater ? 'has-background-danger-light' : 'has-background-success-light' }} mb-2">
         <div class="card-image">
             <figure class="image is-4by3">
                 <img src="{{ $player->backdrop_url }}" alt="{{ $player->gamertag }} Backdrop Emblem">
