@@ -39,6 +39,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $service_tag
  * @property boolean $is_private
  * @property boolean $is_bot
+ * @property boolean $is_cheater
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled

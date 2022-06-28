@@ -34,6 +34,8 @@ class MedalsLeaderboard extends Component
 
         $query = ServiceRecord::query()
             ->with('player')
+            ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
+            ->where('is_cheater', false)
             ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC) AS place,
                 CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) as value,
                 mode, total_seconds_played, player_id')

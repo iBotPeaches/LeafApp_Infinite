@@ -22,6 +22,11 @@
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
+            @if ($player->is_cheater)
+                <div class="notification is-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
+                </div>
+            @endif
             @if (!$player->is_bot)
                 <livewire:update-player-panel :player="$player" :type="$type" />
             @endif

@@ -39,7 +39,10 @@ class MostKillsInRankedGame extends BaseGameStat implements AnalyticInterface
     public function results(): ?Collection
     {
         return $this->builder()
+            ->select('game_players.*')
             ->with(['game', 'player'])
+            ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
+            ->where('players.is_cheater', false)
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('playlists.is_ranked', true)
