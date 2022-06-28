@@ -40,7 +40,10 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
     public function results(): ?Collection
     {
         return $this->builder()
+            ->select('service_records.*')
             ->with(['player'])
+            ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
+            ->where('is_cheater', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
             ->where('total_matches', '>=', 50)
