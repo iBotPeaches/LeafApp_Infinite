@@ -7,7 +7,6 @@ use App\Enums\Mode;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
-use App\Models\Playlist;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Foundation\Testing\WithFaker;

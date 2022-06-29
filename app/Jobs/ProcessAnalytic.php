@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Enums\AnalyticType;
 use App\Enums\QueueName;
 use App\Models\Analytic;
+use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
@@ -41,7 +42,21 @@ class ProcessAnalytic implements ShouldQueue
                 case AnalyticType::GAME():
                     $this->handleGamePlayerResults($results);
                     break;
+                case AnalyticType::ONLY_GAME():
+                    $this->handleGameResults($results);
+                    break;
             }
+        });
+    }
+
+    private function handleGameResults(?Collection $games): void
+    {
+        $games?->each(function (Game $game) {
+            $analytic = new Analytic();
+            $analytic->key = $this->analytic->key();
+            $analytic->value = (float) $game->{$this->analytic->property()};
+            $analytic->game()->associate($game);
+            $analytic->saveOrFail();
         });
     }
 

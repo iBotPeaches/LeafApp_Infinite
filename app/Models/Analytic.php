@@ -8,6 +8,8 @@ use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\Stats\BestAccuracyServiceRecord;
 use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
+use App\Support\Analytics\Stats\HighestScoreInRankedGame;
+use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
@@ -24,12 +26,12 @@ use UnexpectedValueException;
  * @property int $id
  * @property string $key
  * @property ?int $game_id
- * @property int $player_id
+ * @property ?int $player_id
  * @property float $value
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read ?Game $game
- * @property-read Player $player
+ * @property-read ?Player $player
  * @property-read AnalyticInterface $stat
  * @method static AnalyticFactory factory(...$parameters)
  */
@@ -52,6 +54,8 @@ class Analytic extends Model
             AnalyticKey::MOST_TIME_PLAYED_SR => new MostTimePlayedServiceRecord(),
             AnalyticKey::MOST_KILLS_SR => new MostKillsServiceRecord(),
             AnalyticKey::MOST_KILLS_RANKED_GAME => new MostKillsInRankedGame(),
+            AnalyticKey::HIGHEST_SCORE_RANKED_GAME => new HighestScoreInRankedGame(),
+            AnalyticKey::LONGEST_MATCHMAKING_GAME => new LongestMatchmakingGame(),
             AnalyticKey::MOST_BETRAYALS_SR => new MostBetrayalsServiceRecord(),
             AnalyticKey::MOST_MEDALS_SR => new MostMedalsServiceRecord(),
             AnalyticKey::BEST_ACCURACY_SR => new BestAccuracyServiceRecord(),

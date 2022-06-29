@@ -16,8 +16,10 @@ use App\Enums\AnalyticType;
                 <thead>
                     <tr>
                         <th>Place</th>
-                        <th>Gamertag</th>
-                        @if ($analyticClass->type()->is(AnalyticType::GAME()))
+                        @if ($analyticClass->type()->isNot(AnalyticType::ONLY_GAME()))
+                            <th>Gamertag</th>
+                        @endif
+                        @if ($analyticClass->type()->isGame())
                             <th>Game</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
@@ -29,23 +31,25 @@ use App\Enums\AnalyticType;
                         <td>
                             @th($loop->iteration)
                         </td>
-                        <td>
-                            <article class="media">
-                                <figure class="media-left">
-                                    <p class="image is-32x32">
-                                        <img src="{{ $result->player?->emblem_url }}" alt="emblem">
-                                    </p>
-                                </figure>
-                                <div class="media-content">
-                                    <div class="content" style="white-space: nowrap">
-                                        <a href="{{ route('player', [$result->player]) }}">
-                                            {{ $result->player->gamertag }}
-                                        </a>
+                        @if ($analyticClass->type()->isNot(AnalyticType::ONLY_GAME()))
+                            <td>
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <p class="image is-32x32">
+                                            <img src="{{ $result->player?->emblem_url }}" alt="emblem">
+                                        </p>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content" style="white-space: nowrap">
+                                            <a href="{{ route('player', [$result->player]) }}">
+                                                {{ $result->player->gamertag }}
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </article>
-                        </td>
-                        @if ($analyticClass->type()->is(AnalyticType::GAME()))
+                                </article>
+                            </td>
+                        @endif
+                        @if ($analyticClass->type()->isGame())
                             <td>
                                 <a href="{{ route('game', [$result->game]) }}">
                                     {{ $result->game->name }}
