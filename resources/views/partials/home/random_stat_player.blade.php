@@ -1,5 +1,5 @@
 <?php
-/** @var App\Models\serviceRecord $record */
+/** @var App\Models\Analytic $record */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
 ?>
 <section class="mt-3 card">
