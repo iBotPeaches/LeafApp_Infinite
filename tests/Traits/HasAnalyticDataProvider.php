@@ -6,6 +6,8 @@ namespace Tests\Traits;
 use App\Support\Analytics\Stats\BestAccuracyServiceRecord;
 use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
+use App\Support\Analytics\Stats\HighestScoreInRankedGame;
+use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
@@ -40,6 +42,12 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostTimePlayedServiceRecord(),
+            ],
+            [
+                new LongestMatchmakingGame(),
+            ],
+            [
+                new HighestScoreInRankedGame(),
             ]
         ];
     }
