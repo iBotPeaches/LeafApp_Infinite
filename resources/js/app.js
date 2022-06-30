@@ -1,3 +1,3 @@
-require('./bootstrap');
-require('./partials/navbar');
-require('./partials/dates');
+import './bootstrap'
+import './partials/navbar';
+import './partials/dates';
