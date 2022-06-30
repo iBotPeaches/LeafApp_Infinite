@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <livewire:styles />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -20,7 +20,6 @@
         @yield('content')
     </main>
     @include('partials.global.footer')
-    <script src="{{ mix('js/app.js') }}"></script>
     <livewire:scripts />
 </body>
 </html>
