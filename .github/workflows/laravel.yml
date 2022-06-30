@@ -55,7 +55,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Asset Packaging
-        run: yarn run dev
+        run: yarn run build
 
       - name: Asset Storage Link
         run: php artisan storage:link
