@@ -5,7 +5,7 @@ $version = App\Support\System\VersionHelper::getVersionString();
     <div class="content has-text-centered">
         @if (config('services.autocode.warning_message'))
             <div class="notification is-warning">
-                {{ config('services.autocode.warning_message') }}
+                {!! config('services.autocode.warning_message') !!}
             </div>
         @endif
         <p>
