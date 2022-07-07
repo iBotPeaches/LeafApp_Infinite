@@ -42,7 +42,7 @@ class GameController extends Controller
         $writer->insertOne(ExportGame::$header);
         $writer->insertAll($data);
 
-        $title = Str::slug($game->name . '-export') . '.csv';
+        $title = Str::slug($game->name . '-' . $game->occurred_at->toCookieString() . '-export') . '.csv';
 
         return response()->streamDownload(function () use ($writer) {
             echo $writer->toString();
