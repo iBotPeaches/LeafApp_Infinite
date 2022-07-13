@@ -33,6 +33,10 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     public function handle(): void
     {
+        if (config('services.autocode.disabled')) {
+            return;
+        }
+
         $this->client = resolve(InfiniteInterface::class);
 
         // 1 - Find players that have GT matched
