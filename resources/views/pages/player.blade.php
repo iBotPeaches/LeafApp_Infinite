@@ -27,8 +27,10 @@
                     <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
                 </div>
             @endif
-            @if (!$player->is_bot)
-                <livewire:update-player-panel :player="$player" :type="$type" />
+            @if (!config('services.autocode.disabled'))
+                @if (!$player->is_bot)
+                    <livewire:update-player-panel :player="$player" :type="$type" />
+                @endif
             @endif
             @auth
                 @include('partials.player.linkable-card')
