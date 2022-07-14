@@ -1,10 +1,11 @@
 <?php
 $version = App\Support\System\VersionHelper::getVersionString();
+$color = config('services.autocode.disabled') ? 'is-danger' : 'is-warning';
 ?>
 <footer class="footer mt-auto">
     <div class="content has-text-centered">
         @if (config('services.autocode.warning_message'))
-            <div class="notification is-warning">
+            <div class="notification {{ $color }}">
                 {!! config('services.autocode.warning_message') !!}
             </div>
         @endif

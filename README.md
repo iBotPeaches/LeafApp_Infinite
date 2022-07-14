@@ -29,10 +29,14 @@ _Another hobby stat site for another Halo game_
 #### HaloDotApi (Autocode)
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
+ * `AUTOCODE_DISABLED` - Defaults to false, if toggled disables all Autocode API calls.
  * `AUTOCODE_KEY` - The API key given [Autocode](https://autocode.com/lib/halo/)
  * `AUTOCODE_DOMAIN` - The base domain for Autocode
  * `AUTOCODE_VERSION` - The version of the Autocode to use
  * `AUTOCODE_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
+ * `AUTOCODE_CURRENT_SEASON` - Current Halo Infinite Season
+ * `AUTOCODE_CURRENT_SEASON_VERSION` - Current Halo Infinite Season Version
+ * `AUTOCODE_WARNING_MESSAGE` - If populated, puts site into warning mode.
 
 #### XboxApi
 Used for resolving XUIDs so renames are possible without data loss.

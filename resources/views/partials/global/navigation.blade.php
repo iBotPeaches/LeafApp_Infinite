@@ -1,5 +1,7 @@
 <?php
-    $color = is_null(config('services.autocode.warning_message')) ? 'is-success' : 'is-warning';
+    $color = config('services.autocode.disabled')
+        ? 'is-danger'
+        : (is_null(config('services.autocode.warning_message')) ? 'is-success' : 'is-warning');
 ?>
 <nav class="navbar is-fixed-top {{ $color }}" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">

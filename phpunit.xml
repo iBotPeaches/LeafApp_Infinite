@@ -34,5 +34,6 @@
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
         <server name="XBOXAPI_ENABLED" value="true"/>
+        <server name="AUTOCODE_DISABLED" value="false"/>
     </php>
 </phpunit>
