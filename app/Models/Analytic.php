@@ -10,9 +10,13 @@ use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
+use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
+use App\Support\Analytics\Stats\MostDeathsInGame;
+use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
+use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use Carbon\Carbon;
@@ -54,6 +58,10 @@ class Analytic extends Model
             AnalyticKey::MOST_TIME_PLAYED_SR => new MostTimePlayedServiceRecord(),
             AnalyticKey::MOST_KILLS_SR => new MostKillsServiceRecord(),
             AnalyticKey::MOST_KILLS_RANKED_GAME => new MostKillsInRankedGame(),
+            AnalyticKey::MOST_ASSISTS_GAME => new MostAssistsInGame(),
+            AnalyticKey::MOST_DEATHS_GAME => new MostDeathsInGame(),
+            AnalyticKey::MOST_KILLS_GAME => new MostKillsInGame(),
+            AnalyticKey::MOST_MEDALS_GAME => new MostMedalsInGame(),
             AnalyticKey::HIGHEST_SCORE_RANKED_GAME => new HighestScoreInRankedGame(),
             AnalyticKey::LONGEST_MATCHMAKING_GAME => new LongestMatchmakingGame(),
             AnalyticKey::MOST_BETRAYALS_SR => new MostBetrayalsServiceRecord(),

@@ -8,9 +8,13 @@ use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
+use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
+use App\Support\Analytics\Stats\MostDeathsInGame;
+use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
+use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 
@@ -48,6 +52,18 @@ trait HasAnalyticDataProvider
             ],
             [
                 new HighestScoreInRankedGame(),
+            ],
+            [
+                new MostKillsInGame(),
+            ],
+            [
+                new MostDeathsInGame(),
+            ],
+            [
+                new MostAssistsInGame(),
+            ],
+            [
+                new MostMedalsInGame(),
             ]
         ];
     }
