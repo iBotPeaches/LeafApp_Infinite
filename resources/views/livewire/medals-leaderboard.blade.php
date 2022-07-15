@@ -46,7 +46,14 @@
                             </article>
                         </td>
                         <td>{{ number_format($result->value) }}</td>
-                        <td>{{ number_format($result->time_played) }}</td>
+                        <td>
+                            <span
+                                class="has-tooltip-arrow"
+                                data-tooltip="{{ number_format($result->value / $result->time_played, 2) }} medals per hour."
+                            >
+                                {{ number_format($result->time_played) }}
+                            </span>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
