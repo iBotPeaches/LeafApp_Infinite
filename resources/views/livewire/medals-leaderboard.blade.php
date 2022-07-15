@@ -49,7 +49,7 @@
                         <td>
                             <span
                                 class="has-tooltip-arrow"
-                                data-tooltip="{{ number_format($result->value / $result->time_played, 2) }} medals per hour."
+                                data-tooltip="{{ number_format($result->value / min($result->time_played, 1), 2) }} medals per hour."
                             >
                                 {{ number_format($result->time_played) }}
                             </span>
