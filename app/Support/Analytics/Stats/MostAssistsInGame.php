@@ -43,6 +43,7 @@ class MostAssistsInGame extends BaseGameStat implements AnalyticInterface
             ->with(['game', 'player'])
             ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
             ->where('players.is_cheater', false)
+            ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->orderByDesc($this->property())
             ->limit(10)
