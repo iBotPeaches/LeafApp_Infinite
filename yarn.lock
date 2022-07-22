@@ -1424,9 +1424,9 @@ acorn-import-assertions@^1.7.6:
   integrity sha512-m7VZ3jwz4eK6A4Vtt8Ew1/mNbP24u0FhdyfA7fSvnJR6LMdfOYnmuIrrJAgrYfYJ10F/otaHTtrtrtmHdMNzEw==
 
 acorn@^8.4.1, acorn@^8.5.0:
-  version "8.7.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
-  integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
+  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
 adjust-sourcemap-loader@^4.0.0:
   version "4.0.0"
@@ -1841,9 +1841,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001366:
-  version "1.0.30001367"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001367.tgz#2b97fe472e8fa29c78c5970615d7cd2ee414108a"
-  integrity sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==
+  version "1.0.30001368"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001368.tgz#c5c06381c6051cd863c45021475434e81936f713"
+  integrity sha512-wgfRYa9DenEomLG/SdWgQxpIyvdtH3NW8Vq+tB6AwR9e56iOIcu1im5F/wNdDf04XlKHXqIx4N8Jo0PemeBenQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -2441,9 +2441,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.188:
-  version "1.4.195"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.195.tgz#139b2d95a42a3f17df217589723a1deac71d1473"
-  integrity sha512-vefjEh0sk871xNmR5whJf9TEngX+KTKS3hOHpjoMpauKkwlGwtMz1H8IaIjAT/GNnX0TbGwAdmVoXCAzXf+PPg==
+  version "1.4.198"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.198.tgz#36a8e7871046f7f94c01dc0133912fd5cf226c6a"
+  integrity sha512-jwqQPdKGeAslcq8L+1SZZgL6uDiIDmTe9Gq4brsdWAH27y7MJ2g9Ue6MyST3ogmSM49EAQP7bype1V5hsuNrmQ==
 
 elliptic@^6.5.3:
   version "6.5.4"
