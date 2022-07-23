@@ -236,7 +236,7 @@ class ApiClient implements InfiniteInterface
                 continue;
             }
 
-            $data = $response->json();
+            $data = $response->throw()->json();
 
             $item = Arr::get($data, 'data');
             $item['_leaf']['player'] = $player;
