@@ -38,6 +38,7 @@ use Illuminate\Support\Collection;
  * @property int $assists
  * @property int $betrayals
  * @property int $suicides
+ * @property int|null $max_spree
  * @property int $vehicle_destroys
  * @property int $vehicle_hijacks
  * @property int $medal_count
@@ -126,6 +127,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->assists = Arr::get($payload, $prefix . 'stats.core.summary.assists');
         $gamePlayer->betrayals = Arr::get($payload, $prefix . 'stats.core.summary.betrayals');
         $gamePlayer->suicides = Arr::get($payload, $prefix . 'stats.core.summary.suicides');
+        $gamePlayer->max_spree = Arr::get($payload, $prefix . 'stats.core.summary.max_killing_spree');
         $gamePlayer->vehicle_destroys ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.destroys');
         $gamePlayer->vehicle_hijacks ??= Arr::get($payload, $prefix . 'stats.core.summary.vehicles.hijacks');
         $gamePlayer->medal_count = Arr::get($payload, $prefix . 'stats.core.summary.medals');
