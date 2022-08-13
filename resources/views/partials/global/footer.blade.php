@@ -32,18 +32,18 @@ $color = config('services.autocode.disabled') ? 'is-danger' : 'is-warning';
             >Connor</a>).
 
             <span class="is-hidden-mobile">
-                The <span class="has-tooltip-arrow" data-tooltip="100% Test Coverage!">source code</span> is at
+                <span class="has-tooltip-arrow" data-tooltip="100% Test Coverage!">Source code</span> is at
                 <a
                     target="_blank"
                     href="https://github.com/iBotPeaches/LeafApp_Infinite"
                     rel="noreferrer"
                 >GitHub</a>.
 
-                API Data from <a
+                API via <a
                     target="_blank"
                     href="https://autocode.com/lib/halo/"
                     rel="noreferrer"
-                >HaloDotAPI (Autocode)</a>.
+                >HaloDotAPI (Autocode {{ config('services.autocode.version') }})</a>.
             </span>
         </p>
     </div>
