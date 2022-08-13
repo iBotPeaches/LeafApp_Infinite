@@ -223,16 +223,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.10.1",
+            "version": "0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "de846578401f4e58f911b3afeb62ced56365ed87"
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/de846578401f4e58f911b3afeb62ced56365ed87",
-                "reference": "de846578401f4e58f911b3afeb62ced56365ed87",
+                "url": "https://api.github.com/repos/brick/math/zipball/459f2781e1a08d52ee56b0b1444086e038561e3f",
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f",
                 "shasum": ""
             },
             "require": {
@@ -267,7 +267,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.10.1"
+                "source": "https://github.com/brick/math/tree/0.10.2"
             },
             "funding": [
                 {
@@ -275,7 +275,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-01T22:54:31+00:00"
+            "time": "2022-08-10T22:54:19+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1000,16 +1000,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.3.7",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a"
+                "reference": "118a360e9437e88d49024f36283c8bcbd76105f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/118a360e9437e88d49024f36283c8bcbd76105f5",
+                "reference": "118a360e9437e88d49024f36283c8bcbd76105f5",
                 "shasum": ""
             },
             "require": {
@@ -1017,21 +1017,21 @@
                 "doctrine/cache": "^1.11|^2.0",
                 "doctrine/deprecations": "^0.5.3|^1",
                 "doctrine/event-manager": "^1.0",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "psr/cache": "^1|^2|^3",
                 "psr/log": "^1|^2|^3"
             },
             "require-dev": {
                 "doctrine/coding-standard": "9.0.0",
                 "jetbrains/phpstorm-stubs": "2022.1",
-                "phpstan/phpstan": "1.7.13",
-                "phpstan/phpstan-strict-rules": "^1.2",
-                "phpunit/phpunit": "9.5.20",
-                "psalm/plugin-phpunit": "0.16.1",
-                "squizlabs/php_codesniffer": "3.7.0",
-                "symfony/cache": "^5.2|^6.0",
-                "symfony/console": "^2.7|^3.0|^4.0|^5.0|^6.0",
-                "vimeo/psalm": "4.23.0"
+                "phpstan/phpstan": "1.8.2",
+                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpunit/phpunit": "9.5.21",
+                "psalm/plugin-phpunit": "0.17.0",
+                "squizlabs/php_codesniffer": "3.7.1",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/console": "^4.4|^5.4|^6.0",
+                "vimeo/psalm": "4.24.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -1091,7 +1091,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.3.7"
+                "source": "https://github.com/doctrine/dbal/tree/3.4.0"
             },
             "funding": [
                 {
@@ -1107,7 +1107,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-13T21:43:03+00:00"
+            "time": "2022-08-06T20:35:57+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -2296,16 +2296,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.23.0",
+            "version": "v9.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c4eea9060d847b5c93957b203caa8f57544a76ab"
+                "reference": "053840f579cf01d353d81333802afced79b1c0af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c4eea9060d847b5c93957b203caa8f57544a76ab",
-                "reference": "c4eea9060d847b5c93957b203caa8f57544a76ab",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/053840f579cf01d353d81333802afced79b1c0af",
+                "reference": "053840f579cf01d353d81333802afced79b1c0af",
                 "shasum": ""
             },
             "require": {
@@ -2472,7 +2472,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-08-02T14:24:44+00:00"
+            "time": "2022-08-09T13:43:22+00:00"
         },
         {
             "name": "laravel/horizon",
@@ -2677,16 +2677,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.5.3",
+            "version": "v5.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "9dfc76b31ee041c45a7cae86f23339784abde46d"
+                "reference": "3eec261bf83690dd85812587457f093e3156dca6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/9dfc76b31ee041c45a7cae86f23339784abde46d",
-                "reference": "9dfc76b31ee041c45a7cae86f23339784abde46d",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/3eec261bf83690dd85812587457f093e3156dca6",
+                "reference": "3eec261bf83690dd85812587457f093e3156dca6",
                 "shasum": ""
             },
             "require": {
@@ -2742,7 +2742,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2022-07-18T13:51:19+00:00"
+            "time": "2022-08-08T13:27:06+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -3373,16 +3373,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.10.6",
+            "version": "v2.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "020ad095cf1239138b097d22b584e2701ec3edfb"
+                "reference": "fa0441bf82f1674beecb3a8ad8a4ae428736ed18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/020ad095cf1239138b097d22b584e2701ec3edfb",
-                "reference": "020ad095cf1239138b097d22b584e2701ec3edfb",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/fa0441bf82f1674beecb3a8ad8a4ae428736ed18",
+                "reference": "fa0441bf82f1674beecb3a8ad8a4ae428736ed18",
                 "shasum": ""
             },
             "require": {
@@ -3434,7 +3434,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.10.6"
+                "source": "https://github.com/livewire/livewire/tree/v2.10.7"
             },
             "funding": [
                 {
@@ -3442,7 +3442,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-19T02:54:20+00:00"
+            "time": "2022-08-08T13:52:53+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -3617,16 +3617,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.60.0",
+            "version": "2.61.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "00a259ae02b003c563158b54fb6743252b638ea6"
+                "reference": "bdf4f4fe3a3eac4de84dbec0738082a862c68ba6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/00a259ae02b003c563158b54fb6743252b638ea6",
-                "reference": "00a259ae02b003c563158b54fb6743252b638ea6",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bdf4f4fe3a3eac4de84dbec0738082a862c68ba6",
+                "reference": "bdf4f4fe3a3eac4de84dbec0738082a862c68ba6",
                 "shasum": ""
             },
             "require": {
@@ -3715,7 +3715,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-27T15:57:48+00:00"
+            "time": "2022-08-06T12:41:24+00:00"
         },
         {
             "name": "nette/schema",
@@ -5156,16 +5156,16 @@
         },
         {
             "name": "spatie/image",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "35d2082fa2daa41fc0da8dfad9b930be7c4c5b27"
+                "reference": "c2dc137c52d17bf12aff94ad051370c0f106b322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/35d2082fa2daa41fc0da8dfad9b930be7c4c5b27",
-                "reference": "35d2082fa2daa41fc0da8dfad9b930be7c4c5b27",
+                "url": "https://api.github.com/repos/spatie/image/zipball/c2dc137c52d17bf12aff94ad051370c0f106b322",
+                "reference": "c2dc137c52d17bf12aff94ad051370c0f106b322",
                 "shasum": ""
             },
             "require": {
@@ -5208,8 +5208,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/image/issues",
-                "source": "https://github.com/spatie/image/tree/2.2.3"
+                "source": "https://github.com/spatie/image/tree/2.2.4"
             },
             "funding": [
                 {
@@ -5221,7 +5220,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-21T11:31:51+00:00"
+            "time": "2022-08-09T10:18:57+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -10883,16 +10882,16 @@
         },
         {
             "name": "spatie/flare-client-php",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/flare-client-php.git",
-                "reference": "86a380f5b1ce839af04a08f1c8f2697184cdf23f"
+                "reference": "b1b974348750925b717fa8c8b97a0db0d1aa40ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/flare-client-php/zipball/86a380f5b1ce839af04a08f1c8f2697184cdf23f",
-                "reference": "86a380f5b1ce839af04a08f1c8f2697184cdf23f",
+                "url": "https://api.github.com/repos/spatie/flare-client-php/zipball/b1b974348750925b717fa8c8b97a0db0d1aa40ca",
+                "reference": "b1b974348750925b717fa8c8b97a0db0d1aa40ca",
                 "shasum": ""
             },
             "require": {
@@ -10940,7 +10939,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/flare-client-php/issues",
-                "source": "https://github.com/spatie/flare-client-php/tree/1.2.0"
+                "source": "https://github.com/spatie/flare-client-php/tree/1.3.0"
             },
             "funding": [
                 {
@@ -10948,7 +10947,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-16T12:13:39+00:00"
+            "time": "2022-08-08T10:10:20+00:00"
         },
         {
             "name": "spatie/ignition",
