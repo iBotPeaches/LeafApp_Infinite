@@ -22,9 +22,9 @@ class MedalsLeaderboard extends Component
         '$refresh'
     ];
 
-    public function paginationView(): string
+    public function paginationSimpleView(): string
     {
-        return 'pagination::bulma';
+        return 'pagination::bulma-simple';
     }
 
     public function render(): View
@@ -48,7 +48,7 @@ class MedalsLeaderboard extends Component
         } else {
             $query->where('season_number', $seasonSession);
         }
-        $results = $query->paginate(15);
+        $results = $query->simplePaginate(15);
 
         return view('livewire.medals-leaderboard', [
             'results' => $results
