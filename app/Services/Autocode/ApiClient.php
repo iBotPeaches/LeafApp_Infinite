@@ -24,19 +24,15 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ApiClient implements InfiniteInterface
 {
-    private PendingRequest $pendingRequest;
-
-    public function __construct(array $config)
-    {
-        $this->pendingRequest = Http::asJson()
-            ->baseUrl($config['domain'] . '/infinite@'. $config['version'])
-            ->timeout(180)
-            ->withToken($config['key']);
+    public function __construct(
+        private readonly array $config
+    ) {
+        //
     }
 
     public function appearance(string $gamertag): ?Player
     {
-        $response = $this->pendingRequest->get('appearance/players/spartan-id', [
+        $response = $this->getPendingRequest()->get('appearance/players/spartan-id', [
             'gamertag' => $gamertag
         ]);
 
@@ -49,7 +45,7 @@ class ApiClient implements InfiniteInterface
 
     public function competitive(Player $player, ?int $season = null): ?Csr
     {
-        $response = $this->pendingRequest->get('stats/players/csrs', [
+        $response = $this->getPendingRequest()->get('stats/players/csrs', [
             'gamertag' => $player->gamertag,
             'season' => $season ?? (int)config('services.autocode.competitive.season')
         ]);
@@ -65,7 +61,7 @@ class ApiClient implements InfiniteInterface
 
     public function mmr(Player $player): Player
     {
-        $response = $this->pendingRequest->get('stats/players/mmr', [
+        $response = $this->getPendingRequest()->get('stats/players/mmr', [
             'gamertag' => $player->gamertag
         ]);
 
@@ -101,7 +97,7 @@ class ApiClient implements InfiniteInterface
         $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
-            $response = $this->pendingRequest->post('stats/players/matches', [
+            $response = $this->getPendingRequest()->post('stats/players/matches', [
                 'gamertag' => $player->gamertag,
                 'type' => (string)$mode->value,
                 'language' => Language::US,
@@ -145,7 +141,7 @@ class ApiClient implements InfiniteInterface
 
     public function match(string $matchUuid): ?Game
     {
-        $response = $this->pendingRequest->get('stats/matches', [
+        $response = $this->getPendingRequest()->get('stats/matches', [
             'ids' => Arr::wrap($matchUuid)
         ])->throw();
 
@@ -161,7 +157,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMedals(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/multiplayer/medals')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/medals')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $medal) {
@@ -173,7 +169,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMaps(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/multiplayer/maps')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/maps')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $map) {
@@ -185,7 +181,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataTeams(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/multiplayer/teams')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/teams')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $team) {
@@ -197,7 +193,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataPlaylists(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/multiplayer/playlists')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/playlists')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $playlist) {
@@ -209,7 +205,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataCategories(): Collection
     {
-        $response = $this->pendingRequest->get('metadata/multiplayer/gamevariants')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/gamevariants')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $category) {
@@ -225,7 +221,7 @@ class ApiClient implements InfiniteInterface
             $url = 'stats/players/service-record/multiplayer/matchmade/' . $filter->toUrlSlug();
             $season = $season === -1 ? null : $season;
 
-            $response = $this->pendingRequest->get($url, [
+            $response = $this->getPendingRequest()->get($url, [
                 'gamertag' => $player->gamertag,
                 'season' => $season
             ]);
@@ -248,5 +244,13 @@ class ApiClient implements InfiniteInterface
         }
 
         return $player->serviceRecord;
+    }
+
+    private function getPendingRequest(): PendingRequest
+    {
+        return Http::asJson()
+            ->baseUrl($this->config['domain'] . '/infinite@'. $this->config['version'])
+            ->timeout(180)
+            ->withToken($this->config['key']);
     }
 }
