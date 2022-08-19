@@ -9,23 +9,27 @@ use Illuminate\Support\Facades\Http;
 
 class ApiClient implements XboxInterface
 {
-    private PendingRequest $pendingRequest;
-
-    public function __construct(array $config)
-    {
-        $this->pendingRequest = Http::asJson()
-            ->withUserAgent('Leaf - v' . config('services.autocode.version', 'dirty'))
-            ->baseUrl($config['domain']);
+    public function __construct(
+        private readonly array $config
+    ) {
+        //
     }
 
     public function xuid(string $gamertag): ?string
     {
-        $response = $this->pendingRequest->get('/xuid/' . $gamertag);
+        $response = $this->getPendingRequest()->get('/xuid/' . $gamertag);
 
         if ($response->successful()) {
             return Arr::get($response->json(), 'xuid');
         }
 
         return null;
+    }
+
+    private function getPendingRequest(): PendingRequest
+    {
+        return Http::asJson()
+            ->withUserAgent('Leaf - v' . config('services.autocode.version', 'dirty'))
+            ->baseUrl($this->config['domain']);
     }
 }

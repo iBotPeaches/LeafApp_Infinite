@@ -8,23 +8,27 @@ use Illuminate\Support\Facades\Http;
 
 class ApiClient implements ImageInterface
 {
-    private PendingRequest $pendingRequest;
-
-    public function __construct(array $config)
-    {
-        $this->pendingRequest = Http::asJson()
-            ->baseUrl($config['domain'])
-            ->withBasicAuth('api', $config['key']);
+    public function __construct(
+        private readonly array $config
+    ) {
+        //
     }
 
     public function optimize(string $url): ?string
     {
-        $response = $this->pendingRequest->post('shrink', [
+        $response = $this->getPendingRequest()->post('shrink', [
             'source' => [
                 'url' => $url
             ]
         ])->throw();
 
         return $response->header('Location');
+    }
+
+    private function getPendingRequest(): PendingRequest
+    {
+        return Http::asJson()
+            ->baseUrl($this->config['domain'])
+            ->withBasicAuth('api', $this->config['key']);
     }
 }

@@ -16,18 +16,15 @@ use Illuminate\Support\Facades\Http;
 
 class ApiClient implements TournamentInterface
 {
-    private PendingRequest $pendingRequest;
-
-    public function __construct(array $config)
-    {
-        $this->pendingRequest = Http::asJson()
-            ->baseUrl($config['domain'] . '/data/v4/')
-            ->withToken($config['key']);
+    public function __construct(
+        private readonly array $config
+    ) {
+        //
     }
 
     public function championship(string $championshipId): ?Championship
     {
-        $response = $this->pendingRequest->get('championships/' . $championshipId)->throw();
+        $response = $this->getPendingRequest()->get('championships/' . $championshipId)->throw();
         $data = $response->json();
 
         return Championship::fromFaceItApi((array)$data);
@@ -35,7 +32,7 @@ class ApiClient implements TournamentInterface
 
     public function matchup(Championship $championship, string $matchupId): ?Matchup
     {
-        $response = $this->pendingRequest->get('matches/' . $matchupId)->throw();
+        $response = $this->getPendingRequest()->get('matches/' . $matchupId)->throw();
         $data = $response->json();
 
         return $this->parseMatchup($championship, (array)$data);
@@ -48,7 +45,7 @@ class ApiClient implements TournamentInterface
         $offset = 0;
 
         while ($count !== 0) {
-            $response = $this->pendingRequest->get('championships/' . $championship->faceit_id . '/matches', [
+            $response = $this->getPendingRequest()->get('championships/' . $championship->faceit_id . '/matches', [
                 'type' => 'past',
                 'offset' => $offset,
                 'limit' => $perPage
@@ -97,5 +94,12 @@ class ApiClient implements TournamentInterface
         }
 
         return $matchup;
+    }
+
+    private function getPendingRequest(): PendingRequest
+    {
+        return Http::asJson()
+            ->baseUrl($this->config['domain'] . '/data/v4/')
+            ->withToken($this->config['key']);
     }
 }
