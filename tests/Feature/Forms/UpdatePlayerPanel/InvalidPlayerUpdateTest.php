@@ -101,7 +101,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.matches.0.experience', 'unknown-gametype');
+        Arr::set($mockMatchesResponse, 'data.0.experience', 'unknown-gametype');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -183,7 +183,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.matches.0.details.playlist.properties.queue', 'unknown-queue');
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.queue', 'unknown-queue');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -225,7 +225,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.matches.0.details.playlist.properties.input', 'unknown-input');
+        Arr::set($mockMatchesResponse, 'data.0.details.playlist.properties.input', 'unknown-input');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -267,7 +267,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockMatchesResponse, 'data.matches.0.player.outcome', 'crashed');
+        Arr::set($mockMatchesResponse, 'data.0.player.outcome', 'crashed');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)

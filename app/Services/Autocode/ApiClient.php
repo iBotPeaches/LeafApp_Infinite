@@ -114,7 +114,7 @@ class ApiClient implements InfiniteInterface
                 $count = (int)Arr::get($data, 'additional.count');
                 $offset += $perPage;
 
-                foreach (Arr::get($data, 'data.matches') as $gameData) {
+                foreach (Arr::get($data, 'data') as $gameData) {
                     $game = Game::fromHaloDotApi((array)$gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
@@ -242,7 +242,7 @@ class ApiClient implements InfiniteInterface
             $item['_leaf']['player'] = $player;
             $item['_leaf']['filter'] = $filter;
             $item['_leaf']['season'] = $season;
-            $item['_leaf']['privacy'] = Arr::get($data, 'data.privacy');
+            $item['_leaf']['privacy'] = Arr::get($data, 'additional.privacy');
 
             ServiceRecord::fromHaloDotApi($item);
         }
