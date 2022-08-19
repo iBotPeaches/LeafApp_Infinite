@@ -53,7 +53,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
-        Arr::set($mockServiceResponse, 'data.privacy.public', false);
+        Arr::set($mockServiceResponse, 'additional.privacy.public', false);
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_OK)
@@ -355,7 +355,7 @@ class ValidPlayerUpdateTest extends TestCase
         $gamePlayer = GamePlayer::factory()
             ->createOne([
                 'game_id' => Game::factory()->state([
-                    'uuid' => Arr::get($mockMatchesResponse, 'data.matches.1.id')
+                    'uuid' => Arr::get($mockMatchesResponse, 'data.1.id')
                 ]),
                 'player_id' => $player->id
             ]);

@@ -46,9 +46,9 @@ class PullHaloDataTest extends TestCase
         Arr::set($mockCustomMatchesResponse, 'data.0.details.playlist', null);
         Arr::set($mockCustomMatchesResponse, 'data.1.details.playlist', null);
 
-        $matchmakingGameUuid = Arr::get($mockMatchesResponse, 'data.matches.0.id');
-        $customGameUuid = Arr::get($mockCustomMatchesResponse, 'data.matches.0.id');
-        $lanGameUuid = Arr::get($mockLanMatchesResponse, 'data.matches.0.id');
+        $matchmakingGameUuid = Arr::get($mockMatchesResponse, 'data.0.id');
+        $customGameUuid = Arr::get($mockCustomMatchesResponse, 'data.0.id');
+        $lanGameUuid = Arr::get($mockLanMatchesResponse, 'data.0.id');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
