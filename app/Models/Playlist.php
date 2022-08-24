@@ -46,6 +46,14 @@ class Playlist extends Model implements HasHaloDotApi
         return $value;
     }
 
+    public static function fromPlaylistId(string $playlistId): ?self
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return self::query()
+            ->where('uuid', $playlistId)
+            ->first();
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
         $playlistId = Arr::get($payload, 'asset.id');
