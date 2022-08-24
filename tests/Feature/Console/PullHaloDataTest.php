@@ -5,6 +5,7 @@ namespace Tests\Feature\Console;
 
 use App\Models\Game;
 use App\Models\Player;
+use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -62,6 +63,10 @@ class PullHaloDataTest extends TestCase
             ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag

@@ -7,6 +7,7 @@ use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Models\Player;
+use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -72,6 +73,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_TOO_MANY_REQUESTS);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -84,6 +89,44 @@ class InvalidPlayerUpdateTest extends TestCase
             ->call('processUpdate')
             ->assertViewHas('color', 'is-danger')
             ->assertViewHas('message', 'Rate Limit Hit :( - Try later.');
+    }
+
+    public function testCrashingOutIfUnknownPlaylist(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullAppearance::class
+        ]);
+        $gamertag = $this->faker->word . $this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
+        $mockMmrResponse = (new MockMmrService())->success($gamertag);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
+            ->push($mockMmrResponse, Response::HTTP_OK)
+            ->push($mockMatchResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-danger')
+            ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
     public function testCrashingOutIfNewExperienceMode(): void
@@ -111,6 +154,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -151,6 +198,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -194,6 +245,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -235,6 +290,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -278,6 +337,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -319,6 +382,10 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag

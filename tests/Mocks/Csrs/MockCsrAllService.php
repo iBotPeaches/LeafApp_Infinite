@@ -16,6 +16,7 @@ class MockCsrAllService extends BaseMock
         return [
             'data' => [
                 [
+                    'id' => '1',
                     'queue' => 'open',
                     'input' => 'crossplay',
                     'response' => [
@@ -25,6 +26,7 @@ class MockCsrAllService extends BaseMock
                     ]
                 ],
                 [
+                    'id' => '1',
                     'queue' => 'solo-duo',
                     'input' => 'controller',
                     'response' => [
@@ -34,6 +36,7 @@ class MockCsrAllService extends BaseMock
                     ]
                 ],
                 [
+                    'id' => '1',
                     'queue' => 'solo-duo',
                     'input' => 'mnk',
                     'response' => [
@@ -55,6 +58,7 @@ class MockCsrAllService extends BaseMock
         return [
             'data' => [
                 [
+                    'id' => '1',
                     'queue' => 'open',
                     'input' => 'crossplay',
                     'response' => [
