@@ -2,7 +2,7 @@
     <div class="card" style="height: 100%;">
         <div class="card-header">
             <span class="card-header-title">
-                {{ $playlist->title }}
+                {{ $playlist?->playlist?->name ?? $playlist->title }}
                 {!! $playlist->icon !!}
             </span>
         </div>

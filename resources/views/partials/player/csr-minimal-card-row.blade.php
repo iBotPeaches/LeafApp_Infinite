@@ -8,7 +8,7 @@
         <div class="content">
             <p>
                 <strong style="white-space: nowrap">
-                    {{ $playlist->title }}
+                    {{ $playlist?->playlist?->name ?? $playlist->title }}
                     {!! $playlist->icon !!}
                 </strong>
             </p>
