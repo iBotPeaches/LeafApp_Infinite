@@ -45,6 +45,9 @@ class ApiClient implements InfiniteInterface
 
     public function competitive(Player $player, ?int $season = null): ?Csr
     {
+        // Handle when -1 (no season) is sent here.
+        $season = $season === -1 ? null : $season;
+
         $response = $this->getPendingRequest()->get('stats/players/csrs', [
             'gamertag' => $player->gamertag,
             'season' => $season ?? (int)config('services.autocode.competitive.season')

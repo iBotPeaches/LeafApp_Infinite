@@ -19,6 +19,7 @@ use InvalidArgumentException;
 /**
  * @property int $id
  * @property int $player_id
+ * @property int $playlist_id
  * @property Queue|null $queue
  * @property Input|null $input
  * @property int|null $season
@@ -34,6 +35,7 @@ use InvalidArgumentException;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
+ * @property-read Playlist $playlist
  * @property-read string $rank
  * @property-read string $next_rank
  * @property-read float $next_rank_percent
@@ -55,6 +57,10 @@ class Csr extends Model implements HasHaloDotApi
         'input' => Input::class,
         'queue' => Queue::class,
         'mode' => CompetitiveMode::class,
+    ];
+
+    public $with = [
+        'playlist'
     ];
 
     public $touches = [
@@ -170,6 +176,12 @@ class Csr extends Model implements HasHaloDotApi
             $queue = Queue::coerce($queueName);
             $input = Input::coerce($inputName);
 
+            $playlistModel = Playlist::fromPlaylistId((string)Arr::get($playlist, 'id'));
+
+            if (empty($playlistModel)) {
+                throw new InvalidArgumentException('Playlist not found.');
+            }
+
             if (empty($queue) || empty($input)) {
                 throw new \InvalidArgumentException(
                     'Queue (' . $queueName . ') or input (' . $inputName . ') is unknown.'
@@ -190,6 +202,7 @@ class Csr extends Model implements HasHaloDotApi
                 /** @var Csr $csr */
                 $csr = Csr::query()
                     ->where('player_id', $player->id)
+                    ->where('playlist_id', $playlistModel->id)
                     ->where('season', $playlistSeason)
                     ->where('mode', $mode->value)
                     ->where('queue', $queue->value)
@@ -204,6 +217,7 @@ class Csr extends Model implements HasHaloDotApi
                 }
 
                 $csr->player()->associate($player);
+                $csr->playlist()->associate($playlistModel);
                 $csr->season = $playlistSeason;
                 $csr->mode = $mode;
                 $csr->queue = $queue;
@@ -230,6 +244,11 @@ class Csr extends Model implements HasHaloDotApi
         }
 
         return $csr ?? null;
+    }
+
+    public function playlist(): BelongsTo
+    {
+        return $this->belongsTo(Playlist::class);
     }
 
     public function player(): BelongsTo

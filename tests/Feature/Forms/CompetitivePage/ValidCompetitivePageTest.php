@@ -8,6 +8,7 @@ use App\Enums\Queue;
 use App\Http\Livewire\CompetitivePage;
 use App\Models\Csr;
 use App\Models\Player;
+use App\Models\Playlist;
 use Carbon\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -18,8 +19,12 @@ class ValidCompetitivePageTest extends TestCase
     {
         // Arrange
         Carbon::setTestNow(now());
+
+        /** @var Playlist $playlist */
+        $playlist = Playlist::factory()->createOne();
+
         $player = Player::factory()
-            ->has(Csr::factory()->state(function () {
+            ->has(Csr::factory()->hasPlaylist($playlist)->state(function () {
                 return [
                     'queue' => Queue::OPEN,
                     'input' => Input::CROSSPLAY,
@@ -28,7 +33,7 @@ class ValidCompetitivePageTest extends TestCase
                     'csr' => 1499
                 ];
             }))
-            ->has(Csr::factory()->state(function () {
+            ->has(Csr::factory()->hasPlaylist($playlist)->state(function () {
                 return [
                     'queue' => Queue::SOLO_DUO,
                     'input' => Input::KBM,
@@ -37,7 +42,7 @@ class ValidCompetitivePageTest extends TestCase
                     'csr' => 1480
                 ];
             }))
-            ->has(Csr::factory()->state(function () {
+            ->has(Csr::factory()->hasPlaylist($playlist)->state(function () {
                 return [
                     'queue' => Queue::SOLO_DUO,
                     'input' => Input::CONTROLLER,
@@ -50,7 +55,6 @@ class ValidCompetitivePageTest extends TestCase
 
         /** @var Csr[] $current */
         $current = $player->currentRanked();
-
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [

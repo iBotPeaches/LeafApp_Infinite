@@ -38,7 +38,7 @@ return [
         'cooldown' => env('AUTOCODE_COOLDOWN', 120),
         'competitive' => [
             'season' => env('AUTOCODE_CURRENT_SEASON', 2),
-            'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 1),
+            'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 2),
         ],
         'warning_message' => env('AUTOCODE_WARNING_MESSAGE')
     ],

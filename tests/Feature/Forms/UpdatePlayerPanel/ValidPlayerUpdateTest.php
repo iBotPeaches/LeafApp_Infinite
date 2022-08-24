@@ -17,6 +17,7 @@ use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
+use App\Models\Playlist;
 use App\Services\Autocode\Enums\Mode;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
@@ -137,6 +138,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         /** @var Player $player */
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
@@ -190,6 +195,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
             'xuid' => null
@@ -240,6 +249,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $oldPlayer = Player::factory()->createOne([
             'gamertag' => $gamertag . 'old',
@@ -297,9 +310,14 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
+        $playlist = Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()
-            ->has(Csr::factory()->state(function () {
+            ->has(Csr::factory()->state(function () use ($playlist) {
                 return [
+                    'playlist_id' => $playlist->id,
                     'queue' => \App\Enums\Queue::OPEN,
                     'mode' => CompetitiveMode::ALL_TIME,
                     'season' => null,
@@ -347,6 +365,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Http::fakeSequence()
             ->push($mockMatchesResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -473,6 +495,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -518,6 +544,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -566,6 +596,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -612,6 +646,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
@@ -660,6 +698,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
 
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag
         ]);
@@ -706,6 +748,10 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1
+        ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag

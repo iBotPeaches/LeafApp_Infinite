@@ -32,6 +32,11 @@
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
             @endif
+            @if ($type === 'competitive')
+                <div class="notification is-warning">
+                    343 does not like mid-season CSR resets - it causes some issues with data.
+                </div>
+            @endif
             @auth
                 @include('partials.player.linkable-card')
             @endauth
