@@ -24,6 +24,7 @@ use Illuminate\Support\Collection;
  * @property int $game_id
  * @property int $pre_csr
  * @property int $post_csr
+ * @property ?int $matches_remaining
  * @property int $rank
  * @property Outcome $outcome
  * @property boolean|null $was_at_start
@@ -113,6 +114,8 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->game()->associate($game);
         $gamePlayer->pre_csr ??= Arr::get($payload, $prefix . 'progression.csr.pre_match.value');
         $gamePlayer->post_csr ??= Arr::get($payload, $prefix . 'progression.csr.post_match.value');
+        $gamePlayer->matches_remaining ??=
+            Arr::get($payload, $prefix . 'progression.csr.pre_match.measurement_matches_remaining');
         $gamePlayer->rank = Arr::get($payload, $prefix . 'rank');
         $gamePlayer->outcome = Arr::get($payload, $prefix . 'outcome');
         $gamePlayer->was_at_start ??= Arr::get($payload, $prefix . 'participation.presence.beginning');
