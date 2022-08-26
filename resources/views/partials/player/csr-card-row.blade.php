@@ -6,7 +6,7 @@
                 {!! $playlist->icon !!}
             </span>
         </div>
-        <div class="card-image has-background-light">
+        <div class="card-image {{ 'is-' . Str::slug($playlist->rank) }}">
             <figure class="image">
                 <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}">
             </figure>
