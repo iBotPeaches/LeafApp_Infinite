@@ -18,7 +18,7 @@ class PullMatchHistory implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 2;
+    public int $tries = 1;
     public int $timeout = 720;
 
     private Player $player;
