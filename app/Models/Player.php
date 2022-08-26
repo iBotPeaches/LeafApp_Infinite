@@ -275,6 +275,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
                 'rank',
                 'pre_csr',
                 'post_csr',
+                'matches_remaining',
             ]);
     }
 }

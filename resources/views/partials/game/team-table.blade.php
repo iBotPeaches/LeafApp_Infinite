@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Str;
+
 /** @var App\Models\Game $game */
 /** @var App\Models\GamePlayer[] $gamePlayers */
 /** @var App\Models\GameTeam $team */
@@ -79,7 +81,7 @@
                         <td>
                             <article class="media">
                                 <figure class="media-left">
-                                    <p class="image is-32x32">
+                                    <p class="image is-32x32 {{ 'is-' . Str::slug($gamePlayer->level) }}">
                                         <img src="{{ $gamePlayer->level_image }}" alt="{{ $gamePlayer->level }}"/>
                                     </p>
                                 </figure>

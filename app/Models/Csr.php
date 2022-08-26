@@ -160,7 +160,7 @@ class Csr extends Model implements HasHaloDotApi
 
     public function toCsrObject(): \App\Support\Csr\Csr
     {
-        return CsrHelper::getCsrFromValue($this->csr);
+        return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining);
     }
 
     public static function fromHaloDotApi(array $payload): ?self

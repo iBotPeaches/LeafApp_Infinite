@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $rank
  * @property int $pre_csr
  * @property int $post_csr
+ * @property ?int $matches_remaining
  * @property float|null $mmr
  */
 class PersonalResult extends Pivot

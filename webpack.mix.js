@@ -22,8 +22,10 @@ mix
                 /has-text-orange/,
                 /has-text-purple/,
                 /has-text-info/,
-                /has-text-primary/
-                ]},
+                /has-text-primary/,
+                /is-unranked/
+                ]
+            },
         },
     })
     .version();

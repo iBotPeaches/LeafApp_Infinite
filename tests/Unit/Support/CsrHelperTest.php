@@ -14,7 +14,7 @@ class CsrHelperTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            CsrHelper::getCsrFromValue($csr)->title,
+            CsrHelper::getCsrFromValue($csr, null)->title,
             $csr . ' csr is not: ' . $expected
         );
     }
@@ -24,18 +24,58 @@ class CsrHelperTest extends TestCase
     {
         $this->assertStringEndsWith(
             Str::slug($expected) . '.png',
-            CsrHelper::getCsrFromValue($csr)->url(),
+            CsrHelper::getCsrFromValue($csr, null)->url(),
             $csr . ' url() is not ending with proper string.'
         );
+    }
+
+    /** @dataProvider unrankedCsrDataProvider */
+    public function testUnrankedCsrCalculationToRank(?int $matchesRemaining, string $expected)
+    {
+        $this->assertEquals(
+            $expected,
+            CsrHelper::getCsrFromValue(0, $matchesRemaining)->title,
+            $matchesRemaining . ' matches remaining is not: ' . $expected
+        );
+    }
+
+    /** @dataProvider unrankedCsrDataProvider */
+    public function testUnrankedCsrCalculationToAsset(?int $matchesRemaining, string $expected)
+    {
+        $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);
+
+        $this->assertStringEndsWith(
+            Str::slug($expected . '-' . $matchesCompleted) . '.png',
+            CsrHelper::getCsrFromValue(0, $matchesRemaining)->url(),
+            $matchesRemaining . ' url() is not ending with proper string: ' . $expected
+        );
+    }
+
+    public function unrankedCsrDataProvider(): array
+    {
+        return [
+            'unranked 0' => [
+                'matchesRemaining' => 10,
+                'expected' => 'Unranked'
+            ],
+            'unranked null' => [
+                'matchesRemaining' => null,
+                'expected' => 'Unranked'
+            ],
+            'unranked-1' => [
+                'matchesRemaining' => 9,
+                'expected' => 'Unranked'
+            ],
+            'unranked-9' => [
+                'matchesRemaining' => 1,
+                'expected' => 'Unranked'
+            ]
+        ];
     }
 
     public function csrDataProvider(): array
     {
         return [
-            'unranked' => [
-                'csr' => 0,
-                'expected' => 'Unranked'
-            ],
             'bronze 1' => [
                 'csr' => 1,
                 'expected' => 'Bronze 1'

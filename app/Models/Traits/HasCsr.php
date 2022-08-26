@@ -26,12 +26,12 @@ trait HasCsr
 
     public function getLevelAttribute(): string
     {
-        return CsrHelper::getCsrFromValue($this->pre_csr)->title;
+        return CsrHelper::getCsrFromValue($this->pre_csr, $this->matches_remaining)->title;
     }
 
     public function getLevelImageAttribute(): string
     {
-        return CsrHelper::getCsrFromValue($this->pre_csr)->url();
+        return CsrHelper::getCsrFromValue($this->pre_csr, $this->matches_remaining)->url();
     }
 
     public function getCsrChangeRawAttribute(): int
@@ -48,8 +48,8 @@ trait HasCsr
 
     public function getCsrRankChangeMessageAttribute(): ?string
     {
-        $preCsr = CsrHelper::getCsrFromValue($this->pre_csr);
-        $postCsr = CsrHelper::getCsrFromValue($this->post_csr);
+        $preCsr = CsrHelper::getCsrFromValue($this->pre_csr, $this->matches_remaining);
+        $postCsr = CsrHelper::getCsrFromValue($this->post_csr, $this->matches_remaining);
 
         if ($preCsr->isDifferent($postCsr)) {
             $message = $postCsr > $preCsr ? 'moved to ' : 'fell to ';
