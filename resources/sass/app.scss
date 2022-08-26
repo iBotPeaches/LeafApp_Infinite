@@ -32,3 +32,7 @@ td {
 .is-greyscale:hover {
     opacity: 1;
 }
+
+.is-unranked {
+    filter: drop-shadow(16px 16px 20px black) invert(100%);
+}
