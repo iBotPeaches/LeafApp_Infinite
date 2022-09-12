@@ -1,8 +1,17 @@
-<article class="message is-small {{ $color }}" wire:init="processUpdate">
+<article class="message is-small {{ $color }}">
     <div class="message-header">
         <p>Checking for Update</p>
     </div>
     <div class="message-body">
-        {{ $message }}
+        @if (isset($button))
+            <button
+                class="button is-success is-outlined is-fullwidth"
+                wire:click="processUpdate"
+            >
+                Request Stat Update
+            </button>
+        @else
+            {{ $message }}
+        @endif
     </div>
 </article>
