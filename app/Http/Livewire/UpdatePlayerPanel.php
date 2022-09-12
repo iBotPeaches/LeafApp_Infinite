@@ -47,6 +47,7 @@ class UpdatePlayerPanel extends Component
             if (! $this->runUpdate) {
                 return view('livewire.update-player-panel', [
                     'color' => 'is-info',
+                    'button' => true,
                     'message' => 'Checking for updated stats.'
                 ]);
             }
