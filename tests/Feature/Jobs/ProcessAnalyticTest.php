@@ -31,7 +31,9 @@ class ProcessAnalyticTest extends TestCase
         ]);
         GamePlayer::factory()
             ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
-            ->createOne();
+            ->createOne([
+                'deaths' => 0
+            ]);
 
         // Act
         ProcessAnalytic::dispatchSync($analyticClass);
