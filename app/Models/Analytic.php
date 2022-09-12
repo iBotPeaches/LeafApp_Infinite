@@ -16,6 +16,7 @@ use App\Support\Analytics\Stats\MostDeathsInGame;
 use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
+use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
@@ -58,6 +59,7 @@ class Analytic extends Model
             AnalyticKey::MOST_TIME_PLAYED_SR => new MostTimePlayedServiceRecord(),
             AnalyticKey::MOST_KILLS_SR => new MostKillsServiceRecord(),
             AnalyticKey::MOST_KILLS_RANKED_GAME => new MostKillsInRankedGame(),
+            AnalyticKey::MOST_KILLS_ZERO_DEATHS_GAME => new MostKillsWithZeroDeathsGame(),
             AnalyticKey::MOST_ASSISTS_GAME => new MostAssistsInGame(),
             AnalyticKey::MOST_DEATHS_GAME => new MostDeathsInGame(),
             AnalyticKey::MOST_KILLS_GAME => new MostKillsInGame(),

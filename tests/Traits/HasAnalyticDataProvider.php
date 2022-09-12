@@ -14,6 +14,7 @@ use App\Support\Analytics\Stats\MostDeathsInGame;
 use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
+use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
@@ -37,6 +38,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostKillsInRankedGame(),
+            ],
+            [
+                new MostKillsWithZeroDeathsGame(),
             ],
             [
                 new MostKillsServiceRecord(),
