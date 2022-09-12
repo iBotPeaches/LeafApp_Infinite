@@ -74,7 +74,6 @@ class GamePlayerFactory extends Factory
                 : Medal::all();
 
             return [
-                // @phpstan-ignore-next-line
                 'medals' => $medals->mapWithKeys(function (Medal $medal) {
                     return [
                         $medal->id => $this->faker->numberBetween(1, 25)
