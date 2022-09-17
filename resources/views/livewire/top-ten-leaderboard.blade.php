@@ -23,6 +23,9 @@ use App\Enums\AnalyticType;
                             <th>Game</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
+                        @if ($analyticClass->type()->isGame())
+                            <th>Date</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +60,11 @@ use App\Enums\AnalyticType;
                             </td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
+                        @if ($analyticClass->type()->isGame())
+                            <td>
+                                @include('partials.player.date-link', ['date' => $result->game->occurred_at])
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
