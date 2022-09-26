@@ -34,7 +34,7 @@ return [
         'disabled' => env('AUTOCODE_DISABLED', false),
         'key' => env('AUTOCODE_KEY'),
         'domain' => env('AUTOCODE_DOMAIN', 'https://halo.api.stdlib.com'),
-        'version' => env('AUTOCODE_VERSION', '1.5.0'),
+        'version' => env('AUTOCODE_VERSION', '1.6.4'),
         'cooldown' => env('AUTOCODE_COOLDOWN', 120),
         'competitive' => [
             'season' => env('AUTOCODE_CURRENT_SEASON', 2),
