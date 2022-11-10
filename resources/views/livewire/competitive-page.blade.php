@@ -26,6 +26,7 @@
                                 <th>Playlist</th>
                                 <th>Rank</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,6 +55,21 @@
                                             <i>In Placements</i>
                                         @else
                                             CSR: {{ number_format($playlist->csr) }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (! $playlist->isOnyx())
+                                            <span
+                                                class="has-tooltip-arrow has-tooltip-text-centered"
+                                                data-tooltip="{{ $playlist->getRankPercentTooltip() }}"
+                                            >
+                                                <progress
+                                                    class="progress {{ $playlist->getRankPercentColor() }}"
+                                                    value="{{ $playlist->current_xp_for_level }}"
+                                                    max="{{ $playlist->next_xp_for_level }}">
+                                                    %{{ number_format($playlist->next_rank_percent, 2) }}
+                                                </progress>
+                                            </span>
                                         @endif
                                     </td>
                                 </tr>
