@@ -19,10 +19,47 @@
                             Showing current season since "All Seasons" is useless in this view.
                         </div>
                     @endif
-                    <div class="columns is-centered">
-                        @foreach ($current as $playlist)
-                            @include('partials.player.csr-card-row')
-                        @endforeach
+                    <div class="table-container">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <thead>
+                            <tr>
+                                <th>Playlist</th>
+                                <th>Rank</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($current as $playlist)
+                                <tr>
+                                    <td>
+                                        {{ $playlist?->playlist?->name ?? $playlist->title }}
+                                        {!! $playlist->icon !!}
+                                    </td>
+                                    <td>
+                                        <article class="media">
+                                            <div class="card-image {{ 'is-' . Str::slug($playlist->rank) }}">
+                                                <p class="image is-32x32">
+                                                    <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}">
+                                                </p>
+                                            </div>
+                                            <div class="media-content">
+                                                <div class="content" style="white-space: nowrap">
+                                                    &nbsp;{{ $playlist->rank }}
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </td>
+                                    <td>
+                                        @if ($playlist->matches_remaining > 0)
+                                            <i>In Placements</i>
+                                        @else
+                                            CSR: {{ number_format($playlist->csr) }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </article>
