@@ -14,6 +14,7 @@ class ImageHelper
 
         $hash = $result['hash'] ?? null;
 
+        // @phpstan-ignore-next-line
         $filepath = base64_decode((string)$hash);
         return $filepath ? Str::afterLast($filepath, '/') : null;
     }
