@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
@@ -156,6 +157,15 @@ class Csr extends Model implements HasHaloDotApi
             $this->next_rank_percent > 40 && $this->next_rank_percent <= 60 => 'is-warning',
             default => 'is-danger',
         };
+    }
+
+    public function getRankPercentTooltip(): string
+    {
+        if ($this->hasNextRank()) {
+            return 'Up Next: ' . $this->next_rank;
+        }
+
+        return $this->matches_remaining . ' ' . Str::plural('match', $this->matches_remaining) . ' remaining.';
     }
 
     public function toCsrObject(): \App\Support\Csr\Csr
