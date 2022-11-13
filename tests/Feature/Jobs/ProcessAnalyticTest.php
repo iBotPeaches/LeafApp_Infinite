@@ -27,7 +27,7 @@ class ProcessAnalyticTest extends TestCase
         ServiceRecord::factory()->createOne([
             'mode' => Mode::MATCHMADE_PVP,
             'season_number' => null,
-            'total_matches' => 102
+            'total_matches' => 1102
         ]);
         GamePlayer::factory()
             ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
