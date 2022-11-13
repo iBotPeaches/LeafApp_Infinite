@@ -14,7 +14,7 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
 {
     public function title(): string
     {
-        return 'Best Accuracy (50 game min)';
+        return 'Best Accuracy (1k game min)';
     }
 
     public function key(): string
@@ -46,7 +46,7 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
             ->where('is_cheater', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
-            ->where('total_matches', '>=', 50)
+            ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
             ->limit(10)
             ->get();
