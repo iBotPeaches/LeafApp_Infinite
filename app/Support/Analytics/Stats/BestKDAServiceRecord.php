@@ -14,7 +14,7 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
     public function title(): string
     {
-        return 'Best KDA (50 game min)';
+        return 'Best KDA (1k game min)';
     }
 
     public function key(): string
@@ -46,7 +46,7 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
             ->where('is_cheater', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
-            ->where('total_matches', '>=', 50)
+            ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
             ->limit(10)
             ->get();
