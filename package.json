@@ -1,12 +1,12 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
+        "dev": "yarn run development",
         "development": "mix",
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "prod": "npm run production",
+        "prod": "yarn run production",
         "production": "mix --production"
     },
     "devDependencies": {
@@ -22,5 +22,6 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.51.0",
         "sass-loader": "^12.6.0"
-    }
+    },
+    "packageManager": "yarn@3.3.1"
 }
