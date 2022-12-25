@@ -19,6 +19,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@erbelion/vite-plugin-laravel-purgecss@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@erbelion/vite-plugin-laravel-purgecss@npm:0.1.1"
+  dependencies:
+    purgecss: ^4.1.1
+    vite: ^3.0.0
+  peerDependencies:
+    vite: ^3.0.0
+  checksum: b6c2ebd2386093c7454b32f148a3520ad95e2cab8725a0fca86053658642648f7ad18f225f6eca2bc0c92e324ba467459c163ec586967a920aa60b405b1ddde8
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm@npm:0.15.18":
   version: 0.15.18
   resolution: "@esbuild/android-arm@npm:0.15.18"
@@ -312,6 +324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^8.0.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
+  languageName: node
+  linkType: hard
+
 "concat-map@npm:0.0.1":
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
@@ -330,6 +349,15 @@ __metadata:
   version: 1.9.0
   resolution: "convert-source-map@npm:1.9.0"
   checksum: dc55a1f28ddd0e9485ef13565f8f756b342f9a46c4ae18b843fe3c30c675d058d6a4823eff86d472f187b176f0adf51ea7b69ea38be34be4a63cbbf91b0593c8
+  languageName: node
+  linkType: hard
+
+"cssesc@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "cssesc@npm:3.0.0"
+  bin:
+    cssesc: bin/cssesc
+  checksum: f8c4ababffbc5e2ddf2fa9957dda1ee4af6048e22aeda1869d0d00843223c1b13ad3f5d88b51caa46c994225eacb636b764eb807a8883e2fb6f99b4f4e8c48b2
   languageName: node
   linkType: hard
 
@@ -717,7 +745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.3, glob@npm:^7.1.4":
+"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.7":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -1253,7 +1281,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.2.14, postcss@npm:^8.4.18":
+"postcss-selector-parser@npm:^6.0.6":
+  version: 6.0.11
+  resolution: "postcss-selector-parser@npm:6.0.11"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 0b01aa9c2d2c8dbeb51e9b204796b678284be9823abc8d6d40a8b16d4149514e922c264a8ed4deb4d6dbced564b9be390f5942c058582d8656351516d6c49cde
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.2.14, postcss@npm:^8.3.5, postcss@npm:^8.4.18":
   version: 8.4.20
   resolution: "postcss@npm:8.4.20"
   dependencies:
@@ -1278,6 +1316,20 @@ __metadata:
     err-code: ^2.0.2
     retry: ^0.12.0
   checksum: f96a3f6d90b92b568a26f71e966cbbc0f63ab85ea6ff6c81284dc869b41510e6cdef99b6b65f9030f0db422bf7c96652a3fff9f2e8fb4a0f069d8f4430359429
+  languageName: node
+  linkType: hard
+
+"purgecss@npm:^4.1.1":
+  version: 4.1.3
+  resolution: "purgecss@npm:4.1.3"
+  dependencies:
+    commander: ^8.0.0
+    glob: ^7.1.7
+    postcss: ^8.3.5
+    postcss-selector-parser: ^6.0.6
+  bin:
+    purgecss: bin/purgecss.js
+  checksum: 508613f904b130401f2a403d3383533f703c6bcd56e1254c1e8f57818a5337db3a667f66f48355f86271b20dd576691357752f460eb2edd94c095e4178391c5f
   languageName: node
   linkType: hard
 
@@ -1385,6 +1437,7 @@ __metadata:
   dependencies:
     "@creativebulma/bulma-divider": ^1.1.0
     "@creativebulma/bulma-tooltip": ^1.2.0
+    "@erbelion/vite-plugin-laravel-purgecss": ^0.1.1
     "@fortawesome/fontawesome-free": ^6.1.1
     axios: ^0.27
     bulma: ^0.9.4
@@ -1394,6 +1447,7 @@ __metadata:
     resolve-url-loader: ^5.0.0
     sass: ^1.51.0
     vite: ^3.0.0
+    vite-plugin-manifest-sri: ^0.1.0
   languageName: unknown
   linkType: soft
 
@@ -1577,7 +1631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util-deprecate@npm:^1.0.1":
+"util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
@@ -1593,6 +1647,13 @@ __metadata:
   peerDependencies:
     vite: ^2 || ^3 || ^4
   checksum: 250d50a2ce4b4de0f6855aaf191d3c37838da6795a113b1de28b390be71a0bb23351072fa8f4ab8ad4a07026ecb56b3d0358a1341288de9a736f99ae5a47d7ce
+  languageName: node
+  linkType: hard
+
+"vite-plugin-manifest-sri@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "vite-plugin-manifest-sri@npm:0.1.0"
+  checksum: fbbba255dae0f07c58290e7eadca7ec636b3c850e3130aa82a1573d14194c59e1434e7c89214f7bb78987372e9584a33eaeec6b439f65fb9107dd45a9b9fc0f0
   languageName: node
   linkType: hard
 
