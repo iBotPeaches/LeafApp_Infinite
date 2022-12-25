@@ -1,6 +1,6 @@
 import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
-import purge from '@erbelion/vite-plugin-laravel-purgecss'
+import purge from '@erbelion/vite-plugin-laravel-purgecss';
 import manifestSRI from 'vite-plugin-manifest-sri';
 
 export default defineConfig({
@@ -12,14 +12,15 @@ export default defineConfig({
         purge({
             templates: ['blade', 'vue'],
             safelist: {
+                greedy: [
+                    /orange/,
+                    /purple/,
+                    /unranked/
+                ],
                 deep: [
-                    /is-orange/,
-                    /is-purple/,
-                    /has-text-orange/,
-                    /has-text-purple/,
+                    /has-tooltip-info/,
                     /has-text-info/,
                     /has-text-primary/,
-                    /is-unranked/
                 ]
             },
         }),
