@@ -39,7 +39,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '14'
           cache: 'yarn'
 
       - name: Install Composer Dependencies
@@ -55,7 +55,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Asset Packaging
-        run: yarn run dev
+        run: yarn run build
 
       - name: Asset Storage Link
         run: php artisan storage:link

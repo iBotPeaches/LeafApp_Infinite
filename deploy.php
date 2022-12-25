@@ -37,7 +37,7 @@ task('deploy', [
 
 task('yarn:run:prod', function () {
     cd('{{release_or_current_path}}');
-    run('yarn run prod');
+    run('yarn run build');
 });
 
 task('app:version:file', function () {
