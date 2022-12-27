@@ -6,7 +6,6 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Mode;
 use App\Models\Analytic;
-use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use Illuminate\Database\Eloquent\Collection;
