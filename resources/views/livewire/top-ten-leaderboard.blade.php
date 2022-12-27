@@ -69,7 +69,9 @@ use App\Enums\AnalyticType;
                 @endforeach
                 </tbody>
             </table>
+            <div class="notification is-light is-hidden-mobile mt-2">
+                export to csv: <a href="#">top 10</a>, <a href="#">top 100</a> or <a href="#">top 1,000</a>.
+            </div>
         </div>
-        {{ $results->links() }}
     @endif
 </div>

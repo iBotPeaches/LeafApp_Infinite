@@ -37,7 +37,7 @@ class BestKDServiceRecord extends BasePlayerStat implements AnalyticInterface
         return number_format($analytic->value, 2);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -48,7 +48,7 @@ class BestKDServiceRecord extends BasePlayerStat implements AnalyticInterface
             ->whereNull('season_number')
             ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

@@ -36,7 +36,7 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
         return number_format($analytic->value);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('game_players.*')
@@ -47,7 +47,7 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('playlists.is_ranked', true)
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

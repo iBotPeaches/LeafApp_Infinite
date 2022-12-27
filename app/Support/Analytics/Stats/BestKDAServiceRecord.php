@@ -6,6 +6,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Mode;
 use App\Models\Analytic;
+use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +38,18 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
         return number_format($analytic->value, 2);
     }
 
-    public function results(): ?Collection
+    public function csvData(Collection $collection): array
+    {
+        return $collection->map(function (ServiceRecord $serviceRecord) {
+            return [
+                'gamertag' => $serviceRecord->player->gamertag,
+                'profile' => route('player', $serviceRecord->player),
+                $serviceRecord->{$this->property()}
+            ];
+        })->toArray();
+    }
+
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -48,7 +60,7 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
             ->whereNull('season_number')
             ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

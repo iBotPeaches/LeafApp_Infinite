@@ -17,5 +17,8 @@ interface AnalyticInterface
     public function property(): string;
     public function displayProperty(Analytic $analytic): string;
     public function builder(): Builder;
-    public function results(): ?Collection;
+    public function results(int $limit = 10): ?Collection;
+
+    public function csvHeader(): array;
+    public function csvData(Collection $collection): array;
 }

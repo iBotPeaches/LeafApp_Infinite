@@ -37,7 +37,7 @@ class MostMedalsServiceRecord extends BasePlayerStat implements AnalyticInterfac
         return number_format($analytic->value);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -47,7 +47,7 @@ class MostMedalsServiceRecord extends BasePlayerStat implements AnalyticInterfac
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

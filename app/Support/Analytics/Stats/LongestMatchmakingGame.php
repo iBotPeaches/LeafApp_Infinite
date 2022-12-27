@@ -41,12 +41,12 @@ class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterfa
         return $game->duration;
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->whereNotNull('playlist_id')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

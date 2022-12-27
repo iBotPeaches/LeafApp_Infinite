@@ -36,7 +36,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
         return number_format($analytic->value);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('game_players.*')
@@ -46,7 +46,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
             ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

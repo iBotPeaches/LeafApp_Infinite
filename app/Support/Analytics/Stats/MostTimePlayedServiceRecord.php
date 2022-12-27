@@ -37,7 +37,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
         return number_format(now()->addSeconds((int)$analytic->value)->diffInHours());
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -47,7 +47,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

@@ -6,6 +6,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Mode;
 use App\Models\Analytic;
+use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +38,7 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
         return number_format($analytic->value, 2) . '%';
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -48,7 +49,7 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
             ->whereNull('season_number')
             ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }
