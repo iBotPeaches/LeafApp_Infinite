@@ -7,10 +7,15 @@ use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasGamePlayerExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
 {
+    use HasExportUrlGeneration;
+    use HasGamePlayerExport;
+
     public function title(): string
     {
         return 'Most Deaths in Game';
@@ -36,7 +41,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
         return number_format($analytic->value);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('game_players.*')
@@ -46,7 +51,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
             ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

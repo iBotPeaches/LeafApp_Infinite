@@ -7,10 +7,15 @@ use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasGamePlayerExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
 {
+    use HasExportUrlGeneration;
+    use HasGamePlayerExport;
+
     public function title(): string
     {
         return 'Highest Score in Ranked Game';
@@ -36,7 +41,7 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
         return number_format($analytic->value);
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('game_players.*')
@@ -47,7 +52,7 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('playlists.is_ranked', true)
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

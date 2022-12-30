@@ -8,10 +8,15 @@ use App\Enums\Mode;
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasServiceRecordExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
+    use HasExportUrlGeneration;
+    use HasServiceRecordExport;
+
     public function title(): string
     {
         return 'Most Time Played';
@@ -37,7 +42,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
         return number_format(now()->addSeconds((int)$analytic->value)->diffInHours());
     }
 
-    public function results(): ?Collection
+    public function results(int $limit = 10): ?Collection
     {
         return $this->builder()
             ->select('service_records.*')
@@ -47,7 +52,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_number')
             ->orderByDesc($this->property())
-            ->limit(10)
+            ->limit($limit)
             ->get();
     }
 }

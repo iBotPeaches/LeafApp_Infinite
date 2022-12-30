@@ -16,6 +16,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use League\Csv\Writer;
 
 class ProcessAnalytic implements ShouldQueue
 {
@@ -33,18 +35,32 @@ class ProcessAnalytic implements ShouldQueue
         DB::transaction(function () {
             Analytic::purgeKey($this->analytic->key());
 
-            $results = $this->analytic->results();
+            $results = $this->analytic->results(1000);
+
+            $topTen = $results?->slice(0, 10);
+            $topHundred = $results?->slice(0, 100);
+            $topThousand = $results?->slice(0, 1000);
 
             switch ($this->analytic->type()) {
                 case AnalyticType::PLAYER():
-                    $this->handleServiceRecordResults($results);
+                    $this->handleServiceRecordResults($topTen);
                     break;
                 case AnalyticType::GAME():
-                    $this->handleGamePlayerResults($results);
+                    $this->handleGamePlayerResults($topTen);
                     break;
                 case AnalyticType::ONLY_GAME():
-                    $this->handleGameResults($results);
+                    $this->handleGameResults($topTen);
                     break;
+            }
+
+            foreach ([$topTen, $topHundred, $topThousand] as $resultSet) {
+                $writer = Writer::createFromString();
+                $writer->insertOne($this->analytic->csvHeader());
+                $writer->insertAll($this->analytic->csvData($resultSet));
+
+                $slug = $this->analytic->slug(count($resultSet ?? []));
+
+                Storage::disk('public')->put('top-ten/' . $slug . '.csv', $writer->toString());
             }
         });
     }

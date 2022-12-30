@@ -18,7 +18,8 @@ class TopTenLeaderboard extends Component
             ->with(['player', 'game'])
             ->where('key', $this->analyticKey)
             ->orderByDesc('value')
-            ->paginate(15);
+            ->limit(10)
+            ->get();
 
         $analyticEnumKey = AnalyticKey::tryFrom($this->analyticKey);
 
