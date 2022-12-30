@@ -17,7 +17,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use League\Csv\Writer;
 
 class ProcessAnalytic implements ShouldQueue
@@ -38,9 +37,9 @@ class ProcessAnalytic implements ShouldQueue
 
             $results = $this->analytic->results(1000);
 
-            $topTen = $results->slice(0, 10);
-            $topHundred = $results->slice(0, 100);
-            $topThousand = $results->slice(0, 1000);
+            $topTen = $results?->slice(0, 10);
+            $topHundred = $results?->slice(0, 100);
+            $topThousand = $results?->slice(0, 1000);
 
             switch ($this->analytic->type()) {
                 case AnalyticType::PLAYER():
@@ -59,7 +58,7 @@ class ProcessAnalytic implements ShouldQueue
                 $writer->insertOne($this->analytic->csvHeader());
                 $writer->insertAll($this->analytic->csvData($resultSet));
 
-                $slug = Str::slug($this->analytic->title() . ' -top-' . count($resultSet));
+                $slug = $this->analytic->slug(count($resultSet ?? []));
 
                 Storage::disk('public')->put('top-ten/' . $slug . '.csv', $writer->toString());
             }

@@ -7,10 +7,15 @@ use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasGamePlayerExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class MostAssistsInGame extends BaseGameStat implements AnalyticInterface
 {
+    use HasExportUrlGeneration;
+    use HasGamePlayerExport;
+
     public function title(): string
     {
         return 'Most Assists in Game';

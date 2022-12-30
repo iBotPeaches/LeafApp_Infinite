@@ -8,10 +8,15 @@ use App\Enums\Mode;
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasServiceRecordExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
+    use HasServiceRecordExport;
+    use HasExportUrlGeneration;
+
     public function title(): string
     {
         return 'Best KDA (1k game min)';

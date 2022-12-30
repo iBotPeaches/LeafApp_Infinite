@@ -15,10 +15,12 @@ interface AnalyticInterface
     public function title(): string;
     public function unit(): string;
     public function property(): string;
+    public function slug(int $count): string;
     public function displayProperty(Analytic $analytic): string;
+    public function displayExportUrl(int $count): string;
     public function builder(): Builder;
     public function results(int $limit = 10): ?Collection;
 
     public function csvHeader(): array;
-    public function csvData(Collection $collection): array;
+    public function csvData(?Collection $collection): array;
 }

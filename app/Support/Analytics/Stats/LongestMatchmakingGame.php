@@ -8,10 +8,15 @@ use App\Models\Analytic;
 use App\Models\Game;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseOnlyGameStat;
+use App\Support\Analytics\Traits\HasExportUrlGeneration;
+use App\Support\Analytics\Traits\HasGameExport;
 use Illuminate\Database\Eloquent\Collection;
 
 class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterface
 {
+    use HasExportUrlGeneration;
+    use HasGameExport;
+
     public function title(): string
     {
         return 'Longest Matchmaking Game';

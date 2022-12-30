@@ -70,7 +70,9 @@ use App\Enums\AnalyticType;
                 </tbody>
             </table>
             <div class="notification is-light is-hidden-mobile mt-2">
-                export to csv: <a href="#">top 10</a>, <a href="#">top 100</a> or <a href="#">top 1,000</a>.
+                export to csv: <a href="{{ $analyticClass->displayExportUrl(10) }}">top 10</a>,
+                <a href="{{ $analyticClass->displayExportUrl(100) }}">top 100</a> or
+                <a href="{{ $analyticClass->displayExportUrl(1000) }}">top 1,000</a>.
             </div>
         </div>
     @endif
