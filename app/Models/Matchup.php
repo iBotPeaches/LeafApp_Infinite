@@ -53,9 +53,9 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         'matchupTeams'
     ];
 
-    public $dates = [
-        'started_at',
-        'ended_at'
+    public $casts = [
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
     ];
 
     public $timestamps = false;
