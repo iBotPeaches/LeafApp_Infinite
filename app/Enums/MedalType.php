@@ -25,7 +25,7 @@ final class MedalType extends Enum implements LocalizedEnum
     const MULTIKILL = 6;
     const UNKNOWN = 99;
 
-    public static function coerce($enumKeyOrValue): ?Enum
+    public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match ($enumKeyOrValue) {
             'KILLING-SPREE' => self::KILLING_SPREE,

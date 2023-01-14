@@ -22,7 +22,7 @@ final class Experience extends Enum implements LocalizedEnum
     const CUSTOM = 4;
     const FEATURED = 5;
 
-    public static function coerce($enumKeyOrValue): ?Enum
+    public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
         return parent::coerce($enumKeyOrValue);

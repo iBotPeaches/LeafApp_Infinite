@@ -18,7 +18,7 @@ final class Input extends Enum implements LocalizedEnum
     const CONTROLLER = 1;
     const KBM = 2;
 
-    public static function coerce($enumKeyOrValue): ?Enum
+    public static function coerce(mixed $enumKeyOrValue): ?static
     {
         // The HaloDotAPI uses 'mnk', I prefer 'kbm'
         if ($enumKeyOrValue === 'mnk') {
