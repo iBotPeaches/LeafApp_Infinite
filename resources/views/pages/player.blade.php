@@ -34,7 +34,7 @@
             @endif
             @if ($type === 'competitive')
                 <div class="notification is-warning">
-                    343 does not like mid-season CSR resets - it causes some issues with data.
+                    Old season data is commonly missing from API.
                 </div>
             @endif
             @auth
