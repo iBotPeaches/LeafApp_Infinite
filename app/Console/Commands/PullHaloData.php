@@ -32,7 +32,7 @@ class PullHaloData extends Command
             return CommandAlias::FAILURE;
         }
 
-        $this->client->competitive($player);
+        $this->client->competitive($player, 2);
         $this->client->mmr($player);
         $this->client->matches($player, Mode::MATCHMADE(), true);
         $this->client->matches($player, Mode::CUSTOM(), true);
