@@ -48,10 +48,19 @@ class ApiClient implements InfiniteInterface
         // Handle when -1 (no season) is sent here.
         $season = $season === -1 ? null : $season;
 
-        $response = $this->getPendingRequest()->get('stats/players/csrs', [
+        $season ?? (int)config('services.autocode.competitive.season');
+        $queryParams = [
             'gamertag' => $player->gamertag,
-            'season' => $season ?? (int)config('services.autocode.competitive.season')
-        ]);
+            'season' => $season
+        ];
+
+        // Handle upstream API breaking when we send latest season (ie 2), but with no version.
+        // Returns are returned with S2V3, but invalid when S2 only is asked for.
+        if ($season === (int)config('services.autocode.competitive.season')) {
+            $queryParams['version'] = (int)config('services.autocode.competitive.version');
+        }
+
+        $response = $this->getPendingRequest()->get('stats/players/csrs', $queryParams);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
