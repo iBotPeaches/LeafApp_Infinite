@@ -70,6 +70,26 @@ Used for optimizing images that come from backdrops and emblems.
  * `IMAGE_OPTIMIZE_KEY` - The key for API use.
  * `IMAGE_DOMAIN` - The domain for API Service
 
+### Docker
+A docker-based infrastructure is available for development.
+
+Set the database hostname in `.env`
+```
+DB_HOST=leaf-db
+```
+
+To set up the containers, run
+```shell
+docker compose --env-file .env -p leaf -f docker/docker-compose.yml up -d
+```
+
+To run commands in the PHP container (e.g. composer or yarn):
+```shell
+docker exec -it leaf-php php -v
+```
+
+Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
+
 ### Dependencies
 
 #### Node

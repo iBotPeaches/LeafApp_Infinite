@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+    php:
+        build:
+            context: ./php
+        image: leaf-php
+        container_name: leaf-php
+        volumes:
+            - ../:/var/www
+        working_dir: /var/www/
+        networks:
+            - leaf
+
+    db:
+        image: mariadb:10.10
+        container_name: leaf-db
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_USER: ${DB_USERNAME}
+        networks:
+            - leaf
+
+    nginx:
+        image: nginx:alpine
+        container_name: leaf-nginx
+        ports:
+            - '8080:80'
+        volumes:
+            - ../:/var/www
+            - ./nginx:/etc/nginx/conf.d/
+        networks:
+            - leaf
+
+networks:
+    leaf:
+        driver: bridge
