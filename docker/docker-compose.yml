@@ -3,6 +3,8 @@ services:
     php:
         build:
             context: ./php
+            args:
+                HOST_UID: ${HOST_UID}
         image: leaf-php
         container_name: leaf-php
         volumes:

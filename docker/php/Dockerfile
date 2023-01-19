@@ -1,5 +1,8 @@
 FROM php:8.1-fpm
 
+ARG HOST_UID
+RUN usermod -u $HOST_UID www-data
+
 # Setup node repo
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 
