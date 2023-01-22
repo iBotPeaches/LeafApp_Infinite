@@ -18,6 +18,8 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. `docker exec -it leaf-php php artisan migrate`
 1. `docker exec -it leaf-php yarn run dev`
 
+Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
+
 ### Setup
 1. PHP8.1
 1. Node + Yarn installed
@@ -81,8 +83,6 @@ Used for marking an account as "you" and supporting making "scrims".
 Used for optimizing images that come from backdrops and emblems.
  * `IMAGE_OPTIMIZE_KEY` - The key for API use.
  * `IMAGE_DOMAIN` - The domain for API Service
-
-Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 
 ### Dependencies
 
