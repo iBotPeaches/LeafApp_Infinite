@@ -19,15 +19,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@erbelion/vite-plugin-laravel-purgecss@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@erbelion/vite-plugin-laravel-purgecss@npm:0.1.1"
+"@erbelion/vite-plugin-laravel-purgecss@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@erbelion/vite-plugin-laravel-purgecss@npm:0.1.2"
   dependencies:
     purgecss: ^4.1.1
     vite: ^3.0.0
   peerDependencies:
     vite: ^3.0.0
-  checksum: b6c2ebd2386093c7454b32f148a3520ad95e2cab8725a0fca86053658642648f7ad18f225f6eca2bc0c92e324ba467459c163ec586967a920aa60b405b1ddde8
+  checksum: b2fe0c13070df201ed0eb5c9392fb51c6609155604d9bf5a648dbe66d99a4eb7401d3e579ffa8734dbdd0467bb105e0253ba2c36d3f7a3b71c46f039a132faba
   languageName: node
   linkType: hard
 
@@ -45,7 +45,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-free@npm:^6.1.1":
+"@fortawesome/fontawesome-free@npm:^6.1.2":
   version: 6.2.1
   resolution: "@fortawesome/fontawesome-free@npm:6.2.1"
   checksum: c77b7c8b0965e5c17f4ca45667885b6273e26af97a9e83db343fc756c159b5acd35cf420e73e1b916af1d275179290ccfb1900af48631749e30f36464f339bd3
@@ -174,7 +174,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27":
+"axios@npm:^0.27.2":
   version: 0.27.2
   resolution: "axios@npm:0.27.2"
   dependencies:
@@ -964,14 +964,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-vite-plugin@npm:^0.5.0":
-  version: 0.5.4
-  resolution: "laravel-vite-plugin@npm:0.5.4"
+"laravel-vite-plugin@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "laravel-vite-plugin@npm:0.7.3"
   dependencies:
-    vite-plugin-full-reload: ^1.0.1
+    picocolors: ^1.0.0
+    vite-plugin-full-reload: ^1.0.5
   peerDependencies:
-    vite: ^3.0.0
-  checksum: 0125616db1baabb8139cda81ec895767939337a050c0c2e8f9bb60aebe1a48632115eb3e71af88376d2505c17ef557ce457ad6ba8cf2c542af3be4bb9ab19f7c
+    vite: ^3.0.0 || ^4.0.0
+  checksum: 10fc833375eac6f3223829d5c276d7aaab577763146db7c49eee66692b1a1d9d5012ace220d0105706fe8761f3e3182031d0f0dde6d5257bf052b46590ba069a
   languageName: node
   linkType: hard
 
@@ -1437,16 +1438,16 @@ __metadata:
   dependencies:
     "@creativebulma/bulma-divider": ^1.1.0
     "@creativebulma/bulma-tooltip": ^1.2.0
-    "@erbelion/vite-plugin-laravel-purgecss": ^0.1.1
-    "@fortawesome/fontawesome-free": ^6.1.1
-    axios: ^0.27
+    "@erbelion/vite-plugin-laravel-purgecss": ^0.1.2
+    "@fortawesome/fontawesome-free": ^6.1.2
+    axios: ^0.27.2
     bulma: ^0.9.4
     bulma-ribbon: ^0.1.1
-    laravel-vite-plugin: ^0.5.0
+    laravel-vite-plugin: ^0.7.3
     lodash: ^4.17.21
     resolve-url-loader: ^5.0.0
-    sass: ^1.51.0
-    vite: ^3.0.0
+    sass: ^1.57.1
+    vite: ^3.2.5
     vite-plugin-manifest-sri: ^0.1.0
   languageName: unknown
   linkType: soft
@@ -1465,7 +1466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.51.0":
+"sass@npm:^1.57.1":
   version: 1.57.1
   resolution: "sass@npm:1.57.1"
   dependencies:
@@ -1638,7 +1639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-full-reload@npm:^1.0.1":
+"vite-plugin-full-reload@npm:^1.0.5":
   version: 1.0.5
   resolution: "vite-plugin-full-reload@npm:1.0.5"
   dependencies:
@@ -1657,7 +1658,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.0":
+"vite@npm:^3.0.0, vite@npm:^3.2.5":
   version: 3.2.5
   resolution: "vite@npm:3.2.5"
   dependencies:
