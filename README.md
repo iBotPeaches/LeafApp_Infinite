@@ -6,6 +6,18 @@ _Another hobby stat site for another Halo game_
 ### Branches
  * `master` - Branch off it. Must be stable.
 
+### Setup (Docker)
+A docker-based infrastructure is available for development. If you wish to run directly on host, see [Setup](#setup) below.
+
+1. `cp .env.example .env`
+1. Set the database hostname in `.env` like `DB_HOST=leaf-db`
+1. `HOST_UID=$(id -u) docker compose --env-file .env -p leaf -f docker/docker-compose.yml up -d`
+1. `docker exec -it leaf-php composer install`
+1. `docker exec -it leaf-php yarn install`
+1. `docker exec -it leaf-php php artisan key:generate`
+1. `docker exec -it leaf-php php artisan migrate`
+1. `docker exec -it leaf-php yarn run dev`
+
 ### Setup
 1. PHP8.1
 1. Node + Yarn installed
@@ -69,6 +81,8 @@ Used for marking an account as "you" and supporting making "scrims".
 Used for optimizing images that come from backdrops and emblems.
  * `IMAGE_OPTIMIZE_KEY` - The key for API use.
  * `IMAGE_DOMAIN` - The domain for API Service
+
+Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 
 ### Dependencies
 
