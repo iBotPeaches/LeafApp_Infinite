@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "artesaos/seotools": "dev-master",
         "bensampo/laravel-enum": "^5.0",
         "doctrine/dbal": "^3.2",
