@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eef2bf7b1cab1adee481ca1185dd20b6",
+    "content-hash": "ae3c54ce1e834f8748b2fc6a61bed71a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -11387,8 +11387,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

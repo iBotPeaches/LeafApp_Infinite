@@ -21,7 +21,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 
 ### Setup
-1. PHP8.1
+1. PHP8.2
 1. Node + Yarn installed
 1. MariaDB 10.4+
 1. [Composer](https://getcomposer.org/) installed.
