@@ -22,7 +22,7 @@
         "brianium/paratest": "^6.3",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.0",
+        "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "2.2.9",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0",
