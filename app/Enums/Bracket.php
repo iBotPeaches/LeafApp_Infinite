@@ -24,7 +24,7 @@ final class Bracket extends Enum implements LocalizedEnum
     const POOL_C = 'c';
     const POOL_D = 'd';
 
-    public static function coerce($enumKeyOrValue): ?Enum
+    public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match ($enumKeyOrValue) {
             1, self::POOL_A => self::WINNERS,
