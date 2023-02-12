@@ -71,7 +71,7 @@ jobs:
           DB_PORT: ${{ job.services.maria.ports[3306] }}
         run: php artisan test --without-tty --coverage --min=100 --parallel -p2 --coverage-html=output
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: coverage-html
