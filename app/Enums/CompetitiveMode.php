@@ -18,7 +18,7 @@ final class CompetitiveMode extends Enum implements LocalizedEnum
     const SEASON = 2;
     const ALL_TIME = 3;
 
-    public static function coerce($enumKeyOrValue): ?Enum
+    public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = is_numeric($enumKeyOrValue)
             ? $enumKeyOrValue
