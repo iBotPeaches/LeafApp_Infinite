@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property int $id
@@ -42,15 +43,19 @@ class Map extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         $mapId = Arr::get($payload, 'level_id', Arr::get($payload, 'properties.level_id'));
+        $mapName = Arr::get($payload, 'name');
+
+        // Due to forged maps having the same levelId as base. We will key again to prevent wiping forge vs base maps.
+        $key = md5($mapId.Str::lower($mapName));
 
         /** @var Map $map */
         $map = self::query()
-            ->where('uuid', $mapId)
+            ->where('uuid', $key)
             ->firstOrNew([
-                'uuid' => $mapId
+                'uuid' => $key
             ]);
 
-        $map->name = Arr::get($payload, 'name');
+        $map->name = $mapName;
         $map->thumbnail_url = Arr::get($payload, 'thumbnail_url', Arr::get($payload, 'asset.thumbnail_url'));
 
         if ($map->isDirty()) {
