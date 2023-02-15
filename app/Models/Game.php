@@ -64,12 +64,9 @@ class Game extends Model implements HasHaloDotApi
         'gamevariant_id',
     ];
 
-    public $dates = [
-        'occurred_at'
-    ];
-
     public $casts = [
-        'experience' => Experience::class
+        'experience' => Experience::class,
+        'occurred_at' => 'datetime',
     ];
 
     public $with = [

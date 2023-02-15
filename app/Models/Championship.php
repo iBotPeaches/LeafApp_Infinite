@@ -38,13 +38,10 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         'id',
     ];
 
-    public $dates = [
-        'started_at'
-    ];
-
     public $casts = [
         'region' => Region::class,
-        'type' => ChampionshipType::class
+        'type' => ChampionshipType::class,
+        'started_at' => 'datetime'
     ];
 
     public $timestamps = false;
