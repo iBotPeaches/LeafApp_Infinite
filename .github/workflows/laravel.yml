@@ -63,13 +63,13 @@ jobs:
       - name: PHPCS
         run: vendor/bin/phpcs
 
-      - name: PHPStan
-        run: vendor/bin/phpstan analyse
-
       - name: Execute tests (With Coverage) via PHPUnit
         env:
           DB_PORT: ${{ job.services.maria.ports[3306] }}
         run: php artisan test --without-tty --coverage --min=100 --coverage-html=output
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --xdebug
 
       - uses: actions/upload-artifact@v3
         if: failure()
