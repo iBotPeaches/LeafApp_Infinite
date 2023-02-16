@@ -47,7 +47,7 @@ class ApiClient implements TournamentInterface
 
         while ($count !== 0) {
             $response = $this->getPendingRequest()->get('championships/'.$championship->faceit_id.'/matches', [
-                'type' => 'past',
+                'type' => 'all',
                 'offset' => $offset,
                 'limit' => $perPage,
             ])->throw();

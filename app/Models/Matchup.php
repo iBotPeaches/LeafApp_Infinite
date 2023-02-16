@@ -69,12 +69,12 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
 
     public function setStartedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestampMs($value);
+        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
     public function setEndedAtAttribute(string|Carbon $value): void
     {
-        $this->attributes['ended_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestampMs($value);
+        $this->attributes['ended_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestamp($value);
     }
 
     public function getWinnerAttribute(): ?MatchupTeam

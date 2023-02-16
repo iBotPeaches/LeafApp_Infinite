@@ -4,8 +4,8 @@
 <table class="table is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
     <tr>
+        <th>Matchup</th>
         <th>Winner</th>
-        <th>Loser</th>
         <th>Best Of</th>
         <th>Score</th>
     </tr>
@@ -13,14 +13,18 @@
     <tbody>
     @foreach ($matchups as $matchup)
         <tr>
-            <td class="has-background-danger-light">
+            <td>
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
                     {{ $matchup->winner?->name }}
                 </a>
-            </td>
-            <td class="has-background-info-light">
+                vs
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
                     {{ $matchup->loser?->name }}
+                </a>
+            </td>
+            <td>
+                <a class="is-bold" href="{{ route('matchup', [$championship, $matchup]) }}">
+                    {{ $matchup->winner?->name }}
                 </a>
             </td>
             <td>
