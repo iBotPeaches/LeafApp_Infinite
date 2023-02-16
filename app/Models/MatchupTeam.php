@@ -64,7 +64,7 @@ class MatchupTeam extends Model implements HasFaceItApi
         $matchupPayload = Arr::get($payload, '_leaf.raw_matchup');
 
         $winner = Arr::get($matchupPayload, 'results.winner');
-        $points = Arr::get($matchupPayload, 'results.score.' . $teamInternalId);
+        $points = Arr::get($matchupPayload, 'results.score.'.$teamInternalId);
 
         /** @var Matchup $matchup */
         $matchup = Arr::get($payload, '_leaf.matchup');
@@ -82,7 +82,7 @@ class MatchupTeam extends Model implements HasFaceItApi
             ? Arr::get($payload, 'roster.0.game_player_name', Arr::get($payload, 'name'))
             : Arr::get($payload, 'name');
 
-        $team->points = $points ? (int)$points : null;
+        $team->points = $points ? (int) $points : null;
 
         $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : null;
 
