@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Matches;
@@ -23,35 +24,35 @@ class MockMatchesService extends BaseMock
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->url
+                                'thumbnail_url' => $this->faker->url,
                             ],
                             'properties' => [
                                 'category_id' => 1,
-                            ]
+                            ],
                         ],
                         'map' => [
                             'name' => $this->faker->word,
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->url
+                                'thumbnail_url' => $this->faker->url,
                             ],
                             'properties' => [
                                 'level_id' => $this->faker->numberBetween(0, 10),
-                            ]
+                            ],
                         ],
                         'playlist' => [
                             'name' => $this->faker->word,
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->imageUrl
+                                'thumbnail_url' => $this->faker->imageUrl,
                             ],
                             'properties' => [
                                 'queue' => 'open',
                                 'input' => 'crossplay',
                                 'ranked' => true,
-                            ]
+                            ],
                         ],
                     ],
                     'teams' => [
@@ -75,17 +76,17 @@ class MockMatchesService extends BaseMock
                                         'destroys' => $this->faker->numberBetween(0, 2),
                                         'hijacks' => $this->faker->numberBetween(0, 2),
                                     ],
-                                    'medals' => $this->faker->numberBetween(1, 25)
+                                    'medals' => $this->faker->numberBetween(1, 25),
                                 ],
                                 'damage' => [
                                     'taken' => $this->faker->numerify('####'),
-                                    'dealt' => $this->faker->numerify('####')
+                                    'dealt' => $this->faker->numerify('####'),
                                 ],
                                 'shots' => [
                                     'fired' => $this->faker->numerify(),
                                     'landed' => $this->faker->numerify(),
                                     'missed' => $this->faker->numerify(),
-                                    'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                                    'accuracy' => $this->faker->randomFloat(2, 0, 100),
                                 ],
                                 'kda' => $this->faker->randomFloat(2, 0, 10),
                                 'kdr' => $this->faker->randomFloat(2, 0, 10),
@@ -100,7 +101,7 @@ class MockMatchesService extends BaseMock
                                     'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
                                     'sub_tier' => $this->faker->numberBetween(0, 5),
                                     'initial_measurement_matches' => 10,
-                                    'measurement_matches_remaining' => 0
+                                    'measurement_matches_remaining' => 0,
                                 ],
                                 'post_match' => [
                                     'value' => $this->faker->numberBetween(1000, 1400),
@@ -108,9 +109,9 @@ class MockMatchesService extends BaseMock
                                     'tier_start' => 1200,
                                     'sub_tier' => $this->faker->numberBetween(0, 5),
                                     'initial_measurement_matches' => 10,
-                                    'measurement_matches_remaining' => 0
-                                ]
-                            ]
+                                    'measurement_matches_remaining' => 0,
+                                ],
+                            ],
                         ],
                     ],
                     'experience' => $this->faker->randomElement(['arena', 'btb']),
@@ -118,8 +119,8 @@ class MockMatchesService extends BaseMock
                     'played_at' => now()->toIso8601ZuluString(),
                     'duration' => [
                         'seconds' => $this->faker->numerify('###'),
-                        'human' => ''
-                    ]
+                        'human' => '',
+                    ],
                 ],
                 [
                     'id' => $this->faker->uuid,
@@ -129,35 +130,35 @@ class MockMatchesService extends BaseMock
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->url
+                                'thumbnail_url' => $this->faker->url,
                             ],
                             'properties' => [
                                 'category_id' => 1,
-                            ]
+                            ],
                         ],
                         'map' => [
                             'name' => $this->faker->word,
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->url
+                                'thumbnail_url' => $this->faker->url,
                             ],
                             'properties' => [
                                 'level_id' => $this->faker->numberBetween(0, 10),
-                            ]
+                            ],
                         ],
                         'playlist' => [
                             'name' => $this->faker->word,
                             'asset' => [
                                 'id' => $this->faker->uuid,
                                 'version' => $this->faker->uuid,
-                                'thumbnail_url' => $this->faker->imageUrl
+                                'thumbnail_url' => $this->faker->imageUrl,
                             ],
                             'properties' => [
                                 'queue' => 'open',
                                 'input' => 'crossplay',
                                 'ranked' => true,
-                            ]
+                            ],
                         ],
                     ],
                     'teams' => [
@@ -181,17 +182,17 @@ class MockMatchesService extends BaseMock
                                         'destroys' => $this->faker->numberBetween(0, 2),
                                         'hijacks' => $this->faker->numberBetween(0, 2),
                                     ],
-                                    'medals' => $this->faker->numberBetween(1, 25)
+                                    'medals' => $this->faker->numberBetween(1, 25),
                                 ],
                                 'damage' => [
                                     'taken' => $this->faker->numerify('####'),
-                                    'dealt' => $this->faker->numerify('####')
+                                    'dealt' => $this->faker->numerify('####'),
                                 ],
                                 'shots' => [
                                     'fired' => $this->faker->numerify(),
                                     'landed' => $this->faker->numerify(),
                                     'missed' => $this->faker->numerify(),
-                                    'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                                    'accuracy' => $this->faker->randomFloat(2, 0, 100),
                                 ],
                                 'kda' => $this->faker->randomFloat(2, 0, 10),
                                 'kdr' => $this->faker->randomFloat(2, 0, 10),
@@ -206,7 +207,7 @@ class MockMatchesService extends BaseMock
                                     'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
                                     'sub_tier' => $this->faker->numberBetween(0, 5),
                                     'initial_measurement_matches' => 10,
-                                    'measurement_matches_remaining' => 0
+                                    'measurement_matches_remaining' => 0,
                                 ],
                                 'post_match' => [
                                     'value' => $this->faker->numberBetween(1000, 1400),
@@ -214,9 +215,9 @@ class MockMatchesService extends BaseMock
                                     'tier_start' => 1200,
                                     'sub_tier' => $this->faker->numberBetween(0, 5),
                                     'initial_measurement_matches' => 10,
-                                    'measurement_matches_remaining' => 0
-                                ]
-                            ]
+                                    'measurement_matches_remaining' => 0,
+                                ],
+                            ],
                         ],
                     ],
                     'experience' => $this->faker->randomElement(['arena', 'btb']),
@@ -224,25 +225,25 @@ class MockMatchesService extends BaseMock
                     'played_at' => now()->toIso8601ZuluString(),
                     'duration' => [
                         'seconds' => $this->faker->numerify('###'),
-                        'human' => ''
-                    ]
+                        'human' => '',
+                    ],
                 ],
             ],
             'additional' => [
                 'privacy' => [
-                    'public' => true
+                    'public' => true,
                 ],
                 'count' => $count,
                 'paging' => [
                     'count' => $count,
-                    'offset' => $offset
+                    'offset' => $offset,
                 ],
                 'parameters' => [
                     'gamertag' => $gamertag,
                     'language' => Language::US,
-                    'type' => 'matchmaking'
-                ]
-            ]
+                    'type' => 'matchmaking',
+                ],
+            ],
         ];
     }
 
@@ -252,19 +253,19 @@ class MockMatchesService extends BaseMock
             'data' => [],
             'additional' => [
                 'privacy' => [
-                    'public' => true
+                    'public' => true,
                 ],
                 'count' => 0,
                 'paging' => [
                     'count' => 0,
-                    'offset' => $offset
+                    'offset' => $offset,
                 ],
                 'parameters' => [
                     'gamertag' => $gamertag,
                     'language' => Language::US,
-                    'type' => 'matchmaking'
-                ]
-            ]
+                    'type' => 'matchmaking',
+                ],
+            ],
         ];
     }
 }

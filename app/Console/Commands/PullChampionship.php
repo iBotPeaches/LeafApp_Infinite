@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -11,6 +12,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 class PullChampionship extends Command
 {
     protected $signature = 'app:championship {championshipId}';
+
     protected $description = 'Pulls Championship from FaceIt';
 
     protected TournamentInterface $client;

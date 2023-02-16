@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Traits;
@@ -17,6 +18,7 @@ trait HasMedals
 
         return Medal::all()->map(function (Medal $medal) use ($medals) {
             $medal['count'] = $medals[$medal->id] ?? 0;
+
             return $medal;
         })->reject(function (Medal $medal) {
             // @phpstan-ignore-next-line

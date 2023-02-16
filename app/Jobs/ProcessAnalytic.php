@@ -26,7 +26,6 @@ class ProcessAnalytic implements ShouldQueue
     public function __construct(
         public AnalyticInterface $analytic
     ) {
-
         $this->onQueue(QueueName::RECORDS);
     }
 
@@ -60,7 +59,7 @@ class ProcessAnalytic implements ShouldQueue
 
                 $slug = $this->analytic->slug(count($resultSet ?? []));
 
-                Storage::disk('public')->put('top-ten/' . $slug . '.csv', $writer->toString());
+                Storage::disk('public')->put('top-ten/'.$slug.'.csv', $writer->toString());
             }
         });
     }

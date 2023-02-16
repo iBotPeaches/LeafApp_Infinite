@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
 
-use App\Services\Autocode\Enums\Filter;
 use BenSampo\Enum\Enum;
 
 /**
@@ -16,9 +16,13 @@ use BenSampo\Enum\Enum;
 final class Mode extends Enum
 {
     const MATCHMADE_PVP = 1;
+
     const MATCHMADE_SOCIAL = 2;
+
     const MATCHMADE_RANKED = 3;
+
     const MATCHMADE_BOTS = 4;
+
     const CUSTOM = 5;
 
     public function toPlayerRelation(): string

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -17,14 +18,19 @@ use Illuminate\Support\Str;
 final class Experience extends Enum implements LocalizedEnum
 {
     const BTB = 1;
+
     const ARENA = 2;
+
     const PVE_BOTS = 3;
+
     const CUSTOM = 4;
+
     const FEATURED = 5;
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+
         return parent::coerce($enumKeyOrValue);
     }
 }

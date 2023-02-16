@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Models;
@@ -15,12 +16,12 @@ class GameTeamModelTest extends TestCase
         /** @var GameTeam $gameTeam */
         $gameTeam = GameTeam::factory()
             ->make([
-                'internal_team_id' => $internalId
+                'internal_team_id' => $internalId,
             ]);
 
         // Act & Assert
-        $this->assertEquals('is-' . $expected, $gameTeam->color);
-        $this->assertEquals('has-tooltip-' . $expected, $gameTeam->tooltip_color);
+        $this->assertEquals('is-'.$expected, $gameTeam->color);
+        $this->assertEquals('has-tooltip-'.$expected, $gameTeam->tooltip_color);
     }
 
     public function teamColorDataProvider(): array
@@ -28,16 +29,16 @@ class GameTeamModelTest extends TestCase
         return [
             [
                 'internal_team_id' => 0,
-                'expected' => 'info'
+                'expected' => 'info',
             ],
             [
                 'internal_team_id' => 1,
-                'expected' => 'danger'
+                'expected' => 'danger',
             ],
             [
                 'internal_team_id' => 99,
-                'expected' => 'dark'
-            ]
+                'expected' => 'dark',
+            ],
         ];
     }
 }

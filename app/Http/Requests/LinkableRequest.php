@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Requests;
 
@@ -9,7 +10,7 @@ class LinkableRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return (bool)$this->user();
+        return (bool) $this->user();
     }
 
     public function rules(): array

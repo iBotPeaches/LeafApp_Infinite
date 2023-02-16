@@ -25,7 +25,7 @@ class TopTenTable extends Component
             ->paginate(15);
 
         return view('livewire.top-ten-table', [
-            'stats' => $stats
+            'stats' => $stats,
         ]);
     }
 }

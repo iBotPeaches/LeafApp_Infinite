@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
  * @property int $internal_id
  * @property string $name
  * @property string $emblem_url
+ *
  * @method static TeamFactory factory(...$parameters)
  */
 class Team extends Model implements HasHaloDotApi
@@ -20,7 +21,7 @@ class Team extends Model implements HasHaloDotApi
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $timestamps = false;
@@ -33,7 +34,7 @@ class Team extends Model implements HasHaloDotApi
         $team = self::query()
             ->where('internal_id', $teamId)
             ->firstOrNew([
-                'internal_id' => $teamId
+                'internal_id' => $teamId,
             ]);
 
         $team->name = Arr::get($payload, 'name');

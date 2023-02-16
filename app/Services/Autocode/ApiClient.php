@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Autocode;
@@ -33,7 +34,7 @@ class ApiClient implements InfiniteInterface
     public function appearance(string $gamertag): ?Player
     {
         $response = $this->getPendingRequest()->get('appearance/players/spartan-id', [
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         if ($response->successful()) {
@@ -48,16 +49,16 @@ class ApiClient implements InfiniteInterface
         // Handle when -1 (no season) is sent here.
         $season = $season === -1 ? null : $season;
 
-        $season ?? (int)config('services.autocode.competitive.season');
+        $season ?? (int) config('services.autocode.competitive.season');
         $queryParams = [
             'gamertag' => $player->gamertag,
-            'season' => $season
+            'season' => $season,
         ];
 
         // Handle upstream API breaking when we send latest season (ie 2), but with no version.
         // Returns are returned with S2V3, but invalid when S2 only is asked for.
-        if ($season === (int)config('services.autocode.competitive.season')) {
-            $queryParams['version'] = (int)config('services.autocode.competitive.version');
+        if ($season === (int) config('services.autocode.competitive.season')) {
+            $queryParams['version'] = (int) config('services.autocode.competitive.version');
         }
 
         $response = $this->getPendingRequest()->get('stats/players/csrs', $queryParams);
@@ -74,7 +75,7 @@ class ApiClient implements InfiniteInterface
     public function mmr(Player $player): Player
     {
         $response = $this->getPendingRequest()->get('stats/players/mmr', [
-            'gamertag' => $player->gamertag
+            'gamertag' => $player->gamertag,
         ]);
 
         if ($response->throw()->successful()) {
@@ -111,7 +112,7 @@ class ApiClient implements InfiniteInterface
         while ($count !== 0) {
             $response = $this->getPendingRequest()->post('stats/players/matches', [
                 'gamertag' => $player->gamertag,
-                'type' => (string)$mode->value,
+                'type' => (string) $mode->value,
                 'language' => Language::US,
                 'count' => $perPage,
                 'offset' => $offset,
@@ -119,11 +120,11 @@ class ApiClient implements InfiniteInterface
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $count = (int)Arr::get($data, 'additional.count');
+                $count = (int) Arr::get($data, 'additional.count');
                 $offset += $perPage;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
-                    $game = Game::fromHaloDotApi((array)$gameData);
+                    $game = Game::fromHaloDotApi((array) $gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
@@ -134,7 +135,7 @@ class ApiClient implements InfiniteInterface
 
                     GamePlayer::fromHaloDotApi($gameData);
 
-                    if (!$forceUpdate && $game && $game->id === $player->$lastGameIdVariable) {
+                    if (! $forceUpdate && $game && $game->id === $player->$lastGameIdVariable) {
                         break 2;
                     }
                 }
@@ -154,14 +155,14 @@ class ApiClient implements InfiniteInterface
     public function match(string $matchUuid): ?Game
     {
         $response = $this->getPendingRequest()->get('stats/matches', [
-            'ids' => Arr::wrap($matchUuid)
+            'ids' => Arr::wrap($matchUuid),
         ])->throw();
 
         $data = $response->json();
 
         $lastMatch = null;
         foreach (Arr::get($data, 'data') as $match) {
-            $lastMatch = Game::fromHaloDotApi((array)Arr::get($match, 'match', []));
+            $lastMatch = Game::fromHaloDotApi((array) Arr::get($match, 'match', []));
         }
 
         return $lastMatch;
@@ -230,12 +231,12 @@ class ApiClient implements InfiniteInterface
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
     {
         foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
-            $url = 'stats/players/service-record/multiplayer/matchmade/' . $filter->toUrlSlug();
+            $url = 'stats/players/service-record/multiplayer/matchmade/'.$filter->toUrlSlug();
             $season = $season === -1 ? null : $season;
 
             $response = $this->getPendingRequest()->get($url, [
                 'gamertag' => $player->gamertag,
-                'season' => $season
+                'season' => $season,
             ]);
 
             // If we have a 403 - Chances are its because season x is not available.
@@ -261,7 +262,7 @@ class ApiClient implements InfiniteInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->baseUrl($this->config['domain'] . '/infinite@'. $this->config['version'])
+            ->baseUrl($this->config['domain'].'/infinite@'.$this->config['version'])
             ->timeout(180)
             ->withToken($this->config['key']);
     }

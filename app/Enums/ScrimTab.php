@@ -13,6 +13,8 @@ use BenSampo\Enum\Enum;
 final class ScrimTab extends Enum implements LocalizedEnum
 {
     const OVERVIEW = 'overview';
+
     const MATCHES = 'matches';
+
     const PLAYERS = 'players';
 }

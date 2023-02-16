@@ -26,16 +26,16 @@ use Illuminate\Support\Str;
  * @property string $uuid
  * @property int $category_id
  * @property int $map_id
- * @property boolean $is_ffa
- * @property boolean $is_lan
- * @property boolean $is_scored
+ * @property bool $is_ffa
+ * @property bool $is_lan
+ * @property bool $is_scored
  * @property Experience $experience
  * @property Carbon $occurred_at
  * @property int $duration_seconds
  * @property int|null $season_number
  * @property int|null $season_version
  * @property string $version
- * @property boolean $was_pulled
+ * @property bool $was_pulled
  * @property-read Category $category
  * @property-read Map $map
  * @property-read Playlist|null $playlist
@@ -43,13 +43,14 @@ use Illuminate\Support\Str;
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
- * @property-read boolean $outdated
+ * @property-read bool $outdated
  * @property-read string $name
  * @property-read string $description
  * @property-read GameTeam|null $winner
  * @property-read GameTeam|null $loser
  * @property-read string $score
  * @property-read string $duration
+ *
  * @method static GameFactory factory(...$parameters)
  */
 class Game extends Model implements HasHaloDotApi
@@ -106,7 +107,7 @@ class Game extends Model implements HasHaloDotApi
     {
         $experience = is_numeric($value) ? Experience::fromValue((int) $value) : Experience::coerce($value);
         if (empty($experience)) {
-            throw new \InvalidArgumentException('Invalid Experience Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Experience Enum ('.$value.')');
         }
 
         $this->attributes['experience'] = $experience->value;
@@ -114,23 +115,24 @@ class Game extends Model implements HasHaloDotApi
 
     public function getNameAttribute(): string
     {
-        return $this->category->name . ' on ' . $this->map->name;
+        return $this->category->name.' on '.$this->map->name;
     }
 
     public function getDescriptionAttribute(): string
     {
-        return $this->category->name . ' on ' .
-            $this->map->name . ' in ' .
-            $this->experience->description . ' at ' .
-            $this->occurred_at->toFormattedDateString() . ' with: ' .
+        return $this->category->name.' on '.
+            $this->map->name.' in '.
+            $this->experience->description.' at '.
+            $this->occurred_at->toFormattedDateString().' with: '.
             $this->players->implode('player.gamertag', ', ');
     }
 
     public function getOutdatedAttribute(): bool
     {
-        if (!$this->was_pulled) {
+        if (! $this->was_pulled) {
             return true;
         }
+
         return $this->version !== config('services.autocode.version');
     }
 
@@ -139,7 +141,7 @@ class Game extends Model implements HasHaloDotApi
         $minutes = intdiv($this->duration_seconds, 60);
         $seconds = $this->duration_seconds % 60;
 
-        return $minutes . 'min' . ', ' . $seconds . ' ' . Str::plural('sec', $seconds);
+        return $minutes.'min'.', '.$seconds.' '.Str::plural('sec', $seconds);
     }
 
     public function updateFromHaloDotApi(): void
@@ -172,7 +174,7 @@ class Game extends Model implements HasHaloDotApi
 
     public function getScoreAttribute(): string
     {
-        return $this->winner?->final_score . '-' . $this->loser?->final_score;
+        return $this->winner?->final_score.'-'.$this->loser?->final_score;
     }
 
     public static function fromHaloDotApi(array $payload): ?self
@@ -199,7 +201,7 @@ class Game extends Model implements HasHaloDotApi
         $game = self::query()
             ->where('uuid', $gameId)
             ->firstOrNew([
-                'uuid' => $gameId
+                'uuid' => $gameId,
             ]);
 
         $game->category()->associate($category);
@@ -208,7 +210,7 @@ class Game extends Model implements HasHaloDotApi
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
-        $game->is_ffa = !(bool) Arr::get($payload, 'teams.enabled');
+        $game->is_ffa = ! (bool) Arr::get($payload, 'teams.enabled');
         $game->is_lan ??= $mode && $mode->is(Mode::LAN());
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
@@ -240,9 +242,10 @@ class Game extends Model implements HasHaloDotApi
 
                 // Skip unresolved users from upstream API. We will force the game not yet updated to
                 // re-process later.
-                if ($type === PlayerType::PLAYER &&(bool)Arr::get($playerData, 'details.resolved') === false) {
+                if ($type === PlayerType::PLAYER && (bool) Arr::get($playerData, 'details.resolved') === false) {
                     $game->was_pulled = false;
                     $game->saveOrFail();
+
                     continue;
                 }
 

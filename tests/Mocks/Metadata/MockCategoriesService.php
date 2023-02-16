@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Metadata;
@@ -23,9 +24,9 @@ class MockCategoriesService extends BaseMock
             'additional' => [
                 'count' => $this->faker->numberBetween(0, 5),
                 'parameters' => [
-                    'ids' => []
-                ]
-            ]
+                    'ids' => [],
+                ],
+            ],
         ];
     }
 

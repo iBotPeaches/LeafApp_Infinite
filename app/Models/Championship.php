@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -28,6 +29,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
  * @property-read bool $has_championship
+ *
  * @method static ChampionshipFactory factory(...$parameters)
  */
 class Championship extends Model implements HasFaceItApi, Sitemapable
@@ -41,7 +43,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
     public $casts = [
         'region' => Region::class,
         'type' => ChampionshipType::class,
-        'started_at' => 'datetime'
+        'started_at' => 'datetime',
     ];
 
     public $timestamps = false;
@@ -55,7 +57,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
     {
         $region = is_numeric($value) ? Region::fromValue((int) $value) : Region::coerce(Str::upper($value));
         if (empty($region)) {
-            throw new \InvalidArgumentException('Invalid Region Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Region Enum ('.$value.')');
         }
 
         $this->attributes['region'] = $region->value;
@@ -68,7 +70,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
             : ChampionshipType::coerce($value);
 
         if (empty($type)) {
-            throw new \InvalidArgumentException('Invalid Type Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Type Enum ('.$value.')');
         }
 
         $this->attributes['type'] = $type->value;
@@ -81,7 +83,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
 
     public function getFaceitUrlAttribute(): string
     {
-        return 'https://www.faceit.com/en/championship/' . $this->faceit_id . '/' . $this->name;
+        return 'https://www.faceit.com/en/championship/'.$this->faceit_id.'/'.$this->name;
     }
 
     public function getHasChampionshipAttribute(): bool
@@ -98,7 +100,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         $championship = self::query()
             ->where('faceit_id', $championshipId)
             ->firstOrNew([
-                'faceit_id' => $championshipId
+                'faceit_id' => $championshipId,
             ]);
 
         $championship->name = Arr::get($payload, 'name');

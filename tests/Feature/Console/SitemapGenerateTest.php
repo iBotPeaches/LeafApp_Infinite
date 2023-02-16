@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
-use App\Models\Game;
 use App\Models\Matchup;
 use App\Models\Medal;
 use App\Models\Player;

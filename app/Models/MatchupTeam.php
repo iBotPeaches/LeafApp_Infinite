@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -26,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
  * @property-read MatchupPlayer[]|Collection $faceitPlayers
+ *
  * @method static MatchupTeamFactory factory(...$parameters)
  */
 class MatchupTeam extends Model implements HasFaceItApi
@@ -40,7 +42,7 @@ class MatchupTeam extends Model implements HasFaceItApi
     ];
 
     public $casts = [
-        'outcome' => Outcome::class
+        'outcome' => Outcome::class,
     ];
 
     public $timestamps = false;
@@ -69,14 +71,14 @@ class MatchupTeam extends Model implements HasFaceItApi
             ->where('matchup_id', $matchup->id)
             ->where('faceit_id', $teamId)
             ->firstOrNew([
-                'faceit_id' => $teamId
+                'faceit_id' => $teamId,
             ]);
 
         $team->matchup()->associate($matchup);
         $team->name = (string) $matchup->championship->type->isFfa()
             ? Arr::get($payload, 'roster.0.game_player_name', Arr::get($payload, 'name'))
             : Arr::get($payload, 'name');
-        $team->points = (int)Arr::get($matchupPayload, 'results.score.' . $teamInternalId, 0);
+        $team->points = (int) Arr::get($matchupPayload, 'results.score.'.$teamInternalId, 0);
         $team->outcome = Arr::get($matchupPayload, 'results.winner') === $teamInternalId
             ? Outcome::WIN()
             : Outcome::LOSS();
@@ -110,7 +112,7 @@ class MatchupTeam extends Model implements HasFaceItApi
             ->using(MatchupPlayer::class)
             ->withPivot([
                 'faceit_id',
-                'faceit_name'
+                'faceit_name',
             ]);
     }
 }

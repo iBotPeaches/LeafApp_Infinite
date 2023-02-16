@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -11,7 +12,9 @@ use Livewire\Component;
 class PlayerTogglePanel extends Component
 {
     public int $playerType;
+
     public string $type;
+
     public int $season;
 
     public function onChange(): void
@@ -28,7 +31,7 @@ class PlayerTogglePanel extends Component
 
     public function mount(): void
     {
-        $this->playerType = (int)ModeSession::get()->value;
+        $this->playerType = (int) ModeSession::get()->value;
         $this->season = SeasonSession::get();
     }
 
@@ -36,7 +39,7 @@ class PlayerTogglePanel extends Component
     {
         return view('livewire.player-toggle-panel', [
             'playerType' => $this->playerType,
-            'season' => $this->season
+            'season' => $this->season,
         ]);
     }
 

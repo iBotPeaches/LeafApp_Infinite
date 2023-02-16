@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\AddGamer;
@@ -23,14 +24,14 @@ class ValidGamerFormTest extends TestCase
         $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
 
         Http::fake([
-            '*' => Http::response($mockResponse, Response::HTTP_OK)
+            '*' => Http::response($mockResponse, Response::HTTP_OK),
         ]);
 
         // Act & Assert
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
@@ -55,11 +56,11 @@ class ValidGamerFormTest extends TestCase
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
-            'xuid' => Arr::get($mockXuidResponse, 'xuid')
+            'xuid' => Arr::get($mockXuidResponse, 'xuid'),
         ]);
     }
 
@@ -77,7 +78,7 @@ class ValidGamerFormTest extends TestCase
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
     }
 
     public function testGracefulFallbackIfXuidNotFound(): void
@@ -95,7 +96,7 @@ class ValidGamerFormTest extends TestCase
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
     }
 
     public function testValidResponseFromHaloDotApiIfAccountAlreadyExists(): void
@@ -104,17 +105,17 @@ class ValidGamerFormTest extends TestCase
         $mockResponse = (new MockAppearanceService())->success();
         $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
         Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         Http::fake([
-            '*' => Http::response($mockResponse, Response::HTTP_OK)
+            '*' => Http::response($mockResponse, Response::HTTP_OK),
         ]);
 
         // Act & Assert
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
     }
 }

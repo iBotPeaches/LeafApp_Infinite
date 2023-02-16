@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -25,7 +26,7 @@ class ScrimsTable extends Component
             ->paginate();
 
         return view('livewire.scrims-table', [
-            'scrims' => $scrims
+            'scrims' => $scrims,
         ]);
     }
 }

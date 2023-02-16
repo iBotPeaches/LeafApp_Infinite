@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -16,7 +17,7 @@ class UserFactory extends Factory
     {
         return [
             'google_id' => $this->faker->numerify('#############'),
-            'player_id' => Player::factory()
+            'player_id' => Player::factory(),
         ];
     }
 }

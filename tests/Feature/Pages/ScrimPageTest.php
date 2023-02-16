@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -7,7 +8,6 @@ use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\GameTeam;
 use App\Models\Pivots\GameScrim;
-use App\Models\Player;
 use App\Models\Scrim;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\Http;
@@ -22,10 +22,10 @@ class ScrimPageTest extends TestCase
         Http::fake();
 
         $scrim = Scrim::factory()->createOne([
-            'is_complete' => true
+            'is_complete' => true,
         ]);
         GameScrim::factory()->createOne([
-            'scrim_id' => $scrim->id
+            'scrim_id' => $scrim->id,
         ]);
 
         // Act
@@ -42,17 +42,17 @@ class ScrimPageTest extends TestCase
         Http::fake();
 
         $scrim = Scrim::factory()->createOne([
-            'is_complete' => true
+            'is_complete' => true,
         ]);
         GameScrim::factory()->createOne([
             'scrim_id' => $scrim->id,
-            'game_id' => Game::factory()->state(['is_ffa' => true])->has(GameTeam::factory(), 'teams')
+            'game_id' => Game::factory()->state(['is_ffa' => true])->has(GameTeam::factory(), 'teams'),
         ]);
 
         // Act
         $response = $this->get(route('scrim', [
             $scrim,
-            'matches'
+            'matches',
         ]));
 
         // Assert
@@ -66,17 +66,17 @@ class ScrimPageTest extends TestCase
         Http::fake();
 
         $scrim = Scrim::factory()->createOne([
-            'is_complete' => true
+            'is_complete' => true,
         ]);
         GameScrim::factory()->createOne([
             'scrim_id' => $scrim->id,
-            'game_id' => Game::factory()->state(['is_ffa' => false])->has(GameTeam::factory(), 'teams')
+            'game_id' => Game::factory()->state(['is_ffa' => false])->has(GameTeam::factory(), 'teams'),
         ]);
 
         // Act
         $response = $this->get(route('scrim', [
             $scrim,
-            'matches'
+            'matches',
         ]));
 
         // Assert
@@ -90,13 +90,13 @@ class ScrimPageTest extends TestCase
         Http::fake();
 
         $scrim = Scrim::factory()->createOne([
-            'is_complete' => true
+            'is_complete' => true,
         ]);
 
         $game = Game::factory()
             ->createOne([
                 'version' => config('services.autocode.version'),
-                'was_pulled' => true
+                'was_pulled' => true,
             ]);
 
         $gamePlayers = GamePlayer::factory()
@@ -116,7 +116,7 @@ class ScrimPageTest extends TestCase
         $game2 = Game::factory()
             ->createOne([
                 'version' => config('services.autocode.version'),
-                'was_pulled' => true
+                'was_pulled' => true,
             ]);
 
         GamePlayer::factory()
@@ -129,18 +129,18 @@ class ScrimPageTest extends TestCase
 
         GameScrim::factory()->createOne([
             'scrim_id' => $scrim->id,
-            'game_id' => $game->id
+            'game_id' => $game->id,
         ]);
 
         GameScrim::factory()->createOne([
             'scrim_id' => $scrim->id,
-            'game_id' => $game2->id
+            'game_id' => $game2->id,
         ]);
 
         // Act
         $response = $this->get(route('scrim', [
             $scrim,
-            'players'
+            'players',
         ]));
 
         // Assert

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -19,7 +20,7 @@ class MedalsLeaderboard extends Component
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function paginationSimpleView(): string
@@ -37,10 +38,10 @@ class MedalsLeaderboard extends Component
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
             ->where('is_cheater', false)
             ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC) AS place,
-                CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) as value,
+                CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) as value,
                 mode, total_seconds_played, player_id')
             ->where('mode', $modeSession->value)
-            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.' . $this->medal->id . '") as unsigned) > 0')
+            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')
             ->orderByRaw('value DESC');
 
         if ($seasonSession === -1) {
@@ -51,7 +52,7 @@ class MedalsLeaderboard extends Component
         $results = $query->simplePaginate(15);
 
         return view('livewire.medals-leaderboard', [
-            'results' => $results
+            'results' => $results,
         ]);
     }
 }

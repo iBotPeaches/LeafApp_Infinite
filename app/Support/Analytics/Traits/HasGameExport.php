@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Support\Analytics\Traits;
@@ -27,7 +28,7 @@ trait HasGameExport
                 'game' => $game->name,
                 'gameLink' => route('game', $game),
                 'date' => $game->occurred_at,
-                $game->{$this->property()}
+                $game->{$this->property()},
             ];
         })->toArray() ?? [];
     }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -20,7 +21,7 @@ class AnalyticFactory extends Factory
             'key' => AnalyticKey::MOST_MEDALS_SR->value,
             'game_id' => Game::factory(),
             'player_id' => Player::factory(),
-            'value' => $this->faker->randomFloat(2, 0, 20)
+            'value' => $this->faker->randomFloat(2, 0, 20),
         ];
     }
 }

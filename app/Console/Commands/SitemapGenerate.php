@@ -1,10 +1,10 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
 use App\Models\Championship;
-use App\Models\Game;
 use App\Models\Matchup;
 use App\Models\Medal;
 use App\Models\Player;
@@ -19,6 +19,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 class SitemapGenerate extends Command
 {
     protected $signature = 'sitemap:generate';
+
     protected $description = 'Generate the sitemap.';
 
     public function handle(): int
@@ -28,15 +29,15 @@ class SitemapGenerate extends Command
 
         Sitemap::create()
             ->add(Championship::all())
-            ->writeToFile($sitemapFolder . '/sitemap_championships.xml');
+            ->writeToFile($sitemapFolder.'/sitemap_championships.xml');
 
         Sitemap::create()
             ->add(Scrim::all())
-            ->writeToFile($sitemapFolder . '/sitemap_scrims.xml');
+            ->writeToFile($sitemapFolder.'/sitemap_scrims.xml');
 
         Sitemap::create()
             ->add(Medal::all())
-            ->writeToFile($sitemapFolder . '/sitemap_medals.xml');
+            ->writeToFile($sitemapFolder.'/sitemap_medals.xml');
 
         $playerIndex = 0;
         Player::query()
@@ -44,7 +45,7 @@ class SitemapGenerate extends Command
             ->chunkById(30000, function (Collection $players) use ($sitemapFolder, &$playerIndex) {
                 Sitemap::create()
                     ->add($players)
-                    ->writeToFile(sprintf($sitemapFolder . '/sitemap_players_%d.xml', $playerIndex++));
+                    ->writeToFile(sprintf($sitemapFolder.'/sitemap_players_%d.xml', $playerIndex++));
             });
 
         $matchupIndex = 0;
@@ -53,7 +54,7 @@ class SitemapGenerate extends Command
             ->chunkById(25000, function (Collection $matchups) use ($sitemapFolder, &$matchupIndex) {
                 Sitemap::create()
                     ->add($matchups)
-                    ->writeToFile(sprintf($sitemapFolder . '/sitemap_matchups_%d.xml', $matchupIndex++));
+                    ->writeToFile(sprintf($sitemapFolder.'/sitemap_matchups_%d.xml', $matchupIndex++));
             });
 
         // Index
@@ -69,7 +70,7 @@ class SitemapGenerate extends Command
             $sitemapIndex->add(sprintf('/sitemaps/sitemap_matchups_%d.xml', $i));
         }
 
-        $sitemapIndex->writeToFile($sitemapFolder . '/sitemap.xml');
+        $sitemapIndex->writeToFile($sitemapFolder.'/sitemap.xml');
 
         return CommandAlias::SUCCESS;
     }

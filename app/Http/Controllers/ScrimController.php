@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -20,7 +21,7 @@ class ScrimController extends Controller
         return view('pages.scrim', [
             'scrim' => $scrim,
             'user' => $request->user(),
-            'type' => $scrimType
+            'type' => $scrimType,
         ]);
     }
 }

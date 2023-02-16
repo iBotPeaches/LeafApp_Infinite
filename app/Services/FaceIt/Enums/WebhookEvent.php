@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\FaceIt\Enums;
@@ -13,5 +14,6 @@ use BenSampo\Enum\Enum;
 final class WebhookEvent extends Enum implements LocalizedEnum
 {
     const MATCH_STATUS_FINISHED = 'match_status_finished';
+
     const CHAMPIONSHIP_FINISHED = 'championship_finished';
 }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -18,7 +19,7 @@ class ScrimPlayers extends Component
     public function render(): View
     {
         $this->scrim->load([
-            'games.players.player'
+            'games.players.player',
         ]);
 
         $this->scrim->games->each(function (Game $game) {
@@ -58,7 +59,7 @@ class ScrimPlayers extends Component
         });
 
         return view('livewire.scrim-players', [
-            'gamePlayers' => $this->mergedStats
+            'gamePlayers' => $this->mergedStats,
         ]);
     }
 }

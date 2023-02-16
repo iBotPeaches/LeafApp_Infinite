@@ -61,7 +61,7 @@ jobs:
         run: php artisan storage:link
 
       - name: PHPCS
-        run: vendor/bin/phpcs
+        run: vendor/bin/pint --test
 
       - name: Execute tests (With Coverage) via PHPUnit
         env:

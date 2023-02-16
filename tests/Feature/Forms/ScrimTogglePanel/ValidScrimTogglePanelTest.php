@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\ScrimTogglePanel;
 
-use App\Http\Livewire\GameCustomHistoryTable;
 use App\Http\Livewire\ScrimTogglePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
@@ -26,8 +26,8 @@ class ValidScrimTogglePanelTest extends TestCase
         Livewire::test(ScrimTogglePanel::class, [
             'gameIds' => ['a', 'b', 'c'],
         ])
-            ->call('syncGameIds', [1,2,3])
-            ->assertSet('gameIds', [1,2,3]);
+            ->call('syncGameIds', [1, 2, 3])
+            ->assertSet('gameIds', [1, 2, 3]);
     }
 
     public function testCreateScrim(): void
@@ -35,7 +35,7 @@ class ValidScrimTogglePanelTest extends TestCase
         // Arrange
         Bus::fake([
             PullAppearance::class,
-            PullXuid::class
+            PullXuid::class,
         ]);
 
         $mockMatchResponse = (new MockMatchService())->success('a', 'b');

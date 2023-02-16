@@ -58,6 +58,7 @@ use Illuminate\Support\Collection;
  * @property-read string $kda_color
  * @property-read string $win_percent_color
  * @property-read Collection<int, Medal> $hydrated_medals
+ *
  * @method static ServiceRecordFactory factory(...$parameters)
  */
 class ServiceRecord extends Model implements HasHaloDotApi
@@ -65,7 +66,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
     use HasFactory, HasMedals, HasAccuracy;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $casts = [
@@ -75,7 +76,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
     ];
 
     public $touches = [
-        'player'
+        'player',
     ];
 
     public function getWinPercentAttribute(): float
@@ -195,10 +196,10 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->assists_driver = Arr::get($payload, 'core.breakdowns.assists.driver');
         $serviceRecord->assists_callout = Arr::get($payload, 'core.breakdowns.assists.callouts');
 
-        $serviceRecord->medals = collect((array)Arr::get($payload, 'core.breakdowns.medals'))
+        $serviceRecord->medals = collect((array) Arr::get($payload, 'core.breakdowns.medals'))
             ->mapWithKeys(function (array $medal) {
                 return [
-                    $medal['id'] => $medal['count']
+                    $medal['id'] => $medal['count'],
                 ];
             })->toArray();
 
@@ -212,7 +213,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
             $serviceRecord->player->saveOrFail();
         }
 
-        if ($serviceRecord->isDirty() && !$serviceRecord->player->is_private) {
+        if ($serviceRecord->isDirty() && ! $serviceRecord->player->is_private) {
             $serviceRecord->saveOrFail();
         }
 
@@ -229,6 +230,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         if ($season === -1) {
             return $query->whereNull('season_number');
         }
+
         return $query->where('season_number', $season);
     }
 }

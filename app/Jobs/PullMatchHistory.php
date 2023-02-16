@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Jobs;
@@ -19,9 +20,11 @@ class PullMatchHistory implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 1;
+
     public int $timeout = 720;
 
     private Player $player;
+
     public Mode $mode;
 
     public function __construct(Player $player, Mode $mode)
@@ -34,7 +37,7 @@ class PullMatchHistory implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'match-history' . $this->mode->value))->dontRelease()
+            (new WithoutOverlapping($this->player->id.'match-history'.$this->mode->value))->dontRelease(),
         ];
     }
 

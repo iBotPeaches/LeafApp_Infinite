@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -16,12 +17,13 @@ use Spatie\Sitemap\Tags\Url;
 /**
  * @property int $id
  * @property int $user_id
- * @property boolean $is_complete
+ * @property bool $is_complete
  * @property string $status_message
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read User $user
  * @property-read Game[]|Collection<int,Game> $games
+ *
  * @method static ScrimFactory factory(...$parameters)
  */
 class Scrim extends Model implements Sitemapable

@@ -188,7 +188,7 @@ return [
         'supervisor-2' => [
             'connection' => 'redis',
             'queue' => [
-                QueueName::XUID
+                QueueName::XUID,
             ],
             'balance' => 'simple',
             'maxProcesses' => 1,

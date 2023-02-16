@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -25,7 +26,7 @@ class TopTenLeaderboard extends Component
 
         return view('livewire.top-ten-leaderboard', [
             'results' => $topTen,
-            'analyticClass' => Analytic::getStatFromEnum($analyticEnumKey)
+            'analyticClass' => Analytic::getStatFromEnum($analyticEnumKey),
         ]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Exports;
@@ -21,11 +22,11 @@ class ExportMatchHistoryTest extends TestCase
         $player = Player::factory()->createOne();
         GamePlayer::factory()
             ->createOne([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($player->gamertag) . '/matches/csv/matches');
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/matches/csv/matches');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -41,11 +42,11 @@ class ExportMatchHistoryTest extends TestCase
         $player = Player::factory()->createOne();
         GamePlayer::factory()
             ->createOne([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($player->gamertag) . '/matches/csv/overview');
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/matches/csv/overview');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -62,14 +63,14 @@ class ExportMatchHistoryTest extends TestCase
         GamePlayer::factory()
             ->for(Game::factory()->create([
                 'is_lan' => false,
-                'experience' => Experience::CUSTOM
+                'experience' => Experience::CUSTOM,
             ]))
             ->createOne([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($player->gamertag) . '/matches/csv/custom');
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/matches/csv/custom');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -86,14 +87,14 @@ class ExportMatchHistoryTest extends TestCase
         GamePlayer::factory()
             ->for(Game::factory()->create([
                 'is_lan' => true,
-                'experience' => Experience::CUSTOM
+                'experience' => Experience::CUSTOM,
             ]))
             ->createOne([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($player->gamertag) . '/matches/csv/lan');
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/matches/csv/lan');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);

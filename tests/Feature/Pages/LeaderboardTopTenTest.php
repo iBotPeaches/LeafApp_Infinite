@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -19,11 +20,11 @@ class LeaderboardTopTenTest extends TestCase
         // Arrange
         Analytic::factory()
             ->create([
-                'key' => $analyticClass->key()
+                'key' => $analyticClass->key(),
             ]);
 
         // Act & Assert
-        $response = $this->get('/leaderboards/top-ten/' . $analyticClass->key());
+        $response = $this->get('/leaderboards/top-ten/'.$analyticClass->key());
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('top-ten-leaderboard');
     }

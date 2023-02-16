@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
-use App\Models\Player;
+use App\Models\Championship;
+use App\Models\Matchup;
 use App\Models\MatchupTeam;
+use App\Models\Player;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Championship;
-use App\Models\Matchup;
 
 class AddMatchups extends Migration
 {

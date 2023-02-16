@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -8,7 +9,6 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -29,7 +29,7 @@ class HomeController extends Controller
             ->first();
 
         $availableAnalytics = Storage::disk('stats')->files();
-        $randomAnalytic = 'App\Support\Analytics\Stats\\' .
+        $randomAnalytic = 'App\Support\Analytics\Stats\\'.
             Str::before($availableAnalytics[array_rand($availableAnalytics)], '.php');
 
         /** @var AnalyticInterface $randomAnalyticClass */
@@ -45,7 +45,7 @@ class HomeController extends Controller
             'lastUpdated' => $lastUpdated,
             'medal' => $randomMedal,
             'analyticClass' => $randomAnalyticClass,
-            'analytic' => $randomAnalytic
+            'analytic' => $randomAnalytic,
         ]);
     }
 

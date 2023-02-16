@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -50,7 +51,7 @@ class AuthenticationTest extends TestCase
         Socialite::shouldReceive('driver->user')->andReturn($abstractUser);
 
         User::factory()->createOne([
-            'google_id' => $googleId
+            'google_id' => $googleId,
         ]);
 
         // Act

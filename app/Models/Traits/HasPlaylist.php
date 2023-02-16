@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Traits;
@@ -14,7 +15,7 @@ trait HasPlaylist
 {
     public function getTitleAttribute(): string
     {
-        return $this->queue?->description . ' - ' . $this->input?->description;
+        return $this->queue?->description.' - '.$this->input?->description;
     }
 
     public function getIconAttribute(): ?string
@@ -40,7 +41,7 @@ trait HasPlaylist
 
         $queue = is_numeric($value) ? Queue::fromValue((int) $value) : Queue::coerce($value);
         if (empty($queue)) {
-            throw new \InvalidArgumentException('Invalid Queue Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Queue Enum ('.$value.')');
         }
 
         $this->attributes['queue'] = $queue->value;
@@ -54,7 +55,7 @@ trait HasPlaylist
 
         $input = is_numeric($value) ? Input::fromValue((int) $value) : Input::coerce($value);
         if (empty($input)) {
-            throw new \InvalidArgumentException('Invalid Input Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Input Enum ('.$value.')');
         }
 
         $this->attributes['input'] = $input->value;

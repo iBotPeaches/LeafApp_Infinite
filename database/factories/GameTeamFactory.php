@@ -21,7 +21,7 @@ class GameTeamFactory extends Factory
             'internal_team_id' => 0,
             'outcome' => Outcome::WIN,
             'rank' => 1,
-            'score' => $this->faker->numerify('####')
+            'score' => $this->faker->numerify('####'),
         ];
     }
 }

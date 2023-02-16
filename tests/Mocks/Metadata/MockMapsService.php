@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Metadata;
@@ -23,9 +24,9 @@ class MockMapsService extends BaseMock
             'additional' => [
                 'count' => $this->faker->numberBetween(0, 5),
                 'parameters' => [
-                    'ids' => []
-                ]
-            ]
+                    'ids' => [],
+                ],
+            ],
         ];
     }
 
@@ -34,7 +35,7 @@ class MockMapsService extends BaseMock
         return [
             'level_id' => $this->faker->numberBetween(1, 500),
             'name' => $this->faker->word,
-            'thumbnail_url' => $this->faker->imageUrl()
+            'thumbnail_url' => $this->faker->imageUrl(),
         ];
     }
 }

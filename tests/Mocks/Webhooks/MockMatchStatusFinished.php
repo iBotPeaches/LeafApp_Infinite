@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Webhooks;
@@ -25,7 +26,7 @@ class MockMatchStatusFinished extends BaseMock
             'retry_count' => 0,
             'version' => 1,
             'payload' => [
-                'id' => '1-' . $this->faker->uuid,
+                'id' => '1-'.$this->faker->uuid,
                 'organizer_id' => $this->faker->uuid,
                 'region' => 'NA',
                 'game' => 'halo_infinite',
@@ -33,9 +34,9 @@ class MockMatchStatusFinished extends BaseMock
                 'entity' => [
                     'id' => $this->faker->uuid,
                     'name' => 'HCS Something',
-                    'type' => 'championship'
-                ]
-            ]
+                    'type' => 'championship',
+                ],
+            ],
         ];
     }
 }

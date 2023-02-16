@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -15,6 +16,7 @@ class GameCustomHistoryTable extends Component
     public Player $player;
 
     public bool $isScrimEditor = false;
+
     public array $scrimGameIds = [];
 
     // @phpstan-ignore-next-line
@@ -25,7 +27,7 @@ class GameCustomHistoryTable extends Component
 
     public function toggleScrimMode(): void
     {
-        $this->isScrimEditor = !$this->isScrimEditor;
+        $this->isScrimEditor = ! $this->isScrimEditor;
     }
 
     /** @codeCoverageIgnore */
@@ -49,7 +51,7 @@ class GameCustomHistoryTable extends Component
                 ->where('is_lan', false)
                 ->whereDoesntHave('playlist')
                 ->orderByDesc('occurred_at')
-                ->paginate(16)
+                ->paginate(16),
         ]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\AddGamer;
@@ -21,7 +22,7 @@ class InvalidGamerFormTest extends TestCase
             ->set('gamertag', $gamertag)
             ->call('submit')
             ->assertHasErrors([
-                'gamertag' => $validationError
+                'gamertag' => $validationError,
             ]);
     }
 
@@ -32,7 +33,7 @@ class InvalidGamerFormTest extends TestCase
         $mockResponse = call_user_func($mockResponse);
 
         Http::fake([
-            '*' => Http::response($mockResponse, $statusCode)
+            '*' => Http::response($mockResponse, $statusCode),
         ]);
 
         // Act & Assert
@@ -56,32 +57,32 @@ class InvalidGamerFormTest extends TestCase
         Livewire::test(AddGamerForm::class)
             ->set('gamertag', $gamertag)
             ->call('submit')
-            ->assertRedirect('/player/' . $gamertag);
+            ->assertRedirect('/player/'.$gamertag);
     }
 
     public function invalidApiDataProvider(): array
     {
         return [
             401 => [
-                'response' => fn() => (new MockAppearanceService())->error401(),
-                'statusCode' => Response::HTTP_UNAUTHORIZED
+                'response' => fn () => (new MockAppearanceService())->error401(),
+                'statusCode' => Response::HTTP_UNAUTHORIZED,
             ],
             403 => [
-                'response' => fn() => (new MockAppearanceService())->error403(),
-                'statusCode' => Response::HTTP_FORBIDDEN
+                'response' => fn () => (new MockAppearanceService())->error403(),
+                'statusCode' => Response::HTTP_FORBIDDEN,
             ],
             404 => [
-                'response' => fn() => (new MockAppearanceService())->error404(),
-                'statusCode' => Response::HTTP_NOT_FOUND
+                'response' => fn () => (new MockAppearanceService())->error404(),
+                'statusCode' => Response::HTTP_NOT_FOUND,
             ],
             429 => [
-                'response' => fn() => (new MockAppearanceService())->error429(),
-                'statusCode' => Response::HTTP_TOO_MANY_REQUESTS
+                'response' => fn () => (new MockAppearanceService())->error429(),
+                'statusCode' => Response::HTTP_TOO_MANY_REQUESTS,
             ],
             500 => [
-                'response' => fn() => (new MockAppearanceService())->error500(),
-                'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR
-            ]
+                'response' => fn () => (new MockAppearanceService())->error500(),
+                'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ],
         ];
     }
 
@@ -90,16 +91,16 @@ class InvalidGamerFormTest extends TestCase
         return [
             'empty' => [
                 'gamertag' => null,
-                'validation' => 'required'
+                'validation' => 'required',
             ],
             'empty string' => [
                 'gamertag' => '',
-                'validation' => 'required'
+                'validation' => 'required',
             ],
             'too long' => [
                 'gamertag' => 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnoprstuvwxyz',
-                'validation' => 'max'
-            ]
+                'validation' => 'max',
+            ],
         ];
     }
 }

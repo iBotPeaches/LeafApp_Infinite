@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -16,12 +17,14 @@ use Livewire\Component;
 class UpdatePlayerPanel extends Component
 {
     public Player $player;
+
     public string $type;
+
     public bool $runUpdate = false;
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function processUpdate(): void
@@ -35,8 +38,8 @@ class UpdatePlayerPanel extends Component
         $message = 'Profile updated!';
 
         $seasonNumber = SeasonSession::get();
-        $cacheKey = 'player-profile-' . $this->player->id . $seasonNumber . md5($this->player->gamertag);
-        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int)config('services.autocode.competitive.season');
+        $cacheKey = 'player-profile-'.$this->player->id.$seasonNumber.md5($this->player->gamertag);
+        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int) config('services.autocode.competitive.season');
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
@@ -48,13 +51,13 @@ class UpdatePlayerPanel extends Component
                 return view('livewire.update-player-panel', [
                     'color' => 'is-info',
                     'button' => true,
-                    'message' => 'Checking for updated stats.'
+                    'message' => 'Checking for updated stats.',
                 ]);
             }
 
             try {
                 DB::transaction(function () use ($cacheKey, $isOlderSeason) {
-                    $cooldownMinutes = (int)config('services.autocode.cooldown');
+                    $cooldownMinutes = (int) config('services.autocode.cooldown');
                     $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
                     Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 
@@ -77,7 +80,7 @@ class UpdatePlayerPanel extends Component
 
         return view('livewire.update-player-panel', [
             'color' => $color,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -15,7 +16,9 @@ use Illuminate\Support\Str;
 final class CompetitiveMode extends Enum implements LocalizedEnum
 {
     const CURRENT = 1;
+
     const SEASON = 2;
+
     const ALL_TIME = 3;
 
     public static function coerce(mixed $enumKeyOrValue): ?static

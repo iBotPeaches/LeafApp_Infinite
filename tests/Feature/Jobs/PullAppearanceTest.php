@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Jobs;
@@ -27,7 +28,7 @@ class PullAppearanceTest extends TestCase
         Http::fake()->preventStrayRequests();
 
         $player = Player::factory()->createOne([
-            'is_bot' => true
+            'is_bot' => true,
         ]);
 
         // Act
@@ -36,7 +37,7 @@ class PullAppearanceTest extends TestCase
         // Assert
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'is_bot' => true
+            'is_bot' => true,
         ]);
     }
 
@@ -44,7 +45,7 @@ class PullAppearanceTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullXuid::class
+            PullXuid::class,
         ]);
         Storage::fake();
         $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');

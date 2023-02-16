@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -19,12 +20,12 @@ class HcsController extends Controller
     public function championship(Championship $championship, string $bracket = Bracket::WINNERS, int $round = 1): View
     {
         SEOTools::setTitle($championship->name);
-        SEOTools::setDescription($championship->name . ' (' . $championship->region  . ')');
+        SEOTools::setDescription($championship->name.' ('.$championship->region.')');
 
         return view('pages.championship', [
             'championship' => $championship,
             'bracket' => $bracket,
-            'round' => $round
+            'round' => $round,
         ]);
     }
 
@@ -37,7 +38,7 @@ class HcsController extends Controller
 
         return view('pages.matchup', [
             'championship' => $championship,
-            'matchup' => $matchup
+            'matchup' => $matchup,
         ]);
     }
 }

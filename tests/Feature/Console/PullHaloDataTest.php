@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Console;
@@ -32,7 +33,7 @@ class PullHaloDataTest extends TestCase
     public function testValidDataPull(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
@@ -65,11 +66,11 @@ class PullHaloDataTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -85,7 +86,7 @@ class PullHaloDataTest extends TestCase
             'gamertag' => $gamertag,
             'last_game_id_pulled' => $lastMatchmakingGame?->id,
             'last_custom_game_id_pulled' => $lastCustomGame?->id,
-            'last_lan_game_id_pulled' => $lastLanGame?->id
+            'last_lan_game_id_pulled' => $lastLanGame?->id,
         ]);
     }
 }

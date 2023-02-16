@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\XboxApi;
@@ -17,7 +18,7 @@ class ApiClient implements XboxInterface
 
     public function xuid(string $gamertag): ?string
     {
-        $response = $this->getPendingRequest()->get('/xuid/' . $gamertag);
+        $response = $this->getPendingRequest()->get('/xuid/'.$gamertag);
 
         if ($response->successful()) {
             return Arr::get($response->json(), 'xuid');
@@ -29,7 +30,7 @@ class ApiClient implements XboxInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->withUserAgent('Leaf - v' . config('services.autocode.version', 'dirty'))
+            ->withUserAgent('Leaf - v'.config('services.autocode.version', 'dirty'))
             ->baseUrl($this->config['domain']);
     }
 }

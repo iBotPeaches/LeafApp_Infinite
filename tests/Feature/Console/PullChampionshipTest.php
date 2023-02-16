@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Console;
@@ -38,7 +39,7 @@ class PullChampionshipTest extends TestCase
 
         // Act & Assert
         $this
-            ->artisan('app:championship ' . $championshipId)
+            ->artisan('app:championship '.$championshipId)
             ->assertExitCode(CommandAlias::SUCCESS);
 
         Queue::assertPushed(FindPlayersFromTeam::class);
@@ -66,7 +67,7 @@ class PullChampionshipTest extends TestCase
 
         // Act & Assert
         $this
-            ->artisan('app:championship ' . $championshipId)
+            ->artisan('app:championship '.$championshipId)
             ->assertExitCode(CommandAlias::SUCCESS);
 
         Queue::assertPushed(FindPlayersFromTeam::class);
@@ -91,7 +92,7 @@ class PullChampionshipTest extends TestCase
             ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
 
         // Act & Assert
-        $this->artisan('app:championship ' . $championshipId)
+        $this->artisan('app:championship '.$championshipId)
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
@@ -114,7 +115,7 @@ class PullChampionshipTest extends TestCase
             ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
 
         // Act & Assert
-        $this->artisan('app:championship ' . $championshipId)
+        $this->artisan('app:championship '.$championshipId)
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
@@ -125,7 +126,7 @@ class PullChampionshipTest extends TestCase
                 'type' => 'roundRobin',
             ],
             [
-                'type' => 'doubleElimination'
+                'type' => 'doubleElimination',
             ],
             [
                 'type' => 'stage',

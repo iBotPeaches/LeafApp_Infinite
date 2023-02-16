@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -13,6 +14,7 @@ use Livewire\Component;
 class ChampionshipMatchup extends Component
 {
     public Championship $championship;
+
     public Matchup $matchup;
 
     public function render(): View
@@ -36,7 +38,7 @@ class ChampionshipMatchup extends Component
             'championship' => $this->championship,
             'matchup' => $this->matchup,
             'games' => $this->matchup->games,
-            'aggregateStats' => $aggregateStats
+            'aggregateStats' => $aggregateStats,
         ]);
     }
 }

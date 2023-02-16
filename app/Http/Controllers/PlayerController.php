@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -20,16 +21,16 @@ class PlayerController extends Controller
 {
     public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): View
     {
-        SEOTools::setTitle($player->gamertag . ' ' . Str::title($type));
+        SEOTools::setTitle($player->gamertag.' '.Str::title($type));
         SEOTools::addImages([
-            $player->emblem_url
+            $player->emblem_url,
         ]);
-        SEOTools::setDescription($player->gamertag . ' Halo Infinite ' . Str::title($type));
+        SEOTools::setDescription($player->gamertag.' Halo Infinite '.Str::title($type));
 
         return view('pages.player', [
             'player' => $player,
             'user' => $request->user(),
-            'type' => $type
+            'type' => $type,
         ]);
     }
 
@@ -48,7 +49,7 @@ class PlayerController extends Controller
             default => 'OtherHistory'
         };
 
-        $title = Str::slug($player->gamertag . '-Infinite-' . $suffix) . '.csv';
+        $title = Str::slug($player->gamertag.'-Infinite-'.$suffix).'.csv';
 
         return response()->streamDownload(function () use ($writer) {
             echo $writer->toString();

@@ -27,7 +27,7 @@ return [
     PlayerTab::class => [
         PlayerTab::OVERVIEW => 'Overview',
         PlayerTab::COMPETITIVE => 'Competitive',
-        PlayerTab::MATCHES => 'Matches'
+        PlayerTab::MATCHES => 'Matches',
     ],
     ScrimTab::class => [
         ScrimTab::OVERVIEW => 'Overview',
@@ -45,7 +45,7 @@ return [
         Region::NA => 'NA',
         Region::EU => 'EU',
         Region::OCE => 'OCE',
-        Region::LATAM => 'LATAM'
+        Region::LATAM => 'LATAM',
     ],
     Bracket::class => [
         Bracket::WINNERS => 'Winners',
@@ -55,5 +55,5 @@ return [
         CompetitiveMode::CURRENT => 'Current',
         CompetitiveMode::SEASON => 'Season',
         CompetitiveMode::ALL_TIME => 'All Time',
-    ]
+    ],
 ];

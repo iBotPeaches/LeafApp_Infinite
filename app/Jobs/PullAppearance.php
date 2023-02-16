@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Jobs;
@@ -22,6 +23,7 @@ class PullAppearance implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 1;
+
     public Player $player;
 
     public function __construct(Player $player)
@@ -33,7 +35,7 @@ class PullAppearance implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'appearance'))->dontRelease()
+            (new WithoutOverlapping($this->player->id.'appearance'))->dontRelease(),
         ];
     }
 
@@ -64,7 +66,7 @@ class PullAppearance implements ShouldQueue
                 /** @var ImageInterface $client */
                 $client = resolve(ImageInterface::class);
 
-                Storage::put($filename, (string)resolve(FileUtilInterface::class)->getFileContents(
+                Storage::put($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
                     $client->optimize($url)
                 ));
             }
@@ -74,6 +76,7 @@ class PullAppearance implements ShouldQueue
     private function getStoragePathFromUrl(?string $url, string $type): ?string
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($url);
-        return $filename !== null ? 'public/images/' . $type . '/' . $filename : null;
+
+        return $filename !== null ? 'public/images/'.$type.'/'.$filename : null;
     }
 }

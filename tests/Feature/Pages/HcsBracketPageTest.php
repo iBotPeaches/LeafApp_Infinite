@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -29,7 +30,7 @@ class HcsBracketPageTest extends TestCase
             ->has(MatchupPlayer::factory(), 'faceitPlayers')
             ->createOne([
                 'matchup_id' => $championship->matchups->first()->id,
-                'points' => 2
+                'points' => 2,
             ]);
 
         // Act
@@ -61,51 +62,51 @@ class HcsBracketPageTest extends TestCase
             [
                 'round' => null,
                 'group' => null,
-                'attributes' => []
+                'attributes' => [],
             ],
             [
                 'round' => 1,
                 'group' => Bracket::WINNERS,
-                'attributes' => []
+                'attributes' => [],
             ],
             [
                 'round' => 2,
                 'group' => Bracket::LOSERS,
-                'attributes' => []
+                'attributes' => [],
             ],
             [
                 'round' => 2,
                 'group' => Bracket::GRAND,
-                'attributes' => []
+                'attributes' => [],
             ],
             [
                 'round' => 1,
                 'group' => Bracket::WINNERS,
                 'attributes' => [
-                    'type' => ChampionshipType::STAGE
-                ]
+                    'type' => ChampionshipType::STAGE,
+                ],
             ],
             [
                 'round' => 2,
                 'group' => Bracket::LOSERS,
                 'attributes' => [
-                    'type' => ChampionshipType::STAGE
-                ]
+                    'type' => ChampionshipType::STAGE,
+                ],
             ],
             [
                 'round' => 2,
                 'group' => Bracket::POOL_D,
                 'attributes' => [
-                    'type' => ChampionshipType::ROUND_ROBIN
-                ]
+                    'type' => ChampionshipType::ROUND_ROBIN,
+                ],
             ],
             [
                 'round' => 1,
                 'group' => Bracket::OTHER,
                 'attributes' => [
-                    'type' => ChampionshipType::ROUND_ROBIN
-                ]
-            ]
+                    'type' => ChampionshipType::ROUND_ROBIN,
+                ],
+            ],
         ];
     }
 }

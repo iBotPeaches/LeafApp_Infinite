@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Playlist;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

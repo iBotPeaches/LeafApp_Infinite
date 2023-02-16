@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Jobs;
 
@@ -51,6 +52,7 @@ class ExportGameHistory implements ShouldQueue
     protected array $data = [];
 
     public Player $player;
+
     public string $playerTab;
 
     public function __construct(Player $player, string $playerTab)
@@ -127,7 +129,7 @@ class ExportGameHistory implements ShouldQueue
                     $gamePlayer->expected_deaths,
                     $gamePlayer->getRawOriginal('score'),
                     $perfectMedal->count ?? 0,
-                    $gamePlayer->medal_count
+                    $gamePlayer->medal_count,
                 ];
             });
 

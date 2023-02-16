@@ -14,7 +14,10 @@ use BenSampo\Enum\Enum;
 final class Outcome extends Enum implements LocalizedEnum
 {
     const WIN = 1;
+
     const LOSS = 2;
+
     const LEFT = 3;
+
     const DRAW = 4;
 }

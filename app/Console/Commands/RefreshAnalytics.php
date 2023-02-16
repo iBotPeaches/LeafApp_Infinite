@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -13,6 +14,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 class RefreshAnalytics extends Command
 {
     protected $signature = 'analytics:refresh';
+
     protected $description = 'Refreshes cache table of top-ten stats.';
 
     public function handle(): int
@@ -20,7 +22,7 @@ class RefreshAnalytics extends Command
         $availableAnalytics = Storage::disk('stats')->files();
 
         foreach ($availableAnalytics as $availableAnalytic) {
-            $analytic = 'App\Support\Analytics\Stats\\' . Str::before($availableAnalytic, '.php');
+            $analytic = 'App\Support\Analytics\Stats\\'.Str::before($availableAnalytic, '.php');
 
             /** @var AnalyticInterface $analyticClass */
             $analyticClass = new $analytic();

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -18,7 +19,7 @@ class ChampionshipFactory extends Factory
             'faceit_id' => $this->faker->unique()->uuid,
             'name' => $this->faker->word,
             'region' => Region::getRandomValue(),
-            'started_at' => now()
+            'started_at' => now(),
         ];
     }
 }

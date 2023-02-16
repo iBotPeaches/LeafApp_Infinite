@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -14,7 +15,9 @@ use BenSampo\Enum\Enum;
 final class ChampionshipType extends Enum implements LocalizedEnum
 {
     const ROUND_ROBIN = 1;
+
     const DOUBLE_ELIM = 2;
+
     const STAGE = 3;
 
     public static function coerce(mixed $enumKeyOrValue): ?static

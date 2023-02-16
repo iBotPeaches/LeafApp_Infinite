@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 class PullMetadata extends Command
 {
     protected $signature = 'app:pull-metadata';
+
     protected $description = 'Pulls Metadata from endpoints';
 
     protected InfiniteInterface $client;

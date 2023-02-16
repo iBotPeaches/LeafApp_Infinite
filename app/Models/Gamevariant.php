@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $uuid
  * @property string $name
+ *
  * @method static GamevariantFactory factory(...$parameters)
  */
 class Gamevariant extends Model implements HasHaloDotApi
@@ -21,20 +23,20 @@ class Gamevariant extends Model implements HasHaloDotApi
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $timestamps = false;
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $gamevariantId = (string)Arr::get($payload, 'asset.id');
+        $gamevariantId = (string) Arr::get($payload, 'asset.id');
 
         /** @var Gamevariant $gamevariant */
         $gamevariant = self::query()
             ->where('uuid', $gamevariantId)
             ->firstOrNew([
-                'uuid' => $gamevariantId
+                'uuid' => $gamevariantId,
             ]);
 
         $gamevariant->name = Str::after(Arr::get($payload, 'name'), ':');

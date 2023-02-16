@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
  * @property string $name
  * @property string $thumbnail_url
  * @property-read string $image
+ *
  * @method static MapFactory factory(...$parameters)
  */
 class Map extends Model implements HasHaloDotApi
@@ -23,17 +24,17 @@ class Map extends Model implements HasHaloDotApi
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $timestamps = false;
 
     public function getImageAttribute(): string
     {
-        $filename = Str::slug($this->name) . '.jpg';
+        $filename = Str::slug($this->name).'.jpg';
 
-        if (File::exists(public_path('images/maps/' . $filename))) {
-            return asset('images/maps/' . $filename);
+        if (File::exists(public_path('images/maps/'.$filename))) {
+            return asset('images/maps/'.$filename);
         }
 
         return $this->thumbnail_url;
@@ -51,7 +52,7 @@ class Map extends Model implements HasHaloDotApi
         $map = self::query()
             ->where('uuid', $key)
             ->firstOrNew([
-                'uuid' => $key
+                'uuid' => $key,
             ]);
 
         $map->name = $mapName;

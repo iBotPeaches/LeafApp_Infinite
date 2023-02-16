@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Appearance;
@@ -23,9 +24,9 @@ class MockAppearanceService extends BaseMock
             ],
             'additional' => [
                 'parameters' => [
-                    'gamertag' => $gamertag ?? $this->faker->word
-                ]
-            ]
+                    'gamertag' => $gamertag ?? $this->faker->word,
+                ],
+            ],
         ];
     }
 
@@ -39,14 +40,14 @@ class MockAppearanceService extends BaseMock
             ],
             'additional' => [
                 'parameters' => [
-                    'gamertag' => $gamertag ?? $this->faker->word
-                ]
-            ]
+                    'gamertag' => $gamertag ?? $this->faker->word,
+                ],
+            ],
         ];
     }
 
     private function getAssetUrl(string $imageName): string
     {
-        return 'https://assets.halo.autocode.gg/externals/infinite/cms-images/?hash=' . base64_encode($imageName);
+        return 'https://assets.halo.autocode.gg/externals/infinite/cms-images/?hash='.base64_encode($imageName);
     }
 }

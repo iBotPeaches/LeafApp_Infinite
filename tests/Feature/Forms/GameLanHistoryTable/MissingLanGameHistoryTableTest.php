@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\GameLanHistoryTable;
@@ -17,7 +18,7 @@ class MissingLanGameHistoryTableTest extends TestCase
 
         // Act & Assert
         Livewire::test(GameLanHistoryTable::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->call('render')
             ->assertViewHas('games');

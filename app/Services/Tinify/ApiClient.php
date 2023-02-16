@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Tinify;
@@ -18,8 +19,8 @@ class ApiClient implements ImageInterface
     {
         $response = $this->getPendingRequest()->post('shrink', [
             'source' => [
-                'url' => $url
-            ]
+                'url' => $url,
+            ],
         ])->throw();
 
         return $response->header('Location');

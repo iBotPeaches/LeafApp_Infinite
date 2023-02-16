@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Jobs;
 
@@ -18,6 +19,7 @@ class PullMmr implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 1;
+
     public int $timeout = 60;
 
     private Player $player;
@@ -31,7 +33,7 @@ class PullMmr implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id . 'mmr'))->dontRelease()
+            (new WithoutOverlapping($this->player->id.'mmr'))->dontRelease(),
         ];
     }
 

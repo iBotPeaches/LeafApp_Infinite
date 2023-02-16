@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Traits;
@@ -43,7 +44,7 @@ trait HasCsr
     {
         $difference = $this->csr_change_raw;
 
-        return $difference > 0 ? '+' . $difference : (string) $difference;
+        return $difference > 0 ? '+'.$difference : (string) $difference;
     }
 
     public function getCsrRankChangeMessageAttribute(): ?string
@@ -53,7 +54,8 @@ trait HasCsr
 
         if ($preCsr->isDifferent($postCsr)) {
             $message = $postCsr > $preCsr ? 'moved to ' : 'fell to ';
-            return $message . $postCsr->title;
+
+            return $message.$postCsr->title;
         }
 
         return null;

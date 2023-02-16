@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -15,13 +16,19 @@ use BenSampo\Enum\Enum;
 final class Bracket extends Enum implements LocalizedEnum
 {
     const WINNERS = 'winners';
+
     const LOSERS = 'losers';
+
     const GRAND = 'grand';
+
     const OTHER = 'other';
 
     const POOL_A = 'a';
+
     const POOL_B = 'b';
+
     const POOL_C = 'c';
+
     const POOL_D = 'd';
 
     public static function coerce(mixed $enumKeyOrValue): ?static
@@ -39,7 +46,7 @@ final class Bracket extends Enum implements LocalizedEnum
 
     public function toNumerical(): ?int
     {
-        return match ((string)$this->value) {
+        return match ((string) $this->value) {
             self::WINNERS => 1,
             self::LOSERS => 2,
             self::GRAND => 3,

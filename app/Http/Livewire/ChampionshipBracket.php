@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -11,7 +12,9 @@ use Livewire\Component;
 class ChampionshipBracket extends Component
 {
     public Championship $championship;
+
     public string $bracket;
+
     public int $round;
 
     public function render(): View

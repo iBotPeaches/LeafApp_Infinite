@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Traits;
@@ -12,7 +13,7 @@ trait HasErrorFunctions
         return [
             'statusCode' => Response::HTTP_UNAUTHORIZED,
             'error' => 'Unauthorized',
-            'message' => 'Missing Authentication'
+            'message' => 'Missing Authentication',
         ];
     }
 
@@ -21,7 +22,7 @@ trait HasErrorFunctions
         return [
             'statusCode' => Response::HTTP_FORBIDDEN,
             'error' => 'Forbidden',
-            'message' => 'Forbidden'
+            'message' => 'Forbidden',
         ];
     }
 
@@ -30,7 +31,7 @@ trait HasErrorFunctions
         return [
             'statusCode' => Response::HTTP_NOT_FOUND,
             'error' => 'Not Found',
-            'message' => 'Not Found'
+            'message' => 'Not Found',
         ];
     }
 
@@ -39,7 +40,7 @@ trait HasErrorFunctions
         return [
             'statusCode' => Response::HTTP_TOO_MANY_REQUESTS,
             'error' => 'Too Many Requests',
-            'message' => 'Rate limit reached, please retry in 343 second(s)'
+            'message' => 'Rate limit reached, please retry in 343 second(s)',
         ];
     }
 
@@ -48,7 +49,7 @@ trait HasErrorFunctions
         return [
             'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR,
             'error' => 'Internal Server Error',
-            'message' => 'Something went wrong...'
+            'message' => 'Something went wrong...',
         ];
     }
 }
