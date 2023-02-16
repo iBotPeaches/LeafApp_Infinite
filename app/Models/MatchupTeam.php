@@ -23,7 +23,7 @@ use Illuminate\Support\Collection;
  * @property string $faceit_id
  * @property string $name
  * @property int $points
- * @property Outcome $outcome
+ * @property Outcome|null $outcome
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
  * @property-read MatchupPlayer[]|Collection $faceitPlayers

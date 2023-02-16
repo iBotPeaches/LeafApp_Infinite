@@ -27,8 +27,8 @@ use Spatie\Sitemap\Tags\Url;
  * @property int $round
  * @property int $group
  * @property int $best_of
- * @property Carbon $started_at
- * @property Carbon $ended_at
+ * @property Carbon|null $started_at
+ * @property Carbon|null $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
  * @property-read Game[]|Collection $games
