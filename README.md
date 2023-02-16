@@ -88,21 +88,20 @@ Used for optimizing images that come from backdrops and emblems.
 
 #### Node
 1. Bulma - https://github.com/jgthms/bulma - MIT
-2. FontAwesome - https://github.com/FortAwesome/Font-Awesome - Font Awesome Free License
-3. Bulma-Dividers - https://github.com/CreativeBulma/bulma-divider - MIT
-4. Bulma-Tooltip - https://github.com/CreativeBulma/bulma-tooltip - MIT
-5. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
+1. FontAwesome - https://github.com/FortAwesome/Font-Awesome - Font Awesome Free License
+1. Bulma-Dividers - https://github.com/CreativeBulma/bulma-divider - MIT
+1. Bulma-Tooltip - https://github.com/CreativeBulma/bulma-tooltip - MIT
+1. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
 
 #### PHP
 1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
-2. Larastan - https://github.com/nunomaduro/larastan - MIT
-3. Paratest - https://github.com/paratestphp/paratest - MIT
-4. Guzzle - https://github.com/guzzle/guzzle - MIT
-5. Livewire - https://github.com/livewire/livewire - MIT
-6. Enum - https://github.com/BenSampo/laravel-enum - MIT
-7. DBAL - https://github.com/doctrine/dbal - MIT
-8. SEOTools - https://github.com/artesaos/seotools - MIT
-9. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
-10. Socialite - https://github.com/laravel/socialite - MIT
-11. Sitemap - https://github.com/spatie/laravel-sitemap - MIT
-12. Horizon - https://github.com/laravel/horizon - MIT
+1. Larastan - https://github.com/nunomaduro/larastan - MIT
+1. Guzzle - https://github.com/guzzle/guzzle - MIT
+1. Livewire - https://github.com/livewire/livewire - MIT
+1. Enum - https://github.com/BenSampo/laravel-enum - MIT
+1. DBAL - https://github.com/doctrine/dbal - MIT
+1. SEOTools - https://github.com/artesaos/seotools - MIT
+1. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
+1. Socialite - https://github.com/laravel/socialite - MIT
+1. Sitemap - https://github.com/spatie/laravel-sitemap - MIT
+1. Horizon - https://github.com/laravel/horizon - MIT
