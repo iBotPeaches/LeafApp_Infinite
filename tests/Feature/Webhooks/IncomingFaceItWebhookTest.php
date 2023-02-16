@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Webhooks;
@@ -22,7 +23,7 @@ class IncomingFaceItWebhookTest extends TestCase
         Queue::fake();
         $payload = (new MockMatchStatusFinished())->success();
         $headers = [
-            'X-Cat-Dog' => config('services.faceit.webhook.secret')
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
         $mockChampionshipResponse = (new MockChampionshipService())->success();
@@ -44,7 +45,7 @@ class IncomingFaceItWebhookTest extends TestCase
         Queue::fake();
         $payload = (new MockChampionshipFinished())->success();
         $headers = [
-            'X-Cat-Dog' => config('services.faceit.webhook.secret')
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
         $mockChampionshipResponse = (new MockChampionshipService())->success();
@@ -67,7 +68,7 @@ class IncomingFaceItWebhookTest extends TestCase
         // Arrange & Act
         $payload = (new MockMatchStatusFinished())->success();
         $headers = [
-            'X-Cat-Dog' => config('services.faceit.webhook.secret')
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
         Arr::set($payload, 'payload.entity.type', 'not-championship');
@@ -82,7 +83,7 @@ class IncomingFaceItWebhookTest extends TestCase
         // Arrange & Act
         $payload = (new MockMatchStatusFinished())->error();
         $headers = [
-            'X-Cat-Dog' => config('services.faceit.webhook.secret')
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
         $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);

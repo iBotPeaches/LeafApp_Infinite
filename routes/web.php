@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\Auth\BaseAuthController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\HcsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ScrimController;
 use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PlayerController;
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\HcsController;
 use Symfony\Component\HttpFoundation\Response;
 
 /*

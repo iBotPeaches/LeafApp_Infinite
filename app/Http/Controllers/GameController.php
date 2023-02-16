@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Jobs\ExportGame;
 use App\Models\Game;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Artesaos\SEOTools\Facades\SEOTools;
 use League\Csv\Writer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -42,7 +43,7 @@ class GameController extends Controller
         $writer->insertOne(ExportGame::$header);
         $writer->insertAll($data);
 
-        $title = Str::slug($game->name . '-' . $game->occurred_at->toCookieString() . '-export') . '.csv';
+        $title = Str::slug($game->name.'-'.$game->occurred_at->toCookieString().'-export').'.csv';
 
         return response()->streamDownload(function () use ($writer) {
             echo $writer->toString();

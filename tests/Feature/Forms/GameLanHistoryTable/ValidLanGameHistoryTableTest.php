@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\GameLanHistoryTable;
@@ -23,7 +24,7 @@ class ValidLanGameHistoryTableTest extends TestCase
         GamePlayer::factory()
             ->for(Game::factory()->state([
                 'playlist_id' => null,
-                'is_lan' => true
+                'is_lan' => true,
             ]))
             ->count(3)
             ->state(new Sequence(
@@ -33,7 +34,7 @@ class ValidLanGameHistoryTableTest extends TestCase
                 ['outcome' => Outcome::DRAW],
             ))
             ->create([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         /** @var Game $game */
@@ -41,7 +42,7 @@ class ValidLanGameHistoryTableTest extends TestCase
 
         // Act & Assert
         Livewire::test(GameLanHistoryTable::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('games')
             ->assertSee($game->map->name)

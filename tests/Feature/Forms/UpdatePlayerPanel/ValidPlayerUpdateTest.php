@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdatePlayerPanel;
@@ -48,9 +49,9 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
             PullCompetitive::class,
             PullMatchHistory::class,
-            PullMmr::class
+            PullMmr::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
@@ -61,7 +62,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -75,7 +76,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'is_private' => true
+            'is_private' => true,
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
@@ -91,9 +92,9 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
             PullCompetitive::class,
             PullMatchHistory::class,
-            PullMmr::class
+            PullMmr::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->error403();
         $mockSuccessfulServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -102,7 +103,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockSuccessfulServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -128,7 +129,7 @@ class ValidPlayerUpdateTest extends TestCase
             PullMatchHistory::class,
             PullServiceRecord::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMmrResponse = (new MockMmrService())->empty($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
@@ -139,21 +140,21 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         /** @var Player $player */
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
             'mmr' => 1234,
-            'mmr_game_id' => Game::factory()
+            'mmr_game_id' => Game::factory(),
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::COMPETITIVE,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -174,7 +175,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::fake([
             PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -196,12 +197,12 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
-            'xuid' => null
+            'xuid' => null,
         ]);
 
         // Act & Assert
@@ -215,7 +216,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'xuid' => Arr::get($mockXuidResponse, 'xuid')
+            'xuid' => Arr::get($mockXuidResponse, 'xuid'),
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
@@ -225,11 +226,11 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
 
         $xuid = $this->faker->numerify('################');
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -251,17 +252,17 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $oldPlayer = Player::factory()->createOne([
-            'gamertag' => $gamertag . 'old',
-            'xuid' => $xuid
+            'gamertag' => $gamertag.'old',
+            'xuid' => $xuid,
         ]);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
-            'xuid' => null
+            'xuid' => null,
         ]);
 
         // Act & Assert
@@ -275,11 +276,11 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'xuid' => Arr::get($mockXuidResponse, 'xuid')
+            'xuid' => Arr::get($mockXuidResponse, 'xuid'),
         ]);
 
         $this->assertDatabaseMissing('players', [
-            'id' => $oldPlayer->id
+            'id' => $oldPlayer->id,
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
@@ -289,9 +290,9 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -311,7 +312,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $playlist = Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()
@@ -324,12 +325,12 @@ class ValidPlayerUpdateTest extends TestCase
                     'input' => Input::CROSSPLAY,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1500,
-                    'csr' => 9999
+                    'csr' => 9999,
                 ];
             }))
             ->createOne([
                 'gamertag' => $gamertag,
-                'is_private' => true
+                'is_private' => true,
             ]);
 
         // Act & Assert
@@ -343,7 +344,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'is_private' => false
+            'is_private' => false,
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
@@ -357,9 +358,9 @@ class ValidPlayerUpdateTest extends TestCase
             PullCompetitive::class,
             PullMatchHistory::class,
             PullMmr::class,
-            PullServiceRecord::class
+            PullServiceRecord::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
@@ -367,19 +368,19 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         $gamePlayer = GamePlayer::factory()
             ->createOne([
                 'game_id' => Game::factory()->state([
-                    'uuid' => Arr::get($mockMatchesResponse, 'data.1.id')
+                    'uuid' => Arr::get($mockMatchesResponse, 'data.1.id'),
                 ]),
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         $player->last_game_id_pulled = $gamePlayer->game_id;
@@ -389,7 +390,7 @@ class ValidPlayerUpdateTest extends TestCase
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::MATCHES,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -413,7 +414,7 @@ class ValidPlayerUpdateTest extends TestCase
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => false
+            'runUpdate' => false,
         ])
             ->call('render')
             ->assertViewHas('color', 'is-info')
@@ -428,14 +429,14 @@ class ValidPlayerUpdateTest extends TestCase
         Http::fake();
         $player = Player::factory()->createOne();
 
-        $cacheKey = 'player-profile-' . $player->id . SeasonSession::get() . md5($player->gamertag);
+        $cacheKey = 'player-profile-'.$player->id.SeasonSession::get().md5($player->gamertag);
         Cache::put($cacheKey, true);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => false
+            'runUpdate' => false,
         ])
             ->call('render')
             ->assertViewHas('color', 'is-dark')
@@ -451,14 +452,14 @@ class ValidPlayerUpdateTest extends TestCase
         SeasonSession::set(1);
         $player = Player::factory()->createOne();
 
-        $cacheKey = 'player-profile-' . $player->id . SeasonSession::get() . md5($player->gamertag);
+        $cacheKey = 'player-profile-'.$player->id.SeasonSession::get().md5($player->gamertag);
         Cache::put($cacheKey, true);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => false
+            'runUpdate' => false,
         ])
             ->call('render')
             ->assertViewHas('color', 'is-dark')
@@ -470,7 +471,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsFaceItPlayer(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -496,22 +497,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!');
@@ -522,7 +523,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsOverview(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -546,22 +547,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -573,7 +574,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsCompetitive(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -597,22 +598,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::COMPETITIVE,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -624,7 +625,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsMatches(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -648,22 +649,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::MATCHES,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -675,7 +676,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsCustomMatches(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -699,22 +700,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::CUSTOM,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
@@ -726,7 +727,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsLanMatches(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
@@ -750,22 +751,22 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id
+            'player_id' => $player->id,
         ]);
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
             'player' => $player,
             'type' => PlayerTab::LAN,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')

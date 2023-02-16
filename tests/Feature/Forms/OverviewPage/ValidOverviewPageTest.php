@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\OverviewPage;
@@ -31,7 +32,7 @@ class ValidOverviewPageTest extends TestCase
         ModeSession::set($attributes['mode']);
         SeasonSession::set(1);
         Livewire::test(OverviewPage::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('serviceRecord')
             ->assertSee('Quick Peek')
@@ -47,13 +48,13 @@ class ValidOverviewPageTest extends TestCase
         $player = Player::factory()
             ->has(ServiceRecord::factory())
             ->createOne([
-                'is_private' => true
+                'is_private' => true,
             ]);
 
         // Act & Assert
         ModeSession::set(Mode::MATCHMADE_RANKED);
         Livewire::test(OverviewPage::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->call('render')
             ->assertViewHas('serviceRecord')
@@ -71,7 +72,7 @@ class ValidOverviewPageTest extends TestCase
                 'attributes' => [
                     'kd' => 1.5,
                     'kda' => 2.5,
-                    'accuracy' => 60
+                    'accuracy' => 60,
                 ],
                 'mode' => null,
             ],
@@ -79,52 +80,52 @@ class ValidOverviewPageTest extends TestCase
                 'attributes' => [
                     'kd' => 0.32,
                     'kda' => 1.32,
-                    'accuracy' => 41
+                    'accuracy' => 41,
                 ],
-                'mode' => Mode::MATCHMADE_RANKED()
+                'mode' => Mode::MATCHMADE_RANKED(),
             ],
             'alright kd' => [
                 'attributes' => [
                     'kd' => 0.99,
                     'kda' => 0.99,
-                    'accuracy' => 21
+                    'accuracy' => 21,
                 ],
-                'mode' => Mode::MATCHMADE_RANKED()
+                'mode' => Mode::MATCHMADE_RANKED(),
             ],
             'positive win rate' => [
                 'attributes' => [
                     'matches_won' => 50,
-                    'total_matches' => 51
+                    'total_matches' => 51,
                 ],
-                'mode' => Mode::MATCHMADE_PVP()
+                'mode' => Mode::MATCHMADE_PVP(),
             ],
             'okay win rate' => [
                 'attributes' => [
                     'matches_won' => 5,
-                    'total_matches' => 10
+                    'total_matches' => 10,
                 ],
-                'mode' => Mode::MATCHMADE_PVP()
+                'mode' => Mode::MATCHMADE_PVP(),
             ],
             'poor win rate' => [
                 'attributes' => [
                     'matches_won' => 0,
-                    'total_matches' => 5
+                    'total_matches' => 5,
                 ],
-                'mode' => Mode::MATCHMADE_PVP()
+                'mode' => Mode::MATCHMADE_PVP(),
             ],
             'horrible accuracy' => [
                 'attributes' => [
                     'accuracy' => 15,
                 ],
-                'mode' => Mode::MATCHMADE_PVP()
+                'mode' => Mode::MATCHMADE_PVP(),
             ],
             '0 wins' => [
                 'attributes' => [
                     'matches_won' => 1,
                     'total_matches' => 0,
                 ],
-                'mode' => null
-            ]
+                'mode' => null,
+            ],
         ];
     }
 }

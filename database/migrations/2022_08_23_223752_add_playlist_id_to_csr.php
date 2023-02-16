@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Enums\Input;
@@ -12,7 +13,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     private const SOLO_DUO_MNK = 'f7eb8c71-fedb-4696-8c0f-96025e285ffd';
+
     private const SOLO_DUO_CONTROLLER = 'f7f30787-f607-436b-bdec-44c65bc2ecef';
+
     private const OPEN_CROSSPLAY_ARENA = 'edfef3ac-9cbe-4fa2-b949-8f29deafd483';
 
     public function up(): void
@@ -44,7 +47,7 @@ return new class extends Migration
                 ->where('queue', Queue::SOLO_DUO)
                 ->where('input', Input::KBM)
                 ->update([
-                    'playlist_id' => $soloDuoMnk->id
+                    'playlist_id' => $soloDuoMnk->id,
                 ]);
         }
 
@@ -54,7 +57,7 @@ return new class extends Migration
                 ->where('queue', Queue::SOLO_DUO)
                 ->where('input', Input::CONTROLLER)
                 ->update([
-                    'playlist_id' => $soloDuoController->id
+                    'playlist_id' => $soloDuoController->id,
                 ]);
         }
 
@@ -64,7 +67,7 @@ return new class extends Migration
                 ->where('queue', Queue::OPEN)
                 ->where('input', Input::CROSSPLAY)
                 ->update([
-                    'playlist_id' => $soloDuoController->id
+                    'playlist_id' => $soloDuoController->id,
                 ]);
         }
     }

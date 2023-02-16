@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -13,7 +14,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
-use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\TestCase;
 
 class PlayerPageTest extends TestCase
@@ -26,7 +26,7 @@ class PlayerPageTest extends TestCase
 
         $player = Player::factory()
             ->createOne([
-                'gamertag' => $gamertag
+                'gamertag' => $gamertag,
             ]);
 
         $user = User::factory()
@@ -36,7 +36,7 @@ class PlayerPageTest extends TestCase
         $this->actingAs($user);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag) . '/matches');
+        $response = $this->get('/player/'.urlencode($gamertag).'/matches');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -54,7 +54,7 @@ class PlayerPageTest extends TestCase
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag));
+        $response = $this->get('/player/'.urlencode($gamertag));
 
         // Assert
         $response->assertOk();
@@ -74,7 +74,7 @@ class PlayerPageTest extends TestCase
         $this->actingAs($user);
 
         // Act
-        $response = $this->post('/player/' . urlencode($player->gamertag) . '/link');
+        $response = $this->post('/player/'.urlencode($player->gamertag).'/link');
 
         // Assert
         $response->assertRedirect();
@@ -94,7 +94,7 @@ class PlayerPageTest extends TestCase
         $this->actingAs($user);
 
         // Act
-        $response = $this->post('/player/' . urlencode($player->gamertag) . '/unlink');
+        $response = $this->post('/player/'.urlencode($player->gamertag).'/unlink');
 
         // Assert
         $response->assertRedirect();
@@ -108,11 +108,11 @@ class PlayerPageTest extends TestCase
 
         Player::factory()
             ->createOne([
-                'gamertag' => $gamertag
+                'gamertag' => $gamertag,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag) . '/overview');
+        $response = $this->get('/player/'.urlencode($gamertag).'/overview');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -131,7 +131,7 @@ class PlayerPageTest extends TestCase
             ->create();
 
         // Act
-        $response = $this->get('/player/' . urlencode($serviceRecord->player->gamertag) . '/overview');
+        $response = $this->get('/player/'.urlencode($serviceRecord->player->gamertag).'/overview');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -148,11 +148,11 @@ class PlayerPageTest extends TestCase
         Player::factory()
             ->createOne([
                 'gamertag' => $gamertag,
-                'is_private' => true
+                'is_private' => true,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag) . '/overview');
+        $response = $this->get('/player/'.urlencode($gamertag).'/overview');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -174,7 +174,7 @@ class PlayerPageTest extends TestCase
                     'input' => Input::CROSSPLAY,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1499
+                    'csr' => 1499,
                 ];
             }))
             ->has(Csr::factory()->state(function () {
@@ -185,15 +185,15 @@ class PlayerPageTest extends TestCase
                     'input' => Input::CROSSPLAY,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1499
+                    'csr' => 1499,
                 ];
             }))
             ->createOne([
-                'gamertag' => $gamertag
+                'gamertag' => $gamertag,
             ]);
 
         // Act
-        $response = $this->get('/player/' . urlencode($gamertag) . '/competitive');
+        $response = $this->get('/player/'.urlencode($gamertag).'/competitive');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -205,11 +205,11 @@ class PlayerPageTest extends TestCase
     {
         return [
             'spaces' => [
-                'gamertag' => 'gamer tag'
+                'gamertag' => 'gamer tag',
             ],
             'no spaces' => [
-                'gamertag' => 'gamertag'
-            ]
+                'gamertag' => 'gamertag',
+            ],
         ];
     }
 }

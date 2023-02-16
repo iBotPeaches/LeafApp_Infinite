@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Jobs;
@@ -31,7 +32,7 @@ class PullXuid implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new ThrottlesExceptions(5, 10))
+            (new ThrottlesExceptions(5, 10)),
         ];
     }
 
@@ -49,8 +50,9 @@ class PullXuid implements ShouldQueue
 
     public function handle(): void
     {
-        if (!config('services.xboxapi.enabled') || $this->player->xuid) {
+        if (! config('services.xboxapi.enabled') || $this->player->xuid) {
             $this->delete();
+
             return;
         }
 

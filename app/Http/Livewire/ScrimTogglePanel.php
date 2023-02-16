@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -41,7 +42,7 @@ class ScrimTogglePanel extends Component
     public function render(): View
     {
         return view('livewire.scrim-toggle-panel', [
-            'gameCount' => count($this->gameIds)
+            'gameCount' => count($this->gameIds),
         ]);
     }
 }

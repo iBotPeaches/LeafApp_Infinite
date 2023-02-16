@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\FaceIt;
@@ -6,8 +7,8 @@ namespace App\Services\FaceIt;
 use App\Jobs\FindPlayersFromTeam;
 use App\Models\Championship;
 use App\Models\Matchup;
-use App\Models\Pivots\MatchupPlayer;
 use App\Models\MatchupTeam;
+use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -24,18 +25,18 @@ class ApiClient implements TournamentInterface
 
     public function championship(string $championshipId): ?Championship
     {
-        $response = $this->getPendingRequest()->get('championships/' . $championshipId)->throw();
+        $response = $this->getPendingRequest()->get('championships/'.$championshipId)->throw();
         $data = $response->json();
 
-        return Championship::fromFaceItApi((array)$data);
+        return Championship::fromFaceItApi((array) $data);
     }
 
     public function matchup(Championship $championship, string $matchupId): ?Matchup
     {
-        $response = $this->getPendingRequest()->get('matches/' . $matchupId)->throw();
+        $response = $this->getPendingRequest()->get('matches/'.$matchupId)->throw();
         $data = $response->json();
 
-        return $this->parseMatchup($championship, (array)$data);
+        return $this->parseMatchup($championship, (array) $data);
     }
 
     public function bracket(Championship $championship): Collection
@@ -45,10 +46,10 @@ class ApiClient implements TournamentInterface
         $offset = 0;
 
         while ($count !== 0) {
-            $response = $this->getPendingRequest()->get('championships/' . $championship->faceit_id . '/matches', [
+            $response = $this->getPendingRequest()->get('championships/'.$championship->faceit_id.'/matches', [
                 'type' => 'past',
                 'offset' => $offset,
-                'limit' => $perPage
+                'limit' => $perPage,
             ])->throw();
 
             $data = $response->json();
@@ -65,7 +66,6 @@ class ApiClient implements TournamentInterface
             }
         }
 
-
         return $championship->matchups;
     }
 
@@ -78,7 +78,7 @@ class ApiClient implements TournamentInterface
             $teamData['_leaf']['matchup'] = $matchup;
             $teamData['_leaf']['raw_matchup'] = $matchupData;
             $teamData['_leaf']['team_id'] = $teamId;
-            $team = MatchupTeam::fromFaceItApi((array)$teamData);
+            $team = MatchupTeam::fromFaceItApi((array) $teamData);
 
             foreach (Arr::get($teamData, 'roster', []) as $playerData) {
                 $playerData['_leaf']['team'] = $team;
@@ -88,7 +88,7 @@ class ApiClient implements TournamentInterface
 
             if ($team) {
                 Bus::chain([
-                    new FindPlayersFromTeam($team)
+                    new FindPlayersFromTeam($team),
                 ])->dispatch();
             }
         }
@@ -99,7 +99,7 @@ class ApiClient implements TournamentInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->baseUrl($this->config['domain'] . '/data/v4/')
+            ->baseUrl($this->config['domain'].'/data/v4/')
             ->withToken($this->config['key']);
     }
 }

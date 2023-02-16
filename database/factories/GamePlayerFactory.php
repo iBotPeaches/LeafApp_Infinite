@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
@@ -76,9 +77,9 @@ class GamePlayerFactory extends Factory
             return [
                 'medals' => $medals->mapWithKeys(function (Medal $medal) {
                     return [
-                        $medal->id => $this->faker->numberBetween(1, 25)
+                        $medal->id => $this->faker->numberBetween(1, 25),
                     ];
-                })->toArray()
+                })->toArray(),
             ];
         });
     }

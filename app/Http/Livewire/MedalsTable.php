@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -24,7 +25,7 @@ class MedalsTable extends Component
             ->paginate(15);
 
         return view('livewire.medals-table', [
-            'medals' => $medals
+            'medals' => $medals,
         ]);
     }
 }

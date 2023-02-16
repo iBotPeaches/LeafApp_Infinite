@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Autocode\Enums;
@@ -13,7 +14,9 @@ use BenSampo\Enum\Enum;
 final class Mode extends Enum
 {
     const MATCHMADE = 'matchmaking';
+
     const CUSTOM = 'custom';
+
     const LAN = 'local';
 
     public function getLastGameIdVariable(): string

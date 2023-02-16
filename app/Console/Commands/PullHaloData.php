@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Player;
-use App\Services\Autocode\Enums\Filter;
 use App\Services\Autocode\Enums\Mode;
 use App\Services\Autocode\InfiniteInterface;
 use Illuminate\Console\Command;
@@ -12,6 +11,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 class PullHaloData extends Command
 {
     protected $signature = 'app:pull-halo-data {player}';
+
     protected $description = 'Pull all data from API';
 
     protected InfiniteInterface $client;
@@ -29,6 +29,7 @@ class PullHaloData extends Command
 
         if (empty($player)) {
             $this->error('Player not found.');
+
             return CommandAlias::FAILURE;
         }
 

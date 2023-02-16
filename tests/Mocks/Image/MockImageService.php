@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Image;
@@ -12,8 +13,8 @@ class MockImageService extends BaseMock
         return [
             'output' => [
                 'size' => $this->faker->randomNumber(1),
-                'type' => 'image/png'
-            ]
+                'type' => 'image/png',
+            ],
         ];
     }
 }

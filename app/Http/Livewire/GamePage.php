@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -13,11 +14,12 @@ use Livewire\Component;
 class GamePage extends Component
 {
     public Game $game;
+
     public array $medals = [];
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function render(): View
@@ -31,7 +33,7 @@ class GamePage extends Component
                     $this->medals[$medal->id]['medal'] = $medal;
 
                     // Pass on our medal specific count and attach to the specific gamePlayer
-                    $gamePlayer['medal_' . $medal->id] = $medal['count'];
+                    $gamePlayer['medal_'.$medal->id] = $medal['count'];
 
                     $this->medals[$medal->id]['players'][$gamePlayer->id] = $gamePlayer;
                 });
@@ -40,7 +42,7 @@ class GamePage extends Component
 
         foreach ($this->medals as &$medal) {
             uasort($medal['players'], function (GamePlayer $a, GamePlayer $b) use ($medal) {
-                return Arr::get($b, 'medal_' . $medal['medal']->id) <=> Arr::get($a, 'medal_' . $medal['medal']->id);
+                return Arr::get($b, 'medal_'.$medal['medal']->id) <=> Arr::get($a, 'medal_'.$medal['medal']->id);
             });
         }
 
@@ -51,13 +53,14 @@ class GamePage extends Component
             if ($aDifficulty->value === $bDifficulty->value) {
                 return Arr::get($a, 'medal.name') <=> Arr::get($b, 'medal.name');
             }
+
             return $aDifficulty <=> $bDifficulty;
         });
 
         return view('livewire.game-page', [
             'game' => $this->game,
             'groupedGamePlayers' => $groupedPlayers,
-            'powerfulMedals' => $this->medals
+            'powerfulMedals' => $this->medals,
         ]);
     }
 }

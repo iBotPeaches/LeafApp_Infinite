@@ -16,7 +16,7 @@ class ValidInfiniteAccount implements Rule
 
     public function passes($attribute, $value): bool
     {
-        if (is_string($value) && !config('services.autocode.disabled')) {
+        if (is_string($value) && ! config('services.autocode.disabled')) {
             $player = $this->apiClient->appearance($value);
 
             if ($player) {

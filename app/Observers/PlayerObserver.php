@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Observers;
@@ -11,7 +12,7 @@ class PlayerObserver
 {
     public function saved(Player $player): void
     {
-        $cacheKey = 'xuid-pull-' . $player->id;
+        $cacheKey = 'xuid-pull-'.$player->id;
 
         if (empty($player->xuid) && Cache::missing($cacheKey)) {
             PullXuid::dispatch($player);

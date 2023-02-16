@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -13,6 +14,7 @@ use Livewire\Component;
 class UpdateGamePanel extends Component
 {
     public Game $game;
+
     public bool $runUpdate = false;
 
     public function processUpdate(): void
@@ -25,10 +27,10 @@ class UpdateGamePanel extends Component
         $color = 'is-success';
         $message = 'Game updated!';
 
-        if (!$this->runUpdate) {
+        if (! $this->runUpdate) {
             return view('livewire.update-game-panel', [
                 'color' => 'is-info',
-                'message' => 'Checking for missing players.'
+                'message' => 'Checking for missing players.',
             ]);
         }
 
@@ -51,7 +53,7 @@ class UpdateGamePanel extends Component
 
         return view('livewire.update-game-panel', [
             'color' => $color,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 }

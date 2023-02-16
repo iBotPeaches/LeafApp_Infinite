@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Autocode\Enums;
@@ -15,8 +16,12 @@ use BenSampo\Enum\Enum;
 final class Filter extends Enum
 {
     const MATCHMADE = 'matchmade';
+
     const PVP = 'pvp';
+
     const RANKED = 'ranked';
+
     const SOCIAL = 'social';
+
     const CUSTOM = 'custom';
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\CompetitivePage;
@@ -30,7 +31,7 @@ class ValidCompetitivePageTest extends TestCase
                     'input' => Input::CROSSPLAY,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1499
+                    'csr' => 1499,
                 ];
             }))
             ->has(Csr::factory()->hasPlaylist($playlist)->state(function () {
@@ -39,7 +40,7 @@ class ValidCompetitivePageTest extends TestCase
                     'input' => Input::KBM,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1480
+                    'csr' => 1480,
                 ];
             }))
             ->has(Csr::factory()->hasPlaylist($playlist)->state(function () {
@@ -48,7 +49,7 @@ class ValidCompetitivePageTest extends TestCase
                     'input' => Input::CONTROLLER,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1485
+                    'csr' => 1485,
                 ];
             }))
             ->createOne();
@@ -58,7 +59,7 @@ class ValidCompetitivePageTest extends TestCase
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [
-            'player' => $player
+            'player' => $player,
         ]);
 
         // Assert
@@ -88,7 +89,7 @@ class ValidCompetitivePageTest extends TestCase
                     'next_csr' => 0,
                     'tier' => 'Unranked',
                     'tier_start_csr' => 0,
-                    'csr' => null
+                    'csr' => null,
                 ];
             }))
             ->has(Csr::factory()->state(function () {
@@ -97,7 +98,7 @@ class ValidCompetitivePageTest extends TestCase
                     'input' => Input::CONTROLLER,
                     'next_csr' => 1500,
                     'tier_start_csr' => 1450,
-                    'csr' => 1450
+                    'csr' => 1450,
                 ];
             }))
             ->createOne();
@@ -107,7 +108,7 @@ class ValidCompetitivePageTest extends TestCase
 
         // Act
         $livewire = Livewire::test(CompetitivePage::class, [
-            'player' => $player
+            'player' => $player,
         ]);
 
         // Assert

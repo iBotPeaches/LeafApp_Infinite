@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
-use App\Enums\MedalType;
 use App\Enums\MedalDifficulty;
+use App\Enums\MedalType;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;

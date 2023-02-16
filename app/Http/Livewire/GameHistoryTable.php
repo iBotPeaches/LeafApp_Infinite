@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -16,7 +17,7 @@ class GameHistoryTable extends Component
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function paginationView(): string
@@ -32,7 +33,7 @@ class GameHistoryTable extends Component
                 ->with(['playlist', 'map', 'category'])
                 ->whereHas('playlist')
                 ->orderByDesc('occurred_at')
-                ->paginate(16)
+                ->paginate(16),
         ]);
     }
 }

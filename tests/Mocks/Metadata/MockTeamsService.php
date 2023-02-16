@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Metadata;
@@ -23,9 +24,9 @@ class MockTeamsService extends BaseMock
             'additional' => [
                 'count' => $this->faker->numberBetween(0, 5),
                 'parameters' => [
-                    'ids' => []
-                ]
-            ]
+                    'ids' => [],
+                ],
+            ],
         ];
     }
 
@@ -34,7 +35,7 @@ class MockTeamsService extends BaseMock
         return [
             'id' => $this->faker->numberBetween(1, 25),
             'name' => $this->faker->word,
-            'emblem_url' => $this->faker->imageUrl()
+            'emblem_url' => $this->faker->imageUrl(),
         ];
     }
 }

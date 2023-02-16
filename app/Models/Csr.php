@@ -42,6 +42,7 @@ use InvalidArgumentException;
  * @property-read float $next_rank_percent
  * @property-read int $next_xp_for_level
  * @property-read int|null $current_xp_for_level
+ *
  * @method static CsrFactory factory(...$parameters)
  */
 class Csr extends Model implements HasHaloDotApi
@@ -49,7 +50,7 @@ class Csr extends Model implements HasHaloDotApi
     use HasFactory, HasPlaylist;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $casts = [
@@ -61,11 +62,11 @@ class Csr extends Model implements HasHaloDotApi
     ];
 
     public $with = [
-        'playlist'
+        'playlist',
     ];
 
     public $touches = [
-        'player'
+        'player',
     ];
 
     public function setCsrAttribute(?int $csr): void
@@ -83,7 +84,7 @@ class Csr extends Model implements HasHaloDotApi
     public function getRankAttribute(): string
     {
         if ($this->hasNextRank()) {
-            return $this->tier . ' ' . ($this->sub_tier + 1);
+            return $this->tier.' '.($this->sub_tier + 1);
         }
 
         return $this->tier;
@@ -91,8 +92,8 @@ class Csr extends Model implements HasHaloDotApi
 
     public function getNextRankAttribute(): string
     {
-        if ($this->hasNextRank() && !$this->isNextOnyx()) {
-            return $this->next_tier . ' ' . ($this->next_sub_tier + 1);
+        if ($this->hasNextRank() && ! $this->isNextOnyx()) {
+            return $this->next_tier.' '.($this->next_sub_tier + 1);
         }
 
         return $this->next_tier;
@@ -162,10 +163,10 @@ class Csr extends Model implements HasHaloDotApi
     public function getRankPercentTooltip(): string
     {
         if ($this->hasNextRank()) {
-            return 'Up Next: ' . $this->next_rank;
+            return 'Up Next: '.$this->next_rank;
         }
 
-        return $this->matches_remaining . ' ' . Str::plural('match', $this->matches_remaining) . ' remaining.';
+        return $this->matches_remaining.' '.Str::plural('match', $this->matches_remaining).' remaining.';
     }
 
     public function toCsrObject(): \App\Support\Csr\Csr
@@ -186,7 +187,7 @@ class Csr extends Model implements HasHaloDotApi
             $queue = Queue::coerce($queueName);
             $input = Input::coerce($inputName);
 
-            $playlistModel = Playlist::fromPlaylistId((string)Arr::get($playlist, 'id'));
+            $playlistModel = Playlist::fromPlaylistId((string) Arr::get($playlist, 'id'));
 
             if (empty($playlistModel)) {
                 throw new InvalidArgumentException('Playlist not found.');
@@ -194,14 +195,14 @@ class Csr extends Model implements HasHaloDotApi
 
             if (empty($queue) || empty($input)) {
                 throw new \InvalidArgumentException(
-                    'Queue (' . $queueName . ') or input (' . $inputName . ') is unknown.'
+                    'Queue ('.$queueName.') or input ('.$inputName.') is unknown.'
                 );
             }
 
             foreach (Arr::get($playlist, 'response') as $key => $playlistMode) {
                 $mode = CompetitiveMode::coerce($key);
                 if (empty($mode)) {
-                    throw new InvalidArgumentException('Mode (' . $key . ') is unknown.');
+                    throw new InvalidArgumentException('Mode ('.$key.') is unknown.');
                 }
 
                 $playlistSeason = $season;
@@ -241,10 +242,10 @@ class Csr extends Model implements HasHaloDotApi
                 // data in database to +1, then remove the -1 below.
                 $csr->tier = Arr::get($playlistMode, 'tier');
                 $csr->tier_start_csr = Arr::get($playlistMode, 'tier_start');
-                $csr->sub_tier = ((int)Arr::get($playlistMode, 'sub_tier')) - 1;
+                $csr->sub_tier = ((int) Arr::get($playlistMode, 'sub_tier')) - 1;
 
                 $csr->next_tier = Arr::get($playlistMode, 'next_tier');
-                $csr->next_sub_tier = ((int)Arr::get($playlistMode, 'next_sub_tier')) - 1;
+                $csr->next_sub_tier = ((int) Arr::get($playlistMode, 'next_sub_tier')) - 1;
                 $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
 
                 if ($csr->isDirty()) {

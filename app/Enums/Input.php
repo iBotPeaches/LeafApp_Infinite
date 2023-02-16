@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -15,7 +16,9 @@ use Illuminate\Support\Str;
 final class Input extends Enum implements LocalizedEnum
 {
     const CROSSPLAY = 0;
+
     const CONTROLLER = 1;
+
     const KBM = 2;
 
     public static function coerce(mixed $enumKeyOrValue): ?static
@@ -26,6 +29,7 @@ final class Input extends Enum implements LocalizedEnum
         }
 
         $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+
         return parent::coerce($enumKeyOrValue);
     }
 }

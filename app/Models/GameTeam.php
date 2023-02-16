@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -32,6 +33,7 @@ use Illuminate\Support\Arr;
  * @property-read string $color
  * @property-read string $tooltip_color
  * @property-read float $csr
+ *
  * @method static GameTeamFactory factory(...$parameters)
  */
 class GameTeam extends Model implements HasHaloDotApi
@@ -41,11 +43,11 @@ class GameTeam extends Model implements HasHaloDotApi
     public $timestamps = false;
 
     public $casts = [
-        'outcome' => Outcome::class
+        'outcome' => Outcome::class,
     ];
 
     public $with = [
-        'team'
+        'team',
     ];
 
     public function getColorAttribute(): string
@@ -64,12 +66,12 @@ class GameTeam extends Model implements HasHaloDotApi
 
     public function getCsrAttribute(): float
     {
-        return (float)$this->players->avg('pre_csr');
+        return (float) $this->players->avg('pre_csr');
     }
 
     public function getEmblemUrlAttribute(): string
     {
-        return asset('images/teams/'. $this->internal_team_id . '.png');
+        return asset('images/teams/'.$this->internal_team_id.'.png');
     }
 
     public function getTooltipColorAttribute(): string
@@ -83,7 +85,7 @@ class GameTeam extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $internalTeamId = (int)Arr::get($payload, 'team.id');
+        $internalTeamId = (int) Arr::get($payload, 'team.id');
 
         /** @var Game $game */
         $game = Arr::get($payload, '_leaf.game');

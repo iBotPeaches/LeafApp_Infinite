@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -22,7 +23,7 @@ class MatchupTeamFactory extends Factory
             'faceit_id' => $this->faker->unique()->uuid,
             'name' => $this->faker->word,
             'points' => $outcome === Outcome::WIN ? 3 : 0,
-            'outcome' => $outcome
+            'outcome' => $outcome,
         ];
     }
 
@@ -31,7 +32,7 @@ class MatchupTeamFactory extends Factory
         return $this->state(function () {
             return [
                 'faceit_id' => MatchupTeam::$byeTeamId,
-                'name' => 'bye'
+                'name' => 'bye',
             ];
         });
     }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models\Pivots;
 
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $game_id
  * @property-read Scrim $scrim
  * @property-read Game $game
+ *
  * @method static GameScrimFactory factory(...$parameters)
  */
 class GameScrim extends Pivot

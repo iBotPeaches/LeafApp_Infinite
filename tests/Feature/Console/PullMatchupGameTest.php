@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Console;
@@ -22,7 +23,7 @@ class PullMatchupGameTest extends TestCase
     public function testValidDataPull(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockHistoryResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyHistoryResponse = (new MockMatchesService())->empty($gamertag);
 
@@ -33,7 +34,7 @@ class PullMatchupGameTest extends TestCase
             ->push($mockEmptyHistoryResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         /** @var Matchup $matchup */

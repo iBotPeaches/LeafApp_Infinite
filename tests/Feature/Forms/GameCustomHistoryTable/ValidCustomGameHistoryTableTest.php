@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\GameCustomHistoryTable;
@@ -22,7 +23,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
 
         // Act & Assert
         Livewire::test(GameCustomHistoryTable::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->call('toggleScrimMode')
             ->assertSet('isScrimEditor', true);
@@ -35,7 +36,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
         $player = Player::factory()->createOne();
         GamePlayer::factory()
             ->for(Game::factory()->state([
-                'playlist_id' => null
+                'playlist_id' => null,
             ]))
             ->count(3)
             ->state(new Sequence(
@@ -45,7 +46,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
                 ['outcome' => Outcome::DRAW],
             ))
             ->create([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         /** @var Game $game */
@@ -53,7 +54,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
 
         // Act & Assert
         Livewire::test(GameCustomHistoryTable::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('games')
             ->assertSee($game->map->name)

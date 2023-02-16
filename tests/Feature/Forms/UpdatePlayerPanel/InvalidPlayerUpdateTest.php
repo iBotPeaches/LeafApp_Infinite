@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdatePlayerPanel;
@@ -29,7 +30,7 @@ class InvalidPlayerUpdateTest extends TestCase
     public function testInvalidResponseFromAllHaloDotApiServices(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->error401();
         $mockMatchesResponse = (new MockMatchesService())->error404();
         $mockServiceResponse = (new MockServiceRecordService())->error404();
@@ -40,7 +41,7 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_NOT_FOUND);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -56,7 +57,7 @@ class InvalidPlayerUpdateTest extends TestCase
     public function testInvalidResponseDueToRateLimit(): void
     {
         // Arrange
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -74,11 +75,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_TOO_MANY_REQUESTS);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -95,9 +96,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -116,7 +117,7 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -133,9 +134,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -156,11 +157,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -179,9 +180,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->malformed();
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -200,11 +201,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -223,9 +224,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -246,11 +247,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -269,9 +270,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -292,11 +293,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -315,9 +316,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -338,11 +339,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert
@@ -361,9 +362,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake([
-            PullAppearance::class
+            PullAppearance::class,
         ]);
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -384,11 +385,11 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
-            'uuid' => 1
+            'uuid' => 1,
         ]);
 
         $player = Player::factory()->createOne([
-            'gamertag' => $gamertag
+            'gamertag' => $gamertag,
         ]);
 
         // Act & Assert

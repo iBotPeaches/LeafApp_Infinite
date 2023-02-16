@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Autocode\Enums;
@@ -12,5 +13,6 @@ use BenSampo\Enum\Enum;
 final class PlayerType extends Enum
 {
     const PLAYER = 'player';
+
     const BOT = 'bot';
 }

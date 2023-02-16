@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\MedalType;
 use App\Enums\MedalDifficulty;
+use App\Enums\MedalType;
 use App\Models\Contracts\HasHaloDotApi;
 use Database\Factories\MedalFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +23,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read string $color
  * @property-read string $tooltip_color
  * @property-read string $text_color
+ *
  * @method static MedalFactory factory(...$parameters)
  */
 class Medal extends Model implements HasHaloDotApi, Sitemapable
@@ -30,7 +31,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $casts = [
@@ -49,7 +50,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
             : MedalType::coerce(Str::upper($value));
 
         if (empty($category)) {
-            throw new \InvalidArgumentException('Invalid Type Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Type Enum ('.$value.')');
         }
 
         $this->attributes['type'] = $category->value;
@@ -62,7 +63,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
             : MedalDifficulty::coerce(Str::upper($value));
 
         if (empty($type)) {
-            throw new \InvalidArgumentException('Invalid Difficulty Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Difficulty Enum ('.$value.')');
         }
 
         $this->attributes['difficulty'] = $type->value;
@@ -70,7 +71,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
 
     public function getImageAttribute(): string
     {
-        return asset('images/medals/' . $this->id . '.png');
+        return asset('images/medals/'.$this->id.'.png');
     }
 
     public function getColorAttribute(): string
@@ -95,7 +96,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
 
     public function getTextColorAttribute(): string
     {
-        return 'has-text-' . $this->color;
+        return 'has-text-'.$this->color;
     }
 
     public function toSitemapTag(): Url|string|array

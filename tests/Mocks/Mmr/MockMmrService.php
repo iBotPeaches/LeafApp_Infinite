@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Mmr;
@@ -16,12 +17,12 @@ class MockMmrService extends BaseMock
             'data' => [
                 'value' => $this->faker->numberBetween(0, 2000),
                 'match' => [
-                    'id' => $this->faker->uuid
-                ]
+                    'id' => $this->faker->uuid,
+                ],
             ],
             'additional' => [
-                'gamertag' => $gamertag
-            ]
+                'gamertag' => $gamertag,
+            ],
         ];
     }
 
@@ -31,12 +32,12 @@ class MockMmrService extends BaseMock
             'data' => [
                 'value' => null,
                 'match' => [
-                    'id' => null
-                ]
+                    'id' => null,
+                ],
             ],
             'additional' => [
-                'gamertag' => $gamertag
-            ]
+                'gamertag' => $gamertag,
+            ],
         ];
     }
 }

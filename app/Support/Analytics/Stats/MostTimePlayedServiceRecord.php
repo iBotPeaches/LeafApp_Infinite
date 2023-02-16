@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Support\Analytics\Stats;
 
@@ -39,7 +40,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
 
     public function displayProperty(Analytic $analytic): string
     {
-        return number_format(now()->addSeconds((int)$analytic->value)->diffInHours());
+        return number_format(now()->addSeconds((int) $analytic->value)->diffInHours());
     }
 
     public function results(int $limit = 10): ?Collection

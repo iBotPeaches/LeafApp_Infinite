@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -14,7 +15,7 @@ class CompetitivePage extends Component
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function render(): View
@@ -32,7 +33,7 @@ class CompetitivePage extends Component
             'season' => $this->player->seasonHighRanked($season),
             'allTime' => $this->player->allTimeRanked(),
             'latestMmr' => $latestMmr,
-            'isCurrentSeason' => $season === (int)config('services.autocode.competitive.season'),
+            'isCurrentSeason' => $season === (int) config('services.autocode.competitive.season'),
             'isAllSeasons' => $season === -1,
         ]);
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -15,7 +16,7 @@ class OverviewPage extends Component
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function render(): View
@@ -24,7 +25,7 @@ class OverviewPage extends Component
         $season = SeasonSession::get();
 
         return view('livewire.overview-page', [
-            'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first()
+            'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first(),
         ]);
     }
 }

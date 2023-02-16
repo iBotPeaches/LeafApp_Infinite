@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -18,8 +19,8 @@ use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
-use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
+use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use Carbon\Carbon;
 use Database\Factories\AnalyticFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,6 +39,7 @@ use UnexpectedValueException;
  * @property-read ?Game $game
  * @property-read ?Player $player
  * @property-read AnalyticInterface $stat
+ *
  * @method static AnalyticFactory factory(...$parameters)
  */
 class Analytic extends Model
@@ -45,7 +47,7 @@ class Analytic extends Model
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public function getStatAttribute(): AnalyticInterface

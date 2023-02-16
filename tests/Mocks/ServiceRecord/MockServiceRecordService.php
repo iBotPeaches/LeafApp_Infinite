@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\ServiceRecord;
@@ -21,9 +22,9 @@ class MockServiceRecordService extends BaseMock
                 ],
                 'parameters' => [
                     'gamertag' => $gamertag,
-                    'filter' => Filter::MATCHMADE
-                ]
-            ]
+                    'filter' => Filter::MATCHMADE,
+                ],
+            ],
         ];
     }
 
@@ -43,7 +44,7 @@ class MockServiceRecordService extends BaseMock
                         'destroys' => $this->faker->numberBetween(0, 2),
                         'hijacks' => $this->faker->numberBetween(0, 2),
                     ],
-                    'medals' => $this->faker->numberBetween(1, 25)
+                    'medals' => $this->faker->numberBetween(1, 25),
                 ],
                 'damage' => [
                     'taken' => $this->faker->numerify('######'),
@@ -53,12 +54,12 @@ class MockServiceRecordService extends BaseMock
                     'fired' => $this->faker->numerify(),
                     'landed' => $this->faker->numerify(),
                     'missed' => $this->faker->numerify(),
-                    'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                    'accuracy' => $this->faker->randomFloat(2, 0, 100),
                 ],
                 'rounds' => [
                     'won' => $this->faker->numerify(),
                     'lost' => $this->faker->numerify(),
-                    'tied' => $this->faker->numerify()
+                    'tied' => $this->faker->numerify(),
                 ],
                 'breakdowns' => [
                     'kills' => [
@@ -73,26 +74,26 @@ class MockServiceRecordService extends BaseMock
                         'miscellaneous' => [
                             'repulsor' => $this->faker->numberBetween(0, 5),
                             'fusion_coils' => $this->faker->numberBetween(0, 5),
-                        ]
+                        ],
                     ],
                     'assists' => [
                         'emp' => $this->faker->numberBetween(0, 5),
                         'driver' => $this->faker->numberBetween(0, 5),
-                        'callouts' => $this->faker->numberBetween(0, 5)
+                        'callouts' => $this->faker->numberBetween(0, 5),
                     ],
                     'vehicles' => [
                         'destroys' => [
                             [
                                 'value' => 'warthog',
-                                'count' => $this->faker->numberBetween(0, 5)
-                            ]
+                                'count' => $this->faker->numberBetween(0, 5),
+                            ],
                         ],
                         'hijacks' => [
                             [
                                 'value' => 'warthog',
-                                'count' => $this->faker->numberBetween(0, 5)
-                            ]
-                        ]
+                                'count' => $this->faker->numberBetween(0, 5),
+                            ],
+                        ],
                     ],
                     'medals' => [
                         [
@@ -102,14 +103,14 @@ class MockServiceRecordService extends BaseMock
                         [
                             'id' => 1169571763,
                             'count' => $this->faker->numberBetween(0, 25),
-                        ]
+                        ],
                     ],
                 ],
                 'kda' => $this->faker->randomFloat(2, 0, 10),
                 'kdr' => $this->faker->randomFloat(2, 0, 10),
                 'average_life_duration' => [
                     'seconds' => $this->faker->numberBetween(45, 60),
-                    'human' => ''
+                    'human' => '',
                 ],
                 'scores' => [
                     'personal' => $this->faker->numerify('######'),
@@ -123,12 +124,12 @@ class MockServiceRecordService extends BaseMock
                     'losses' => $this->faker->numberBetween(0, 25),
                     'left' => $this->faker->numberBetween(0, 25),
                 ],
-                'total' => $this->faker->numberBetween(0, 25)
+                'total' => $this->faker->numberBetween(0, 25),
             ],
             'time_played' => [
                 'seconds' => $this->faker->numerify('######'),
-                'human' => ''
-            ]
+                'human' => '',
+            ],
         ];
     }
 }

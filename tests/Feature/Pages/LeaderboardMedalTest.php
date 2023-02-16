@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -19,12 +20,12 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create();
 
-        SeasonSession::set((int)config('services.autocode.competitive.season'));
+        SeasonSession::set((int) config('services.autocode.competitive.season'));
 
         // Acts & Assert
         foreach ($serviceRecord->hydrated_medals as $medal) {
             /** @var Medal $medal */
-            $response = $this->get('/leaderboards/medal/' . $medal->id);
+            $response = $this->get('/leaderboards/medal/'.$medal->id);
 
             // Assert
             $response->assertStatus(Response::HTTP_OK);
@@ -46,7 +47,7 @@ class LeaderboardMedalTest extends TestCase
         // Acts & Assert
         foreach ($serviceRecord->hydrated_medals as $medal) {
             /** @var Medal $medal */
-            $response = $this->get('/leaderboards/medal/' . $medal->id);
+            $response = $this->get('/leaderboards/medal/'.$medal->id);
 
             // Assert
             $response->assertStatus(Response::HTTP_OK);

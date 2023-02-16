@@ -21,7 +21,7 @@ class CreateGameTeamsTable extends Migration
 
             $table->unique([
                 'game_id',
-                'internal_team_id'
+                'internal_team_id',
             ]);
         });
     }

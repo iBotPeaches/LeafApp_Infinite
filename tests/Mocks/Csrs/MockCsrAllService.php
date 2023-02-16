@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Csrs;
@@ -22,8 +23,8 @@ class MockCsrAllService extends BaseMock
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
-                        'all_time' => $this->playlistResponse()
-                    ]
+                        'all_time' => $this->playlistResponse(),
+                    ],
                 ],
                 [
                     'id' => '1',
@@ -32,8 +33,8 @@ class MockCsrAllService extends BaseMock
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
-                        'all_time' => $this->playlistResponse()
-                    ]
+                        'all_time' => $this->playlistResponse(),
+                    ],
                 ],
                 [
                     'id' => '1',
@@ -42,14 +43,14 @@ class MockCsrAllService extends BaseMock
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
-                        'all_time' => $this->playlistResponse()
-                    ]
-                ]
+                        'all_time' => $this->playlistResponse(),
+                    ],
+                ],
             ],
             'additional' => [
                 'gamertag' => $gamertag,
-                'season' => $season
-            ]
+                'season' => $season,
+            ],
         ];
     }
 
@@ -64,13 +65,13 @@ class MockCsrAllService extends BaseMock
                     'response' => [
                         CompetitiveMode::SEASON => $this->playlistResponse(),
                         'c0rrent' => $this->playlistResponse(),
-                    ]
+                    ],
                 ],
             ],
             'additional' => [
                 'gamertag' => '',
-                'season' => ''
-            ]
+                'season' => '',
+            ],
         ];
     }
 
@@ -86,7 +87,7 @@ class MockCsrAllService extends BaseMock
             'next_tier_start' => $this->faker->numerify('####'),
             'next_sub_tier' => $this->faker->numberBetween(1, 5),
             'initial_measurement_matches' => 10,
-            'tier_image_url' => $this->faker->imageUrl
+            'tier_image_url' => $this->faker->imageUrl,
         ];
     }
 }

@@ -37,9 +37,9 @@ use Spatie\Sitemap\Tags\Url;
  * @property string|null $xuid
  * @property string $gamertag
  * @property string $service_tag
- * @property boolean $is_private
- * @property boolean $is_bot
- * @property boolean $is_cheater
+ * @property bool $is_private
+ * @property bool $is_bot
+ * @property bool $is_cheater
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
@@ -56,6 +56,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Game|null $mmrGame
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
+ *
  * @method static PlayerFactory factory(...$parameters)
  */
 class Player extends Model implements HasHaloDotApi, Sitemapable
@@ -63,7 +64,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public function getRouteKeyName(): string
@@ -94,8 +95,8 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($value);
 
-        if ($filename && File::exists(public_path('storage/images/emblems/' . $filename))) {
-            return asset('storage/images/emblems/' . $filename);
+        if ($filename && File::exists(public_path('storage/images/emblems/'.$filename))) {
+            return asset('storage/images/emblems/'.$filename);
         }
 
         return $value;
@@ -105,8 +106,8 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     {
         $filename = ImageHelper::getInternalFilenameFromAutocode($value);
 
-        if ($filename && File::exists(public_path('storage/images/backdrops/' . $filename))) {
-            return asset('storage/images/backdrops/' . $filename);
+        if ($filename && File::exists(public_path('storage/images/backdrops/'.$filename))) {
+            return asset('storage/images/backdrops/'.$filename);
         }
 
         return $value;
@@ -117,7 +118,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([
-                'gamertag' => $gamertag
+                'gamertag' => $gamertag,
             ]);
     }
 

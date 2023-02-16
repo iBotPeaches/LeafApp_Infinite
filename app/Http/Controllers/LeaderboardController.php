@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -23,14 +24,14 @@ class LeaderboardController extends Controller
 
     public function medal(Medal $medal): View
     {
-        SEOTools::setTitle($medal->name . ' Leaderboards');
+        SEOTools::setTitle($medal->name.' Leaderboards');
         SEOTools::addImages([
-            $medal->image
+            $medal->image,
         ]);
-        SEOTools::setDescription('Halo Infinite Medal: ' . $medal->name . ' Leaderboards');
+        SEOTools::setDescription('Halo Infinite Medal: '.$medal->name.' Leaderboards');
 
         return view('pages.medal-leaderboard', [
-            'medal' => $medal
+            'medal' => $medal,
         ]);
     }
 
@@ -38,11 +39,11 @@ class LeaderboardController extends Controller
     {
         $analyticClass = Analytic::getStatFromEnum($key);
 
-        SEOTools::setTitle($analyticClass->title() . ' Top Ten Leaderboards');
-        SEOTools::setDescription('Top Ten Halo Infinite Leaderboards: ' . $analyticClass->title());
+        SEOTools::setTitle($analyticClass->title().' Top Ten Leaderboards');
+        SEOTools::setDescription('Top Ten Halo Infinite Leaderboards: '.$analyticClass->title());
 
         return view('pages.topten-leaderboard', [
-            'analyticClass' => $analyticClass
+            'analyticClass' => $analyticClass,
         ]);
     }
 }

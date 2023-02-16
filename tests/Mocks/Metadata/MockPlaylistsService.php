@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Metadata;
@@ -23,9 +24,9 @@ class MockPlaylistsService extends BaseMock
             'additional' => [
                 'count' => $this->faker->numberBetween(0, 5),
                 'parameters' => [
-                    'ids' => []
-                ]
-            ]
+                    'ids' => [],
+                ],
+            ],
         ];
     }
 
@@ -36,17 +37,17 @@ class MockPlaylistsService extends BaseMock
             'asset' => [
                 'id' => $this->faker->uuid,
                 'version' => $this->faker->uuid,
-                'thumbnail_url' => $this->faker->imageUrl
+                'thumbnail_url' => $this->faker->imageUrl,
             ],
             'availability' => [
                 'start_date' => now()->toIso8601ZuluString(),
-                'end_date' => now()->toIso8601ZuluString()
+                'end_date' => now()->toIso8601ZuluString(),
             ],
             'properties' => [
                 'queue' => 'solo-duo',
                 'input' => 'mnk',
-                'ranked' => $this->faker->boolean
-            ]
+                'ranked' => $this->faker->boolean,
+            ],
         ];
     }
 }

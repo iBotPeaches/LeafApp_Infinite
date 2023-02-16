@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Category;
-use App\Models\Map;
 use App\Models\Game;
+use App\Models\Map;
 use App\Models\Player;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

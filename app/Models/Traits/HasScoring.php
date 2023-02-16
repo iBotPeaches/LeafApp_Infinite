@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Traits;
@@ -13,7 +14,7 @@ trait HasScoring
 {
     public function getFormattedScoreAttribute(): string
     {
-        return number_format((int)$this->score);
+        return number_format((int) $this->score);
     }
 
     public function getVictoryColor(): string

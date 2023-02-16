@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -26,11 +27,11 @@ class GamePageTest extends TestCase
         Http::fake();
 
         $game = Game::factory()->createOne([
-            'was_pulled' => false
+            'was_pulled' => false,
         ]);
 
         // Act
-        $response = $this->get('/game/' . $game->uuid);
+        $response = $this->get('/game/'.$game->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -43,7 +44,7 @@ class GamePageTest extends TestCase
         // Arrange
         Queue::fake([
             PullAppearance::class,
-            PullXuid::class
+            PullXuid::class,
         ]);
         $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
 
@@ -56,7 +57,7 @@ class GamePageTest extends TestCase
         $uuid = Arr::get($mockMatchResponse, 'data.0.id');
 
         // Act
-        $response = $this->get('/game/' . $uuid);
+        $response = $this->get('/game/'.$uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -73,11 +74,11 @@ class GamePageTest extends TestCase
 
         $game = Game::factory()->createOne([
             'version' => '0.0.1',
-            'was_pulled' => true
+            'was_pulled' => true,
         ]);
 
         // Act
-        $response = $this->get('/game/' . $game->uuid);
+        $response = $this->get('/game/'.$game->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -93,15 +94,15 @@ class GamePageTest extends TestCase
         $playlist = Playlist::factory()->createOne([
             'is_ranked' => 1,
             'queue' => null,
-            'input' => null
+            'input' => null,
         ]);
 
         $game = Game::factory()->createOne([
-            'playlist_id' => $playlist->id
+            'playlist_id' => $playlist->id,
         ]);
 
         // Act
-        $response = $this->get('/game/' . $game->uuid);
+        $response = $this->get('/game/'.$game->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -119,7 +120,7 @@ class GamePageTest extends TestCase
             ->forPlaylist(['name' => 'Unknown', 'is_ranked' => true])
             ->createOne([
                 'version' => config('services.autocode.version'),
-                'was_pulled' => true
+                'was_pulled' => true,
             ]);
 
         GamePlayer::factory()
@@ -139,7 +140,7 @@ class GamePageTest extends TestCase
             ->createOne();
 
         // Act
-        $response = $this->get('/game/' . $game->uuid);
+        $response = $this->get('/game/'.$game->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
@@ -155,7 +156,7 @@ class GamePageTest extends TestCase
         $game = Game::factory()
             ->createOne([
                 'version' => config('services.autocode.version'),
-                'was_pulled' => true
+                'was_pulled' => true,
             ]);
 
         GamePlayer::factory()
@@ -178,7 +179,7 @@ class GamePageTest extends TestCase
             ->createOne();
 
         // Act
-        $response = $this->get('/game/' . $game->uuid);
+        $response = $this->get('/game/'.$game->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);

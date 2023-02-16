@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdateGamePanel;
@@ -32,7 +33,7 @@ class ValidGameUpdateTest extends TestCase
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => false
+            'runUpdate' => false,
         ])
             ->call('render')
             ->assertViewHas('color', 'is-info')
@@ -45,7 +46,7 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = 'test';
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
@@ -55,25 +56,25 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
             ->assertEmittedTo('game-page', '$refresh');
 
         $this->assertDatabaseMissing('players', [
-            'gamertag' => $gamertag2
+            'gamertag' => $gamertag2,
         ]);
 
         $this->assertDatabaseHas('games', [
             'id' => $game->id,
-            'was_pulled' => false
+            'was_pulled' => false,
         ]);
 
         Queue::assertPushed(PullAppearance::class);
@@ -83,8 +84,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.players.1.details.type', PlayerType::BOT);
@@ -93,13 +94,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -112,8 +113,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.details.playlist.properties.queue', null);
@@ -125,13 +126,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -144,21 +145,21 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -171,8 +172,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Slayer');
@@ -181,13 +182,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -200,8 +201,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'CTF');
@@ -210,13 +211,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -229,8 +230,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Oddball');
@@ -239,13 +240,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -258,8 +259,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.0.match.details.category.name', 'Strongholds');
@@ -268,13 +269,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
@@ -287,8 +288,8 @@ class ValidGameUpdateTest extends TestCase
     {
         // Arrange
         Bus::fake(PullXuid::class);
-        $gamertag = $this->faker->word . $this->faker->numerify;
-        $gamertag2 = $this->faker->word . $this->faker->numerify;
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $gamertag2 = $this->faker->word.$this->faker->numerify;
 
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
@@ -300,13 +301,13 @@ class ValidGameUpdateTest extends TestCase
             ->push($mockAppearance2Response, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.match.id')
+            'uuid' => Arr::get($mockMatchResponse, 'data.0.match.id'),
         ]);
 
         // Act & Assert
         Livewire::test(UpdateGamePanel::class, [
             'game' => $game,
-            'runUpdate' => true
+            'runUpdate' => true,
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')

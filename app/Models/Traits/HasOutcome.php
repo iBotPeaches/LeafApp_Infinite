@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Traits;
@@ -13,7 +14,7 @@ trait HasOutcome
     {
         $outcome = is_numeric($value) ? Outcome::fromValue((int) $value) : Outcome::coerce(Str::upper($value));
         if (empty($outcome)) {
-            throw new \InvalidArgumentException('Invalid Outcome Enum (' . $value . ')');
+            throw new \InvalidArgumentException('Invalid Outcome Enum ('.$value.')');
         }
 
         $this->attributes['outcome'] = $outcome->value;

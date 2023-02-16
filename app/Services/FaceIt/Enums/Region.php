@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\FaceIt\Enums;
@@ -15,7 +16,10 @@ use BenSampo\Enum\Enum;
 final class Region extends Enum implements LocalizedEnum
 {
     const NA = 1;
+
     const EU = 2;
+
     const OCE = 3;
+
     const LATAM = 4;
 }

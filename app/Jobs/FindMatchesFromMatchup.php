@@ -22,7 +22,9 @@ class FindMatchesFromMatchup implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private Matchup $matchup;
+
     private ?InfiniteInterface $client;
+
     private array $processedGameIds = [];
 
     public function __construct(Matchup $matchup)
@@ -76,7 +78,7 @@ class FindMatchesFromMatchup implements ShouldQueue
                     $matchupGame = MatchupGame::query()
                         ->firstOrNew([
                             'game_id' => $game->id,
-                            'matchup_id' => $this->matchup->id
+                            'matchup_id' => $this->matchup->id,
                         ]);
 
                     $matchupGame->game()->associate($game);

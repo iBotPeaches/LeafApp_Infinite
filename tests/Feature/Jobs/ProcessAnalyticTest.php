@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Jobs;
@@ -27,12 +28,12 @@ class ProcessAnalyticTest extends TestCase
         ServiceRecord::factory()->createOne([
             'mode' => Mode::MATCHMADE_PVP,
             'season_number' => null,
-            'total_matches' => 1102
+            'total_matches' => 1102,
         ]);
         GamePlayer::factory()
             ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
             ->createOne([
-                'deaths' => 0
+                'deaths' => 0,
             ]);
 
         // Act
@@ -40,7 +41,7 @@ class ProcessAnalyticTest extends TestCase
 
         // Assert
         $this->assertDatabaseHas('analytics', [
-            'key' => $analyticClass->key()
+            'key' => $analyticClass->key(),
         ]);
     }
 }

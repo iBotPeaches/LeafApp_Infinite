@@ -16,9 +16,14 @@ use BenSampo\Enum\Enum;
 final class PlayerTab extends Enum implements LocalizedEnum
 {
     const OVERVIEW = 'overview';
+
     const MEDALS = 'medals';
+
     const COMPETITIVE = 'competitive';
+
     const MATCHES = 'matches';
+
     const CUSTOM = 'custom';
+
     const LAN = 'lan';
 }

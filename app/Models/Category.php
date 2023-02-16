@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * @property string $uuid
  * @property string $name
  * @property string $thumbnail_url
+ *
  * @method static CategoryFactory factory(...$parameters)
  */
 class Category extends Model implements HasHaloDotApi
@@ -21,20 +22,20 @@ class Category extends Model implements HasHaloDotApi
     use HasFactory;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $timestamps = false;
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = (string)Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
+        $categoryId = (string) Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
 
         /** @var Category $category */
         $category = self::query()
             ->where('uuid', $categoryId)
             ->firstOrNew([
-                'uuid' => $categoryId
+                'uuid' => $categoryId,
             ]);
 
         $category->name = Str::after(Arr::get($payload, 'name'), ':');

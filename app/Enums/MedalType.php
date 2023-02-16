@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -18,11 +19,17 @@ use BenSampo\Enum\Enum;
 final class MedalType extends Enum implements LocalizedEnum
 {
     const MODE = 1;
+
     const KILLING_SPREE = 2;
+
     const PROFICIENCY = 3;
+
     const SKILL = 4;
+
     const STYLE = 5;
+
     const MULTIKILL = 6;
+
     const UNKNOWN = 99;
 
     public static function coerce(mixed $enumKeyOrValue): ?static

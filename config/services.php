@@ -40,7 +40,7 @@ return [
             'season' => env('AUTOCODE_CURRENT_SEASON', 2),
             'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 3),
         ],
-        'warning_message' => env('AUTOCODE_WARNING_MESSAGE')
+        'warning_message' => env('AUTOCODE_WARNING_MESSAGE'),
     ],
 
     'xboxapi' => [
@@ -52,8 +52,8 @@ return [
         'key' => env('FACEIT_KEY'),
         'domain' => env('FACEIT_DOMAIN', 'https://open.faceit.com'),
         'webhook' => [
-            'secret' => env('FACEIT_WEBHOOK_SECRET', '')
-        ]
+            'secret' => env('FACEIT_WEBHOOK_SECRET', ''),
+        ],
     ],
 
     'google' => [

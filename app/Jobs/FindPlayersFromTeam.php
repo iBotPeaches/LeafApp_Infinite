@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Jobs;
 
@@ -20,6 +21,7 @@ class FindPlayersFromTeam implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private MatchupTeam $team;
+
     private ?InfiniteInterface $client;
 
     public function __construct(MatchupTeam $team)
@@ -31,7 +33,7 @@ class FindPlayersFromTeam implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->team->faceit_id))->dontRelease()
+            (new WithoutOverlapping($this->team->faceit_id))->dontRelease(),
         ];
     }
 
@@ -41,7 +43,7 @@ class FindPlayersFromTeam implements ShouldQueue
 
         foreach ($this->team->faceitPlayers->whereNull('player_id') as $teamPlayer) {
             $player = Player::query()->firstWhere('gamertag', $teamPlayer->faceit_name);
-            if (empty($player) && !config('services.autocode.disabled')) {
+            if (empty($player) && ! config('services.autocode.disabled')) {
                 $player = $this->client->appearance($teamPlayer->faceit_name);
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -17,9 +18,10 @@ use Illuminate\Support\Arr;
  * @property string $uuid
  * @property string $name
  * @property string $thumbnail_url
- * @property boolean $is_ranked
+ * @property bool $is_ranked
  * @property Queue|null $queue
  * @property Input|null $input
+ *
  * @method static PlaylistFactory factory(...$parameters)
  */
 class Playlist extends Model implements HasHaloDotApi
@@ -27,7 +29,7 @@ class Playlist extends Model implements HasHaloDotApi
     use HasFactory, HasPlaylist;
 
     public $guarded = [
-        'id'
+        'id',
     ];
 
     public $timestamps = false;
@@ -62,7 +64,7 @@ class Playlist extends Model implements HasHaloDotApi
         $playlist = self::query()
             ->where('uuid', $playlistId)
             ->firstOrNew([
-                'uuid' => $playlistId
+                'uuid' => $playlistId,
             ]);
 
         $playlist->name = Arr::get($payload, 'name');

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Matches;
@@ -29,10 +30,10 @@ class MockMatchService extends BaseMock
                                 'asset' => [
                                     'id' => $this->faker->uuid,
                                     'version' => $this->faker->uuid,
-                                    'thumbnail_url' => $this->faker->url
+                                    'thumbnail_url' => $this->faker->url,
                                 ],
                                 'properties' => [
-                                    'category_id' => 1
+                                    'category_id' => 1,
                                 ],
                             ],
                             'map' => [
@@ -40,25 +41,25 @@ class MockMatchService extends BaseMock
                                 'asset' => [
                                     'id' => $this->faker->uuid,
                                     'version' => $this->faker->uuid,
-                                    'thumbnail_url' => $this->faker->url
+                                    'thumbnail_url' => $this->faker->url,
                                 ],
                                 'properties' => [
-                                    'level_id' => $this->faker->randomNumber(1)
-                                ]
+                                    'level_id' => $this->faker->randomNumber(1),
+                                ],
                             ],
                             'playlist' => [
                                 'name' => $this->faker->word,
                                 'asset' => [
                                     'id' => $this->faker->uuid,
                                     'version' => $this->faker->uuid,
-                                    'thumbnail_url' => $this->faker->imageUrl
+                                    'thumbnail_url' => $this->faker->imageUrl,
                                 ],
                                 'properties' => [
                                     'queue' => 'open',
                                     'input' => 'crossplay',
                                     'ranked' => true,
-                                ]
-                            ]
+                                ],
+                            ],
                         ],
                         'teams' => [
                             'enabled' => $this->faker->boolean,
@@ -81,17 +82,17 @@ class MockMatchService extends BaseMock
                                                     'destroys' => $this->faker->numberBetween(0, 2),
                                                     'hijacks' => $this->faker->numberBetween(0, 2),
                                                 ],
-                                                'medals' => $this->faker->numberBetween(1, 25)
+                                                'medals' => $this->faker->numberBetween(1, 25),
                                             ],
                                             'damage' => [
                                                 'taken' => $this->faker->numerify('####'),
-                                                'dealt' => $this->faker->numerify('####')
+                                                'dealt' => $this->faker->numerify('####'),
                                             ],
                                             'shots' => [
                                                 'fired' => $this->faker->numerify(),
                                                 'landed' => $this->faker->numerify(),
                                                 'missed' => $this->faker->numerify(),
-                                                'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                                                'accuracy' => $this->faker->randomFloat(2, 0, 100),
                                             ],
                                             'rounds' => [
                                                 'won' => $this->faker->numberBetween(0, 2),
@@ -111,26 +112,26 @@ class MockMatchService extends BaseMock
                                                     'miscellaneous' => [
                                                         'repulsor' => $this->faker->numberBetween(0, 5),
                                                         'fusion_coils' => $this->faker->numberBetween(0, 5),
-                                                    ]
+                                                    ],
                                                 ],
                                                 'assists' => [
                                                     'emp' => $this->faker->numberBetween(0, 5),
                                                     'driver' => $this->faker->numberBetween(0, 5),
-                                                    'callouts' => $this->faker->numberBetween(0, 5)
+                                                    'callouts' => $this->faker->numberBetween(0, 5),
                                                 ],
                                                 'vehicles' => [
                                                     'destroys' => [
                                                         [
                                                             'value' => 'warthog',
-                                                            'count' => $this->faker->numberBetween(0, 5)
-                                                        ]
+                                                            'count' => $this->faker->numberBetween(0, 5),
+                                                        ],
                                                     ],
                                                     'hijacks' => [
                                                         [
                                                             'value' => 'warthog',
-                                                            'count' => $this->faker->numberBetween(0, 5)
-                                                        ]
-                                                    ]
+                                                            'count' => $this->faker->numberBetween(0, 5),
+                                                        ],
+                                                    ],
                                                 ],
                                                 'medals' => [
                                                     [
@@ -140,7 +141,7 @@ class MockMatchService extends BaseMock
                                                     [
                                                         'id' => 1169571763,
                                                         'count' => $this->faker->numberBetween(0, 25),
-                                                    ]
+                                                    ],
                                                 ],
                                             ],
                                             'kda' => $this->faker->randomFloat(2, 0, 10),
@@ -157,8 +158,8 @@ class MockMatchService extends BaseMock
                                     'outcome' => 'win',
                                     'odds' => [
                                         'winning' => 50,
-                                        'losing' => 49
-                                    ]
+                                        'losing' => 49,
+                                    ],
                                 ],
                                 [
                                     'team' => [
@@ -177,17 +178,17 @@ class MockMatchService extends BaseMock
                                                     'destroys' => $this->faker->numberBetween(0, 2),
                                                     'hijacks' => $this->faker->numberBetween(0, 2),
                                                 ],
-                                                'medals' => $this->faker->numberBetween(1, 25)
+                                                'medals' => $this->faker->numberBetween(1, 25),
                                             ],
                                             'damage' => [
                                                 'taken' => $this->faker->numerify('####'),
-                                                'dealt' => $this->faker->numerify('####')
+                                                'dealt' => $this->faker->numerify('####'),
                                             ],
                                             'shots' => [
                                                 'fired' => $this->faker->numerify(),
                                                 'landed' => $this->faker->numerify(),
                                                 'missed' => $this->faker->numerify(),
-                                                'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                                                'accuracy' => $this->faker->randomFloat(2, 0, 100),
                                             ],
                                             'rounds' => [
                                                 'won' => $this->faker->numberBetween(0, 2),
@@ -207,26 +208,26 @@ class MockMatchService extends BaseMock
                                                     'miscellaneous' => [
                                                         'repulsor' => $this->faker->numberBetween(0, 5),
                                                         'fusion_coils' => $this->faker->numberBetween(0, 5),
-                                                    ]
+                                                    ],
                                                 ],
                                                 'assists' => [
                                                     'emp' => $this->faker->numberBetween(0, 5),
                                                     'driver' => $this->faker->numberBetween(0, 5),
-                                                    'callouts' => $this->faker->numberBetween(0, 5)
+                                                    'callouts' => $this->faker->numberBetween(0, 5),
                                                 ],
                                                 'vehicles' => [
                                                     'destroys' => [
                                                         [
                                                             'value' => 'warthog',
-                                                            'count' => $this->faker->numberBetween(0, 5)
-                                                        ]
+                                                            'count' => $this->faker->numberBetween(0, 5),
+                                                        ],
                                                     ],
                                                     'hijacks' => [
                                                         [
                                                             'value' => 'warthog',
-                                                            'count' => $this->faker->numberBetween(0, 5)
-                                                        ]
-                                                    ]
+                                                            'count' => $this->faker->numberBetween(0, 5),
+                                                        ],
+                                                    ],
                                                 ],
                                                 'medals' => [
                                                     [
@@ -236,7 +237,7 @@ class MockMatchService extends BaseMock
                                                     [
                                                         'id' => 1169571763,
                                                         'count' => $this->faker->numberBetween(0, 25),
-                                                    ]
+                                                    ],
                                                 ],
                                             ],
                                             'kda' => $this->faker->randomFloat(2, 0, 10),
@@ -253,10 +254,10 @@ class MockMatchService extends BaseMock
                                     'outcome' => 'loss',
                                     'odds' => [
                                         'winning' => 49,
-                                        'losing' => 50
-                                    ]
-                                ]
-                            ]
+                                        'losing' => 50,
+                                    ],
+                                ],
+                            ],
                         ],
                         'players' => [
                             $this->playerBlock($randomCategoryName, $gamertag1),
@@ -267,20 +268,20 @@ class MockMatchService extends BaseMock
                         'played_at' => now()->toIso8601ZuluString(),
                         'duration' => [
                             'seconds' => $this->faker->numerify('###'),
-                            'human' => ''
-                        ]
+                            'human' => '',
+                        ],
                     ],
-                ]
+                ],
             ],
             'additional' => [
                 'count' => 1,
                 'parameters' => [
                     'language' => Language::US,
                     'ids' => [
-                        $this->faker->uuid()
-                    ]
-                ]
-            ]
+                        $this->faker->uuid(),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -317,13 +318,13 @@ class MockMatchService extends BaseMock
         return [
             'total_zone_occupation_time' => [
                 'seconds' => $this->faker->numberBetween(1, 10),
-                'human' => ''
+                'human' => '',
             ],
             'zone_captures' => $this->faker->numberBetween(1, 10),
             'zone_defensive_kills' => $this->faker->numberBetween(1, 10),
             'zone_offensive_kills' => $this->faker->numberBetween(1, 10),
             'zone_scoring_ticks' => $this->faker->numberBetween(1, 10),
-            'zone_secures' => $this->faker->numberBetween(1, 10)
+            'zone_secures' => $this->faker->numberBetween(1, 10),
         ];
     }
 
@@ -340,8 +341,8 @@ class MockMatchService extends BaseMock
             'skull_scoring_ticks' => $this->faker->numberBetween(1, 10),
             'time_as_skull_carrier' => [
                 'seconds' => $this->faker->numberBetween(1, 10),
-                'human' => ''
-            ]
+                'human' => '',
+            ],
         ];
     }
 
@@ -365,8 +366,8 @@ class MockMatchService extends BaseMock
             'kills_as_flag_returner' => $this->faker->numberBetween(1, 10),
             'time_as_flag_carrier' => [
                 'seconds' => $this->faker->numberBetween(1, 10),
-                'human' => ''
-            ]
+                'human' => '',
+            ],
         ];
     }
 
@@ -394,17 +395,17 @@ class MockMatchService extends BaseMock
                             'destroys' => $this->faker->numberBetween(0, 2),
                             'hijacks' => $this->faker->numberBetween(0, 2),
                         ],
-                        'medals' => $this->faker->numberBetween(1, 25)
+                        'medals' => $this->faker->numberBetween(1, 25),
                     ],
                     'damage' => [
                         'taken' => $this->faker->numerify('####'),
-                        'dealt' => $this->faker->numerify('####')
+                        'dealt' => $this->faker->numerify('####'),
                     ],
                     'shots' => [
                         'fired' => $this->faker->numerify(),
                         'landed' => $this->faker->numerify(),
                         'missed' => $this->faker->numerify(),
-                        'accuracy' => $this->faker->randomFloat(2, 0, 100)
+                        'accuracy' => $this->faker->randomFloat(2, 0, 100),
                     ],
                     'rounds' => [
                         'won' => $this->faker->numberBetween(0, 2),
@@ -424,26 +425,26 @@ class MockMatchService extends BaseMock
                             'miscellaneous' => [
                                 'repulsor' => $this->faker->numberBetween(0, 5),
                                 'fusion_coils' => $this->faker->numberBetween(0, 5),
-                            ]
+                            ],
                         ],
                         'assists' => [
                             'emp' => $this->faker->numberBetween(0, 5),
                             'driver' => $this->faker->numberBetween(0, 5),
-                            'callouts' => $this->faker->numberBetween(0, 5)
+                            'callouts' => $this->faker->numberBetween(0, 5),
                         ],
                         'vehicles' => [
                             'destroys' => [
                                 [
                                     'value' => 'warthog',
-                                    'count' => $this->faker->numberBetween(0, 5)
-                                ]
+                                    'count' => $this->faker->numberBetween(0, 5),
+                                ],
                             ],
                             'hijacks' => [
                                 [
                                     'value' => 'warthog',
-                                    'count' => $this->faker->numberBetween(0, 5)
-                                ]
-                            ]
+                                    'count' => $this->faker->numberBetween(0, 5),
+                                ],
+                            ],
                         ],
                         'medals' => [
                             [
@@ -453,7 +454,7 @@ class MockMatchService extends BaseMock
                             [
                                 'id' => 1169571763,
                                 'count' => $this->faker->numberBetween(0, 25),
-                            ]
+                            ],
                         ],
                     ],
                     'kda' => $this->faker->randomFloat(2, 0, 10),
@@ -475,8 +476,8 @@ class MockMatchService extends BaseMock
                 'left_at' => null,
                 'presence' => [
                     'beginning' => true,
-                    'completion' => true
-                ]
+                    'completion' => true,
+                ],
             ],
             'progression' => [
                 'csr' => [
@@ -485,7 +486,7 @@ class MockMatchService extends BaseMock
                         'tier' => $this->faker->randomElement(['Diamond', 'Platinum']),
                         'sub_tier' => $this->faker->numberBetween(0, 5),
                         'initial_measurement_matches' => 10,
-                        'measurement_matches_remaining' => 0
+                        'measurement_matches_remaining' => 0,
                     ],
                     'post_match' => [
                         'value' => $this->faker->numberBetween(1000, 1400),
@@ -493,22 +494,22 @@ class MockMatchService extends BaseMock
                         'tier_start' => 1200,
                         'sub_tier' => $this->faker->numberBetween(0, 5),
                         'initial_measurement_matches' => 10,
-                        'measurement_matches_remaining' => 0
-                    ]
-                ]
+                        'measurement_matches_remaining' => 0,
+                    ],
+                ],
             ],
             'performances' => [
                 'kills' => [
                     'count' => $this->faker->randomNumber(2),
                     'expected' => $this->faker->numberBetween(50, 55),
-                    'standard_deviation' => $this->faker->numberBetween(7, 9)
+                    'standard_deviation' => $this->faker->numberBetween(7, 9),
                 ],
                 'deaths' => [
                     'count' => $this->faker->randomNumber(2),
                     'expected' => $this->faker->numberBetween(50, 55),
-                    'standard_deviation' => $this->faker->numberBetween(7, 9)
-                ]
-            ]
+                    'standard_deviation' => $this->faker->numberBetween(7, 9),
+                ],
+            ],
         ];
     }
 }

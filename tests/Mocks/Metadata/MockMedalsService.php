@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Mocks\Metadata;
@@ -19,7 +20,7 @@ class MockMedalsService extends BaseMock
                 $this->medal(),
                 $this->medal(),
                 $this->medal(),
-            ]
+            ],
         ];
     }
 
@@ -35,7 +36,7 @@ class MockMedalsService extends BaseMock
                 'small' => $this->faker->imageUrl,
                 'medium' => $this->faker->imageUrl,
                 'large' => $this->faker->imageUrl,
-            ]
+            ],
         ];
     }
 }

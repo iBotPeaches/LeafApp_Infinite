@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
@@ -21,7 +22,7 @@ class ScrimMatches extends Component
         ]);
 
         return view('livewire.scrim-matches', [
-            'games' => $this->scrim->games
+            'games' => $this->scrim->games,
         ]);
     }
 }

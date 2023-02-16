@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\MedalsPage;
@@ -19,11 +20,11 @@ class ValidMedalsPageTest extends TestCase
             ->has(ServiceRecord::factory()->withMedals())
             ->createOne();
 
-        SeasonSession::set((int)config('services.autocode.competitive.season'));
+        SeasonSession::set((int) config('services.autocode.competitive.season'));
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('player')
             ->assertViewHas('medals');
@@ -40,7 +41,7 @@ class ValidMedalsPageTest extends TestCase
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('player')
             ->assertViewHas('medals');

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Pages;
@@ -26,20 +27,20 @@ class HcsMatchupPageTest extends TestCase
 
         $matchup = Matchup::factory()
             ->createOne([
-                'group' => $group
+                'group' => $group,
             ]);
 
         $matchupTeam = MatchupTeam::factory()->createOne([
             'outcome' => Outcome::WIN,
-            'matchup_id' => $matchup->id
+            'matchup_id' => $matchup->id,
         ]);
         MatchupPlayer::factory()->createOne([
-            'matchup_team_id' => $matchupTeam->id
+            'matchup_team_id' => $matchupTeam->id,
         ]);
 
         MatchupTeam::factory()->createOne([
             'matchup_id' => $matchup->id,
-            'outcome' => Outcome::LOSS
+            'outcome' => Outcome::LOSS,
         ]);
 
         // Act
@@ -56,17 +57,17 @@ class HcsMatchupPageTest extends TestCase
         Http::fake();
 
         $championship = Championship::factory()->createOne([
-            'type' => ChampionshipType::STAGE
+            'type' => ChampionshipType::STAGE,
         ]);
 
         $matchup = Matchup::factory()
             ->createOne([
-                'championship_id' => $championship->id
+                'championship_id' => $championship->id,
             ]);
 
         MatchupTeam::factory()->createOne([
             'outcome' => Outcome::WIN,
-            'matchup_id' => $matchup->id
+            'matchup_id' => $matchup->id,
         ]);
 
         MatchupTeam::factory()->createOne([
@@ -77,7 +78,7 @@ class HcsMatchupPageTest extends TestCase
         $matchupGame = MatchupGame::factory()
             ->for(Game::factory()->has(GamePlayer::factory(), 'players'))
             ->createOne([
-                'matchup_id' => $matchup->id
+                'matchup_id' => $matchup->id,
             ]);
 
         // Act
@@ -88,21 +89,20 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-
     public function testLoadingMatchupPageWithNoData(): void
     {
         // Arrange
         Http::fake();
 
         $matchupTeam = MatchupTeam::factory()->createOne([
-            'outcome' => Outcome::WIN
+            'outcome' => Outcome::WIN,
         ]);
         $matchup = $matchupTeam->matchup;
         MatchupTeam::factory()
             ->bye()
             ->createOne([
                 'matchup_id' => $matchup->id,
-                'outcome' => Outcome::LOSS
+                'outcome' => Outcome::LOSS,
             ]);
 
         // Act
@@ -117,14 +117,14 @@ class HcsMatchupPageTest extends TestCase
     {
         return [
             [
-                'round' => 1
+                'round' => 1,
             ],
             [
-                'round' => 2
+                'round' => 2,
             ],
             [
-                'round' => 3
-            ]
+                'round' => 3,
+            ],
         ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Jobs;
@@ -29,12 +30,11 @@ class FindPlayersOnTeamTest extends TestCase
             ->push($mockAppearanceResponse, Response::HTTP_OK)
             ->push($mockXuidResponse, Response::HTTP_OK);
 
-
         $matchupTeam = MatchupTeam::factory()->createOne();
         $matchupPlayer = MatchupPlayer::factory()->createOne([
             'matchup_team_id' => $matchupTeam->id,
             'faceit_name' => $gamertag,
-            'player_id' => null
+            'player_id' => null,
         ]);
 
         // Act
@@ -42,7 +42,7 @@ class FindPlayersOnTeamTest extends TestCase
 
         // Assert
         $this->assertDatabaseHas('players', [
-            'emblem_url' => Arr::get($mockAppearanceResponse, 'data.emblem_url')
+            'emblem_url' => Arr::get($mockAppearanceResponse, 'data.emblem_url'),
         ]);
     }
 }

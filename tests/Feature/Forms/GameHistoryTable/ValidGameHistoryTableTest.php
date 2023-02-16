@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Forms\GameHistoryTable;
@@ -29,7 +30,7 @@ class ValidGameHistoryTableTest extends TestCase
                 ['outcome' => Outcome::DRAW],
             ))
             ->create([
-                'player_id' => $player->id
+                'player_id' => $player->id,
             ]);
 
         /** @var Game $game */
@@ -37,7 +38,7 @@ class ValidGameHistoryTableTest extends TestCase
 
         // Act & Assert
         Livewire::test(GameHistoryTable::class, [
-            'player' => $player
+            'player' => $player,
         ])
             ->assertViewHas('games')
             ->assertSee($game->playlist->name)

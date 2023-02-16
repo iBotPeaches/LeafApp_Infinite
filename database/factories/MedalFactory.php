@@ -1,10 +1,11 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\MedalType;
 use App\Enums\MedalDifficulty;
+use App\Enums\MedalType;
 use App\Models\Medal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

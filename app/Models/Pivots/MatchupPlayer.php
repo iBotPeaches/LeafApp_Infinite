@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models\Pivots;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Arr;
  * @property string $faceit_name
  * @property-read MatchupTeam $matchupTeam
  * @property-read Player|null $player
+ *
  * @method static MatchupPlayerFactory factory(...$parameters)
  */
 class MatchupPlayer extends Pivot implements HasFaceItApi
@@ -46,7 +48,7 @@ class MatchupPlayer extends Pivot implements HasFaceItApi
             ->where('matchup_team_id', $team->id)
             ->where('faceit_id', $playerId)
             ->firstOrNew([
-                'faceit_id' => $playerId
+                'faceit_id' => $playerId,
             ]);
 
         $teamPlayer->matchupTeam()->associate($team);

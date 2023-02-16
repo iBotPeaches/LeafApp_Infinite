@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -38,6 +39,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read string $title
  * @property-read string $description
  * @property-read string $faceitUrl
+ *
  * @method static MatchupFactory factory(...$parameters)
  */
 class Matchup extends Model implements HasFaceItApi, Sitemapable
@@ -50,7 +52,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     ];
 
     public $with = [
-        'matchupTeams'
+        'matchupTeams',
     ];
 
     public $casts = [
@@ -87,23 +89,23 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
 
     public function getScoreAttribute(): string
     {
-        return $this->winner?->points . ' - ' . $this->loser?->points;
+        return $this->winner?->points.' - '.$this->loser?->points;
     }
 
     public function getTitleAttribute(): string
     {
-        return $this->bracket?->description . ' Round ' . $this->round .
-            ' ' . $this->winner?->name . ' vs ' . $this->loser?->name;
+        return $this->bracket?->description.' Round '.$this->round.
+            ' '.$this->winner?->name.' vs '.$this->loser?->name;
     }
 
     public function getDescriptionAttribute(): string
     {
-        return $this->winner?->name . ' won ' . $this->score;
+        return $this->winner?->name.' won '.$this->score;
     }
 
     public function getFaceitUrlAttribute(): string
     {
-        return 'https://www.faceit.com/en/halo_infinite/room/' . $this->faceit_id;
+        return 'https://www.faceit.com/en/halo_infinite/room/'.$this->faceit_id;
     }
 
     public function getBracketAttribute(): ?Enum
@@ -127,7 +129,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         $matchup = self::query()
             ->where('faceit_id', $matchId)
             ->firstOrNew([
-                'faceit_id' => $matchId
+                'faceit_id' => $matchId,
             ]);
 
         $matchup->championship()->associate($championship);

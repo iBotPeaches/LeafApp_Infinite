@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Jobs;
@@ -31,7 +32,7 @@ class PullXuidTest extends TestCase
         // Assert
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'xuid' => null
+            'xuid' => null,
         ]);
     }
 }

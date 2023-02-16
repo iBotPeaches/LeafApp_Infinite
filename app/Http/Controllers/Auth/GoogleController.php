@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
@@ -25,7 +26,7 @@ class GoogleController extends Controller
         /** @var User $user */
         $user = User::query()
             ->firstOrNew([
-                'google_id' => $googleUser->getId()
+                'google_id' => $googleUser->getId(),
             ]);
 
         $user->saveOrFail();
@@ -33,6 +34,7 @@ class GoogleController extends Controller
 
         if ($user->player) {
             $playerRoute = route('player', [$user->player]);
+
             return redirect()->intended($playerRoute);
         }
 

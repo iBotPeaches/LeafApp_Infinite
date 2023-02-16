@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Pivots;
@@ -32,6 +33,6 @@ class PersonalResult extends Pivot
     use HasKd, HasScoring, HasCsr, HasAccuracy;
 
     public $casts = [
-        'outcome' => Outcome::class
+        'outcome' => Outcome::class,
     ];
 }

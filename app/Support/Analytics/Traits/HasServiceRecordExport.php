@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Support\Analytics\Traits;
@@ -25,7 +26,7 @@ trait HasServiceRecordExport
             return [
                 'gamertag' => $serviceRecord->player->gamertag,
                 'profile' => route('player', $serviceRecord->player),
-                $serviceRecord->{$this->property()}
+                $serviceRecord->{$this->property()},
             ];
         })->toArray() ?? [];
     }

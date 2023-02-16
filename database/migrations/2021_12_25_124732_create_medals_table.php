@@ -23,4 +23,3 @@ class CreateMedalsTable extends Migration
         Schema::dropIfExists('medals');
     }
 }
-

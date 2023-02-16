@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Support\Analytics\Stats;
 
@@ -40,7 +41,7 @@ class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterfa
     public function displayProperty(Analytic $analytic): string
     {
         $game = new Game([
-            'duration_seconds' => $analytic->value
+            'duration_seconds' => $analytic->value,
         ]);
 
         return $game->duration;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Livewire;
@@ -16,7 +17,7 @@ class MedalsPage extends Component
 
     // @phpstan-ignore-next-line
     public $listeners = [
-        '$refresh'
+        '$refresh',
     ];
 
     public function render(): View
@@ -27,6 +28,7 @@ class MedalsPage extends Component
 
         $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecord) {
             $medal['count'] = $serviceRecord->medals[$medal->id] ?? 0;
+
             return $medal;
         })->sortBy('name');
 

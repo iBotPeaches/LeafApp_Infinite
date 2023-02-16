@@ -1,11 +1,9 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Enums\Input;
-use App\Enums\Queue;
-use App\Models\Playlist;
 use App\Models\Scrim;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;

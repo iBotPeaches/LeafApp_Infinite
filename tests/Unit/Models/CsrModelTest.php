@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Models;
@@ -55,7 +56,7 @@ class CsrModelTest extends TestCase
                 'next_csr' => 1250,
                 'next_tier' => 'Diamond',
                 'next_sub_tier' => 1,
-                'expected' => 'Diamond 2'
+                'expected' => 'Diamond 2',
             ],
             'diamond 6' => [
                 'tier' => 'Diamond',
@@ -63,7 +64,7 @@ class CsrModelTest extends TestCase
                 'next_csr' => 1500,
                 'next_tier' => 'Onyx',
                 'next_sub_tier' => 0,
-                'expected' => 'Onyx'
+                'expected' => 'Onyx',
             ],
             'onyx' => [
                 'tier' => 'Onyx',
@@ -71,7 +72,7 @@ class CsrModelTest extends TestCase
                 'next_csr' => 1500,
                 'next_tier' => 'Onyx',
                 'next_sub_tier' => 0,
-                'expected' => 'Onyx'
+                'expected' => 'Onyx',
             ],
             'unranked' => [
                 'tier' => 'Unranked',
@@ -79,8 +80,8 @@ class CsrModelTest extends TestCase
                 'next_csr' => 0,
                 'next_tier' => '',
                 'next_sub_tier' => 0,
-                'expected' => ''
-            ]
+                'expected' => '',
+            ],
         ];
     }
 
@@ -91,20 +92,20 @@ class CsrModelTest extends TestCase
                 'tier' => 'Diamond',
                 'sub_tier' => 0, // 0 index in the API
                 'next_csr' => 1250,
-                'expected' => 'Diamond 1'
+                'expected' => 'Diamond 1',
             ],
             'onyx' => [
                 'tier' => 'Onyx',
                 'sub_tier' => 0,
                 'next_csr' => 1500,
-                'expected' => 'Onyx'
+                'expected' => 'Onyx',
             ],
             'unranked' => [
                 'tier' => 'Unranked',
                 'sub_tier' => 0,
                 'next_csr' => 0,
-                'expected' => 'Unranked'
-            ]
+                'expected' => 'Unranked',
+            ],
         ];
     }
 }

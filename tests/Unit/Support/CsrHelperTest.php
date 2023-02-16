@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -15,7 +16,7 @@ class CsrHelperTest extends TestCase
         $this->assertEquals(
             $expected,
             CsrHelper::getCsrFromValue($csr, null)->title,
-            $csr . ' csr is not: ' . $expected
+            $csr.' csr is not: '.$expected
         );
     }
 
@@ -23,9 +24,9 @@ class CsrHelperTest extends TestCase
     public function testCsrCalculationToAsset(int $csr, string $expected)
     {
         $this->assertStringEndsWith(
-            Str::slug($expected) . '.png',
+            Str::slug($expected).'.png',
             CsrHelper::getCsrFromValue($csr, null)->url(),
-            $csr . ' url() is not ending with proper string.'
+            $csr.' url() is not ending with proper string.'
         );
     }
 
@@ -35,7 +36,7 @@ class CsrHelperTest extends TestCase
         $this->assertEquals(
             $expected,
             CsrHelper::getCsrFromValue(0, $matchesRemaining)->title,
-            $matchesRemaining . ' matches remaining is not: ' . $expected
+            $matchesRemaining.' matches remaining is not: '.$expected
         );
     }
 
@@ -45,9 +46,9 @@ class CsrHelperTest extends TestCase
         $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);
 
         $this->assertStringEndsWith(
-            Str::slug($expected . '-' . $matchesCompleted) . '.png',
+            Str::slug($expected.'-'.$matchesCompleted).'.png',
             CsrHelper::getCsrFromValue(0, $matchesRemaining)->url(),
-            $matchesRemaining . ' url() is not ending with proper string: ' . $expected
+            $matchesRemaining.' url() is not ending with proper string: '.$expected
         );
     }
 
@@ -56,20 +57,20 @@ class CsrHelperTest extends TestCase
         return [
             'unranked 0' => [
                 'matchesRemaining' => 10,
-                'expected' => 'Unranked'
+                'expected' => 'Unranked',
             ],
             'unranked null' => [
                 'matchesRemaining' => null,
-                'expected' => 'Unranked'
+                'expected' => 'Unranked',
             ],
             'unranked-1' => [
                 'matchesRemaining' => 9,
-                'expected' => 'Unranked'
+                'expected' => 'Unranked',
             ],
             'unranked-9' => [
                 'matchesRemaining' => 1,
-                'expected' => 'Unranked'
-            ]
+                'expected' => 'Unranked',
+            ],
         ];
     }
 
@@ -78,11 +79,11 @@ class CsrHelperTest extends TestCase
         return [
             'bronze 1' => [
                 'csr' => 1,
-                'expected' => 'Bronze 1'
+                'expected' => 'Bronze 1',
             ],
             'bronze 4' => [
                 'csr' => 150,
-                'expected' => 'Bronze 4'
+                'expected' => 'Bronze 4',
             ],
             'bronze 6' => [
                 'csr' => 250,
@@ -98,36 +99,36 @@ class CsrHelperTest extends TestCase
             ],
             'gold 1' => [
                 'csr' => 602,
-                'expected' => 'Gold 1'
+                'expected' => 'Gold 1',
             ],
             'gold 6' => [
                 'csr' => 899,
-                'expected' => 'Gold 6'
+                'expected' => 'Gold 6',
             ],
             'platinum 1' => [
                 'csr' => 901,
-                'expected' => 'Platinum 1'
+                'expected' => 'Platinum 1',
             ],
             'platinum 6' => [
                 'csr' => 1151,
-                'expected' => 'Platinum 6'
+                'expected' => 'Platinum 6',
             ],
             'diamond 1' => [
                 'csr' => 1200,
-                'expected' => 'Diamond 1'
+                'expected' => 'Diamond 1',
             ],
             'diamond 6' => [
                 'csr' => 1499,
-                'expected' => 'Diamond 6'
+                'expected' => 'Diamond 6',
             ],
             'onyx small' => [
                 'csr' => 1500,
-                'expected' => 'Onyx'
+                'expected' => 'Onyx',
             ],
             'onyx large' => [
                 'csr' => 2500,
-                'expected' => 'Onyx'
-            ]
+                'expected' => 'Onyx',
+            ],
         ];
     }
 }
