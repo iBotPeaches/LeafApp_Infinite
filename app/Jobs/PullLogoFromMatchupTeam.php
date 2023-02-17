@@ -23,6 +23,7 @@ class PullLogoFromMatchupTeam implements ShouldQueue
     public int $tries = 1;
 
     public MatchupTeam $matchupTeam;
+
     public string $avatar;
 
     public function __construct(MatchupTeam $matchupTeam, string $avatar)

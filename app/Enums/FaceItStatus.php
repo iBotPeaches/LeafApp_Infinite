@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 final class FaceItStatus extends Enum implements LocalizedEnum
 {
     const UNKNOWN = 0;
+
     const FINISHED = 1;
 
     public static function coerce(mixed $enumKeyOrValue): ?static

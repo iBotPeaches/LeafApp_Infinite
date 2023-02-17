@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Bracket;
-use App\Enums\FaceItStatus;
 use App\Enums\ChampionshipType;
+use App\Enums\FaceItStatus;
 use App\Models\Contracts\HasFaceItApi;
 use App\Services\FaceIt\Enums\Region;
 use Carbon\Carbon;
