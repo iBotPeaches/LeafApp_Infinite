@@ -15,7 +15,7 @@
         "laravel-vite-plugin": "^0.7.3",
         "lodash": "^4.17.21",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.58.1",
+        "sass": "^1.58.2",
         "vite": "^3.2.5",
         "vite-plugin-manifest-sri": "^0.1.0"
     },
