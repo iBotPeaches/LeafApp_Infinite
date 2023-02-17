@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Outcome;
+use App\Jobs\PullLogoFromMatchupTeam;
 use App\Models\Contracts\HasFaceItApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Traits\HasOutcome;
@@ -22,7 +23,8 @@ use Illuminate\Support\Collection;
  * @property int $matchup_id
  * @property string $faceit_id
  * @property string $name
- * @property int $points
+ * @property int|null $points
+ * @property string $avatar
  * @property Outcome|null $outcome
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
@@ -89,6 +91,8 @@ class MatchupTeam extends Model implements HasFaceItApi
         if ($team->isDirty()) {
             $team->saveOrFail();
         }
+
+        PullLogoFromMatchupTeam::dispatchSync($team, Arr::get($payload, 'avatar'));
 
         return $team;
     }
