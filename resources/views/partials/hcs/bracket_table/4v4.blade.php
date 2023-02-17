@@ -15,11 +15,11 @@
         <tr>
             <td>
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
-                    {{ $matchup->winner?->name }}
+                    {{ $matchup->team1?->name }}
                 </a>
                 vs
                 <a href="{{ route('matchup', [$championship, $matchup]) }}">
-                    {{ $matchup->loser?->name }}
+                    {{ $matchup->team2?->name }}
                 </a>
             </td>
             <td>
