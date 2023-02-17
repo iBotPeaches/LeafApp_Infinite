@@ -1768,16 +1768,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.0.0",
+            "version": "v10.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "be2ddb5c31b0b9ebc2738d9f37a9d4c960aa3199"
+                "reference": "0bd303853444de33f4fcb16d13bd7574030aa3d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/be2ddb5c31b0b9ebc2738d9f37a9d4c960aa3199",
-                "reference": "be2ddb5c31b0b9ebc2738d9f37a9d4c960aa3199",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0bd303853444de33f4fcb16d13bd7574030aa3d4",
+                "reference": "0bd303853444de33f4fcb16d13bd7574030aa3d4",
                 "shasum": ""
             },
             "require": {
@@ -1964,7 +1964,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-14T15:12:47+00:00"
+            "time": "2023-02-16T22:03:27+00:00"
         },
         {
             "name": "laravel/horizon",
