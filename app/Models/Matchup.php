@@ -117,7 +117,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
 
     public function getScoreAttribute(): string
     {
-        return $this->winner?->points.' - '.$this->loser?->points;
+        return (int)$this->winner?->points.' - '.(int)$this->loser?->points;
     }
 
     public function getTitleAttribute(): string
