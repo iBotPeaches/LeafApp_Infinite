@@ -43,6 +43,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read string $title
  * @property-read string $description
  * @property-read string $faceitUrl
+ * @property-read string|null $length
  *
  * @method static MatchupFactory factory(...$parameters)
  */
@@ -139,6 +140,15 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     public function getBracketAttribute(): ?Enum
     {
         return Bracket::coerce($this->group);
+    }
+
+    public function getLengthAttribute(): ?string
+    {
+        if (empty($this->started_at) || empty($this->ended_at)) {
+            return null;
+        }
+
+        return $this->ended_at->diffInMinutes($this->started_at) . ' minutes';
     }
 
     public function getTeamAt(int $place): ?MatchupTeam

@@ -6,8 +6,8 @@
     <tr>
         <th>Matchup</th>
         <th>Winner</th>
-        <th>Best Of</th>
         <th>Score</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
@@ -28,13 +28,22 @@
                 </a>
             </td>
             <td>
-                {{ $matchup->best_of }}
-            </td>
-            <td>
                 @if ($matchup->loser?->isBye())
                     -
                 @else
                     {{ $matchup->score }}
+                @endif
+            </td>
+            <td>
+                @if ($matchup->started_at && $matchup->ended_at)
+                    <span
+                        class="has-tooltip-arrow"
+                        data-tooltip="Length: {{ $matchup->length }}"
+                    >
+                        @include('partials.player.date-link', ['date' => $matchup->ended_at])
+                    </span>
+                @else
+                    <i>In Progress</i>
                 @endif
             </td>
         </tr>
