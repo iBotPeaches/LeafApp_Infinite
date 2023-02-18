@@ -75,8 +75,8 @@ class MockChampionshipBracketService extends BaseMock
                 'faction2' => $this->teamBlock(),
             ],
             'calculate_elo' => true,
-            'started_at' => now()->getTimestampMs(),
-            'finished_at' => now()->getTimestampMs(),
+            'started_at' => now()->getTimestamp(),
+            'finished_at' => now()->getTimestamp(),
             'chat_room_id' => 'match-1-'.$this->faker->uuid,
             'best_of' => $this->faker->randomElement([3, 5, 7]),
             'results' => [
