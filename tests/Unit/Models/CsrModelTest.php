@@ -47,7 +47,7 @@ class CsrModelTest extends TestCase
         $this->assertEquals($expected, $csr->next_rank);
     }
 
-    public function nextRankDataProvider(): array
+    public static function nextRankDataProvider(): array
     {
         return [
             'diamond' => [
@@ -85,7 +85,7 @@ class CsrModelTest extends TestCase
         ];
     }
 
-    public function rankDataProvider(): array
+    public static function rankDataProvider(): array
     {
         return [
             'diamond' => [

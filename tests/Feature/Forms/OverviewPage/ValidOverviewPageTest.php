@@ -65,7 +65,7 @@ class ValidOverviewPageTest extends TestCase
             ->assertDontSee('Other');
     }
 
-    public function validAttributesDataProvider(): array
+    public static function validAttributesDataProvider(): array
     {
         return [
             'positive kd' => [

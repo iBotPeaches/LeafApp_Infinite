@@ -24,7 +24,7 @@ class GameTeamModelTest extends TestCase
         $this->assertEquals('has-tooltip-'.$expected, $gameTeam->tooltip_color);
     }
 
-    public function teamColorDataProvider(): array
+    public static function teamColorDataProvider(): array
     {
         return [
             [

@@ -22,7 +22,7 @@ use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 
 trait HasAnalyticDataProvider
 {
-    public function analyticDataProvider(): array
+    public static function analyticDataProvider(): array
     {
         return [
             [

@@ -113,7 +113,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function groupDataProvider(): array
+    public static function groupDataProvider(): array
     {
         return [
             [

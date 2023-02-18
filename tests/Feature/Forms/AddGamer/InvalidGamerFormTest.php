@@ -60,7 +60,7 @@ class InvalidGamerFormTest extends TestCase
             ->assertRedirect('/player/'.$gamertag);
     }
 
-    public function invalidApiDataProvider(): array
+    public static function invalidApiDataProvider(): array
     {
         return [
             401 => [
@@ -86,7 +86,7 @@ class InvalidGamerFormTest extends TestCase
         ];
     }
 
-    public function invalidTextDataProvider(): array
+    public static function invalidTextDataProvider(): array
     {
         return [
             'empty' => [
