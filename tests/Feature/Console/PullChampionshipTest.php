@@ -119,7 +119,7 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function championshipTypeDataProvider(): array
+    public static function championshipTypeDataProvider(): array
     {
         return [
             [

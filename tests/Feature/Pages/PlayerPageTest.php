@@ -201,7 +201,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function gamertagDataProvider(): array
+    public static function gamertagDataProvider(): array
     {
         return [
             'spaces' => [

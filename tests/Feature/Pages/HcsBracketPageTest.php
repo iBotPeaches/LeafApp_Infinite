@@ -56,7 +56,7 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
-    public function bracketDataProvider(): array
+    public static function bracketDataProvider(): array
     {
         return [
             [

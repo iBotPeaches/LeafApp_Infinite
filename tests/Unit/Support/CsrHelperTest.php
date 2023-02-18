@@ -52,7 +52,7 @@ class CsrHelperTest extends TestCase
         );
     }
 
-    public function unrankedCsrDataProvider(): array
+    public static function unrankedCsrDataProvider(): array
     {
         return [
             'unranked 0' => [
@@ -74,7 +74,7 @@ class CsrHelperTest extends TestCase
         ];
     }
 
-    public function csrDataProvider(): array
+    public static function csrDataProvider(): array
     {
         return [
             'bronze 1' => [
