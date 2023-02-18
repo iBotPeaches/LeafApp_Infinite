@@ -20,16 +20,24 @@
         </div>
     </div>
     <div class="columns">
-        <div class="column is-one-fifth">
-            @include('partials.hcs.bracket_panel')
-            <article class="message is-link">
-                <div class="message-body">
-                    View on <a target="_blank" href="{{ $championship->faceitUrl }}" rel="nofollow">FaceIt</a>
-                </div>
-            </article>
-        </div>
-        <div class="column">
-            @include('partials.hcs.bracket_table')
-        </div>
+        @if ($bracket === App\Enums\Bracket::RULES)
+            <div class="box">
+                <x-markdown class="content">
+                    {{ $championship->description }}
+                </x-markdown>
+            </div>
+        @else
+            <div class="column is-one-fifth">
+                @include('partials.hcs.bracket_panel')
+                <article class="message is-link">
+                    <div class="message-body">
+                        View on <a target="_blank" href="{{ $championship->faceitUrl }}" rel="nofollow">FaceIt</a>
+                    </div>
+                </article>
+            </div>
+            <div class="column">
+                @include('partials.hcs.bracket_table')
+            </div>
+        @endif
     </div>
 </div>
