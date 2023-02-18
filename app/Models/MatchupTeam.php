@@ -69,7 +69,7 @@ class MatchupTeam extends Model implements HasFaceItApi
 
     public function isWinner(): bool
     {
-        return $this->outcome->is(Outcome::WIN());
+        return $this->outcome && $this->outcome->is(Outcome::WIN());
     }
 
     public static function fromFaceItApi(array $payload): ?self

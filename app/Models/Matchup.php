@@ -192,7 +192,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     public function toSitemapTag(): Url|string|array
     {
         $url = new Url(route('matchup', [$this->championship, $this]));
-        $url->setLastModificationDate($this->ended_at);
+        $url->setLastModificationDate($this->ended_at ?? now());
         $url->setChangeFrequency('never');
 
         return $url;

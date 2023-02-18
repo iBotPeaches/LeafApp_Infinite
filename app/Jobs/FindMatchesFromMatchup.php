@@ -35,7 +35,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     public function handle(): void
     {
-        if (config('services.autocode.disabled')) {
+        if (config('services.autocode.disabled') || is_null($this->matchup->started_at)) {
             return;
         }
 
@@ -60,10 +60,13 @@ class FindMatchesFromMatchup implements ShouldQueue
                 ->whereDoesntHave('playlist')
                 // @phpstan-ignore-next-line
                 ->where(function (Builder $query): void {
-                    $query
-                        ->whereDate('occurred_at', $this->matchup->started_at->subDay())
-                        ->orWhereDate('occurred_at', $this->matchup->started_at)
-                        ->orWhereDate('occurred_at', $this->matchup->started_at->addDay());
+                    $startedAt = $this->matchup->started_at;
+                    if ($startedAt) {
+                        $query
+                            ->whereDate('occurred_at', $startedAt->subDay())
+                            ->orWhereDate('occurred_at', $startedAt)
+                            ->orWhereDate('occurred_at', $startedAt->addDay());
+                    }
                 })
                 ->cursor()
                 ->filter(function (Game $game) use ($playerIds) {
