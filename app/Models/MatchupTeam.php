@@ -52,10 +52,10 @@ class MatchupTeam extends Model implements HasFaceItApi
 
     public function getAvatarAttribute(): string
     {
-        $filename = $this->faceit_id . '.png';
-        $avatar = asset('storage/images/logos/' . $filename);
+        $filename = $this->faceit_id.'.png';
+        $avatar = asset('storage/images/logos/'.$filename);
 
-        if (Storage::exists('public/images/logos/' . $filename)) {
+        if (Storage::exists('public/images/logos/'.$filename)) {
             return $avatar;
         }
 

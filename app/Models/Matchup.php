@@ -148,7 +148,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
             return null;
         }
 
-        return $this->ended_at->diffInMinutes($this->started_at) . ' minutes';
+        return $this->ended_at->diffInMinutes($this->started_at).' minutes';
     }
 
     public function getTeamAt(int $place): ?MatchupTeam
