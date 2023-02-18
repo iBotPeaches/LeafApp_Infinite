@@ -30,15 +30,19 @@ class Category extends Model implements HasHaloDotApi
     public static function fromHaloDotApi(array $payload): ?self
     {
         $categoryId = (string) Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
+        $name = Str::after(Arr::get($payload, 'name'), ':');
+
+        // Due to gametypes having the same categoryId as base. We will key again to prevent wiping custom gametypes vs base modes.
+        $key = md5($categoryId.Str::lower($name));
 
         /** @var Category $category */
         $category = self::query()
-            ->where('uuid', $categoryId)
+            ->where('uuid', $key)
             ->firstOrNew([
-                'uuid' => $categoryId,
+                'uuid' => $key,
             ]);
 
-        $category->name = Str::after(Arr::get($payload, 'name'), ':');
+        $category->name = $name;
         $category->thumbnail_url = Arr::get(
             $payload,
             'thumbnail_url',

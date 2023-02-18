@@ -182,9 +182,7 @@ class Game extends Model implements HasHaloDotApi
         $categoryPayload = Arr::get($payload, 'details.gamevariant');
 
         $gameId = Arr::get($payload, 'id');
-        $category = Category::firstWhere('uuid', Arr::get($categoryPayload, 'properties.category_id'))
-            ?? Category::fromHaloDotApi($categoryPayload);
-
+        $category = Category::fromHaloDotApi($categoryPayload);
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
         $gamevariant = Gamevariant::fromHaloDotApi($categoryPayload);
 
