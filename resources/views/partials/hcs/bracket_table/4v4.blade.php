@@ -4,7 +4,8 @@
 <table class="table is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
     <tr>
-        <th>Matchup</th>
+        <th>Team 1</th>
+        <th>Team 2</th>
         <th>Winner</th>
         <th>Score</th>
         <th>Date</th>
@@ -13,19 +14,53 @@
     <tbody>
     @foreach ($matchups as $matchup)
         <tr>
-            <td>
-                <a href="{{ route('matchup', [$championship, $matchup]) }}">
-                    {{ $matchup->team1?->name }}
-                </a>
-                vs
-                <a href="{{ route('matchup', [$championship, $matchup]) }}">
-                    {{ $matchup->team2?->name }}
-                </a>
+            <td style="opacity: {{ $matchup->team1?->id === $matchup->loser?->id ? '40%' : '100%' }}">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-32x32">
+                            <img class="is-rounded" src="{{ $matchup->team1?->avatar }}" alt="{{ $matchup->team1?->name }} "/>
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content" style="white-space: nowrap;">
+                            <a href="{{ route('matchup', [$championship, $matchup]) }}">
+                                {{ $matchup->team1?->name }}
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </td>
+            <td style="opacity: {{ $matchup->team2?->id === $matchup->loser?->id ? '40%' : '100%' }}">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-32x32">
+                            <img class="is-rounded" src="{{ $matchup->team2?->avatar }}" alt="{{ $matchup->team2?->name }} "/>
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content" style="white-space: nowrap;">
+                            <a href="{{ route('matchup', [$championship, $matchup]) }}">
+                                {{ $matchup->team2?->name }}
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </td>
             <td>
-                <a class="is-bold" href="{{ route('matchup', [$championship, $matchup]) }}">
-                    {{ $matchup->winner?->name }}
-                </a>
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-32x32">
+                            <img class="is-rounded" src="{{ $matchup->winner?->avatar }}" alt="{{ $matchup->winner?->name }} "/>
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content" style="white-space: nowrap;">
+                            <a class="is-bold" href="{{ route('matchup', [$championship, $matchup]) }}">
+                                {{ $matchup->winner?->name }}
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </td>
             <td>
                 @if ($matchup->loser?->isBye())

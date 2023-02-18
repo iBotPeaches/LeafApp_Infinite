@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -48,6 +49,18 @@ class MatchupTeam extends Model implements HasFaceItApi
     ];
 
     public $timestamps = false;
+
+    public function getAvatarAttribute(): string
+    {
+        $filename = $this->faceit_id . '.png';
+        $avatar = asset('storage/images/logos/' . $filename);
+
+        if (Storage::exists('public/images/logos/' . $filename)) {
+            return $avatar;
+        }
+
+        return asset('images/logos/missing.png');
+    }
 
     public function isBye(): bool
     {
