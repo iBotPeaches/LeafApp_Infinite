@@ -28,6 +28,11 @@
             </div>
         @else
             <div class="column is-one-fifth">
+                @if ($championship->status?->is(App\Enums\FaceItStatus::CANCELLED))
+                    <div class="notification is-warning">
+                        This championship was marked as cancelled.
+                    </div>
+                @endif
                 @include('partials.hcs.bracket_panel')
                 <article class="message is-link">
                     <div class="message-body">
