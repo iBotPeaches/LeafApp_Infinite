@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Outcome;
+use App\Jobs\PullLogoFromMatchupTeam;
 use App\Models\Contracts\HasFaceItApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Traits\HasOutcome;
@@ -16,14 +17,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
  * @property int $matchup_id
  * @property string $faceit_id
  * @property string $name
- * @property int $points
- * @property Outcome $outcome
+ * @property int|null $points
+ * @property string $avatar
+ * @property Outcome|null $outcome
  * @property-read Matchup $matchup
  * @property-read Player[]|Collection $players
  * @property-read MatchupPlayer[]|Collection $faceitPlayers
@@ -47,6 +50,18 @@ class MatchupTeam extends Model implements HasFaceItApi
 
     public $timestamps = false;
 
+    public function getAvatarAttribute(): string
+    {
+        $filename = $this->faceit_id.'.png';
+        $avatar = asset('storage/images/logos/'.$filename);
+
+        if (Storage::exists('public/images/logos/'.$filename)) {
+            return $avatar;
+        }
+
+        return asset('images/logos/missing.png');
+    }
+
     public function isBye(): bool
     {
         return $this->faceit_id === self::$byeTeamId;
@@ -54,7 +69,7 @@ class MatchupTeam extends Model implements HasFaceItApi
 
     public function isWinner(): bool
     {
-        return $this->outcome->is(Outcome::WIN());
+        return $this->outcome && $this->outcome->is(Outcome::WIN());
     }
 
     public static function fromFaceItApi(array $payload): ?self
@@ -62,6 +77,9 @@ class MatchupTeam extends Model implements HasFaceItApi
         $teamInternalId = Arr::get($payload, '_leaf.team_id');
         $teamId = Arr::get($payload, 'faction_id');
         $matchupPayload = Arr::get($payload, '_leaf.raw_matchup');
+
+        $winner = Arr::get($matchupPayload, 'results.winner');
+        $points = Arr::get($matchupPayload, 'results.score.'.$teamInternalId);
 
         /** @var Matchup $matchup */
         $matchup = Arr::get($payload, '_leaf.matchup');
@@ -78,14 +96,16 @@ class MatchupTeam extends Model implements HasFaceItApi
         $team->name = (string) $matchup->championship->type->isFfa()
             ? Arr::get($payload, 'roster.0.game_player_name', Arr::get($payload, 'name'))
             : Arr::get($payload, 'name');
-        $team->points = (int) Arr::get($matchupPayload, 'results.score.'.$teamInternalId, 0);
-        $team->outcome = Arr::get($matchupPayload, 'results.winner') === $teamInternalId
-            ? Outcome::WIN()
-            : Outcome::LOSS();
+
+        $team->points = $points ? (int) $points : null;
+
+        $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : null;
 
         if ($team->isDirty()) {
             $team->saveOrFail();
         }
+
+        PullLogoFromMatchupTeam::dispatchSync($team, Arr::get($payload, 'avatar'));
 
         return $team;
     }

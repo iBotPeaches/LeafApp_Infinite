@@ -9,6 +9,7 @@
                 <th>Tournament</th>
                 <th>Region</th>
                 <th>Date</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                     </td>
                     <td>{{ $championship->region->description }}</td>
                     <td>{{ $championship->started_at->toDateString() }}</td>
+                    <td>{{ $championship->status?->description }}</td>
                 </tr>
             @endforeach
             </tbody>

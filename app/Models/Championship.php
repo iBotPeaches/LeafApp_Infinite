@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\Bracket;
 use App\Enums\ChampionshipType;
+use App\Enums\FaceItStatus;
 use App\Models\Contracts\HasFaceItApi;
 use App\Services\FaceIt\Enums\Region;
 use Carbon\Carbon;
@@ -24,7 +25,9 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $faceit_id
  * @property string $name
  * @property Region $region
+ * @property FaceItStatus $status
  * @property ChampionshipType $type
+ * @property string|null $description
  * @property Carbon $started_at
  * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
@@ -42,6 +45,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
 
     public $casts = [
         'region' => Region::class,
+        'status' => FaceItStatus::class,
         'type' => ChampionshipType::class,
         'started_at' => 'datetime',
     ];
@@ -61,6 +65,19 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         }
 
         $this->attributes['region'] = $region->value;
+    }
+
+    public function setStatusAttribute(string $value): void
+    {
+        $type = is_numeric($value)
+            ? FaceItStatus::fromValue((int) $value)
+            : FaceItStatus::coerce($value);
+
+        if (empty($type)) {
+            throw new \InvalidArgumentException('Invalid Status Enum ('.$value.')');
+        }
+
+        $this->attributes['status'] = $type->value;
     }
 
     public function setTypeAttribute(string $value): void
@@ -106,7 +123,9 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         $championship->name = Arr::get($payload, 'name');
         $championship->region = Arr::get($payload, 'region');
         $championship->type = Arr::get($payload, 'type');
+        $championship->status = Arr::get($payload, 'status');
         $championship->started_at = Arr::get($payload, 'championship_start');
+        $championship->description = Arr::get($payload, 'description');
 
         if ($championship->isDirty()) {
             $championship->saveOrFail();

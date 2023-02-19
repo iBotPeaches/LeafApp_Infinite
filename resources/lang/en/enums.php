@@ -3,6 +3,7 @@
 use App\Enums\Bracket;
 use App\Enums\CompetitiveMode;
 use App\Enums\Experience;
+use App\Enums\FaceItStatus;
 use App\Enums\Input;
 use App\Enums\Outcome;
 use App\Enums\PlayerTab;
@@ -55,5 +56,11 @@ return [
         CompetitiveMode::CURRENT => 'Current',
         CompetitiveMode::SEASON => 'Season',
         CompetitiveMode::ALL_TIME => 'All Time',
+    ],
+    FaceItStatus::class => [
+        FaceItStatus::UNKNOWN => '?',
+        FaceItStatus::FINISHED => 'Complete',
+        FaceItStatus::STARTED => 'Started',
+        FaceItStatus::CANCELLED => 'Cancelled',
     ],
 ];

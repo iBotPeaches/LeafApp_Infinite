@@ -15,8 +15,10 @@ class MockChampionshipService extends BaseMock
             'championship_id' => $this->faker->uuid,
             'name' => 'HCS Open #'.$this->faker->numberBetween(1, 25),
             'type' => $this->faker->randomElement(['roundRobin', 'doubleElimination', 'stage']),
+            'status' => $this->faker->randomElement(['started', 'finished']),
             'region' => $this->faker->randomElement(['na', 'eu']),
             'championship_start' => now()->getTimestampMs(),
+            'description' => $this->faker->paragraph,
         ];
     }
 }

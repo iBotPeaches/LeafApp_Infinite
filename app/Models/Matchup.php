@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Bracket;
+use App\Enums\FaceItStatus;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasFaceItApi;
 use BenSampo\Enum\Enum;
@@ -27,18 +28,22 @@ use Spatie\Sitemap\Tags\Url;
  * @property int $round
  * @property int $group
  * @property int $best_of
- * @property Carbon $started_at
- * @property Carbon $ended_at
+ * @property FaceItStatus $status
+ * @property Carbon|null $started_at
+ * @property Carbon|null $ended_at
  * @property-read Championship $championship
  * @property-read MatchupTeam[]|Collection $matchupTeams
  * @property-read Game[]|Collection $games
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
+ * @property-read MatchupTeam|null $team1
+ * @property-read MatchupTeam|null $team2
  * @property-read string $score
  * @property-read Bracket $bracket
  * @property-read string $title
  * @property-read string $description
  * @property-read string $faceitUrl
+ * @property-read string|null $length
  *
  * @method static MatchupFactory factory(...$parameters)
  */
@@ -56,6 +61,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     ];
 
     public $casts = [
+        'status' => FaceItStatus::class,
         'started_at' => 'datetime',
         'ended_at' => 'datetime',
     ];
@@ -67,14 +73,31 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         return 'faceit_id';
     }
 
-    public function setStartedAtAttribute(string|Carbon $value): void
+    public function setStartedAtAttribute(string|Carbon|null $value): void
     {
-        $this->attributes['started_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestampMs($value);
+        $this->attributes['started_at'] = $value instanceof Carbon
+            ? $value
+            : ($value ? Carbon::createFromTimestamp($value) : null);
     }
 
-    public function setEndedAtAttribute(string|Carbon $value): void
+    public function setEndedAtAttribute(string|Carbon|null $value): void
     {
-        $this->attributes['ended_at'] = $value instanceof Carbon ? $value : Carbon::createFromTimestampMs($value);
+        $this->attributes['ended_at'] = $value instanceof Carbon
+            ? $value
+            : ($value ? Carbon::createFromTimestamp($value) : null);
+    }
+
+    public function setStatusAttribute(string $value): void
+    {
+        $type = is_numeric($value)
+            ? FaceItStatus::fromValue((int) $value)
+            : FaceItStatus::coerce($value);
+
+        if (empty($type)) {
+            throw new \InvalidArgumentException('Invalid Status Enum ('.$value.')');
+        }
+
+        $this->attributes['status'] = $type->value;
     }
 
     public function getWinnerAttribute(): ?MatchupTeam
@@ -87,9 +110,19 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         return $this->matchupTeams->firstWhere('outcome', Outcome::LOSS());
     }
 
+    public function getTeam1Attribute(): ?MatchupTeam
+    {
+        return $this->matchupTeams->first();
+    }
+
+    public function getTeam2Attribute(): ?MatchupTeam
+    {
+        return $this->matchupTeams->last();
+    }
+
     public function getScoreAttribute(): string
     {
-        return $this->winner?->points.' - '.$this->loser?->points;
+        return (int) $this->winner?->points.' - '.(int) $this->loser?->points;
     }
 
     public function getTitleAttribute(): string
@@ -111,6 +144,15 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     public function getBracketAttribute(): ?Enum
     {
         return Bracket::coerce($this->group);
+    }
+
+    public function getLengthAttribute(): ?string
+    {
+        if (empty($this->started_at) || empty($this->ended_at)) {
+            return null;
+        }
+
+        return $this->ended_at->diffInMinutes($this->started_at).' minutes';
     }
 
     public function getTeamAt(int $place): ?MatchupTeam
@@ -136,6 +178,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         $matchup->round = Arr::get($payload, 'round');
         $matchup->group = Arr::get($payload, 'group');
         $matchup->best_of = Arr::get($payload, 'best_of');
+        $matchup->status = Arr::get($payload, 'status');
         $matchup->started_at = Arr::get(
             $payload,
             'started_at',
@@ -153,7 +196,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
     public function toSitemapTag(): Url|string|array
     {
         $url = new Url(route('matchup', [$this->championship, $this]));
-        $url->setLastModificationDate($this->ended_at);
+        $url->setLastModificationDate($this->ended_at ?? now());
         $url->setChangeFrequency('never');
 
         return $url;
@@ -166,7 +209,8 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
 
     public function matchupTeams(): HasMany
     {
-        return $this->hasMany(MatchupTeam::class);
+        return $this->hasMany(MatchupTeam::class)
+            ->orderByDesc('id');
     }
 
     public function games(): BelongsToMany

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\FaceItStatus;
 use App\Models\Championship;
 use App\Models\Matchup;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class MatchupFactory extends Factory
             'round' => 1,
             'group' => 1,
             'best_of' => 3,
+            'status' => FaceItStatus::getRandomValue(),
             'started_at' => now(),
             'ended_at' => now(),
         ];
