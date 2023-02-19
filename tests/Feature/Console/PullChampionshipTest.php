@@ -119,6 +119,50 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
+    public function testInvalidStatusEnumPullOnChampionship(): void
+    {
+        // Expectations
+        $this->expectException(InvalidArgumentException::class);
+
+        // Arrange
+        $championshipId = $this->faker->uuid;
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+
+        Arr::set($mockChampionshipResponse, 'status', 'INVALID-ENUM');
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        $this->artisan('app:championship '.$championshipId)
+            ->assertExitCode(CommandAlias::FAILURE);
+
+        Http::assertSequencesAreEmpty();
+    }
+
+    public function testInvalidStatusEnumPullOnMatchup(): void
+    {
+        // Expectations
+        $this->expectException(InvalidArgumentException::class);
+
+        // Arrange
+        $championshipId = $this->faker->uuid;
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+
+        Arr::set($mockChampionshipBracketResponse, 'items.0.status', 'INVALID-ENUM');
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        $this->artisan('app:championship '.$championshipId)
+            ->assertExitCode(CommandAlias::FAILURE);
+
+        Http::assertSequencesAreEmpty();
+    }
+
     public static function championshipTypeDataProvider(): array
     {
         return [

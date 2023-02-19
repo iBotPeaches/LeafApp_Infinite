@@ -41,6 +41,35 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
+    public function testLoadingBracketPageWithScheduledMatchups(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $championship = Championship::factory()
+            ->has(Matchup::factory()->state(function () {
+                return [
+                    'started_at' => null,
+                    'ended_at' => null,
+                ];
+            }))
+            ->createOne();
+
+        MatchupTeam::factory()
+            ->has(MatchupPlayer::factory(), 'faceitPlayers')
+            ->createOne([
+                'matchup_id' => $championship->matchups->first()->id,
+                'points' => 2,
+            ]);
+
+        // Act
+        $response = $this->get(route('championship', [$championship, Bracket::WINNERS, 1]));
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('championship-bracket');
+    }
+
     public function testLoadingBracketPageWithNoMatchups(): void
     {
         // Arrange
@@ -62,6 +91,11 @@ class HcsBracketPageTest extends TestCase
             [
                 'round' => null,
                 'group' => null,
+                'attributes' => [],
+            ],
+            [
+                'round' => null,
+                'group' => Bracket::RULES,
                 'attributes' => [],
             ],
             [
