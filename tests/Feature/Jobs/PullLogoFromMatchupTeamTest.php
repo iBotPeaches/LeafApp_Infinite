@@ -39,12 +39,14 @@ class PullLogoFromMatchupTeamTest extends TestCase
         Http::fakeSequence()
             ->push($mockOptimizedResponse, Response::HTTP_OK, $headers);
 
+        /** @var MatchupTeam $matchupTeam */
         $matchupTeam = MatchupTeam::factory()->createOne();
 
         // Act
         PullLogoFromMatchupTeam::dispatchSync($matchupTeam, 'http://example.com');
 
         // Assert
+        $this->assertNotNull($matchupTeam->avatar);
         Http::assertSequencesAreEmpty();
     }
 }
