@@ -62,5 +62,6 @@ return [
         FaceItStatus::FINISHED => 'Complete',
         FaceItStatus::STARTED => 'Started',
         FaceItStatus::CANCELLED => 'Cancelled',
+        FaceItStatus::MANUAL_RESULT => 'Manual Result',
     ],
 ];

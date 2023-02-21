@@ -21,12 +21,15 @@ final class FaceItStatus extends Enum implements LocalizedEnum
 
     const CANCELLED = 3;
 
+    const MANUAL_RESULT = 4;
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match (Str::lower($enumKeyOrValue)) {
             'finished' => self::FINISHED,
             'started' => self::STARTED,
             'cancelled' => self::CANCELLED,
+            'manual_result', 'manual-result' => self::MANUAL_RESULT,
             default => $enumKeyOrValue
         };
 
