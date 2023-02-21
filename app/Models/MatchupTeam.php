@@ -99,7 +99,7 @@ class MatchupTeam extends Model implements HasFaceItApi
 
         $team->points = $points ? (int) $points : null;
 
-        $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : null;
+        $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : Outcome::DRAW();
 
         if ($team->isDirty()) {
             $team->saveOrFail();
