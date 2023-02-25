@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Livewire;
 
 use App\Models\Player;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -49,7 +48,7 @@ class GameCustomHistoryTable extends Component
             'games' => $this->player
                 ->games()
                 ->with(['map', 'category'])
-                ->where(function (Builder $query) {
+                ->where(function ($query) {
                     $query
                         ->where('is_lan', '=', false)
                         ->orWhereNull('is_lan');
