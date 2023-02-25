@@ -10,7 +10,7 @@ export default defineConfig({
             'resources/js/app.js',
         ]),
         purge({
-            templates: ['blade', 'vue'],
+            templates: ['blade'],
             safelist: {
                 greedy: [
                     /orange/,
