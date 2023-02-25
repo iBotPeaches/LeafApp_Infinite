@@ -127,7 +127,7 @@ class ApiClient implements InfiniteInterface
                     // HaloDotAPI - We can longer trust "type" as its not returning the matching value from the filtered search.
                     // This field may be deprecated in future. So force set it based on filter param.
                     // https://github.com/iBotPeaches/LeafApp_Infinite/issues/560
-                    Arr::set($gameData, 'type', (string)$mode->value);
+                    Arr::set($gameData, 'type', (string) $mode->value);
 
                     $game = Game::fromHaloDotApi((array) $gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
