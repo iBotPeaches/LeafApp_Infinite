@@ -42,7 +42,7 @@ class MedalsLeaderboard extends Component
                 mode, total_seconds_played, player_id')
             ->where('mode', $modeSession->value)
             ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')
-            ->orderByRaw('value DESC');
+            ->orderByRaw('value DESC, total_seconds_played DESC');
 
         if ($seasonSession === -1) {
             $query->whereNull('season_number');
