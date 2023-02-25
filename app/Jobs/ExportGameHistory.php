@@ -9,6 +9,7 @@ use App\Enums\PlayerTab;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -85,7 +86,11 @@ class ExportGameHistory implements ShouldQueue
 
             case PlayerTab::CUSTOM:
                 $query->where('games.experience', Experience::CUSTOM);
-                $query->where('games.is_lan', false);
+                $query->where(function (Builder $query) {
+                    $query
+                        ->where('is_lan', '=', false)
+                        ->orWhereNull('is_lan');
+                });
                 break;
 
             case PlayerTab::LAN:

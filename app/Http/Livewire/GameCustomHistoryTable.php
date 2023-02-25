@@ -48,7 +48,11 @@ class GameCustomHistoryTable extends Component
             'games' => $this->player
                 ->games()
                 ->with(['map', 'category'])
-                ->where('is_lan', false)
+                ->where(function ($query) {
+                    $query
+                        ->where('is_lan', '=', false)
+                        ->orWhereNull('is_lan');
+                })
                 ->whereDoesntHave('playlist')
                 ->orderByDesc('occurred_at')
                 ->paginate(16),

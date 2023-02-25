@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
  * @property int $category_id
  * @property int $map_id
  * @property bool $is_ffa
- * @property bool $is_lan
+ * @property bool|null $is_lan
  * @property bool $is_scored
  * @property Experience $experience
  * @property Carbon $occurred_at
@@ -208,7 +208,7 @@ class Game extends Model implements HasHaloDotApi
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
-        $game->is_ffa = ! (bool) Arr::get($payload, 'teams.enabled');
+        $game->is_ffa = ! Arr::get($payload, 'teams.enabled');
         $game->is_lan ??= $mode && $mode->is(Mode::LAN());
         $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
         $game->experience = Arr::get($payload, 'experience');
