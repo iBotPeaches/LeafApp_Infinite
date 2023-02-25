@@ -62,7 +62,7 @@ class ExportMatchHistoryTest extends TestCase
         $player = Player::factory()->createOne();
         GamePlayer::factory()
             ->for(Game::factory()->create([
-                'is_lan' => false,
+                'is_lan' => null,
                 'experience' => Experience::CUSTOM,
             ]))
             ->createOne([
