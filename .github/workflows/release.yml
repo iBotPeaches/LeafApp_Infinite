@@ -17,11 +17,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'yarn'
+
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Set version file
         run: echo "${GITHUB_REF#refs/*/}" > VERSION
+
+      - name: Install Yarn Dependencies
+        run: yarn install
+
+      - name: Asset Packaging
+        run: yarn run build
 
       - name: Deploy
         uses: deployphp/action@v1
@@ -29,6 +40,17 @@ jobs:
           private-key: ${{ secrets.DEPLOY_SECRET_KEY }}
           dep: deploy -vvv
           deployer-version: "7.1.4"
+
+      - uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+        with:
+          sourcemaps: './public/build/assets'
+          url_prefix: '~/build/assets'
+          version: ${{ env.RELEASE_VERSION }}
+          environment: production
 
       - name: Release
         uses: softprops/action-gh-release@v1

@@ -20,6 +20,7 @@
         <exclude>
             <directory>./app/Adapters</directory>
             <file>./app/Console/Kernel.php</file>
+            <file>./app/Exceptions/Handler.php</file>
             <file>./app/Providers/HorizonServiceProvider.php</file>
         </exclude>
     </coverage>

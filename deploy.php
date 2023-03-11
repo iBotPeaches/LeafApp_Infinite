@@ -25,23 +25,28 @@ task('deploy', [
     'artisan:view:cache',
     'artisan:migrate',
     'artisan:storage:link',
-    'yarn:install',
-    'yarn:run:prod',
+    'yarn:local:upload',
     'artisan:horizon:assets',
     'app:version:file',
+    'app:sentry:version',
     'deploy:publish',
     'artisan:optimize',
     'php-fpm:reload',
     'artisan:horizon:terminate',
 ]);
 
-task('yarn:run:prod', function () {
-    cd('{{release_or_current_path}}');
-    run('yarn run build');
+task('yarn:local:upload', function () {
+    upload('public/build', '{{release_or_current_path}}/public');
 });
 
 task('app:version:file', function () {
     upload('VERSION', '{{release_or_current_path}}/VERSION');
+});
+
+task('app:sentry:version', function () {
+    cd('{{release_or_current_path}}');
+    run("sed -i '/^SENTRY_LARAVEL_RELEASE/d' .env");
+    run('echo -e "SENTRY_LARAVEL_RELEASE=$(cat VERSION)" >> .env');
 });
 
 task('app:sitemap', function () {

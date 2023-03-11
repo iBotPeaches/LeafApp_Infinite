@@ -106,3 +106,4 @@ Used for optimizing images that come from backdrops and emblems.
 1. Sitemap - https://github.com/spatie/laravel-sitemap - MIT
 1. Horizon - https://github.com/laravel/horizon - MIT
 1. Markdown - https://github.com/spatie/laravel-markdown - MIT
+1. Sentry - https://github.com/getsentry/sentry-laravel - MIT
