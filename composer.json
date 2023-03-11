@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.5",
         "league/csv": "^9.8",
         "livewire/livewire": "^2.7",
+        "sentry/sentry-laravel": "^3.2",
         "spatie/laravel-markdown": "^2.2",
         "spatie/laravel-sitemap": "^6.1"
     },
