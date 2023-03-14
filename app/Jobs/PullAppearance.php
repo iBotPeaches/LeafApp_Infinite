@@ -68,7 +68,7 @@ class PullAppearance implements ShouldQueue
                 $client = resolve(ImageInterface::class);
 
                 if (Http::head($url)->successful()) {
-                    Storage::put($filename, (string)resolve(FileUtilInterface::class)->getFileContents(
+                    Storage::put($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
                         $client->optimize($url)
                     ));
                 }
