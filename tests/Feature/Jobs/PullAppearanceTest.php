@@ -63,8 +63,36 @@ class PullAppearanceTest extends TestCase
         $headers = ['Location' => 'domain.com'];
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push(null, Response::HTTP_OK)
             ->push($mockOptimizedResponse, Response::HTTP_OK, $headers)
+            ->push(null, Response::HTTP_OK)
             ->push($mockOptimizedResponse, Response::HTTP_OK, $headers);
+
+        $player = Player::factory()->createOne();
+
+        // Act
+        PullAppearance::dispatchSync($player);
+
+        // Assert
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+        ]);
+        Bus::assertDispatched(PullXuid::class);
+    }
+
+    public function testInvalidPullingAssetsDownFromWebIfMissingImage(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullXuid::class,
+        ]);
+        Storage::fake();
+        $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push(null, Response::HTTP_NOT_FOUND)
+            ->push(null, Response::HTTP_NOT_FOUND);
 
         $player = Player::factory()->createOne();
 

@@ -16,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class PullAppearance implements ShouldQueue
@@ -66,9 +67,11 @@ class PullAppearance implements ShouldQueue
                 /** @var ImageInterface $client */
                 $client = resolve(ImageInterface::class);
 
-                Storage::put($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
-                    $client->optimize($url)
-                ));
+                if (Http::head($url)->successful()) {
+                    Storage::put($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
+                        $client->optimize($url)
+                    ));
+                }
             }
         }
     }
