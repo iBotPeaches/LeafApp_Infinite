@@ -52,6 +52,8 @@ class MostKillsWithZeroDeathsGame extends BaseGameStat implements AnalyticInterf
             ->where('game_players.deaths', 0)
             ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
+            ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
+            ->where('playlists.uuid', '!=', config('services.halo.playlists.bot-bootcamp'))
             ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
