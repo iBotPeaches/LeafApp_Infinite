@@ -22,11 +22,13 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
+        // @phpstan-ignore-next-line
         $schedule->command(PullMetadata::class)
             ->withoutOverlapping()
             ->twiceDaily()
             ->sentryMonitor(config('services.sentry.crons.pull-metdata'));
 
+        // @phpstan-ignore-next-line
         $schedule->command(RefreshAnalytics::class)
             ->withoutOverlapping()
             ->daily()
