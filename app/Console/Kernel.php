@@ -24,11 +24,13 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command(PullMetadata::class)
             ->withoutOverlapping()
-            ->twiceDaily();
+            ->twiceDaily()
+            ->sentryMonitor(config('services.sentry.crons.pull-metdata'));
 
         $schedule->command(RefreshAnalytics::class)
             ->withoutOverlapping()
-            ->daily();
+            ->daily()
+            ->sentryMonitor(config('services.sentry.crons.refresh-analytics'));
 
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes();
