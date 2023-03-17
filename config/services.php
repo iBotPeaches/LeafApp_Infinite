@@ -74,4 +74,10 @@ return [
         ],
     ],
 
+    'halo' => [
+        'playlists' => [
+            'bot-bootcamp' => env('HALO_PLAYLISTS_BOT_BOOTCAMP', 'a446725e-b281-414c-a21e-31b8700e95a1'),
+        ],
+    ],
+
 ];
