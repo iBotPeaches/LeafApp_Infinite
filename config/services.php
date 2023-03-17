@@ -67,4 +67,11 @@ return [
         'domain' => env('IMAGE_DOMAIN', 'https://api.tinify.com'),
     ],
 
+    'sentry' => [
+        'crons' => [
+            'pull-metdata' => env('SENTRY_CRON_PULL_METADATA', 'e84010bc-19d7-4586-85b8-9c12855a2329'),
+            'refresh-analytics' => env('SENTRY_CRON_REFRESH_ANALYTICS', '0c5b14b2-9929-45ec-b661-69ce66341e9d'),
+        ],
+    ],
+
 ];
