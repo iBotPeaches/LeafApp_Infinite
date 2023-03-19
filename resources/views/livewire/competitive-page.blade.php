@@ -14,11 +14,6 @@
                     Competitive Play ({{ $isCurrentSeason || $isAllSeasons ? 'Current' : 'Previous' }})
                 </p>
                 <div class="panel-block is-block">
-                    @if ($isAllSeasons)
-                        <div class="notification is-dark">
-                            Showing current season since "All Seasons" is useless in this view.
-                        </div>
-                    @endif
                     <div class="table-container">
                         <table class="table is-striped is-hoverable is-fullwidth">
                             <thead>
