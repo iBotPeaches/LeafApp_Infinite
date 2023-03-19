@@ -32,11 +32,6 @@
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
             @endif
-            @if ($type === 'competitive')
-                <div class="notification is-warning">
-                    Old season data is commonly missing from API.
-                </div>
-            @endif
             @auth
                 @include('partials.player.linkable-card')
             @endauth
