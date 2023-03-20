@@ -11,7 +11,9 @@ class MockMatchObjectCreated extends BaseMock
 {
     public function error(): array
     {
-        return [];
+        return [
+            'event' => WebhookEvent::MATCH_OBJECT_CREATED,
+        ];
     }
 
     public function success(): array

@@ -46,21 +46,15 @@ class FaceItController extends Controller
     private function parseMatchObjectCreated(TournamentInterface $client, array $payload): JsonResponse
     {
         $matchup = $this->parseGenericMatchPayload($client, $payload);
-        if ($matchup) {
-            return response()->json($matchup->toArray());
-        }
 
-        return response()->json(null);
+        return response()->json($matchup?->toArray());
     }
 
     private function parseMatchStatusFinished(TournamentInterface $client, array $payload): JsonResponse
     {
         $matchup = $this->parseGenericMatchPayload($client, $payload);
-        if ($matchup) {
-            return response()->json($matchup->toArray());
-        }
 
-        return response()->json(null);
+        return response()->json($matchup?->toArray());
     }
 
     private function parseGenericMatchPayload(TournamentInterface $client, array $payload): ?Matchup
