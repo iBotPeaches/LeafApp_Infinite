@@ -47,8 +47,9 @@ class FaceItController extends Controller
     {
         $matchup = $this->parseGenericMatchPayload($client, $payload);
         if ($matchup) {
-            return response()->json($matchup?->toArray());
+            return response()->json($matchup->toArray());
         }
+
         return response()->json(null);
     }
 
@@ -56,8 +57,9 @@ class FaceItController extends Controller
     {
         $matchup = $this->parseGenericMatchPayload($client, $payload);
         if ($matchup) {
-            return response()->json($matchup?->toArray());
+            return response()->json($matchup->toArray());
         }
+
         return response()->json(null);
     }
 

@@ -119,11 +119,11 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         return [
             [
-                'payload' => (new MockMatchStatusFinished())->error()
+                'payload' => (new MockMatchStatusFinished())->error(),
             ],
             [
-                'payload' => (new MockMatchObjectCreated())->error()
-            ]
+                'payload' => (new MockMatchObjectCreated())->error(),
+            ],
         ];
     }
 }

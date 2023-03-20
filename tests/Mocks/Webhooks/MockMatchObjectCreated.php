@@ -37,7 +37,7 @@ class MockMatchObjectCreated extends BaseMock
                     'type' => 'championship',
                 ],
                 'created_at' => now()->toIso8601ZuluString(),
-                'updated_at' => now()->toIso8601ZuluString()
+                'updated_at' => now()->toIso8601ZuluString(),
             ],
         ];
     }
