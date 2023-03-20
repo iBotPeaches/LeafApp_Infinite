@@ -12,10 +12,15 @@ use stdClass;
 class ModeResult
 {
     public Outcome $outcome;
+
     public int $mapId;
+
     public ?Map $map = null;
+
     public int $categoryId;
+
     public ?Category $category = null;
+
     public int $total;
 
     public function __construct(stdClass $data)

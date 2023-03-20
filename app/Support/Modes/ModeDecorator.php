@@ -33,7 +33,7 @@ class ModeDecorator
             ->filter(function (ModeResult $modeResult) {
                 return $modeResult->outcome->in([
                     Outcome::WIN(),
-                    Outcome::LOSS()
+                    Outcome::LOSS(),
                 ]);
             });
 
@@ -53,17 +53,16 @@ class ModeDecorator
         $this->modes = $modes->map(function (ModeResult $modeResult) use ($maps, $categories) {
             $modeResult->map = $maps[$modeResult->mapId];
             $modeResult->category = $categories[$modeResult->categoryId];
+
             return $modeResult;
         });
     }
 
     public function bestModes()
     {
-
     }
 
     public function worseModes()
     {
-
     }
 }
