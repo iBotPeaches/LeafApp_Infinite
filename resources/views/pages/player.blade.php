@@ -28,7 +28,7 @@
                 </div>
             @endif
             @if (!config('services.autocode.disabled'))
-                @if (!$player->is_bot)
+                @if (!$player->is_bot && $type != 'modes')
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
             @endif
