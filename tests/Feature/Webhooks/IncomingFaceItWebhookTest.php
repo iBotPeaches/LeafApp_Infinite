@@ -12,6 +12,7 @@ use Tests\Mocks\Championship\MockChampionshipBracketService;
 use Tests\Mocks\Championship\MockChampionshipService;
 use Tests\Mocks\Championship\MockMatchupService;
 use Tests\Mocks\Webhooks\MockChampionshipFinished;
+use Tests\Mocks\Webhooks\MockMatchObjectCreated;
 use Tests\Mocks\Webhooks\MockMatchStatusFinished;
 use Tests\TestCase;
 
@@ -22,6 +23,28 @@ class IncomingFaceItWebhookTest extends TestCase
         // Arrange & Act
         Queue::fake();
         $payload = (new MockMatchStatusFinished())->success();
+        $headers = [
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
+        ];
+
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockMatchupResponse = (new MockMatchupService())->success();
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockMatchupResponse, Response::HTTP_OK);
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function testIncomingFaceItMatchObjectCreated(): void
+    {
+        // Arrange & Act
+        Queue::fake();
+        $payload = (new MockMatchObjectCreated())->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
@@ -78,10 +101,10 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingEmptyFaceItData(): void
+    /** @dataProvider emptyFaceItDataProvider */
+    public function testIncomingEmptyFaceItData(array $payload): void
     {
         // Arrange & Act
-        $payload = (new MockMatchStatusFinished())->error();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
@@ -90,5 +113,17 @@ class IncomingFaceItWebhookTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public static function emptyFaceItDataProvider(): array
+    {
+        return [
+            [
+                'payload' => (new MockMatchStatusFinished())->error(),
+            ],
+            [
+                'payload' => (new MockMatchObjectCreated())->error(),
+            ],
+        ];
     }
 }

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Webhook;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IncomingFaceItRequest;
 use App\Models\Championship;
+use App\Models\Matchup;
 use App\Services\FaceIt\Enums\WebhookEvent;
 use App\Services\FaceIt\TournamentInterface;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +23,7 @@ class FaceItController extends Controller
         return match ($type) {
             WebhookEvent::MATCH_STATUS_FINISHED => $this->parseMatchStatusFinished($client, $payload),
             WebhookEvent::CHAMPIONSHIP_FINISHED => $this->parseChampionshipFinished($client, $payload),
+            WebhookEvent::MATCH_OBJECT_CREATED => $this->parseMatchObjectCreated($client, $payload),
             default => response()->json()
         };
     }
@@ -41,10 +43,24 @@ class FaceItController extends Controller
         return response()->json($championship?->toArray());
     }
 
+    private function parseMatchObjectCreated(TournamentInterface $client, array $payload): JsonResponse
+    {
+        $matchup = $this->parseGenericMatchPayload($client, $payload);
+
+        return response()->json($matchup?->toArray());
+    }
+
     private function parseMatchStatusFinished(TournamentInterface $client, array $payload): JsonResponse
     {
+        $matchup = $this->parseGenericMatchPayload($client, $payload);
+
+        return response()->json($matchup?->toArray());
+    }
+
+    private function parseGenericMatchPayload(TournamentInterface $client, array $payload): ?Matchup
+    {
         if (Arr::get($payload, 'payload.entity.type') !== 'championship') {
-            return response()->json(null);
+            return null;
         }
 
         $championshipId = Arr::get($payload, 'payload.entity.id');
@@ -59,6 +75,6 @@ class FaceItController extends Controller
             $matchup = $client->matchup($championship, $matchId);
         }
 
-        return response()->json($matchup?->toArray());
+        return $matchup;
     }
 }
