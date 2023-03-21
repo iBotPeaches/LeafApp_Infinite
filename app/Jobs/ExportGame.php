@@ -50,6 +50,7 @@ class ExportGame implements ShouldQueue
         'TeamScore',
         'TeamMMR',
         'TeamCSR',
+        'LengthSeconds',
     ];
 
     protected array $data = [];
@@ -105,6 +106,7 @@ class ExportGame implements ShouldQueue
                 $team?->score,
                 $team?->mmr,
                 $team?->csr,
+                $this->game->duration_seconds,
             ];
         }
 
