@@ -48,6 +48,7 @@ class ExportGameHistory implements ShouldQueue
         'Score',
         'Perfects',
         'Medals',
+        'LengthSeconds',
     ];
 
     protected array $data = [];
@@ -135,6 +136,7 @@ class ExportGameHistory implements ShouldQueue
                     $gamePlayer->getRawOriginal('score'),
                     $perfectMedal->count ?? 0,
                     $gamePlayer->medal_count,
+                    $gamePlayer->game->duration_seconds,
                 ];
             });
 
