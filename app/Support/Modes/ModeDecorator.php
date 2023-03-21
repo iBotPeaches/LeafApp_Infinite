@@ -58,11 +58,21 @@ class ModeDecorator
         });
     }
 
-    public function bestModes()
+    public function bestModes(): Collection
     {
+        return $this->modes
+            ->filter(function (ModeResult $modeResult) {
+                return $modeResult->outcome->is(Outcome::WIN());
+            })
+            ->sortByDesc('total');
     }
 
-    public function worseModes()
+    public function worseModes(): Collection
     {
+        return $this->modes
+            ->filter(function (ModeResult $modeResult) {
+                return $modeResult->outcome->is(Outcome::LOSS());
+            })
+            ->sortByDesc('total');
     }
 }

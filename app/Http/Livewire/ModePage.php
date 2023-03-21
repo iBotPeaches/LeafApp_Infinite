@@ -26,7 +26,8 @@ class ModePage extends Component
         $modes = new ModeDecorator($this->player);
 
         return view('livewire.mode-page', [
-            'modes' => $modes->modes,
+            'best' => $modes->bestModes(),
+            'worse' => $modes->worseModes(),
         ]);
     }
 }
