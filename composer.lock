@@ -5152,16 +5152,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "e9c87d6580fc56147f580e1d714d8eb4e06d2752"
+                "reference": "a530699461d6bcc9d11515ad0c97d683173d85b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/e9c87d6580fc56147f580e1d714d8eb4e06d2752",
-                "reference": "e9c87d6580fc56147f580e1d714d8eb4e06d2752",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/a530699461d6bcc9d11515ad0c97d683173d85b5",
+                "reference": "a530699461d6bcc9d11515ad0c97d683173d85b5",
                 "shasum": ""
             },
             "require": {
@@ -5229,7 +5229,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/3.3.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/3.3.1"
             },
             "funding": [
                 {
@@ -5241,7 +5241,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2023-03-16T12:25:43+00:00"
+            "time": "2023-03-20T14:21:23+00:00"
         },
         {
             "name": "spatie/browsershot",
