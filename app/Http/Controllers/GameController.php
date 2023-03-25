@@ -21,10 +21,6 @@ class GameController extends Controller
             $game->map->thumbnail_url,
         ];
 
-        if ($game->playlist) {
-            $images[] = $game->playlist->thumbnail_url;
-        }
-
         SEOTools::setTitle($game->name);
         SEOTools::addImages($images);
         SEOTools::setDescription($game->description);
