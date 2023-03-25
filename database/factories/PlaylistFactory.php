@@ -19,7 +19,6 @@ class PlaylistFactory extends Factory
         return [
             'uuid' => $this->faker->unique()->uuid,
             'name' => $this->faker->word,
-            'thumbnail_url' => $this->faker->imageUrl,
             'is_ranked' => $this->faker->boolean,
             'queue' => Queue::getRandomValue(),
             'input' => Input::getRandomValue(),
