@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Map/Mode</th>
-            <th>Percent {{ $title }}</th>
+            <th>% {{ $title }}</th>
             <th>Games Played</th>
         </tr>
     </thead>

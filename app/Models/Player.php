@@ -170,7 +170,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
             PullServiceRecord::dispatch($this, $seasonNumber);
             $client->competitive($this, $seasonNumber);
             $client->mmr($this);
-        } elseif ($type === PlayerTab::MATCHES) {
+        } elseif (in_array($type, [PlayerTab::MATCHES, PlayerTab::MODES])) {
             PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullMmr::dispatch($this);

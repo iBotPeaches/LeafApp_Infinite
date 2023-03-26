@@ -4,7 +4,7 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @if (in_array($type, ['overview', 'medals', 'competitive']))
+            @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
                 <livewire:player-toggle-panel :type="$type" />
             @endif
             @include('partials.player.player-card')
@@ -28,7 +28,7 @@
                 </div>
             @endif
             @if (!config('services.autocode.disabled'))
-                @if (!$player->is_bot && $type != 'modes')
+                @if (!$player->is_bot)
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
             @endif

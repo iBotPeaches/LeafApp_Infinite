@@ -19,15 +19,22 @@ class ModeDecorator
     public function __construct(Player $player, int $season = null)
     {
         $sums = [];
+        $season = $season === -1 ? null : $season;
 
-        $modes = DB::query()
+        $query = DB::query()
             ->from('game_players')
             ->select('outcome', 'map_id', 'category_id', new Expression('COUNT(*) as total'))
             ->where('player_id', $player->id)
             ->where('playlists.is_ranked', true)
             ->join('games', 'game_players.game_id', '=', 'games.id')
             ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->groupBy('map_id', 'category_id', 'outcome')
+            ->groupBy('map_id', 'category_id', 'outcome');
+
+        if ($season) {
+            $query->where('games.season_number', $season);
+        }
+
+        $modes = $query
             ->get()
             ->map(function ($result) {
                 return new ModeResult($result);
@@ -39,7 +46,7 @@ class ModeDecorator
                 ]);
             })
             ->each(function (ModeResult $modeResult) use (&$sums) {
-                if (!isset($sums[$modeResult->key()])) {
+                if (! isset($sums[$modeResult->key()])) {
                     $sums[$modeResult->key()] = 0;
                 }
 

@@ -23,7 +23,7 @@ class ModePage extends Component
     {
         $season = SeasonSession::get();
 
-        $modes = new ModeDecorator($this->player);
+        $modes = new ModeDecorator($this->player, $season);
 
         return view('livewire.mode-page', [
             'best' => $modes->bestModes(),
