@@ -23,11 +23,19 @@ class ModeResult
 
     public int $total;
 
+    public ?float $percentWon = null;
+    public ?int $summedTotal = null;
+
     public function __construct(stdClass $data)
     {
         $this->outcome = Outcome::coerce($data->outcome);
         $this->mapId = $data->map_id;
         $this->categoryId = $data->category_id;
         $this->total = $data->total;
+    }
+
+    public function key(): string
+    {
+        return $this->mapId . $this->categoryId;
     }
 }

@@ -18,6 +18,8 @@ class ModeDecorator
 
     public function __construct(Player $player, int $season = null)
     {
+        $sums = [];
+
         $modes = DB::query()
             ->from('game_players')
             ->select('outcome', 'map_id', 'category_id', new Expression('COUNT(*) as total'))
@@ -35,6 +37,17 @@ class ModeDecorator
                     Outcome::WIN(),
                     Outcome::LOSS(),
                 ]);
+            })
+            ->each(function (ModeResult $modeResult) use (&$sums) {
+                if (!isset($sums[$modeResult->key()])) {
+                    $sums[$modeResult->key()] = 0;
+                }
+
+                $sums[$modeResult->key()] += $modeResult->total;
+            })
+            ->each(function (ModeResult $modeResult) use ($sums) {
+                $modeResult->percentWon = ($modeResult->total / $sums[$modeResult->key()]) * 100;
+                $modeResult->summedTotal = $sums[$modeResult->key()];
             });
 
         $mapIds = $modes->pluck('mapId');
@@ -50,29 +63,32 @@ class ModeDecorator
             ->get()
             ->keyBy('id');
 
-        $this->modes = $modes->map(function (ModeResult $modeResult) use ($maps, $categories) {
-            $modeResult->map = $maps[$modeResult->mapId];
-            $modeResult->category = $categories[$modeResult->categoryId];
+        $this->modes = $modes
+            ->map(function (ModeResult $modeResult) use ($maps, $categories) {
+                $modeResult->map = $maps[$modeResult->mapId];
+                $modeResult->category = $categories[$modeResult->categoryId];
 
-            return $modeResult;
-        });
+                return $modeResult;
+            });
     }
 
-    public function bestModes(): Collection
+    public function bestModes(int $count = 7): Collection
     {
         return $this->modes
             ->filter(function (ModeResult $modeResult) {
-                return $modeResult->outcome->is(Outcome::WIN());
+                return $modeResult->total > 5 && $modeResult->outcome->is(Outcome::WIN());
             })
-            ->sortByDesc('total');
+            ->sortByDesc('percentWon')
+            ->take($count);
     }
 
-    public function worseModes(): Collection
+    public function worseModes(int $count = 7): Collection
     {
         return $this->modes
             ->filter(function (ModeResult $modeResult) {
-                return $modeResult->outcome->is(Outcome::LOSS());
+                return $modeResult->total > 5 && $modeResult->outcome->is(Outcome::LOSS());
             })
-            ->sortByDesc('total');
+            ->sortByDesc('percentWon')
+            ->take($count);
     }
 }
