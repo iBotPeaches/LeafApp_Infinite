@@ -16,6 +16,8 @@ services:
     db:
         image: mariadb:10.4
         container_name: leaf-db
+        ports:
+            - '3306:3306'
         environment:
             MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
