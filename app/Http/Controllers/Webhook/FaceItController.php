@@ -23,6 +23,7 @@ class FaceItController extends Controller
         return match ($type) {
             WebhookEvent::MATCH_STATUS_FINISHED => $this->parseMatchStatusFinished($client, $payload),
             WebhookEvent::CHAMPIONSHIP_FINISHED => $this->parseChampionshipFinished($client, $payload),
+            WebhookEvent::CHAMPIONSHIP_STARTED => $this->parseChampionshipStarted($client, $payload),
             WebhookEvent::MATCH_OBJECT_CREATED => $this->parseMatchObjectCreated($client, $payload),
             default => response()->json()
         };
@@ -30,15 +31,14 @@ class FaceItController extends Controller
 
     private function parseChampionshipFinished(TournamentInterface $client, array $payload): JsonResponse
     {
-        $championshipId = Arr::get($payload, 'payload.id');
-        $championship = Championship::query()->firstWhere('faceit_id', $championshipId);
-        if (! $championship) {
-            $championship = $client->championship($championshipId);
-        }
+        $championship = $this->parseGenericChampionshipPayload($client, $payload);
 
-        if ($championship) {
-            $client->bracket($championship);
-        }
+        return response()->json($championship?->toArray());
+    }
+
+    private function parseChampionshipStarted(TournamentInterface $client, array $payload): JsonResponse
+    {
+        $championship = $this->parseGenericChampionshipPayload($client, $payload);
 
         return response()->json($championship?->toArray());
     }
@@ -55,6 +55,21 @@ class FaceItController extends Controller
         $matchup = $this->parseGenericMatchPayload($client, $payload);
 
         return response()->json($matchup?->toArray());
+    }
+
+    private function parseGenericChampionshipPayload(TournamentInterface $client, array $payload): ?Championship
+    {
+        $championshipId = Arr::get($payload, 'payload.id');
+        $championship = Championship::query()->firstWhere('faceit_id', $championshipId);
+        if (! $championship) {
+            $championship = $client->championship($championshipId);
+        }
+
+        if ($championship) {
+            $client->bracket($championship);
+        }
+
+        return $championship;
     }
 
     private function parseGenericMatchPayload(TournamentInterface $client, array $payload): ?Matchup

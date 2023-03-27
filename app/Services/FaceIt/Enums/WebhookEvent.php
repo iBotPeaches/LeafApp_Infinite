@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  * @method static static MATCH_STATUS_FINISHED()
  * @method static static MATCH_OBJECT_CREATED()
  * @method static static CHAMPIONSHIP_FINISHED()
+ * @method static static CHAMPIONSHIP_STARTED()
  */
 final class WebhookEvent extends Enum implements LocalizedEnum
 {
@@ -19,4 +20,6 @@ final class WebhookEvent extends Enum implements LocalizedEnum
     const MATCH_OBJECT_CREATED = 'match_object_created';
 
     const CHAMPIONSHIP_FINISHED = 'championship_finished';
+
+    const CHAMPIONSHIP_STARTED = 'championship_started';
 }
