@@ -18,11 +18,9 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. `docker exec -it leaf-php php artisan migrate`
 1. `docker exec -it leaf-php yarn run dev`
 
-Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
-
-The mariadb container's port 3306 is mapped to the host.
-
-Xdebug is configured to make connections to port 3006 on the host. Path mappings should be set up so the root of the project is mapped to `/var/www` on the server.
+* Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
+* MariaDB container's port 3306 is mapped to the host.
+* Xdebug is configured to make connections to port 9003 on the host. Path mappings should be set up so the root of the project is mapped to `/var/www` on the server.
 
 ### Setup
 1. PHP8.2
