@@ -22,12 +22,20 @@ class FaceItController extends Controller
 
         return match ($type) {
             WebhookEvent::MATCH_STATUS_FINISHED => $this->parseMatchStatusFinished($client, $payload),
+            WebhookEvent::CHAMPIONSHIP_CREATED => $this->parseChampionshipCreated($client, $payload),
             WebhookEvent::CHAMPIONSHIP_CANCELLED => $this->parseChampionshipCancelled($client, $payload),
             WebhookEvent::CHAMPIONSHIP_FINISHED => $this->parseChampionshipFinished($client, $payload),
             WebhookEvent::CHAMPIONSHIP_STARTED => $this->parseChampionshipStarted($client, $payload),
             WebhookEvent::MATCH_OBJECT_CREATED => $this->parseMatchObjectCreated($client, $payload),
             default => response()->json()
         };
+    }
+
+    private function parseChampionshipCreated(TournamentInterface $client, array $payload): JsonResponse
+    {
+        $championship = $this->parseGenericChampionshipPayload($client, $payload);
+
+        return response()->json($championship?->toArray());
     }
 
     private function parseChampionshipCancelled(TournamentInterface $client, array $payload): JsonResponse

@@ -12,6 +12,7 @@ use Tests\Mocks\Championship\MockChampionshipBracketService;
 use Tests\Mocks\Championship\MockChampionshipService;
 use Tests\Mocks\Championship\MockMatchupService;
 use Tests\Mocks\Webhooks\MockChampionshipCancelled;
+use Tests\Mocks\Webhooks\MockChampionshipCreated;
 use Tests\Mocks\Webhooks\MockChampionshipFinished;
 use Tests\Mocks\Webhooks\MockChampionshipStarted;
 use Tests\Mocks\Webhooks\MockMatchObjectCreated;
@@ -134,6 +135,30 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
+    public function testIncomingFaceItChampionshipCreated(): void
+    {
+        // Arrange & Act
+        Queue::fake();
+        $payload = (new MockChampionshipCreated())->success();
+        $headers = [
+            'X-Cat-Dog' => config('services.faceit.webhook.secret'),
+        ];
+
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Http::fakeSequence()
+            ->push($mockChampionshipResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketResponse, Response::HTTP_OK)
+            ->push($mockChampionshipBracketEmpty, Response::HTTP_OK);
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
     public function testIncomingFaceItMatchCompletedAsNotChampionship(): void
     {
         // Arrange & Act
@@ -177,6 +202,9 @@ class IncomingFaceItWebhookTest extends TestCase
             ],
             [
                 'payload' => (new MockChampionshipCancelled())->error(),
+            ],
+            [
+                'payload' => (new MockChampionshipCreated())->error(),
             ],
         ];
     }
