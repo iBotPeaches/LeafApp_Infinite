@@ -3,7 +3,7 @@
         <tr>
             <th>Map/Mode</th>
             <th>% {{ $title }}</th>
-            <th>Games Played</th>
+            <th>Total</th>
         </tr>
     </thead>
     @foreach ($mode as $game)
