@@ -22,6 +22,8 @@ Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 
 The mariadb container's port 3306 is mapped to the host.
 
+Xdebug is configured to make connections to port 3006 on the host. Path mappings should be set up so the root of the project is mapped to `/var/www` on the server.
+
 ### Setup
 1. PHP8.2
 1. Node + Yarn installed
