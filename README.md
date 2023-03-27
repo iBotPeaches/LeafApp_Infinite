@@ -20,6 +20,8 @@ A docker-based infrastructure is available for development. If you wish to run d
 
 Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 
+The mariadb container's port 3306 is mapped to the host.
+
 ### Setup
 1. PHP8.2
 1. Node + Yarn installed
