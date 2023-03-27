@@ -24,5 +24,8 @@ RUN npm install -g yarn
 #  * exif - Required by spatie/image
 RUN docker-php-ext-install bcmath pdo_mysql pcntl exif
 
+# Install Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

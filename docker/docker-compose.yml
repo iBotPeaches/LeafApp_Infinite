@@ -10,12 +10,17 @@ services:
         volumes:
             - ../:/var/www
         working_dir: /var/www/
+        environment:
+            XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003 start_with_request=yes idekey=leaf
+            XDEBUG_MODE: debug
         networks:
             - leaf
 
     db:
         image: mariadb:10.4
         container_name: leaf-db
+        ports:
+            - '3306:3306'
         environment:
             MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
