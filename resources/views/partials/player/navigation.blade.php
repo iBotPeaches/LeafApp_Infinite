@@ -22,6 +22,12 @@
                 <span>Competitive</span>
             </a>
         </li>
+        <li class="<?= $type === App\Enums\PlayerTab::MODES ? 'is-active' : null; ?>">
+            <a href="<?= route('player', [$player, App\Enums\PlayerTab::MODES]); ?>">
+                <span class="icon"><i class="fa fa-chart-simple"></i></span>
+                <span>Modes</span>
+            </a>
+        </li>
         <li class="<?= $type === App\Enums\PlayerTab::MATCHES ? 'is-active' : null; ?>">
             <a href="<?= route('player', [$player, App\Enums\PlayerTab::MATCHES]); ?>">
                 <span class="icon"><i class="fa fa-history"></i></span>

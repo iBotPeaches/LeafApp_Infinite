@@ -12,7 +12,7 @@
             </select>
         </div>
     </div>
-    @if ($type !== 'competitive')
+    @if (in_array($type, ['overview', 'medals']))
         <div class="control has-icons-left mt-3">
             <div class="select is-medium is-fullwidth">
                 <span class="icon is-large is-left">

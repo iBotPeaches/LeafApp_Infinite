@@ -1,6 +1,6 @@
 <article class="message is-small {{ $color }}">
     <div class="message-header">
-        <p>Checking for Update</p>
+        <p>Want an update?</p>
     </div>
     <div class="message-body">
         @if (isset($button))
