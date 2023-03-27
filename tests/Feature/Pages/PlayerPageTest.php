@@ -161,6 +161,26 @@ class PlayerPageTest extends TestCase
     }
 
     /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerModesPage(string $gamertag): void
+    {
+        // Arrange
+        Http::fake();
+
+        Player::factory()
+            ->createOne([
+                'gamertag' => $gamertag,
+            ]);
+
+        // Act
+        $response = $this->get('/player/'.urlencode($gamertag).'/modes');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('mode-page');
+        $response->assertSeeLivewire('update-player-panel');
+    }
+
+    /** @dataProvider gamertagDataProvider */
     public function testLoadingPlayerCompetitivePage(string $gamertag): void
     {
         // Arrange

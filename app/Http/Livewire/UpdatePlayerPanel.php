@@ -48,6 +48,8 @@ class UpdatePlayerPanel extends Component
                 : 'Profile was recently updated (or updating). Check back soon.';
         } else {
             if (! $this->runUpdate) {
+                $this->emitToRespectiveComponent();
+
                 return view('livewire.update-player-panel', [
                     'color' => 'is-info',
                     'button' => true,
@@ -63,8 +65,6 @@ class UpdatePlayerPanel extends Component
 
                     $this->player->lockForUpdate();
                     $this->player->updateFromHaloDotApi(false, $this->type);
-
-                    $this->emitToRespectiveComponent();
                 });
             } catch (RequestException $exception) {
                 $color = 'is-danger';
@@ -77,6 +77,8 @@ class UpdatePlayerPanel extends Component
                 $message = 'Oops - something went wrong.';
             }
         }
+
+        $this->emitToRespectiveComponent();
 
         return view('livewire.update-player-panel', [
             'color' => $color,
@@ -101,6 +103,9 @@ class UpdatePlayerPanel extends Component
                 break;
             case PlayerTab::LAN:
                 $this->emitTo(GameLanHistoryTable::class, '$refresh');
+                break;
+            case PlayerTab::MODES:
+                $this->emitTo(ModePage::class, '$refresh');
                 break;
         }
     }
