@@ -175,9 +175,10 @@ class IncomingFaceItWebhookTest extends TestCase
     }
 
     /** @dataProvider emptyFaceItDataProvider */
-    public function testIncomingEmptyFaceItData(array $payload): void
+    public function testIncomingEmptyFaceItData(callable $payloadFunction): void
     {
         // Arrange & Act
+        $payload = $payloadFunction();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
@@ -192,19 +193,19 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         return [
             [
-                'payload' => (new MockMatchStatusFinished())->error(),
+                'payload' => fn () => (new MockMatchStatusFinished())->error(),
             ],
             [
-                'payload' => (new MockMatchObjectCreated())->error(),
+                'payload' => fn () => (new MockMatchObjectCreated())->error(),
             ],
             [
-                'payload' => (new MockChampionshipStarted())->error(),
+                'payload' => fn () => (new MockChampionshipStarted())->error(),
             ],
             [
-                'payload' => (new MockChampionshipCancelled())->error(),
+                'payload' => fn () => (new MockChampionshipCancelled())->error(),
             ],
             [
-                'payload' => (new MockChampionshipCreated())->error(),
+                'payload' => fn () => (new MockChampionshipCreated())->error(),
             ],
         ];
     }
