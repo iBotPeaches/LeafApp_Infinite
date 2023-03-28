@@ -10,7 +10,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 #  * git zip unzip - Required by Composer
 #  * mariadb-client - Required for db migration
 #  * nodejs - Required for building js
-RUN apt update && apt install -y git zip unzip mariadb-client nodejs
+#  * libicu-dev - Required for php int ext
+RUN apt update && apt install -y git zip unzip mariadb-client nodejs libicu-dev
 
 # Clear apt cache
 RUN apt clean && rm -rf /var/lib/apt/lists/*
@@ -19,10 +20,10 @@ RUN apt clean && rm -rf /var/lib/apt/lists/*
 RUN npm install -g yarn
 
 # Install PHP extensions
-#  * bcmath pdo_mysql - Required by laravel/framework
+#  * bcmath pdo_mysql intl - Required by laravel/framework
 #  * pcntl - Required by laravel/horizon
 #  * exif - Required by spatie/image
-RUN docker-php-ext-install bcmath pdo_mysql pcntl exif
+RUN docker-php-ext-install bcmath pdo_mysql intl pcntl exif
 
 # Install Xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
