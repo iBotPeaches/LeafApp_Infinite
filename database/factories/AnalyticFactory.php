@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Models\Game;
+use App\Models\Map;
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,6 +22,7 @@ class AnalyticFactory extends Factory
             'key' => AnalyticKey::MOST_MEDALS_SR->value,
             'game_id' => Game::factory(),
             'player_id' => Player::factory(),
+            'map_id' => Map::factory(),
             'value' => $this->faker->randomFloat(2, 0, 20),
         ];
     }
