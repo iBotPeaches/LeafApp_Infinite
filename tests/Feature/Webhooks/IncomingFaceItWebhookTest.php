@@ -193,19 +193,19 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         return [
             [
-                'payload' => fn() => (new MockMatchStatusFinished())->error(),
+                'payload' => fn () => (new MockMatchStatusFinished())->error(),
             ],
             [
-                'payload' => fn() => (new MockMatchObjectCreated())->error(),
+                'payload' => fn () => (new MockMatchObjectCreated())->error(),
             ],
             [
-                'payload' => fn() => (new MockChampionshipStarted())->error(),
+                'payload' => fn () => (new MockChampionshipStarted())->error(),
             ],
             [
-                'payload' => fn() => (new MockChampionshipCancelled())->error(),
+                'payload' => fn () => (new MockChampionshipCancelled())->error(),
             ],
             [
-                'payload' => fn() => (new MockChampionshipCreated())->error(),
+                'payload' => fn () => (new MockChampionshipCreated())->error(),
             ],
         ];
     }
