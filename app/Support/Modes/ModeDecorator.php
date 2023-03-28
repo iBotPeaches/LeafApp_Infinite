@@ -79,7 +79,7 @@ class ModeDecorator
             });
     }
 
-    public function bestModes(int $count = 7): Collection
+    public function bestModes(int $count = 10): Collection
     {
         return $this->modes
             ->filter(function (ModeResult $modeResult) {
@@ -89,7 +89,7 @@ class ModeDecorator
             ->take($count);
     }
 
-    public function worseModes(int $count = 7): Collection
+    public function worseModes(int $count = 10): Collection
     {
         return $this->modes
             ->filter(function (ModeResult $modeResult) {
