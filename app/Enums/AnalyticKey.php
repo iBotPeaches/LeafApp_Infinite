@@ -22,4 +22,6 @@ enum AnalyticKey: string
     case MOST_MEDALS_GAME = 'most_medals_game';
     case HIGHEST_SCORE_RANKED_GAME = 'highest_score_ranked_game';
     case LONGEST_MATCHMAKING_GAME = 'longest_matchmaking_game';
+
+    case MOST_QUIT_MAP = 'most_quit_map';
 }
