@@ -36,7 +36,7 @@ class Playlist extends Model implements HasHaloDotApi
     public $casts = [
         'queue' => Queue::class,
         'input' => Input::class,
-        'is_ranked' => 'bool'
+        'is_ranked' => 'bool',
     ];
 
     public function getNameAttribute(string $value): string
