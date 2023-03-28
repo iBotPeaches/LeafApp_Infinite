@@ -14,7 +14,7 @@
     <div class="column">
         <article class="panel is-danger">
             <p class="panel-heading">
-                Worse Game/Map Type
+                Worst Game/Map Type
             </p>
             <div class="panel-block is-block">
                 <div class="table-container">
