@@ -339,10 +339,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-free@npm:^6.1.2":
-  version: 6.3.0
-  resolution: "@fortawesome/fontawesome-free@npm:6.3.0"
-  checksum: 5c62c2a836079e84b86cea1ab9934f7118ded2b93799a0439b947d5fa821d2df9707dc5f1a6e1e2c85dafb78ad3167597310a526a6ad41ae17aa340f989eec3d
+"@fortawesome/fontawesome-free@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@fortawesome/fontawesome-free@npm:6.4.0"
+  checksum: 0197cd7df96de375862fea561d69427deebb918cadc26074cc8d490180d536e7e58853d138ca74d081b46b2cbdec2783d01cdaccb8bd723d6ef6b4cc8455b84b
   languageName: node
   linkType: hard
 
@@ -1591,7 +1591,7 @@ __metadata:
     "@creativebulma/bulma-divider": ^1.1.0
     "@creativebulma/bulma-tooltip": ^1.2.0
     "@erbelion/vite-plugin-laravel-purgecss": ^0.1.4
-    "@fortawesome/fontawesome-free": ^6.1.2
+    "@fortawesome/fontawesome-free": ^6.4.0
     bulma: ^0.9.4
     bulma-ribbon: ^0.1.1
     laravel-vite-plugin: ^0.7.3
