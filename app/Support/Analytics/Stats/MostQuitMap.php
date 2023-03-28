@@ -52,14 +52,14 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
             ->groupBy(['map_id', 'outcome']);
 
         $outcomeFractionQuery = DB::query()
-            ->selectRaw('map_id, outcome, total, total / (sum(total) over (partition by map_id)) as fraction_quit')
+            ->selectRaw('map_id, outcome, total, total / (sum(total) over (partition by map_id)) as ' . $this->property())
             ->from($mapOutcomesQuery);
 
         return $this->builder()
-            ->selectRaw('maps.*, fraction_quit')
+            ->selectRaw('maps.*, ' . $this->property())
             ->joinSub($outcomeFractionQuery, 'outcome_fraction', 'map_id', '=', 'id', 'right')
             ->where('outcome', '=', 3)
-            ->orderByDesc('fraction_quit')
+            ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
     }
