@@ -20,7 +20,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
 
     public function title(): string
     {
-        return 'Most Quit Map';
+        return 'Most Quit/Crashed Map';
     }
 
     public function key(): string
