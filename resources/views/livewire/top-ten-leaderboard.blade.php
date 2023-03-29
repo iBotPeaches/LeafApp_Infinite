@@ -22,7 +22,7 @@ use App\Enums\AnalyticType;
                         @if ($analyticClass->type()->isGame())
                             <th>Game</th>
                         @endif
-                        @if ($analyticClass->type()->is(AnalyticType::MAP()))
+                        @if ($analyticClass->type()->isMap())
                             <th>Map</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
@@ -62,7 +62,7 @@ use App\Enums\AnalyticType;
                                 </a>
                             </td>
                         @endif
-                        @if ($analyticClass->type()->is(AnalyticType::MAP()))
+                        @if ($analyticClass->type()->isMap())
                             <td>{{ $result->map->name }}</td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
