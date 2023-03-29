@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Support\Analytics\Stats;
 
 use App\Enums\AnalyticKey;
+use App\Enums\Outcome;
 use App\Models\Analytic;
 use App\Models\Game;
 use App\Support\Analytics\AnalyticInterface;
@@ -58,7 +59,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
         return $this->builder()
             ->selectRaw('maps.*, ' . $this->property())
             ->joinSub($outcomeFractionQuery, 'outcome_fraction', 'map_id', '=', 'id', 'right')
-            ->where('outcome', '=', 3)
+            ->where('outcome', '=', Outcome::LEFT)
             ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
