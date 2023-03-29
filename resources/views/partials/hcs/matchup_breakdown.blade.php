@@ -1,6 +1,10 @@
 <?php
 /** @var string $color */
+/** @var App\Models\Matchup $matchup */
 /** @var App\Models\MatchupTeam $team */
+
+$team1 = $matchup->winner ?? $matchup->team1;
+$team2 = $matchup->loser ?? $matchup->team2;
 ?>
 @if ($championship->type->isFfa())
     <div class="columns">
@@ -18,13 +22,13 @@
         <div class="column">
             @include('partials.hcs.team_snippet.4v4', [
                 'color' => 'danger',
-                'team' => $matchup->winner
+                'team' => $team1
             ])
         </div>
         <div class="column">
             @include('partials.hcs.team_snippet.4v4', [
-                'color' => $matchup->loser->isBye() ? 'dark' : 'info',
-                'team' => $matchup->loser
+                'color' => $team2?->isBye() ? 'dark' : 'info',
+                'team' => $team2
             ])
         </div>
     </div>

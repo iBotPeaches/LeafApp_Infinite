@@ -1,12 +1,19 @@
 <?php
 /** @var string $color */
 /** @var App\Models\MatchupTeam $team */
+/** @var App\Models\Matchup $matchup */
 ?>
 <article class="message is-{{ $color }}">
     <div class="message-body">
         <strong>{{ $team->name }}</strong>
         <span class="is-pulled-right">
-            <span class="tag is-{{ $color }}">{{ $team->points }}</span>
+            <span class="tag is-{{ $color }}">
+                 @if ($matchup->started_at && $matchup->ended_at)
+                    {{ $team->points }}
+                 @else
+                    -
+                 @endif
+            </span>
         </span>
     </div>
 </article>
