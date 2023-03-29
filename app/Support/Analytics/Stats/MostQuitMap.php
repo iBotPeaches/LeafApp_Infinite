@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace App\Support\Analytics\Stats;
 
@@ -41,7 +42,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
 
     public function displayProperty(Analytic $analytic): string
     {
-        return number_format($analytic->value, 2) . '%';
+        return number_format($analytic->value, 2).'%';
     }
 
     public function results(int $limit = 10): ?Collection
@@ -53,11 +54,11 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
             ->groupBy(['map_id', 'outcome']);
 
         $outcomeFractionQuery = DB::query()
-            ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as ' . $this->property())
+            ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as '.$this->property())
             ->from($mapOutcomesQuery);
 
         return $this->builder()
-            ->selectRaw('maps.*, ' . $this->property())
+            ->selectRaw('maps.*, '.$this->property())
             ->joinSub($outcomeFractionQuery, 'outcome_fraction', 'map_id', '=', 'id', 'right')
             ->where('outcome', '=', Outcome::LEFT)
             ->orderByDesc($this->property())
