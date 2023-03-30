@@ -24,3 +24,6 @@
         </article>
     </div>
 </div>
+<div class="notification is-light mt-2">
+    Tracking Ranked with requiring a minimum of 5 matches for a map/mode to be included.
+</div>
