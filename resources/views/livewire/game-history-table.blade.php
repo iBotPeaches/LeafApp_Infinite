@@ -33,8 +33,16 @@
                             @include('partials.game.playlist_type', ['playlist' => $game->playlist])
                         @endif
                     </td>
-                    <td>{{ $game->map->name }}</td>
-                    <td>{{ $game->category->name }}</td>
+                    <td>
+                        <abbr title="{{ $game->map->name }}">
+                            {{ \Illuminate\Support\Str::limit($game->map->name, 15) }}
+                        </abbr>
+                    </td>
+                    <td>
+                        <abbr title="{{ $game->category->name }}">
+                            {{ \Illuminate\Support\Str::limit($game->category->name, 18) }}
+                        </abbr>
+                    </td>
                     <td class="{{ $game->personal->getVictoryColor() }}">
                         {{ $game->personal->outcome->description }}
                         @if ($game->playlist->is_ranked)
