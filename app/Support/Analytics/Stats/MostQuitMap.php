@@ -20,6 +20,8 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
     use HasExportUrlGeneration;
     use HasMapExport;
 
+    private const LAST_SPARTAN_STANDING_CATEGORY_ID = '3fdb396febedc607ddd3416aea2ff5a3';
+
     public function title(): string
     {
         return 'Most Quit/Crashed Map';
@@ -50,7 +52,9 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
         $mapOutcomesQuery = Game::query()
             ->selectRaw('map_id, outcome, count(*) as total')
             ->join('game_players', 'games.id', '=', 'game_players.game_id', 'right')
+            ->join('categories', 'games.category_id', '=', 'categories.id', 'left')
             ->whereNotNull('games.playlist_id')
+            ->whereNot('categories.uuid', '=', self::LAST_SPARTAN_STANDING_CATEGORY_ID)
             ->groupBy(['map_id', 'outcome']);
 
         $outcomeFractionQuery = DB::query()
