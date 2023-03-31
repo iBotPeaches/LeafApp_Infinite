@@ -273,6 +273,43 @@ class MostQuitMapTest extends TestCase
                     ],
                 ],
             ],
+            [
+                [
+                    [
+                        'name' => 'Map 1',
+                        'percent_quit' => 50,
+                    ],
+                ],
+                [
+                    [
+                        'mapName' => 'Map 1',
+                        'games' => [
+                            [
+                                'categoryUuid' => null,
+                                'gamePlayers' => [O::LEFT, O::WIN],
+                            ],
+                        ],
+                    ],
+                    [
+                        'mapName' => 'Map 2',
+                        'games' => [
+                            [
+                                'categoryUuid' => null,
+                                'gamePlayers' => [O::WIN, O::LOSS],
+                            ],
+                            [
+                                'categoryUuid' => null,
+                                'gamePlayers' => [O::WIN, O::LOSS],
+                            ],
+                            [
+                                'categoryUuid' => null,
+                                'gamePlayers' => [O::WIN, O::LOSS],
+                            ],
+                        ],
+                    ],
+
+                ],
+            ],
         ];
     }
 }
