@@ -31,7 +31,11 @@ class ProcessAnalyticTest extends TestCase
             'total_matches' => 1102,
         ]);
         GamePlayer::factory()
-            ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
+            ->for(
+                Game::factory()
+                    ->forPlaylist(['is_ranked' => true])
+                    ->forMap([])
+            )
             ->createOne([
                 'deaths' => 0,
             ]);
