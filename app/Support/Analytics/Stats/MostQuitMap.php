@@ -7,6 +7,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Outcome;
 use App\Models\Analytic;
+use App\Models\Category;
 use App\Models\Game;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseMapStat;
@@ -20,7 +21,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
     use HasExportUrlGeneration;
     use HasMapExport;
 
-    private const LAST_SPARTAN_STANDING_CATEGORY_ID = '3fdb396febedc607ddd3416aea2ff5a3';
+    private const LAST_SPARTAN_STANDING_CATEGORY_UUID = '3fdb396febedc607ddd3416aea2ff5a3';
 
     public function title(): string
     {
@@ -52,10 +53,14 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
         $mapOutcomesQuery = Game::query()
             ->selectRaw('map_id, outcome, count(*) as total')
             ->join('game_players', 'games.id', '=', 'game_players.game_id', 'right')
-            ->join('categories', 'games.category_id', '=', 'categories.id', 'left')
             ->whereNotNull('games.playlist_id')
-            ->whereNot('categories.uuid', '=', self::LAST_SPARTAN_STANDING_CATEGORY_ID)
             ->groupBy(['map_id', 'outcome']);
+
+        /** @var Category $lssCategory */
+        $lssCategory = Category::query()->where('uuid', self::LAST_SPARTAN_STANDING_CATEGORY_UUID)->first();
+        if ($lssCategory) {
+            $mapOutcomesQuery->whereNot('games.category_id', '=', $lssCategory->id);
+        }
 
         $outcomeFractionQuery = DB::query()
             ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as '.$this->property())
