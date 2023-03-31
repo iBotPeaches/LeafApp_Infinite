@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Jobs;
 
 use App\Enums\Mode;
+use App\Enums\Outcome;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
@@ -38,6 +39,7 @@ class ProcessAnalyticTest extends TestCase
             )
             ->createOne([
                 'deaths' => 0,
+                'outcome' => Outcome::LEFT,
             ]);
 
         // Act
