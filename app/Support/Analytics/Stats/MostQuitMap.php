@@ -71,6 +71,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
             ->joinSub($outcomePercentQuery, 'outcome_percent', 'map_id', '=', 'id', 'right')
             ->where('outcome', '=', Outcome::LEFT)
             ->orderByDesc($this->property())
+            ->orderBy('name')
             ->limit($limit)
             ->get();
     }
