@@ -7,6 +7,7 @@ use App\Enums\QueueName;
 use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Map;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Bus\Queueable;
@@ -49,6 +50,9 @@ class ProcessAnalytic implements ShouldQueue
                     break;
                 case AnalyticType::ONLY_GAME():
                     $this->handleGameResults($topTen);
+                    break;
+                case AnalyticType::MAP():
+                    $this->handleMapResults($topTen);
                     break;
             }
 
@@ -94,6 +98,17 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $serviceRecord->{$this->analytic->property()};
             $analytic->player()->associate($serviceRecord->player);
+            $analytic->saveOrFail();
+        });
+    }
+
+    private function handleMapResults(?Collection $maps): void
+    {
+        $maps?->each(function (Map $map) {
+            $analytic = new Analytic();
+            $analytic->key = $this->analytic->key();
+            $analytic->value = (float) $map->{$this->analytic->property()};
+            $analytic->map()->associate($map);
             $analytic->saveOrFail();
         });
     }

@@ -2,7 +2,7 @@
 use Illuminate\Support\Str;
 use App\Enums\AnalyticType;
 
-/** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[] $results */
+/** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[]|App\Models\Map[] $results */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
 ?>
 <div>
@@ -16,11 +16,14 @@ use App\Enums\AnalyticType;
                 <thead>
                     <tr>
                         <th>Place</th>
-                        @if ($analyticClass->type()->isNot(AnalyticType::ONLY_GAME()))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <th>Gamertag</th>
                         @endif
                         @if ($analyticClass->type()->isGame())
                             <th>Game</th>
+                        @endif
+                        @if ($analyticClass->type()->isMap())
+                            <th>Map</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
                         @if ($analyticClass->type()->isGame())
@@ -34,7 +37,7 @@ use App\Enums\AnalyticType;
                         <td>
                             @th($loop->iteration)
                         </td>
-                        @if ($analyticClass->type()->isNot(AnalyticType::ONLY_GAME()))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <td>
                                 <article class="media">
                                     <figure class="media-left">
@@ -58,6 +61,9 @@ use App\Enums\AnalyticType;
                                     {{ $result->game->name }}
                                 </a>
                             </td>
+                        @endif
+                        @if ($analyticClass->type()->isMap())
+                            <td>{{ $result->map->name }}</td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
                         @if ($analyticClass->type()->isGame())

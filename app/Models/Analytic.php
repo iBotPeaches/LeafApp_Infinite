@@ -20,6 +20,7 @@ use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
+use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use Carbon\Carbon;
 use Database\Factories\AnalyticFactory;
@@ -38,6 +39,7 @@ use UnexpectedValueException;
  * @property Carbon $updated_at
  * @property-read ?Game $game
  * @property-read ?Player $player
+ * @property-read ?Map $map
  * @property-read AnalyticInterface $stat
  *
  * @method static AnalyticFactory factory(...$parameters)
@@ -73,6 +75,7 @@ class Analytic extends Model
             AnalyticKey::BEST_ACCURACY_SR => new BestAccuracyServiceRecord(),
             AnalyticKey::BEST_KD_SR => new BestKDServiceRecord(),
             AnalyticKey::BEST_KDA_SR => new BestKDAServiceRecord(),
+            AnalyticKey::MOST_QUIT_MAP => new MostQuitMap(),
             default => throw new UnexpectedValueException('Unknown value in getStatFromEnum')
         };
     }
@@ -92,5 +95,10 @@ class Analytic extends Model
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
+    }
+
+    public function map(): BelongsTo
+    {
+        return $this->belongsTo(Map::class);
     }
 }

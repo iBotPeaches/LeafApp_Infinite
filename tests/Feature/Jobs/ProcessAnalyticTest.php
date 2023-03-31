@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Jobs;
 
 use App\Enums\Mode;
+use App\Enums\Outcome;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
@@ -31,10 +32,17 @@ class ProcessAnalyticTest extends TestCase
             'total_matches' => 1102,
         ]);
         GamePlayer::factory()
-            ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
-            ->createOne([
-                'deaths' => 0,
-            ]);
+            ->for(
+                Game::factory()
+                    ->forPlaylist(['is_ranked' => true])
+                    ->forMap([])
+            )
+            ->sequence(
+                ['deaths' => 0, 'outcome' => Outcome::LEFT],
+                ['deaths' => 0, 'outcome' => Outcome::WIN],
+            )
+            ->count(2)
+            ->create();
 
         // Act
         ProcessAnalytic::dispatchSync($analyticClass);
