@@ -37,10 +37,12 @@ class ProcessAnalyticTest extends TestCase
                     ->forPlaylist(['is_ranked' => true])
                     ->forMap([])
             )
-            ->createOne([
-                'deaths' => 0,
-                'outcome' => Outcome::LEFT,
-            ]);
+            ->sequence(
+                ['deaths' => 0, 'outcome' => Outcome::LEFT],
+                ['deaths' => 0, 'outcome' => Outcome::WIN],
+            )
+            ->count(2)
+            ->create();
 
         // Act
         ProcessAnalytic::dispatchSync($analyticClass);
