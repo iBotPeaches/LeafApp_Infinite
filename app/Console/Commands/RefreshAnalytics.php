@@ -27,7 +27,12 @@ class RefreshAnalytics extends Command
             /** @var AnalyticInterface $analyticClass */
             $analyticClass = new $analytic();
 
+            $startTime = time();
+            $this->output->writeln('Processing: ' . $analyticClass->title());
+
             ProcessAnalytic::dispatchSync($analyticClass);
+
+            $this->output->writeln('Processed in ' . (time() - $startTime) . ' seconds.');
         }
 
         return CommandAlias::SUCCESS;
