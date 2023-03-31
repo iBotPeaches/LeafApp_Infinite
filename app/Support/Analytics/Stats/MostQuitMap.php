@@ -56,7 +56,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
             ->whereNotNull('games.playlist_id')
             ->groupBy(['map_id', 'outcome']);
 
-        /** @var Category $lssCategory */
+        /** @var ?Category $lssCategory */
         $lssCategory = Category::query()->where('uuid', self::LAST_SPARTAN_STANDING_CATEGORY_UUID)->first();
         if ($lssCategory) {
             $mapOutcomesQuery->whereNot('games.category_id', '=', $lssCategory->id);
