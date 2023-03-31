@@ -18,6 +18,7 @@ use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
+use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 
 trait HasAnalyticDataProvider
@@ -69,6 +70,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostMedalsInGame(),
+            ],
+            [
+                new MostQuitMap(),
             ],
         ];
     }
