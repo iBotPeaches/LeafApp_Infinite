@@ -40,7 +40,7 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
 
     public function property(): string
     {
-        return 'fraction_quit';
+        return 'percent_quit';
     }
 
     public function displayProperty(Analytic $analytic): string
@@ -62,13 +62,13 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
             $mapOutcomesQuery->whereNot('games.category_id', '=', $lssCategory->id);
         }
 
-        $outcomeFractionQuery = DB::query()
+        $outcomePercentQuery = DB::query()
             ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as '.$this->property())
             ->from($mapOutcomesQuery);
 
         return $this->builder()
             ->selectRaw('maps.*, '.$this->property())
-            ->joinSub($outcomeFractionQuery, 'outcome_fraction', 'map_id', '=', 'id', 'right')
+            ->joinSub($outcomePercentQuery, 'outcome_percent', 'map_id', '=', 'id', 'right')
             ->where('outcome', '=', Outcome::LEFT)
             ->orderByDesc($this->property())
             ->limit($limit)
