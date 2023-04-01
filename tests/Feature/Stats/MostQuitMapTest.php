@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Tests\Feature\Stats;
 
 use App\Enums\Outcome as O;
-use App\Models\Category;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Support\Analytics\Stats\MostQuitMap;
 use Tests\TestCase;
 
 class MostQuitMapTest extends TestCase
 {
-    private const LAST_SPARTAN_STANDING_CATEGORY_UUID = '3fdb396febedc607ddd3416aea2ff5a3';
+    private const LAST_SPARTAN_STANDING_GAMEVARIANT = 'Last Spartan Standing';
 
     /** @dataProvider fixtureDataProvider */
     public function testCalculatesCorrectly(array $expected, array $fixture): void
@@ -26,15 +26,15 @@ class MostQuitMapTest extends TestCase
             ]);
 
             foreach ($mapAndGames['games'] as $categoryAndPlayers) {
-                $category = isset($categoryAndPlayers['categoryUuid'])
-                    ? Category::factory()->createOne([
-                        'uuid' => $categoryAndPlayers['categoryUuid'],
+                $gamevariant = isset($categoryAndPlayers['gamevariantName'])
+                    ? Gamevariant::factory()->createOne([
+                        'name' => $categoryAndPlayers['gamevariantName'],
                     ])
-                    : Category::factory()->createOne();
+                    : Gamevariant::factory()->createOne();
 
                 $game = Game::factory()
                     ->for($map)
-                    ->for($category)
+                    ->for($gamevariant)
                     ->createOne();
 
                 GamePlayer::factory()
@@ -111,11 +111,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 1',
                         'games' => [
                             [
-                                'categoryUuid' => self::LAST_SPARTAN_STANDING_CATEGORY_UUID,
+                                'gamevariantName' => self::LAST_SPARTAN_STANDING_GAMEVARIANT,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::LEFT],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN],
                             ],
                         ],
@@ -124,11 +124,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 2',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -137,11 +137,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 3',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT],
                             ],
                         ],
@@ -150,11 +150,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 4',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::WIN],
                             ],
                         ],
@@ -163,11 +163,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 5',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -176,19 +176,19 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 6',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LOSS, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LOSS, O::LOSS, O::LOSS, O::LOSS, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LOSS, O::LOSS, O::LOSS, O::LOSS, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -197,7 +197,7 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 7',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::WIN],
                             ],
                         ],
@@ -206,11 +206,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 8',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LOSS, O::LEFT, O::LEFT, O::LEFT, O::LEFT],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::LEFT],
                             ],
                         ],
@@ -219,11 +219,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Z Map 9',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -232,11 +232,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'A Map 10',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -245,11 +245,11 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 11',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT, O::LEFT, O::LEFT, O::WIN, O::WIN, O::WIN, O::WIN],
                             ],
                         ],
@@ -258,15 +258,15 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 12',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::LOSS],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::LEFT],
                             ],
                         ],
@@ -285,7 +285,7 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 1',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::LEFT, O::WIN],
                             ],
                         ],
@@ -294,15 +294,15 @@ class MostQuitMapTest extends TestCase
                         'mapName' => 'Map 2',
                         'games' => [
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::LOSS],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::LOSS],
                             ],
                             [
-                                'categoryUuid' => null,
+                                'gamevariantName' => null,
                                 'gamePlayers' => [O::WIN, O::LOSS],
                             ],
                         ],
