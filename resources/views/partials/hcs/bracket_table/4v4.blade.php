@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     @foreach ($matchups as $matchup)
-        <tr>
+        <tr class="{{ $matchup->isCancelled() ? 'has-background-danger-light' : null }}">
             <td style="opacity: {{ $matchup->team1?->id === $matchup->loser?->id ? '40%' : '100%' }}">
                 <article class="media">
                     <figure class="media-left">
@@ -47,26 +47,38 @@
                 </article>
             </td>
             <td>
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-32x32">
-                            <img class="is-rounded" src="{{ $matchup->winner?->avatar }}" alt="{{ $matchup->winner?->name }} "/>
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content" style="white-space: nowrap;">
-                            <a class="is-bold" href="{{ route('matchup', [$championship, $matchup]) }}">
-                                {{ $matchup->winner?->name }}
-                            </a>
+                @if ($matchup->winner)
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-32x32">
+                                <img class="is-rounded" src="{{ $matchup->winner?->avatar }}" alt="{{ $matchup->winner?->name }} "/>
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content" style="white-space: nowrap;">
+                                <a class="is-bold" href="{{ route('matchup', [$championship, $matchup]) }}">
+                                    {{ $matchup->winner?->name }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                @else
+                    -
+                @endif
             </td>
             <td>
                 @if ($matchup->loser?->isBye())
-                    -
+                    <i>bye</i>
                 @else
-                    {{ $matchup->score }}
+                    @if ($matchup->winner)
+                        {{ $matchup->score }}
+                    @else
+                        @if ($matchup->isCancelled())
+                            <i>canceled</i>
+                        @else
+                            -
+                        @endif
+                    @endif
                 @endif
             </td>
             <td>
@@ -78,7 +90,7 @@
                         @include('partials.player.date-link', ['date' => $matchup->ended_at])
                     </span>
                 @else
-                    <i>In Progress</i>
+                    <i>TBD/TBA</i>
                 @endif
             </td>
         </tr>

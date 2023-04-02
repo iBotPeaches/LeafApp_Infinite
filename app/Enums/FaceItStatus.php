@@ -9,7 +9,13 @@ use BenSampo\Enum\Enum;
 use Illuminate\Support\Str;
 
 /**
+ * @method static static UNKNOWN()
  * @method static static FINISHED()
+ * @method static static STARTED()
+ * @method static static CANCELLED()
+ * @method static static MANUAL_RESULT()
+ * @method static static SCHEDULING()
+ * @method static static SCHEDULED()
  */
 final class FaceItStatus extends Enum implements LocalizedEnum
 {
