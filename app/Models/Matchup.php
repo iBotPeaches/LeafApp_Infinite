@@ -155,6 +155,11 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         return $this->ended_at->diffInMinutes($this->started_at).' minutes';
     }
 
+    public function isCancelled(): bool
+    {
+        return (bool)$this->status?->is(FaceItStatus::CANCELLED());
+    }
+
     public function getTeamAt(int $place): ?MatchupTeam
     {
         return $this->matchupTeams->firstWhere('points', $place);
