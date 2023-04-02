@@ -8,11 +8,13 @@ use Tests\Mocks\BaseMock;
 
 class MockChampionshipService extends BaseMock
 {
-    public function success(): array
+    public function success(string $championshipId = null): array
     {
+        $championshipId ??= $this->faker->uuid;
+
         return [
-            'id' => $this->faker->uuid,
-            'championship_id' => $this->faker->uuid,
+            'id' => $championshipId,
+            'championship_id' => $championshipId,
             'name' => 'HCS Open #'.$this->faker->numberBetween(1, 25),
             'type' => $this->faker->randomElement(['roundRobin', 'doubleElimination', 'stage']),
             'status' => $this->faker->randomElement(['started', 'finished']),
