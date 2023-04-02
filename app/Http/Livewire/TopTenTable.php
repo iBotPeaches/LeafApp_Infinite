@@ -22,7 +22,7 @@ class TopTenTable extends Component
             ->select('key')
             ->orderBy('key')
             ->groupBy('key')
-            ->paginate(15);
+            ->paginate(100);
 
         return view('livewire.top-ten-table', [
             'stats' => $stats,
