@@ -26,7 +26,7 @@ class MockChampionshipFinished extends BaseMock
             'retry_count' => 0,
             'version' => 1,
             'payload' => [
-                'id' => '1-'.$this->faker->uuid,
+                'id' => $this->faker->uuid,
                 'organizer_id' => $this->faker->uuid,
                 'game' => 'halo_infinite',
             ],

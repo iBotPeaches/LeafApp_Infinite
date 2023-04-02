@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Webhooks;
 
+use App\Enums\FaceItStatus;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
@@ -116,13 +117,16 @@ class IncomingFaceItWebhookTest extends TestCase
         // Arrange & Act
         Queue::fake();
         $payload = (new MockChampionshipCancelled())->success();
+        $championshipId = Arr::get($payload, 'payload.id');
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService())->success($championshipId);
         $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
         $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+
+        Arr::set($mockChampionshipResponse, 'status', 'cancelled');
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -133,6 +137,10 @@ class IncomingFaceItWebhookTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
+        $this->assertDatabaseHas('championships', [
+            'faceit_id' => Arr::get($payload, 'payload.id'),
+            'status' => FaceItStatus::CANCELLED,
+        ]);
     }
 
     public function testIncomingFaceItChampionshipCreated(): void
