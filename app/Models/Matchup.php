@@ -157,7 +157,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
 
     public function isCancelled(): bool
     {
-        return (bool)$this->status?->is(FaceItStatus::CANCELLED());
+        return (bool) $this->status?->is(FaceItStatus::CANCELLED());
     }
 
     public function getTeamAt(int $place): ?MatchupTeam
