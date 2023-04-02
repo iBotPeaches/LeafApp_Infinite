@@ -57,11 +57,6 @@ class ApiClient implements TournamentInterface
             $offset += $perPage;
 
             foreach (Arr::get($data, 'items', []) as $matchupData) {
-                // Skip cancelled games as they are complete, but no games occurred
-                if (Arr::get($matchupData, 'status') === 'CANCELLED') {
-                    continue;
-                }
-
                 $this->parseMatchup($championship, $matchupData);
             }
         }
