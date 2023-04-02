@@ -76,10 +76,7 @@ class FaceItController extends Controller
     private function parseGenericChampionshipPayload(TournamentInterface $client, array $payload): ?Championship
     {
         $championshipId = Arr::get($payload, 'payload.id');
-        $championship = Championship::query()->firstWhere('faceit_id', $championshipId);
-        if (! $championship) {
-            $championship = $client->championship($championshipId);
-        }
+        $championship = $client->championship($championshipId);
 
         if ($championship) {
             $client->bracket($championship);
@@ -95,10 +92,7 @@ class FaceItController extends Controller
         }
 
         $championshipId = Arr::get($payload, 'payload.entity.id');
-        $championship = Championship::query()->firstWhere('faceit_id', $championshipId);
-        if (! $championship) {
-            $championship = $client->championship($championshipId);
-        }
+        $championship = $client->championship($championshipId);
 
         $matchup = null;
         if ($championship) {
