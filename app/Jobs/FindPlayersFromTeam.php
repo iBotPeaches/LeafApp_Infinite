@@ -7,7 +7,7 @@ namespace App\Jobs;
 use App\Enums\QueueName;
 use App\Models\MatchupTeam;
 use App\Models\Player;
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

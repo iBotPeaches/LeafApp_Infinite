@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Autocode;
+namespace App\Services\HaloDotApi;
 
 use App\Enums\Mode as SystemMode;
 use App\Models\Category;
@@ -15,8 +15,8 @@ use App\Models\Player;
 use App\Models\Playlist;
 use App\Models\ServiceRecord;
 use App\Models\Team;
-use App\Services\Autocode\Enums\Language;
-use App\Services\Autocode\Enums\Mode;
+use App\Services\HaloDotApi\Enums\Language;
+use App\Services\HaloDotApi\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Mocks\Matches;
 
-use App\Services\Autocode\Enums\Language;
-use App\Services\Autocode\Enums\PlayerType;
+use App\Services\HaloDotApi\Enums\Language;
+use App\Services\HaloDotApi\Enums\PlayerType;
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
 

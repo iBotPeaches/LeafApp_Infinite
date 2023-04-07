@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Autocode;
+namespace App\Services\HaloDotApi;
 
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\Player;
 use App\Models\ServiceRecord;
-use App\Services\Autocode\Enums\Mode;
+use App\Services\HaloDotApi\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 
 interface InfiniteInterface

@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidInfiniteAccount implements Rule

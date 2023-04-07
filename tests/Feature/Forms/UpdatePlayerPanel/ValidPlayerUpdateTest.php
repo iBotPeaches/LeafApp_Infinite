@@ -19,7 +19,7 @@ use App\Models\GamePlayer;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Models\Playlist;
-use App\Services\Autocode\Enums\Mode;
+use App\Services\HaloDotApi\Enums\Mode;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Illuminate\Foundation\Testing\WithFaker;

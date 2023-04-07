@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 

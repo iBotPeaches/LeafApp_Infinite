@@ -8,7 +8,7 @@ use App\Http\Livewire\UpdateGamePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
 use App\Models\Game;
-use App\Services\Autocode\Enums\PlayerType;
+use App\Services\HaloDotApi\Enums\PlayerType;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;

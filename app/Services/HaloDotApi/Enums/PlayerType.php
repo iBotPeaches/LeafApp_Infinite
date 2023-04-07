@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Autocode\Enums;
+namespace App\Services\HaloDotApi\Enums;
 
 use BenSampo\Enum\Enum;
 
