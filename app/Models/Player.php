@@ -7,7 +7,6 @@ use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullMmr;
 use App\Jobs\PullServiceRecord;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\MatchupPlayer;
@@ -162,31 +161,26 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
             PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
             $client->serviceRecord($this, $seasonNumber);
         } elseif ($type === PlayerTab::COMPETITIVE) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
             PullServiceRecord::dispatch($this, $seasonNumber);
             $client->competitive($this, $seasonNumber);
-            $client->mmr($this);
         } elseif (in_array($type, [PlayerTab::MATCHES, PlayerTab::MODES])) {
             PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
             PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
         } elseif ($type === PlayerTab::CUSTOM) {
             PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
-            PullMmr::dispatch($this);
             PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::CUSTOM(), $forceUpdate);
         } elseif ($type === PlayerTab::LAN) {
             PullCompetitive::dispatch($this, $seasonNumber);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
             PullServiceRecord::dispatch($this, $seasonNumber);
             $client->matches($this, Mode::LAN(), $forceUpdate);
         }

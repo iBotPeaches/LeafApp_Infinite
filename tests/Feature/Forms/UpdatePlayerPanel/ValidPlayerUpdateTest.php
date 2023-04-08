@@ -11,7 +11,6 @@ use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullMmr;
 use App\Jobs\PullServiceRecord;
 use App\Models\Csr;
 use App\Models\Game;
@@ -48,8 +47,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::fake([
             PullAppearance::class,
             PullCompetitive::class,
-            PullMatchHistory::class,
-            PullMmr::class,
+            PullMatchHistory::class
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
@@ -82,7 +80,6 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
         Bus::assertDispatched(PullCompetitive::class);
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
-        Bus::assertDispatched(PullMmr::class);
     }
 
     public function testAutomaticallySkippingServiceRecordIfUnplayedSeason(): void
@@ -92,7 +89,6 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
             PullCompetitive::class,
             PullMatchHistory::class,
-            PullMmr::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->error403();
@@ -118,7 +114,6 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
         Bus::assertDispatched(PullCompetitive::class);
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
-        Bus::assertDispatched(PullMmr::class);
     }
 
     public function testSkippingMmrIfApiIsReturningNull(): void
@@ -357,7 +352,6 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
             PullCompetitive::class,
             PullMatchHistory::class,
-            PullMmr::class,
             PullServiceRecord::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -400,7 +394,6 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullMatchHistory::class, function (PullMatchHistory $job) {
             return Mode::CUSTOM()->is($job->mode);
         });
-        Bus::assertDispatched(PullMmr::class);
         Bus::assertDispatched(PullServiceRecord::class);
     }
 

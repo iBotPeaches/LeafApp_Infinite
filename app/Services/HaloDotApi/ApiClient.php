@@ -72,35 +72,6 @@ class ApiClient implements InfiniteInterface
         return $player->csrs->first();
     }
 
-    public function mmr(Player $player): Player
-    {
-        $response = $this->getPendingRequest()->get('stats/players/mmr', [
-            'gamertag' => $player->gamertag,
-        ]);
-
-        if ($response->throw()->successful()) {
-            $data = $response->json();
-            $mmr = Arr::get($data, 'data.value');
-
-            if (is_null($mmr)) {
-                return $player;
-            }
-            $player->mmr = $mmr;
-
-            // Pull out the game uuid and use it if we have it.
-            // Otherwise query API to pull game.
-            $matchUuid = Arr::get($data, 'data.match.id');
-            $match = Game::query()
-                ->where('uuid', $matchUuid)
-                ->first();
-
-            $player->mmrGame()->associate($match ?? $matchUuid ? $this->match($matchUuid) : null);
-            $player->saveOrFail();
-        }
-
-        return $player;
-    }
-
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection
     {
         $perPage = 25;
@@ -267,7 +238,7 @@ class ApiClient implements InfiniteInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->baseUrl($this->config['domain'].'/infinite@'.$this->config['version'])
+            ->baseUrl($this->config['domain'].'/games/halo-infinite/')
             ->timeout(180)
             ->withToken($this->config['key']);
     }
