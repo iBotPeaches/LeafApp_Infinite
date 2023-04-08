@@ -29,7 +29,7 @@ class Category extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = (string) Arr::get($payload, 'category_id', Arr::get($payload, 'properties.category_id'));
+        $categoryId = (string) Arr::get($payload, 'id', Arr::get($payload, 'properties.category_id'));
         $name = Str::after(Arr::get($payload, 'name'), ':');
 
         // Due to gametypes having the same categoryId as base. We will key again to prevent wiping custom gametypes vs base modes.
@@ -45,7 +45,7 @@ class Category extends Model implements HasHaloDotApi
         $category->name = $name;
         $category->thumbnail_url = Arr::get(
             $payload,
-            'thumbnail_url',
+            'image_urls.thumbnail',
             Arr::get($payload, 'asset.thumbnail_url')
         );
 

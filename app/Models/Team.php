@@ -38,7 +38,7 @@ class Team extends Model implements HasHaloDotApi
             ]);
 
         $team->name = Arr::get($payload, 'name');
-        $team->emblem_url = Arr::get($payload, 'emblem_url');
+        $team->emblem_url = Arr::get($payload, 'image_urls.icon');
 
         if ($team->isDirty()) {
             $team->saveOrFail();

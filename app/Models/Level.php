@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
-use Database\Factories\MapFactory;
+use Database\Factories\LevelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -17,9 +17,9 @@ use Illuminate\Support\Str;
  * @property string $thumbnail_url
  * @property-read string $image
  *
- * @method static MapFactory factory(...$parameters)
+ * @method static LevelFactory factory(...$parameters)
  */
-class Map extends Model implements HasHaloDotApi
+class Level extends Model implements HasHaloDotApi
 {
     use HasFactory;
 
@@ -45,23 +45,20 @@ class Map extends Model implements HasHaloDotApi
         $mapId = Arr::get($payload, 'id');
         $mapName = Arr::get($payload, 'name');
 
-        // Due to forged maps having the same id as base. We will key again to prevent wiping forge vs base maps.
-        $key = md5($mapId.Str::lower($mapName));
-
-        /** @var Map $map */
-        $map = self::query()
-            ->where('uuid', $key)
+        /** @var Level $level */
+        $level = self::query()
+            ->where('uuid', $mapId)
             ->firstOrNew([
-                'uuid' => $key,
+                'uuid' => $mapId,
             ]);
 
-        $map->name = $mapName;
-        $map->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
+        $level->name = $mapName;
+        $level->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
-        if ($map->isDirty()) {
-            $map->saveOrFail();
+        if ($level->isDirty()) {
+            $level->saveOrFail();
         }
 
-        return $map;
+        return $level;
     }
 }

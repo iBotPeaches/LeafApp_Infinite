@@ -119,8 +119,8 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
         $medal->id = Arr::get($payload, 'id');
         $medal->name = Arr::get($payload, 'name');
         $medal->description = Arr::get($payload, 'description');
-        $medal->type = Arr::get($payload, 'type', 'unknown');
-        $medal->difficulty = Arr::get($payload, 'difficulty');
+        $medal->type = Arr::get($payload, 'properties.type', 'unknown');
+        $medal->difficulty = Arr::get($payload, 'attributes.difficulty');
 
         if ($medal->isDirty()) {
             $medal->saveOrFail();

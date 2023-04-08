@@ -22,10 +22,19 @@ class PullMetadata extends Command
 
     public function handle(): int
     {
+        $this->line('Pulling Medals...');
         $this->client->metadataMedals();
+
+        $this->line('Pulling Maps...');
         $this->client->metadataMaps();
+
+        $this->line('Pulling Teams...');
         $this->client->metadataTeams();
+
+        $this->line('Pulling Playlists...');
         $this->client->metadataPlaylists();
+
+        $this->line('Pulling Categories...');
         $this->client->metadataCategories();
 
         return CommandAlias::SUCCESS;

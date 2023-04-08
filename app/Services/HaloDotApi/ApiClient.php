@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Csr;
 use App\Models\Game;
 use App\Models\GamePlayer;
-use App\Models\Map;
+use App\Models\Level;
 use App\Models\Medal;
 use App\Models\Player;
 use App\Models\Playlist;
@@ -149,10 +149,10 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $map) {
-            Map::fromHaloDotApi($map);
+            Level::fromHaloDotApi($map);
         }
 
-        return Map::all();
+        return Level::all();
     }
 
     public function metadataTeams(): Collection
@@ -197,10 +197,10 @@ class ApiClient implements InfiniteInterface
             $url = "stats/multiplayer/players/{$player->gamertag}/service-record/matchmade/";
             $season = $season === -1 ? null : $season;
 
-            // TODO Season broken
+            // TODO Season broken - query season against metadata and extract key
             $queryParams = [
                 'filter' => $filter->toUrlSlug(),
-                'season' => $season,
+                'season_id' => $season,
             ];
 
             $response = $this->getPendingRequest()->get($url, $queryParams);

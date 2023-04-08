@@ -58,7 +58,7 @@ class Playlist extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $playlistId = Arr::get($payload, 'asset.id');
+        $playlistId = Arr::get($payload, 'id');
 
         /** @var Playlist $playlist */
         $playlist = self::query()
@@ -68,7 +68,7 @@ class Playlist extends Model implements HasHaloDotApi
             ]);
 
         $playlist->name = Arr::get($payload, 'name');
-        $playlist->is_ranked = Arr::get($payload, 'properties.ranked');
+        $playlist->is_ranked = Arr::get($payload, 'attributes.ranked');
         $playlist->queue = Arr::get($payload, 'properties.queue');
         $playlist->input = Arr::get($payload, 'properties.input');
 
