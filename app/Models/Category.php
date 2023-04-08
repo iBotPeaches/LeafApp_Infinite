@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasHaloDotApiMetadata;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
  *
  * @method static CategoryFactory factory(...$parameters)
  */
-class Category extends Model implements HasHaloDotApi
+class Category extends Model implements HasHaloDotApi, HasHaloDotApiMetadata
 {
     use HasFactory;
 
@@ -27,27 +27,27 @@ class Category extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
+    public static function fromMetadata(array $payload): ?static
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return self::query()
+            ->where('uuid', Arr::get($payload, 'properties.category_id'))
+            ->firstOrFail();
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryId = (string) Arr::get($payload, 'id', Arr::get($payload, 'properties.category_id'));
-        $name = Str::after(Arr::get($payload, 'name'), ':');
-
-        // Due to gametypes having the same categoryId as base. We will key again to prevent wiping custom gametypes vs base modes.
-        $key = md5($categoryId.Str::lower($name));
+        $categoryId = (string) Arr::get($payload, 'id');
 
         /** @var Category $category */
         $category = self::query()
-            ->where('uuid', $key)
+            ->where('uuid', $categoryId)
             ->firstOrNew([
-                'uuid' => $key,
+                'uuid' => $categoryId,
             ]);
 
-        $category->name = $name;
-        $category->thumbnail_url = Arr::get(
-            $payload,
-            'image_urls.thumbnail',
-            Arr::get($payload, 'asset.thumbnail_url')
-        );
+        $category->name = Arr::get($payload, 'name');
+        $category->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($category->isDirty()) {
             $category->saveOrFail();

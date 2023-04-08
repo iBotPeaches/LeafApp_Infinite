@@ -45,14 +45,11 @@ class Map extends Model implements HasHaloDotApi
         $mapId = Arr::get($payload, 'id');
         $mapName = Arr::get($payload, 'name');
 
-        // Due to forged maps having the same id as base. We will key again to prevent wiping forge vs base maps.
-        $key = md5($mapId.Str::lower($mapName));
-
         /** @var Map $map */
         $map = self::query()
-            ->where('uuid', $key)
+            ->where('uuid', $mapId)
             ->firstOrNew([
-                'uuid' => $key,
+                'uuid' => $mapId,
             ]);
 
         $map->name = $mapName;

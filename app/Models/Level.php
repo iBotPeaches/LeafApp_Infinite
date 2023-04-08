@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasHaloDotApiMetadata;
 use Database\Factories\LevelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ use Illuminate\Support\Str;
  *
  * @method static LevelFactory factory(...$parameters)
  */
-class Level extends Model implements HasHaloDotApi
+class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
 {
     use HasFactory;
 
@@ -40,19 +41,27 @@ class Level extends Model implements HasHaloDotApi
         return $this->thumbnail_url;
     }
 
+    public static function fromMetadata(array $payload): ?static
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return self::query()
+            ->where('uuid', Arr::get($payload, 'id'))
+            ->firstOrFail();
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $mapId = Arr::get($payload, 'id');
-        $mapName = Arr::get($payload, 'name');
+        $levelId = Arr::get($payload, 'id');
+        $levelName = Arr::get($payload, 'name');
 
         /** @var Level $level */
         $level = self::query()
-            ->where('uuid', $mapId)
+            ->where('uuid', $levelId)
             ->firstOrNew([
-                'uuid' => $mapId,
+                'uuid' => $levelId,
             ]);
 
-        $level->name = $mapName;
+        $level->name = $levelName;
         $level->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($level->isDirty()) {
