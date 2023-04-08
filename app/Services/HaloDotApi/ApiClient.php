@@ -15,7 +15,6 @@ use App\Models\Player;
 use App\Models\Playlist;
 use App\Models\ServiceRecord;
 use App\Models\Team;
-use App\Services\HaloDotApi\Enums\Language;
 use App\Services\HaloDotApi\Enums\Mode;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
@@ -33,9 +32,7 @@ class ApiClient implements InfiniteInterface
 
     public function appearance(string $gamertag): ?Player
     {
-        $response = $this->getPendingRequest()->get('appearance/players/spartan-id', [
-            'gamertag' => $gamertag,
-        ]);
+        $response = $this->getPendingRequest()->get("appearance/players/{$gamertag}/spartan-id");
 
         if ($response->successful()) {
             return Player::fromHaloDotApi($response->json());
@@ -48,20 +45,15 @@ class ApiClient implements InfiniteInterface
     {
         // Handle when -1 (no season) is sent here.
         $season = $season === -1 ? null : $season;
-
         $season ??= (int) config('services.autocode.competitive.season');
+
+        // TODO - Look up season against Season table, extract CSR
+
         $queryParams = [
-            'gamertag' => $player->gamertag,
-            'season' => $season,
+            'season_csr' => 'CsrSeason'.$season.'-1',
         ];
 
-        // Handle upstream API breaking when we send latest season (ie 2), but with no version.
-        // Returns are returned with S2V3, but invalid when S2 only is asked for.
-        if ($season === (int) config('services.autocode.competitive.season')) {
-            $queryParams['version'] = (int) config('services.autocode.competitive.version');
-        }
-
-        $response = $this->getPendingRequest()->get('stats/players/csrs', $queryParams);
+        $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->gamertag}/csrs", $queryParams);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
@@ -81,10 +73,8 @@ class ApiClient implements InfiniteInterface
         $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
-            $response = $this->getPendingRequest()->post('stats/players/matches', [
-                'gamertag' => $player->gamertag,
+            $response = $this->getPendingRequest()->post("stats/multiplayer/players/{$player->gamertag}/matches", [
                 'type' => (string) $mode->value,
-                'language' => Language::US,
                 'count' => $perPage,
                 'offset' => $offset,
             ]);
@@ -130,10 +120,7 @@ class ApiClient implements InfiniteInterface
 
     public function match(string $matchUuid): ?Game
     {
-        $response = $this->getPendingRequest()->get('stats/matches', [
-            'ids' => Arr::wrap($matchUuid),
-        ])->throw();
-
+        $response = $this->getPendingRequest()->get("stats/multiplayer/matches/{$matchUuid}")->throw();
         $data = $response->json();
 
         $lastMatch = null;
@@ -194,7 +181,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataCategories(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/gamevariants')->throw();
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/modes/categories')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $category) {
@@ -207,13 +194,16 @@ class ApiClient implements InfiniteInterface
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
     {
         foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
-            $url = 'stats/players/service-record/multiplayer/matchmade/'.$filter->toUrlSlug();
+            $url = "stats/multiplayer/players/{$player->gamertag}/service-record/matchmade/";
             $season = $season === -1 ? null : $season;
 
-            $response = $this->getPendingRequest()->get($url, [
-                'gamertag' => $player->gamertag,
+            // TODO Season broken
+            $queryParams = [
+                'filter' => $filter->toUrlSlug(),
                 'season' => $season,
-            ]);
+            ];
+
+            $response = $this->getPendingRequest()->get($url, $queryParams);
 
             // If we have a 403 - Chances are its because season x is not available.
             // This is recoverable. Just return and say its okay (because its empty and ok)

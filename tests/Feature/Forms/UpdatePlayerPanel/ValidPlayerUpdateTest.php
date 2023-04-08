@@ -47,7 +47,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::fake([
             PullAppearance::class,
             PullCompetitive::class,
-            PullMatchHistory::class
+            PullMatchHistory::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
