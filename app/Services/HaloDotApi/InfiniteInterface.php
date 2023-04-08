@@ -17,8 +17,6 @@ interface InfiniteInterface
 
     public function competitive(Player $player, ?int $season = null): ?Csr;
 
-    public function mmr(Player $player): Player;
-
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
 
     public function match(string $matchUuid): ?Game;
