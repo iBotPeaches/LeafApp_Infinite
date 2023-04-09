@@ -27,13 +27,14 @@ class Gamevariant extends Model implements HasHaloDotApi
 
     public $guarded = [
         'id',
+        'category_id',
     ];
 
     public $timestamps = false;
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $gamevariantId = (string) Arr::get($payload, 'asset.id');
+        $gamevariantId = (string) Arr::get($payload, 'id');
 
         $category = Category::fromMetadata($payload);
 

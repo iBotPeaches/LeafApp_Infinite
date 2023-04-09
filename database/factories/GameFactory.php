@@ -27,7 +27,6 @@ class GameFactory extends Factory
             'playlist_id' => Playlist::factory(),
             'gamevariant_id' => Gamevariant::factory(),
             'is_ffa' => $this->faker->boolean,
-            'is_scored' => $this->faker->boolean,
             'experience' => Experience::getRandomValue(),
             'occurred_at' => Carbon::now(),
             'duration_seconds' => $this->faker->numerify('####'),

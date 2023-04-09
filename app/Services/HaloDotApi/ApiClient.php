@@ -123,12 +123,7 @@ class ApiClient implements InfiniteInterface
         $response = $this->getPendingRequest()->get("stats/multiplayer/matches/{$matchUuid}")->throw();
         $data = $response->json();
 
-        $lastMatch = null;
-        foreach (Arr::get($data, 'data') as $match) {
-            $lastMatch = Game::fromHaloDotApi((array) Arr::get($match, 'match', []));
-        }
-
-        return $lastMatch;
+        return Game::fromHaloDotApi((array) (Arr::get($data, 'data')));
     }
 
     public function metadataMedals(): Collection

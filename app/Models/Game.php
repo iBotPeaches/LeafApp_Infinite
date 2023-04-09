@@ -28,7 +28,6 @@ use Illuminate\Support\Str;
  * @property int $map_id
  * @property bool $is_ffa
  * @property bool|null $is_lan
- * @property bool $is_scored
  * @property Experience $experience
  * @property Carbon $occurred_at
  * @property int $duration_seconds
@@ -115,12 +114,12 @@ class Game extends Model implements HasHaloDotApi
 
     public function getNameAttribute(): string
     {
-        return $this->category->name.' on '.$this->map->name;
+        return $this->gamevariant->name.' on '.$this->map->name;
     }
 
     public function getDescriptionAttribute(): string
     {
-        return $this->category->name.' on '.
+        return $this->gamevariant->name.' on '.
             $this->map->name.' in '.
             $this->experience->description.' at '.
             $this->occurred_at->toFormattedDateString().' with: '.
@@ -179,12 +178,9 @@ class Game extends Model implements HasHaloDotApi
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $categoryPayload = Arr::get($payload, 'details.gamevariant');
-
         $gameId = Arr::get($payload, 'id');
-        $category = Category::fromHaloDotApi($categoryPayload);
         $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
-        $gamevariant = Gamevariant::fromHaloDotApi($categoryPayload);
+        $gamevariant = Gamevariant::fromHaloDotApi(Arr::get($payload, 'details.ugcgamevariant'));
 
         // Customs do not have a Playlist
         $playlistData = Arr::get($payload, 'details.playlist');
@@ -193,7 +189,7 @@ class Game extends Model implements HasHaloDotApi
         }
 
         /** @var Mode|null $mode */
-        $mode = Mode::coerce(Arr::get($payload, 'type'));
+        $mode = Mode::coerce(Arr::get($payload, 'properties.type'));
 
         /** @var Game $game */
         $game = self::query()
@@ -202,21 +198,20 @@ class Game extends Model implements HasHaloDotApi
                 'uuid' => $gameId,
             ]);
 
-        $game->category()->associate($category);
+        $game->category()->associate(null);
         $game->map()->associate($map);
         $game->gamevariant()->associate($gamevariant);
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
-        $game->is_ffa = ! Arr::get($payload, 'teams.enabled');
+        $game->is_ffa = count(Arr::get($payload, 'teams', [])) > 0;
         $game->is_lan ??= $mode && $mode->is(Mode::LAN());
-        $game->is_scored = (bool) Arr::get($payload, 'teams.scoring');
-        $game->experience = Arr::get($payload, 'experience');
-        $game->occurred_at = Arr::get($payload, 'played_at');
-        $game->duration_seconds = Arr::get($payload, 'duration.seconds');
+        $game->experience = Arr::get($payload, 'properties.experience');
+        $game->occurred_at = Arr::get($payload, 'started_at');
+        $game->duration_seconds = Arr::get($payload, 'playable_duration.seconds');
         $game->season_number = Arr::get($payload, 'season.id');
         $game->season_version = Arr::get($payload, 'season.version');
-        $game->version = config('services.autocode.version');
+        $game->version = config('services.halodotapi.version');
 
         if (Arr::has($payload, 'teams.details')) {
             $game->was_pulled = true;
