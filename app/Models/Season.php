@@ -36,7 +36,7 @@ class Season extends Model implements HasHaloDotApi
     {
         $seasonId = Arr::get($payload, 'id');
         $seasonVersion = Arr::get($payload, 'version');
-        $key = $seasonId . '-' . $seasonVersion;
+        $key = $seasonId.'-'.$seasonVersion;
 
         /** @var Season $season */
         $season = self::query()
