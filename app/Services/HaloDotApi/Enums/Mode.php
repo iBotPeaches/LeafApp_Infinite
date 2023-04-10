@@ -19,6 +19,16 @@ final class Mode extends Enum
 
     const LAN = 'local';
 
+    public static function coerce(mixed $enumKeyOrValue): ?static
+    {
+        $enumKeyOrValue = match (strtolower($enumKeyOrValue)) {
+            'matchmade' => self::MATCHMADE,
+            default => $enumKeyOrValue
+        };
+
+        return parent::coerce($enumKeyOrValue);
+    }
+
     public function getLastGameIdVariable(): string
     {
         return match ($this->value) {
