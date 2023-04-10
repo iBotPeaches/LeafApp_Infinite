@@ -30,7 +30,7 @@ class ApiClient implements XboxInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->withUserAgent('Leaf - v'.config('services.autocode.version', 'dirty'))
+            ->withUserAgent('Leaf - v'.config('sentry.release', 'dirty'))
             ->baseUrl($this->config['domain']);
     }
 }

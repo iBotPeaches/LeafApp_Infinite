@@ -237,6 +237,10 @@ class ApiClient implements InfiniteInterface
     {
         return Http::asJson()
             ->baseUrl($this->config['domain'].'/games/halo-infinite/')
+            ->withUserAgent('Leaf - v'.config('sentry.release', 'dirty'))
+            ->withHeaders([
+                'Halo.API-Version' => config('services.halodotapi.version', '2023-04-07')
+            ])
             ->timeout(180)
             ->withToken($this->config['key']);
     }
