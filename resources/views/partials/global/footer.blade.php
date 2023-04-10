@@ -1,12 +1,12 @@
 <?php
 $version = App\Support\System\VersionHelper::getVersionString();
-$color = config('services.autocode.disabled') ? 'is-danger' : 'is-warning';
+$color = config('services.halotdotapi.disabled') ? 'is-danger' : 'is-warning';
 ?>
 <footer class="footer mt-auto">
     <div class="content has-text-centered">
-        @if (config('services.autocode.warning_message'))
+        @if (config('services.halotdotapi.warning_message'))
             <div class="notification {{ $color }}">
-                {!! config('services.autocode.warning_message') !!}
+                {!! config('services.halotdotapi.warning_message') !!}
             </div>
         @endif
         <p>
@@ -41,9 +41,9 @@ $color = config('services.autocode.disabled') ? 'is-danger' : 'is-warning';
 
                 API via <a
                     target="_blank"
-                    href="https://autocode.com/lib/halo/"
+                    href="https://halo.api/"
                     rel="noreferrer"
-                >HaloDotAPI (Autocode {{ config('services.autocode.version') }})</a>.
+                >HaloDotAPI ({{ config('services.halotdotapi.version') }})</a>.
             </span>
         </p>
     </div>

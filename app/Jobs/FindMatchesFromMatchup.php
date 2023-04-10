@@ -35,7 +35,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     public function handle(): void
     {
-        if (config('services.autocode.disabled') || is_null($this->matchup->started_at)) {
+        if (config('services.halotdotapi.disabled') || is_null($this->matchup->started_at)) {
             return;
         }
 

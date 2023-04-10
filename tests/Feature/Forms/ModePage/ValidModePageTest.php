@@ -31,7 +31,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
             ]);
 
-        SeasonSession::set((int) config('services.autocode.competitive.season'));
+        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
 
         // Act & Assert
         Livewire::test(ModePage::class, [

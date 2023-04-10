@@ -29,7 +29,7 @@ class PullCompetitive implements ShouldQueue
     public function __construct(Player $player, ?int $seasonNumber)
     {
         $this->player = $player;
-        $this->seasonNumber = $seasonNumber ?? (int) config('services.autocode.competitive.season');
+        $this->seasonNumber = $seasonNumber ?? (int) config('services.halodotapi.competitive.season');
         $this->onQueue(QueueName::COMPETITIVE);
     }
 

@@ -191,7 +191,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         $season = $season === -1 ? null : $season;
 
         return $this->csrs()
-            ->where('season', $season ?? config('services.autocode.competitive.season'))
+            ->where('season', $season ?? config('services.halodotapi.competitive.season'))
             ->where('mode', CompetitiveMode::CURRENT)
             ->orderByDesc('csr')
             ->get();
@@ -202,7 +202,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         $season = $season === -1 ? null : $season;
 
         return $this->csrs()
-            ->where('season', $season ?? config('services.autocode.competitive.season'))
+            ->where('season', $season ?? config('services.halodotapi.competitive.season'))
             ->where('mode', CompetitiveMode::SEASON)
             ->orderByDesc('csr')
             ->get();

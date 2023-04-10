@@ -119,7 +119,7 @@ class GamePageTest extends TestCase
             ->forMap(['name' => 'Bazaar'])
             ->forPlaylist(['name' => 'Unknown', 'is_ranked' => true])
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 
@@ -155,7 +155,7 @@ class GamePageTest extends TestCase
 
         $game = Game::factory()
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 

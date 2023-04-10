@@ -20,7 +20,7 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create();
 
-        SeasonSession::set((int) config('services.autocode.competitive.season'));
+        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
 
         // Acts & Assert
         foreach ($serviceRecord->hydrated_medals as $medal) {

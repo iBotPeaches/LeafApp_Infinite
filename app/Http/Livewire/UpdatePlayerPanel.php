@@ -39,7 +39,7 @@ class UpdatePlayerPanel extends Component
 
         $seasonNumber = SeasonSession::get();
         $cacheKey = 'player-profile-'.$this->player->id.$seasonNumber.md5($this->player->gamertag);
-        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int) config('services.autocode.competitive.season');
+        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int) config('services.halodotapi.competitive.season');
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
@@ -59,7 +59,7 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey, $isOlderSeason) {
-                    $cooldownMinutes = (int) config('services.autocode.cooldown');
+                    $cooldownMinutes = (int) config('services.halodotapi.cooldown');
                     $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
                     Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 

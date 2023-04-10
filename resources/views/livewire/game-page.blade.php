@@ -5,7 +5,7 @@
     <div class="column">
         @include('partials.game.game-card')
         @include('partials.game.team-breakdown')
-        @if ($game->outdated && !config('services.autocode.disabled'))
+        @if ($game->outdated && !config('services.halodotapi.disabled'))
             <livewire:update-game-panel :game="$game" />
         @endif
         <hr />

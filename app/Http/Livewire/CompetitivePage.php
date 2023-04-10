@@ -33,7 +33,7 @@ class CompetitivePage extends Component
             'season' => $this->player->seasonHighRanked($season),
             'allTime' => $this->player->allTimeRanked(),
             'latestMmr' => $latestMmr,
-            'isCurrentSeason' => $season === (int) config('services.autocode.competitive.season'),
+            'isCurrentSeason' => $season === (int) config('services.halotdotapi.competitive.season'),
             'isAllSeasons' => $season === -1,
         ]);
     }

@@ -46,7 +46,7 @@ class ApiClient implements InfiniteInterface
     {
         // Handle when -1 (no season) is sent here.
         $season = $season === -1 ? null : $season;
-        $season ??= (int) config('services.autocode.competitive.season');
+        $season ??= (int) config('services.halotdotapi.competitive.season');
 
         // TODO - Look up season against Season table, extract CSR
 

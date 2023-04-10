@@ -20,7 +20,7 @@ class ValidMedalsPageTest extends TestCase
             ->has(ServiceRecord::factory()->withMedals())
             ->createOne();
 
-        SeasonSession::set((int) config('services.autocode.competitive.season'));
+        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [

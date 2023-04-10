@@ -132,7 +132,7 @@ class Game extends Model implements HasHaloDotApi
             return true;
         }
 
-        return $this->version !== config('services.autocode.version');
+        return $this->version !== config('services.halodotapi.version');
     }
 
     public function getDurationAttribute(): string
