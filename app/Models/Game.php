@@ -204,7 +204,7 @@ class Game extends Model implements HasHaloDotApi
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
-        $game->is_ffa = count(Arr::get($payload, 'teams', [])) > 0;
+        $game->is_ffa = count(Arr::get($payload, 'teams', [])) === 0;
         $game->is_lan ??= $mode && $mode->is(Mode::LAN());
         $game->experience = Arr::get($payload, 'properties.experience');
         $game->occurred_at = Arr::get($payload, 'started_at');
@@ -213,7 +213,7 @@ class Game extends Model implements HasHaloDotApi
         $game->season_version = Arr::get($payload, 'season.version');
         $game->version = config('services.halodotapi.version');
 
-        if (Arr::has($payload, 'teams.details')) {
+        if (Arr::has($payload, 'teams.0.id')) {
             $game->was_pulled = true;
         }
 
@@ -221,8 +221,8 @@ class Game extends Model implements HasHaloDotApi
             $game->saveOrFail();
         }
 
-        if (Arr::has($payload, 'teams.details')) {
-            foreach (Arr::get($payload, 'teams.details', []) as $teamData) {
+        if (Arr::has($payload, 'teams.0.id')) {
+            foreach (Arr::get($payload, 'teams', []) as $teamData) {
                 $teamData['_leaf']['game'] = $game;
                 GameTeam::fromHaloDotApi($teamData);
             }
@@ -230,12 +230,12 @@ class Game extends Model implements HasHaloDotApi
 
         if (Arr::has($payload, 'players')) {
             foreach (Arr::get($payload, 'players', []) as $playerData) {
-                $gamertag = Arr::get($playerData, 'details.name');
-                $type = Arr::get($playerData, 'details.type', PlayerType::PLAYER);
+                $gamertag = Arr::get($playerData, 'name');
+                $type = Arr::get($playerData, 'properties.type', PlayerType::PLAYER);
 
                 // Skip unresolved users from upstream API. We will force the game not yet updated to
                 // re-process later.
-                if ($type === PlayerType::PLAYER && (bool) Arr::get($playerData, 'details.resolved') === false) {
+                if ($type === PlayerType::PLAYER && (bool) Arr::get($playerData, 'attributes.resolved') === false) {
                     $game->was_pulled = false;
                     $game->saveOrFail();
 
