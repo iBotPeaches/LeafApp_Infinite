@@ -13,6 +13,7 @@ use App\Models\Level;
 use App\Models\Medal;
 use App\Models\Player;
 use App\Models\Playlist;
+use App\Models\Season;
 use App\Models\ServiceRecord;
 use App\Models\Team;
 use App\Services\HaloDotApi\Enums\Mode;
@@ -184,6 +185,18 @@ class ApiClient implements InfiniteInterface
         }
 
         return Category::all();
+    }
+
+    public function metadataSeasons(): Collection
+    {
+        $response = $this->getPendingRequest()->get('metadata/multiplayer/seasons')->throw();
+        $data = $response->json();
+
+        foreach (Arr::get($data, 'data') as $season) {
+            Season::fromHaloDotApi($season);
+        }
+
+        return Season::all();
     }
 
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord

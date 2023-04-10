@@ -37,6 +37,9 @@ class PullMetadata extends Command
         $this->line('Pulling Categories...');
         $this->client->metadataCategories();
 
+        $this->line('Pulling Seasons...');
+        $this->client->metadataSeasons();
+
         return CommandAlias::SUCCESS;
     }
 }

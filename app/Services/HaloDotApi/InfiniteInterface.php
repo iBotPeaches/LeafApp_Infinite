@@ -31,5 +31,7 @@ interface InfiniteInterface
 
     public function metadataCategories(): Collection;
 
+    public function metadataSeasons(): Collection;
+
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord;
 }
