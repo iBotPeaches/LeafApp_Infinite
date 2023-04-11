@@ -40,8 +40,8 @@
                             </a>
                         </td>
                         <td>
-                            <abbr title="{{ $game->gamevariant->name }}">
-                                {{ \Illuminate\Support\Str::limit($game->gamevariant->name, 18) }}
+                            <abbr title="{{ $game->gamevariant?->name ?? $game->category?->name }}">
+                                {{ \Illuminate\Support\Str::limit($game->gamevariant?->name ?? $game->category?->name, 18) }}
                             </abbr>
                         </td>
                         <td class="{{ $game->personal->getVictoryColor() }}">

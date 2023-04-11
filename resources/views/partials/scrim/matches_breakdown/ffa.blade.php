@@ -15,7 +15,7 @@ $winningPlayer = $game->players->sortBy('rank')->first();
         @endif
     </p>
     <p class="subtitle">
-        {{ $game->gamevariant->name }}
+        {{ $game->gamevariant?->name ?? $game->category?->name }}
         @if ($winningPlayer)
             <span class="is-pulled-right">
                 <span class="has-tooltip-arrow" data-tooltip="{{ $winningPlayer->player->gamertag }}">

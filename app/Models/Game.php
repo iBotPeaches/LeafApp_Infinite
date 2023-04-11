@@ -114,12 +114,12 @@ class Game extends Model implements HasHaloDotApi
 
     public function getNameAttribute(): string
     {
-        return $this->gamevariant->name.' on '.$this->map->name;
+        return ($this->gamevariant?->name ?? $this->category?->name).' on '.$this->map->name;
     }
 
     public function getDescriptionAttribute(): string
     {
-        return $this->gamevariant->name.' on '.
+        return ($this->gamevariant?->name ?? $this->category?->name).' on '.
             $this->map->name.' in '.
             $this->experience->description.' at '.
             $this->occurred_at->toFormattedDateString().' with: '.

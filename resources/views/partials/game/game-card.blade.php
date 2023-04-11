@@ -22,8 +22,8 @@
             <div class="media-content">
                 <h1 class="title is-4">{{ $game->map->name }}</h1>
                 <h2 class="subtitle is-6">
-                    <span class="has-tooltip-arrow" data-tooltip="Base Mode: {{ $game->gamevariant->category->name ?? 'Unknown Gametype' }}">
-                        {{ $game->gamevariant->name }}
+                    <span class="has-tooltip-arrow" data-tooltip="Base Mode: {{ $game->gamevariant?->category?->name ?? 'Unknown Gametype' }}">
+                        {{ $game->gamevariant?->name ?? $game->category?->name }}
                     </span>
                     @if ($game->playlist)
                         - {{ $game->playlist->name }}
