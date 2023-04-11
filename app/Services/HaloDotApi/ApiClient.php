@@ -205,11 +205,16 @@ class ApiClient implements InfiniteInterface
             $url = "stats/multiplayer/players/{$player->gamertag}/service-record/matchmade/";
             $season = $season === -1 ? null : $season;
 
-            // TODO Season broken - query season against metadata and extract key
             $queryParams = [
                 'filter' => $filter->toUrlSlug(),
-                'season_id' => $season,
             ];
+
+            if (is_numeric($season)) {
+                $seasonModel = Season::latestOfSeason($season);
+                if ($seasonModel) {
+                    $queryParams['season_id'] = $seasonModel->identifier;
+                }
+            }
 
             $response = $this->getPendingRequest()->get($url, $queryParams);
 
@@ -225,7 +230,6 @@ class ApiClient implements InfiniteInterface
             $item['_leaf']['player'] = $player;
             $item['_leaf']['filter'] = $filter;
             $item['_leaf']['season'] = $season;
-            $item['_leaf']['privacy'] = Arr::get($data, 'additional.privacy');
 
             ServiceRecord::fromHaloDotApi($item);
         }

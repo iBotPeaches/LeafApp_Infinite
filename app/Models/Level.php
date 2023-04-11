@@ -41,7 +41,7 @@ class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
         return $this->thumbnail_url;
     }
 
-    public static function fromMetadata(array $payload): ?static
+    public static function fromMetadata(array $payload): ?self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()

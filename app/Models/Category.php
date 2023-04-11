@@ -27,7 +27,7 @@ class Category extends Model implements HasHaloDotApi, HasHaloDotApiMetadata
 
     public $timestamps = false;
 
-    public static function fromMetadata(array $payload): ?static
+    public static function fromMetadata(array $payload): ?self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()

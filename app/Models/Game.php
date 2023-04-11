@@ -35,7 +35,7 @@ use Illuminate\Support\Str;
  * @property int|null $season_version
  * @property string $version
  * @property bool $was_pulled
- * @property-read Category $category
+ * @property-read ?Category $category
  * @property-read Map $map
  * @property-read Playlist|null $playlist
  * @property-read Gamevariant|null $gamevariant

@@ -6,5 +6,5 @@ namespace App\Models\Contracts;
 
 interface HasHaloDotApiMetadata
 {
-    public static function fromMetadata(array $payload): ?static;
+    public static function fromMetadata(array $payload): ?self;
 }
