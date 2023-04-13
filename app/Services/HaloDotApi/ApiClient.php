@@ -17,6 +17,7 @@ use App\Models\Season;
 use App\Models\ServiceRecord;
 use App\Models\Team;
 use App\Services\HaloDotApi\Enums\Mode;
+use App\Support\Session\SeasonSession;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
@@ -43,7 +44,7 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function competitive(Player $player, ?int $season = null): ?Csr
+    public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr
     {
         // Handle when -1 (no season) is sent here.
         $season = $season === -1 ? null : $season;
@@ -198,21 +199,18 @@ class ApiClient implements InfiniteInterface
         return Season::all();
     }
 
-    public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
+    public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord
     {
         foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
             $url = "stats/multiplayer/players/{$player->url_safe_gamertag}/service-record/matchmade/";
-            $season = $season === -1 ? null : $season;
+            $season = $seasonIdentifier === SeasonSession::$allSeasonKey ? null : $seasonIdentifier;
 
             $queryParams = [
                 'filter' => $filter->toUrlSlug(),
             ];
 
-            if (is_numeric($season)) {
-                $seasonModel = Season::latestOfSeason($season);
-                if ($seasonModel) {
-                    $queryParams['season_id'] = $seasonModel->identifier;
-                }
+            if ($season) {
+                $queryParams['season_id'] = $seasonIdentifier;
             }
 
             $response = $this->getPendingRequest()->get($url, $queryParams);
@@ -228,7 +226,7 @@ class ApiClient implements InfiniteInterface
             $item = Arr::get($data, 'data');
             $item['_leaf']['player'] = $player;
             $item['_leaf']['filter'] = $filter;
-            $item['_leaf']['season'] = $season;
+            $item['_leaf']['season'] = Season::ofSeasonIdentifierOrKey($seasonIdentifier);
 
             ServiceRecord::fromHaloDotApi($item);
         }

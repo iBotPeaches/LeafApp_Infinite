@@ -6,6 +6,7 @@ use App\Enums\Mode;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
+use App\Support\Session\SeasonSession;
 use Database\Factories\ServiceRecordFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ use Illuminate\Support\Collection;
  * @property int $player_id
  * @property Mode $mode
  * @property int|null $season_number
+ * @property string|null $season_key
  * @property float $kd
  * @property float $kda
  * @property int $total_score
@@ -153,18 +155,19 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $player = Arr::get($payload, '_leaf.player');
         /** @var Mode $mode */
         $mode = Arr::get($payload, '_leaf.filter');
+        /** @var Season|null $season */
         $season = Arr::get($payload, '_leaf.season');
 
         /** @var ServiceRecord $serviceRecord */
         $serviceRecord = ServiceRecord::query()
             ->where('player_id', $player->id)
             ->where('mode', $mode)
-            ->where('season_number', $season)
+            ->where('season_key', $season?->key)
             ->firstOrNew();
 
         $serviceRecord->player()->associate($player);
         $serviceRecord->mode = $mode;
-        $serviceRecord->season_number = $season;
+        $serviceRecord->season_key = $season?->key;
         $serviceRecord->kd = (float) Arr::get($payload, 'stats.core.kdr');
         $serviceRecord->kda = (float) Arr::get($payload, 'stats.core.kda');
         $serviceRecord->total_score = (int) Arr::get($payload, 'stats.core.scores.personal');
@@ -225,12 +228,12 @@ class ServiceRecord extends Model implements HasHaloDotApi
         return $this->belongsTo(Player::class);
     }
 
-    public function scopeOfSeason(Builder $query, int $season): Builder
+    public function scopeOfSeason(Builder $query, Season $season): Builder
     {
-        if ($season === -1) {
-            return $query->whereNull('season_number');
+        if ($season->key === SeasonSession::$allSeasonKey) {
+            return $query->whereNull('season_key');
         }
 
-        return $query->where('season_number', $season);
+        return $query->where('season_key', $season->key);
     }
 }

@@ -4,20 +4,31 @@ declare(strict_types=1);
 
 namespace App\Support\Session;
 
+use App\Models\Season;
 use Illuminate\Support\Facades\Session;
 
 class SeasonSession
 {
     private static string $sessionKey = 'season-type';
 
-    private static int $allSeasonKey = -1;
+    public static string $allSeasonKey = '-1';
 
-    public static function get(): int
+    public static function get(): string
     {
-        return (int) Session::get(self::$sessionKey, self::$allSeasonKey);
+        return (string) Session::get(self::$sessionKey, self::$allSeasonKey);
     }
 
-    public static function set(int $season): void
+    public static function model(): Season
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return Season::query()
+            ->where('key', self::get())
+            ->firstOrNew([
+                'key' => self::get(),
+            ]);
+    }
+
+    public static function set(string $season): void
     {
         Session::put(self::$sessionKey, $season);
     }

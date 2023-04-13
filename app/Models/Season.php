@@ -32,12 +32,16 @@ class Season extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
-    public static function latestOfSeason(int $seasonNumber): ?self
+    public static function ofSeasonIdentifierOrKey(?string $key = null): ?self
     {
+        if (! $key) {
+            return null;
+        }
+
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
-            ->where('season_id', $seasonNumber)
-            ->orderByDesc('season_version')
+            ->where('identifier', $key)
+            ->orWhere('csr_key', $key)
             ->first();
     }
 

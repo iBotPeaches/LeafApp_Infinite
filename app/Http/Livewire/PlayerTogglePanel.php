@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
+use App\Models\Season;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
@@ -15,7 +16,7 @@ class PlayerTogglePanel extends Component
 
     public string $type;
 
-    public int $season;
+    public string $seasonKey;
 
     public function onChange(): void
     {
@@ -25,21 +26,24 @@ class PlayerTogglePanel extends Component
 
     public function onSeasonChange(): void
     {
-        SeasonSession::set($this->season);
+        SeasonSession::set($this->seasonKey);
         $this->emitToComponents();
     }
 
     public function mount(): void
     {
         $this->playerType = (int) ModeSession::get()->value;
-        $this->season = SeasonSession::get();
+        $this->seasonKey = SeasonSession::get();
     }
 
     public function render(): View
     {
+        $seasons = Season::all();
+
         return view('livewire.player-toggle-panel', [
             'playerType' => $this->playerType,
-            'season' => $this->season,
+            'season' => $this->seasonKey,
+            'seasons' => $seasons,
         ]);
     }
 
@@ -50,7 +54,7 @@ class PlayerTogglePanel extends Component
         $this->emitTo(MedalsLeaderboard::class, '$refresh');
         $this->emitTo(CompetitivePage::class, '$refresh');
 
-        // We will refresh the UpdatePlayerPanel so someone swapping between seasons can immediatly get a stat update.
+        // We will refresh the UpdatePlayerPanel so someone swapping between seasons can immediately get a stat update.
         $this->emitTo(UpdatePlayerPanel::class, '$refresh');
     }
 }

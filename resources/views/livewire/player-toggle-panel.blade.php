@@ -1,20 +1,22 @@
 <div class="notification mb-1">
     <div class="control has-icons-left">
-        <div class="select is-medium is-fullwidth">
+        <div class="select is-fullwidth">
             <span class="icon is-large is-left">
                 <i class="fas fa-box"></i>
             </span>
-            <select wire:model="season" wire:change="onSeasonChange">
-                <option value="1">Season 1</option>
-                <option value="2">Season 2</option>
-                <option value="3">Season 3</option>
+            <select wire:model="seasonKey" wire:change="onSeasonChange">
+                @foreach ($seasons as $seasonModel)
+                    <option value="{{ $seasonModel->key }}">
+                        {{ $seasonModel->season_id }}-{{ $seasonModel->name }}
+                    </option>
+                @endforeach
                 <option value="-1">All Seasons</option>
             </select>
         </div>
     </div>
     @if (in_array($type, ['overview', 'medals']))
         <div class="control has-icons-left mt-3">
-            <div class="select is-medium is-fullwidth">
+            <div class="select is-fullwidth">
                 <span class="icon is-large is-left">
                     <i class="fas fa-globe"></i>
                 </span>

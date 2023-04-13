@@ -1,6 +1,7 @@
 <?php
 /** @var App\Models\ServiceRecord|null $serviceRecord */
 /** @var App\Models\Player $player */
+/** @var App\Models\Season $season */
 ?>
 @if (empty($serviceRecord))
     @if ($player->is_private)
@@ -8,11 +9,11 @@
     @else
         <div class="notification is-warning">
             <p>
-                No record was found for this user for this season. This may be intentional or an outdated profile.
+                No record was found for this user for this specific season: <strong>{{ $season->name ?? 'n/a' }}</strong>.
             </p>
             <br /><br />
             <p class="is-size-7">
-                If you are still reading this, chances are it's the specific season and not outdated.
+                If this is not intended - just click "Request Stat Update"
             </p>
         </div>
     @endif

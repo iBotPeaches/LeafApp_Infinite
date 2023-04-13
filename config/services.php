@@ -37,8 +37,8 @@ return [
         'version' => env('HALODOTAPI_VERSION', '2023-04-07'),
         'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
         'competitive' => [
+            'key' => env('HALODOTAPI_CURRENT_SEASON_KEY', '3-1'),
             'season' => env('HALODOTAPI_CURRENT_SEASON', 3),
-            'version' => env('HALODOTAPI_CURRENT_SEASON_VERSION', 1),
         ],
         'warning_message' => env('HALODOTAPI_WARNING_MESSAGE'),
     ],

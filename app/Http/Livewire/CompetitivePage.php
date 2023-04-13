@@ -26,15 +26,15 @@ class CompetitivePage extends Component
             ->orderByDesc('games.occurred_at')
             ->first();
 
-        $season = SeasonSession::get();
+        $seasonModel = SeasonSession::model();
 
         return view('livewire.competitive-page', [
-            'current' => $this->player->currentRanked($season),
-            'season' => $this->player->seasonHighRanked($season),
+            'current' => $this->player->currentRanked($seasonModel),
+            'season' => $this->player->seasonHighRanked($seasonModel),
             'allTime' => $this->player->allTimeRanked(),
             'latestMmr' => $latestMmr,
-            'isCurrentSeason' => $season === (int) config('services.halotdotapi.competitive.season'),
-            'isAllSeasons' => $season === -1,
+            'isCurrentSeason' => $seasonModel->key === (int) config('services.halotdotapi.competitive.key'),
+            'isAllSeasons' => $seasonModel->key === SeasonSession::$allSeasonKey,
         ]);
     }
 }
