@@ -55,6 +55,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Game|null $mmrGame
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
+ * @property-read string $url_safe_gamertag
  *
  * @method static PlayerFactory factory(...$parameters)
  */
@@ -69,6 +70,11 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     public function getRouteKeyName(): string
     {
         return 'gamertag';
+    }
+
+    public function getUrlSafeGamertagAttribute(): string
+    {
+        return urlencode($this->gamertag);
     }
 
     public function resolveRouteBinding($value, $field = null): ?Model
@@ -114,6 +120,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public static function fromGamertag(string $gamertag): self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([

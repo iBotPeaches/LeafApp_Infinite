@@ -33,7 +33,8 @@ class ApiClient implements InfiniteInterface
 
     public function appearance(string $gamertag): ?Player
     {
-        $response = $this->getPendingRequest()->get("appearance/players/{$gamertag}/spartan-id");
+        $urlSafeGamertag = urlencode($gamertag);
+        $response = $this->getPendingRequest()->get("appearance/players/{$urlSafeGamertag}/spartan-id");
 
         if ($response->successful()) {
             return Player::fromHaloDotApi($response->json());
@@ -54,7 +55,7 @@ class ApiClient implements InfiniteInterface
             'season_csr' => 'CsrSeason'.$season.'-1',
         ];
 
-        $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->gamertag}/csrs", $queryParams);
+        $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/csrs", $queryParams);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
@@ -74,7 +75,7 @@ class ApiClient implements InfiniteInterface
         $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
-            $response = $this->getPendingRequest()->post("stats/multiplayer/players/{$player->gamertag}/matches", [
+            $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/matches", [
                 'type' => (string) $mode->value,
                 'count' => $perPage,
                 'offset' => $offset,
@@ -89,15 +90,13 @@ class ApiClient implements InfiniteInterface
                     // HaloDotAPI - We can longer trust "type" as its not returning the matching value from the filtered search.
                     // This field may be deprecated in future. So force set it based on filter param.
                     // https://github.com/iBotPeaches/LeafApp_Infinite/issues/560
-                    Arr::set($gameData, 'type', (string) $mode->value);
+                    Arr::set($gameData, 'properties.type', (string) $mode->value);
 
                     $game = Game::fromHaloDotApi((array) $gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
                     // Due to limitation `fromHaloDotApi` only takes an array.
-                    $gameData['_leaf']['player'] = Player::fromGamertag(
-                        Arr::get($data, 'additional.parameters.gamertag')
-                    );
+                    $gameData['_leaf']['player'] = $player;
                     $gameData['_leaf']['game'] = $game;
 
                     GamePlayer::fromHaloDotApi($gameData);
@@ -110,7 +109,7 @@ class ApiClient implements InfiniteInterface
         }
 
         // Save the Player with the latest game pulled (Custom vs Matchmaking)
-        $player->$lastGameIdVariable = $firstPulledGameId;
+        $player->$lastGameIdVariable = $firstPulledGameId ?? $player->$lastGameIdVariable;
         $player->saveOrFail();
 
         return GamePlayer::query()
@@ -202,7 +201,7 @@ class ApiClient implements InfiniteInterface
     public function serviceRecord(Player $player, int $season = 1): ?ServiceRecord
     {
         foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
-            $url = "stats/multiplayer/players/{$player->gamertag}/service-record/matchmade/";
+            $url = "stats/multiplayer/players/{$player->url_safe_gamertag}/service-record/matchmade/";
             $season = $season === -1 ? null : $season;
 
             $queryParams = [
