@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
 use Tests\Mocks\Matches\MockMatchService;
-use Tests\Mocks\Mmr\MockMmrService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
 use Tests\TestCase;
 
@@ -35,7 +34,6 @@ class PullHaloDataTest extends TestCase
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -54,7 +52,6 @@ class PullHaloDataTest extends TestCase
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
