@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -43,8 +42,6 @@ use Spatie\Sitemap\Tags\Url;
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
  * @property string $last_csr_key
- * @property float|null $mmr
- * @property int $mmr_game_id
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property Carbon $created_at
@@ -52,7 +49,6 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
- * @property-read Game|null $mmrGame
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @property-read string $url_safe_gamertag
@@ -244,11 +240,6 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
-    }
-
-    public function mmrGame(): BelongsTo
-    {
-        return $this->belongsTo(Game::class, 'mmr_game_id');
     }
 
     public function csrs(): HasMany
