@@ -17,7 +17,7 @@ class ModeResult
 
     public ?Map $map = null;
 
-    public int $categoryId;
+    public ?int $categoryId;
 
     public ?Category $category = null;
 

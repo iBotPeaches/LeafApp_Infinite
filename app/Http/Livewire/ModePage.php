@@ -21,7 +21,7 @@ class ModePage extends Component
 
     public function render(): View
     {
-        $season = SeasonSession::get();
+        $season = SeasonSession::model();
 
         $modes = new ModeDecorator($this->player, $season);
 

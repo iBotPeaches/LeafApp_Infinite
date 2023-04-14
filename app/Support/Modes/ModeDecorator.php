@@ -8,6 +8,7 @@ use App\Enums\Outcome;
 use App\Models\Category;
 use App\Models\Map;
 use App\Models\Player;
+use App\Models\Season;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -16,22 +17,24 @@ class ModeDecorator
 {
     public Collection $modes;
 
-    public function __construct(Player $player, int $season = null)
+    public function __construct(Player $player, Season $season = null)
     {
         $sums = [];
         $season = $season === -1 ? null : $season;
 
         $query = DB::query()
             ->from('game_players')
-            ->select('outcome', 'map_id', 'category_id', new Expression('COUNT(*) as total'))
+            ->select('outcome', 'map_id', 'gamevariants.category_id', new Expression('COUNT(*) as total'))
             ->where('player_id', $player->id)
             ->where('playlists.is_ranked', true)
             ->join('games', 'game_players.game_id', '=', 'games.id')
+            ->join('gamevariants', 'games.gamevariant_id', '=', 'gamevariants.id')
             ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->groupBy('map_id', 'category_id', 'outcome');
 
         if ($season) {
-            $query->where('games.season_number', $season);
+            $query->where('games.season_number', $season->season_id);
+            $query->where('games.season_version', $season->season_version);
         }
 
         $modes = $query
@@ -73,7 +76,7 @@ class ModeDecorator
         $this->modes = $modes
             ->map(function (ModeResult $modeResult) use ($maps, $categories) {
                 $modeResult->map = $maps[$modeResult->mapId];
-                $modeResult->category = $categories[$modeResult->categoryId];
+                $modeResult->category = $categories[$modeResult->categoryId] ?? null;
 
                 return $modeResult;
             });
