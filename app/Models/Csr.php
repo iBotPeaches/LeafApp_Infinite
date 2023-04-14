@@ -24,7 +24,7 @@ use InvalidArgumentException;
  * @property Queue|null $queue
  * @property Input|null $input
  * @property int|null $season
- * @property string $season_key
+ * @property string|null $season_key
  * @property CompetitiveMode $mode
  * @property int $csr
  * @property int $matches_remaining

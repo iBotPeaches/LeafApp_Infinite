@@ -20,7 +20,6 @@ class ModeDecorator
     public function __construct(Player $player, Season $season = null)
     {
         $sums = [];
-        $season = $season === -1 ? null : $season;
 
         $query = DB::query()
             ->from('game_players')
@@ -32,7 +31,7 @@ class ModeDecorator
             ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->groupBy('map_id', 'category_id', 'outcome');
 
-        if ($season) {
+        if ($season?->season_id && $season->season_version) {
             $query->where('games.season_number', $season->season_id);
             $query->where('games.season_version', $season->season_version);
         }

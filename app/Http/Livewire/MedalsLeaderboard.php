@@ -44,7 +44,7 @@ class MedalsLeaderboard extends Component
             ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')
             ->orderByRaw('value DESC, total_seconds_played DESC');
 
-        if ($seasonSession === -1) {
+        if ($seasonSession === SeasonSession::$allSeasonKey) {
             $query->whereNull('season_number');
         } else {
             $query->where('season_number', $seasonSession);
