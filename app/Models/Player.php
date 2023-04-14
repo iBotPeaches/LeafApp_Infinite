@@ -193,23 +193,25 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         }
     }
 
-    public function currentRanked(?Season $season = null): Collection
+    public function currentRanked(?string $seasonKey = null, bool $isCurrentOrAll = true): Collection
     {
-        $seasonId = $season->key === SeasonSession::$allSeasonKey ? null : $season->season_id;
-
-        return $this->csrs()
-            ->where('season', $season ?? config('services.halodotapi.competitive.season'))
+        $query = $this->csrs()
+            ->where('season_key', $seasonKey)
             ->where('mode', CompetitiveMode::CURRENT)
-            ->orderByDesc('csr')
-            ->get();
+            ->orderByDesc('csr');
+
+        // If a previous season (or all) - don't show categories that never left placements as no CSR.
+        if (! $isCurrentOrAll) {
+            $query->where('csr', '>', 0);
+        }
+
+        return $query->get();
     }
 
-    public function seasonHighRanked(?Season $season = null): Collection
+    public function seasonHighRanked(?string $seasonKey = null): Collection
     {
-        $seasonId = $season->key === SeasonSession::$allSeasonKey ? null : $season->csr_key;
-
         return $this->csrs()
-            ->where('season', $season ?? config('services.halodotapi.competitive.season'))
+            ->where('season_key', $seasonKey)
             ->where('mode', CompetitiveMode::SEASON)
             ->orderByDesc('csr')
             ->get();
@@ -218,7 +220,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     public function allTimeRanked(): Collection
     {
         return $this->csrs()
-            ->whereNull('season')
+            ->whereNull('season_key')
             ->orderByDesc('csr')
             ->get();
     }

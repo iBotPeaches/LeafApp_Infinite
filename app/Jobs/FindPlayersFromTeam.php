@@ -43,7 +43,7 @@ class FindPlayersFromTeam implements ShouldQueue
 
         foreach ($this->team->faceitPlayers->whereNull('player_id') as $teamPlayer) {
             $player = Player::query()->firstWhere('gamertag', $teamPlayer->faceit_name);
-            if (empty($player) && ! config('services.halotdotapi.disabled')) {
+            if (empty($player) && ! config('services.halodotapi.disabled')) {
                 $player = $this->client->appearance($teamPlayer->faceit_name);
             }
 

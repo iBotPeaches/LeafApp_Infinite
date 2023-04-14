@@ -24,6 +24,7 @@ use InvalidArgumentException;
  * @property Queue|null $queue
  * @property Input|null $input
  * @property int|null $season
+ * @property string $season_key
  * @property CompetitiveMode $mode
  * @property int $csr
  * @property int $matches_remaining
@@ -178,11 +179,12 @@ class Csr extends Model implements HasHaloDotApi
     {
         /** @var Player $player */
         $player = Arr::get($payload, 'player');
-        $season = (int) Arr::get($payload, 'additional.parameters.season');
+        $seasonCsr = (string) Arr::get($payload, 'additional.query.season_csr');
+        $seasonModel = Season::ofSeasonIdentifierOrKey($seasonCsr);
 
         foreach (Arr::get($payload, 'data') as $playlist) {
-            $queueName = Arr::get($playlist, 'queue');
-            $inputName = Arr::get($playlist, 'input');
+            $queueName = Arr::get($playlist, 'properties.queue');
+            $inputName = Arr::get($playlist, 'properties.input');
 
             $queue = Queue::coerce($queueName);
             $input = Input::coerce($inputName);
@@ -205,7 +207,7 @@ class Csr extends Model implements HasHaloDotApi
                     throw new InvalidArgumentException('Mode ('.$key.') is unknown.');
                 }
 
-                $playlistSeason = $season;
+                $playlistSeason = $seasonModel;
                 if ($mode->is(CompetitiveMode::ALL_TIME())) {
                     $playlistSeason = null;
                 }
@@ -214,7 +216,7 @@ class Csr extends Model implements HasHaloDotApi
                 $csr = Csr::query()
                     ->where('player_id', $player->id)
                     ->where('playlist_id', $playlistModel->id)
-                    ->where('season', $playlistSeason)
+                    ->where('season_key', $playlistSeason?->key)
                     ->where('mode', $mode->value)
                     ->where('queue', $queue->value)
                     ->where('input', $input->value)
@@ -229,7 +231,7 @@ class Csr extends Model implements HasHaloDotApi
 
                 $csr->player()->associate($player);
                 $csr->playlist()->associate($playlistModel);
-                $csr->season = $playlistSeason;
+                $csr->season_key = $playlistSeason?->key;
                 $csr->mode = $mode;
                 $csr->queue = $queue;
                 $csr->input = $input;

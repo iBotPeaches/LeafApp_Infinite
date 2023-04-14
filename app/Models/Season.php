@@ -45,6 +45,15 @@ class Season extends Model implements HasHaloDotApi
             ->first();
     }
 
+    public static function latestOfSeason(int $seasonNumber): ?self
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return self::query()
+            ->where('season_id', $seasonNumber)
+            ->orderByDesc('season_version')
+            ->first();
+    }
+
     public static function fromHaloDotApi(array $payload): ?self
     {
         $seasonId = Arr::get($payload, 'id');

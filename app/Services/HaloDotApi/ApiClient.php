@@ -47,14 +47,14 @@ class ApiClient implements InfiniteInterface
     public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr
     {
         // Handle when -1 (no season) is sent here.
-        $season = $season === -1 ? null : $season;
-        $season ??= (int) config('services.halotdotapi.competitive.season');
+        $season = $seasonCsrKey === SeasonSession::$allSeasonKey ? null : $seasonCsrKey;
+        $currentSeasonNumber = (int) config('services.halodotapi.competitive.season');
+        $season ??= Season::latestOfSeason($currentSeasonNumber)?->csr_key;
 
-        // TODO - Look up season against Season table, extract CSR
-
-        $queryParams = [
-            'season_csr' => 'CsrSeason'.$season.'-1',
-        ];
+        $queryParams = [];
+        if ($season) {
+            $queryParams['season_csr'] = $season;
+        }
 
         $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/csrs", $queryParams);
 

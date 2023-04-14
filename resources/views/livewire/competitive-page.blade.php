@@ -75,7 +75,7 @@
                 </div>
             </article>
         @endif
-        @if ($season->isNotEmpty() && $allTime->isNotEmpty())
+        @if ($allTime->isNotEmpty())
             <div class="divider">Records</div>
             <div class="columns">
                 <div class="column">
