@@ -10,6 +10,7 @@ use App\Http\Livewire\CompetitivePage;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\Playlist;
+use App\Support\Session\SeasonSession;
 use Carbon\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -123,5 +124,27 @@ class ValidCompetitivePageTest extends TestCase
             $livewire->assertSee($playlist->rank);
             $livewire->assertSee('In Placements');
         }
+    }
+
+    public function testValidUnrankedResponseFromHaloDotApiInOldSeason(): void
+    {
+        // Arrange
+        Carbon::setTestNow(now());
+        SeasonSession::set('1-1');
+
+        $player = Player::factory()->createOne();
+
+        /** @var Csr[] $ranked */
+        $ranked = $player->currentRanked();
+
+        // Act
+        $livewire = Livewire::test(CompetitivePage::class, [
+            'player' => $player,
+        ]);
+
+        // Assert
+        $livewire->assertViewHas('current');
+        $livewire->assertViewHas('season');
+        $livewire->assertViewHas('allTime');
     }
 }
