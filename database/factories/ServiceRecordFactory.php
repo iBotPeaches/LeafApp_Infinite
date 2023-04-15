@@ -22,6 +22,7 @@ class ServiceRecordFactory extends Factory
             'player_id' => Player::factory(),
             'mode' => Mode::MATCHMADE_RANKED,
             'season_number' => 1,
+            'season_key' => '1-1',
             'kd' => $this->faker->numerify('#.##'),
             'kda' => $this->faker->numerify('#.##'),
             'total_score' => $this->faker->numerify('#####'),
