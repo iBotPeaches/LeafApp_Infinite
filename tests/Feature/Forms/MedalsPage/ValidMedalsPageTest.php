@@ -20,7 +20,7 @@ class ValidMedalsPageTest extends TestCase
             ->has(ServiceRecord::factory()->withMedals())
             ->createOne();
 
-        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
+        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [
@@ -37,7 +37,7 @@ class ValidMedalsPageTest extends TestCase
             ->has(ServiceRecord::factory()->withMedals())
             ->createOne();
 
-        SeasonSession::set(-1);
+        SeasonSession::set(SeasonSession::$allSeasonKey);
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [

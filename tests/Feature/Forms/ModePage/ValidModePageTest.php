@@ -31,7 +31,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
             ]);
 
-        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
+        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
 
         // Act & Assert
         Livewire::test(ModePage::class, [
@@ -57,7 +57,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
             ]);
 
-        SeasonSession::set(-1);
+        SeasonSession::set(SeasonSession::$allSeasonKey);
 
         // Act & Assert
         Livewire::test(ModePage::class, [

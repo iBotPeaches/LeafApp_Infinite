@@ -30,7 +30,7 @@ class ValidOverviewPageTest extends TestCase
 
         // Act & Assert
         ModeSession::set($attributes['mode']);
-        SeasonSession::set(1);
+        SeasonSession::set('1-1');
         Livewire::test(OverviewPage::class, [
             'player' => $player,
         ])

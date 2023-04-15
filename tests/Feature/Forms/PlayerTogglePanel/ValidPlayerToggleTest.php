@@ -35,12 +35,11 @@ class ValidPlayerToggleTest extends TestCase
 
         // Act & Assert
         Livewire::test(PlayerTogglePanel::class)
-            ->set('season', 1)
+            ->set('seasonKey', '1-1')
             ->call('onSeasonChange')
             ->assertEmittedTo('overview-page', '$refresh')
             ->assertEmittedTo('medals-page', '$refresh');
 
-        $season = SeasonSession::get();
-        $this->assertEquals(1, $season);
+        $this->assertEquals('1-1', SeasonSession::get());
     }
 }
