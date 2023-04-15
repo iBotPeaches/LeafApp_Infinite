@@ -18,10 +18,10 @@ class ApiClient implements XboxInterface
 
     public function xuid(string $gamertag): ?string
     {
-        $response = $this->getPendingRequest()->get('/xuid/'.$gamertag);
+        $response = $this->getPendingRequest()->get('/search/'.$gamertag);
 
-        if ($response->successful()) {
-            return Arr::get($response->json(), 'xuid');
+        if ($response->successful() && Arr::get($response->json(), 'people.0.gamertag') === $gamertag) {
+            return Arr::get($response->json(), 'people.0.xuid');
         }
 
         return null;
@@ -30,7 +30,10 @@ class ApiClient implements XboxInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
+            ->withHeaders([
+                'X-Authorization' => config('services.xboxapi.key'),
+            ])
             ->withUserAgent('Leaf - v'.config('sentry.release', 'dirty'))
-            ->baseUrl($this->config['domain']);
+            ->baseUrl($this->config['domain'].'/api/v2/');
     }
 }
