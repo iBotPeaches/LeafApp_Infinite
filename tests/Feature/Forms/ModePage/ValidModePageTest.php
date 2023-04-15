@@ -8,6 +8,7 @@ use App\Enums\Outcome;
 use App\Http\Livewire\ModePage;
 use App\Models\GamePlayer;
 use App\Models\Player;
+use App\Models\Season;
 use App\Support\Session\SeasonSession;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Livewire\Livewire;
@@ -30,6 +31,10 @@ class ValidModePageTest extends TestCase
             ->create([
                 'player_id' => $player->id,
             ]);
+
+        Season::factory()->createOne([
+            'key' => config('services.halodotapi.competitive.key')
+        ]);
 
         SeasonSession::set((string) config('services.halodotapi.competitive.key'));
 
