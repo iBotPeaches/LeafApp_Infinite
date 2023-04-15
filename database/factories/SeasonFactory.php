@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Season;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Season> */
@@ -23,8 +22,6 @@ class SeasonFactory extends Factory
             'season_version' => 2,
             'name' => 'Heroes of Reach',
             'description' => 'Because of you, we found Halo, unlocked its secrets, shattered our enemy\'s resolve.',
-            'started_at' => Carbon::now()->subDay(),
-            'ended_at' => Carbon::now()->addDay(),
         ];
     }
 }
