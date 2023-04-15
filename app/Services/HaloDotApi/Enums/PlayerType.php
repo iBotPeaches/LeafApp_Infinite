@@ -12,7 +12,7 @@ use BenSampo\Enum\Enum;
  */
 final class PlayerType extends Enum
 {
-    const PLAYER = 'player';
+    const PLAYER = 'human';
 
     const BOT = 'bot';
 }
