@@ -204,7 +204,12 @@ class Game extends Model implements HasHaloDotApi
         if (isset($playlist)) {
             $game->playlist()->associate($playlist);
         }
-        $game->is_ffa = count(Arr::get($payload, 'teams', [])) === 0;
+
+        $game->is_ffa = false;
+        if (Arr::has($payload, 'teams')) {
+            $game->is_ffa = count(Arr::get($payload, 'teams', [])) === 0;
+        }
+
         $game->is_lan ??= $mode && $mode->is(Mode::LAN());
         $game->experience = Arr::get($payload, 'properties.experience');
         $game->occurred_at = Arr::get($payload, 'started_at');
