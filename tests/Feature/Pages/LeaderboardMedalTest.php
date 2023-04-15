@@ -20,7 +20,7 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create();
 
-        SeasonSession::set((int) config('services.halodotapi.competitive.season'));
+        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
 
         // Acts & Assert
         foreach ($serviceRecord->hydrated_medals as $medal) {
@@ -42,7 +42,7 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create();
 
-        SeasonSession::set(-1);
+        SeasonSession::set(SeasonSession::$allSeasonKey);
 
         // Acts & Assert
         foreach ($serviceRecord->hydrated_medals as $medal) {
