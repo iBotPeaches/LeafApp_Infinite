@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Contracts\HasHaloDotApiMetadata;
+use App\Services\HaloDotApi\Exceptions\UnknownCategoryException;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use function Sentry\captureException;
+use Throwable;
 
 /**
  * @property int $id
@@ -29,10 +32,19 @@ class Category extends Model implements HasHaloDotApi, HasHaloDotApiMetadata
 
     public static function fromMetadata(array $payload): ?self
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return self::query()
-            ->where('uuid', Arr::get($payload, 'properties.category_id'))
-            ->firstOrFail();
+        try {
+            /** @noinspection PhpIncompatibleReturnTypeInspection */
+            return self::query()
+                ->where('uuid', (string) Arr::get($payload, 'properties.category_id'))
+                ->firstOrFail();
+        } catch (Throwable $e) {
+            captureException(UnknownCategoryException::fromPayload($payload));
+
+            /** @noinspection PhpIncompatibleReturnTypeInspection */
+            return self::query()
+                ->where('name', 'Unknown')
+                ->first();
+        }
     }
 
     public static function fromHaloDotApi(array $payload): ?self

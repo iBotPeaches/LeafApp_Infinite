@@ -45,7 +45,7 @@ class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
-            ->where('uuid', Arr::get($payload, 'properties.level_id'))
+            ->where('uuid', (string) Arr::get($payload, 'properties.level_id'))
             ->firstOrFail();
     }
 
