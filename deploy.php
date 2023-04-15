@@ -10,7 +10,7 @@ set('application', 'Leafapp');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
 set('php_fpm_service', 'ea-php82-php-fpm');
 set('git_ssh_command', 'ssh -o StrictHostKeyChecking=no');
-set('default_timeout', 1200);
+set('default_timeout', 1800);
 
 host('prod')
     ->set('remote_user', 'leafapp')
