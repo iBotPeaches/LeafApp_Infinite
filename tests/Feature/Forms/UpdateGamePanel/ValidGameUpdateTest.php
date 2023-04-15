@@ -7,7 +7,9 @@ namespace Tests\Feature\Forms\UpdateGamePanel;
 use App\Http\Livewire\UpdateGamePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
+use App\Models\Category;
 use App\Models\Game;
+use App\Models\Level;
 use App\Services\HaloDotApi\Enums\PlayerType;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
@@ -50,13 +52,21 @@ class ValidGameUpdateTest extends TestCase
         $gamertag2 = 'test';
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
-        Arr::set($mockMatchResponse, 'data.0.match.players.1.details.resolved', false);
+        Arr::set($mockMatchResponse, 'data.players.1.attributes.resolved', false);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
 
         $game = Game::factory()->createOne([
-            'uuid' => Arr::get($mockMatchResponse, 'data.0.id'),
+            'uuid' => Arr::get($mockMatchResponse, 'data.id'),
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
         ]);
 
         // Act & Assert
