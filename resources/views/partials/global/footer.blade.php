@@ -41,7 +41,7 @@ $color = config('services.halodotapi.disabled') ? 'is-danger' : 'is-warning';
 
                 API via <a
                     target="_blank"
-                    href="https://halo.api/"
+                    href="https://twitter.com/halodotapi"
                     rel="noreferrer"
                 >HaloDotAPI ({{ config('services.halodotapi.version') }})</a>.
             </span>
