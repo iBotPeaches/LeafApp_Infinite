@@ -30,17 +30,6 @@ class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
 
     public $timestamps = false;
 
-    public function getImageAttribute(): string
-    {
-        $filename = Str::slug($this->name).'.jpg';
-
-        if (File::exists(public_path('images/maps/'.$filename))) {
-            return asset('images/maps/'.$filename);
-        }
-
-        return $this->thumbnail_url;
-    }
-
     public static function fromMetadata(array $payload): ?self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
