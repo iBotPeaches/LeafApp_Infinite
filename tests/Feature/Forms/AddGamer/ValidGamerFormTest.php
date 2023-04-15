@@ -21,7 +21,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockResponse, 'additional.params.gamertag');
 
         Http::fake([
             '*' => Http::response($mockResponse, Response::HTTP_OK),
@@ -36,8 +36,8 @@ class ValidGamerFormTest extends TestCase
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
             'service_tag' => Arr::get($mockResponse, 'data.service_tag'),
-            'emblem_url' => Arr::get($mockResponse, 'data.emblem_url'),
-            'backdrop_url' => Arr::get($mockResponse, 'data.backdrop_image_url'),
+            'emblem_url' => Arr::get($mockResponse, 'data.image_urls.emblem'),
+            'backdrop_url' => Arr::get($mockResponse, 'data.image_urls.backdrop'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
@@ -69,7 +69,7 @@ class ValidGamerFormTest extends TestCase
         // Arrange
         Config::set('services.xboxapi.enabled', false);
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK);
@@ -85,7 +85,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
@@ -103,7 +103,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockResponse, 'additional.params.gamertag');
         Player::factory()->createOne([
             'gamertag' => $gamertag,
         ]);
