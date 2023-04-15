@@ -415,7 +415,7 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
-        Arr::set($mockCsrResponse, 'data.0.queue', 'closed');
+        Arr::set($mockCsrResponse, 'data.0.properties.queue', 'closed');
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
