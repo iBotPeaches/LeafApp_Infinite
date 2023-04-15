@@ -18,7 +18,7 @@ class FindMatchesFromMatchupTest extends TestCase
     public function testHaloDotApiMarkedAsDisabled(): void
     {
         // Arrange
-        Config::set('services.halotdotapi.disabled', true);
+        Config::set('services.halodotapi.disabled', true);
 
         Http::preventStrayRequests();
 

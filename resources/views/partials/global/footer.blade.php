@@ -1,12 +1,12 @@
 <?php
 $version = App\Support\System\VersionHelper::getVersionString();
-$color = config('services.halotdotapi.disabled') ? 'is-danger' : 'is-warning';
+$color = config('services.halodotapi.disabled') ? 'is-danger' : 'is-warning';
 ?>
 <footer class="footer mt-auto">
     <div class="content has-text-centered">
-        @if (config('services.halotdotapi.warning_message'))
+        @if (config('services.halodotapi.warning_message'))
             <div class="notification {{ $color }}">
-                {!! config('services.halotdotapi.warning_message') !!}
+                {!! config('services.halodotapi.warning_message') !!}
             </div>
         @endif
         <p>
@@ -43,7 +43,7 @@ $color = config('services.halotdotapi.disabled') ? 'is-danger' : 'is-warning';
                     target="_blank"
                     href="https://halo.api/"
                     rel="noreferrer"
-                >HaloDotAPI ({{ config('services.halotdotapi.version') }})</a>.
+                >HaloDotAPI ({{ config('services.halodotapi.version') }})</a>.
             </span>
         </p>
     </div>
