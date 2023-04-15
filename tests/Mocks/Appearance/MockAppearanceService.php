@@ -6,10 +6,11 @@ namespace Tests\Mocks\Appearance;
 
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
+use Tests\Traits\HasProxiedImageUrls;
 
 class MockAppearanceService extends BaseMock
 {
-    use HasErrorFunctions;
+    use HasErrorFunctions, HasProxiedImageUrls;
 
     public function success(?string $gamertag = null, ?string $emblemName = null, ?string $backdropName = null): array
     {
@@ -54,20 +55,5 @@ class MockAppearanceService extends BaseMock
                 ],
             ],
         ];
-    }
-
-    private function getAssetUrl(string $imageName): string
-    {
-        $imageObject = [
-            'identifier' => 'hi',
-            'path' => $imageName,
-            'options' => [
-                'branch' => 'Waypoint',
-            ],
-        ];
-
-        $imageJson = json_encode($imageObject);
-
-        return 'https://api.halodotapi.com/games/halo-infinite/tooling/cms-images?hash='.base64_encode($imageJson);
     }
 }
