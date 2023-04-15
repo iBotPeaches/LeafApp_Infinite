@@ -7,6 +7,8 @@ namespace Tests\Feature\Forms\UpdatePlayerPanel;
 use App\Enums\PlayerTab;
 use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
+use App\Models\Category;
+use App\Models\Level;
 use App\Models\Player;
 use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -75,6 +77,14 @@ class InvalidPlayerUpdateTest extends TestCase
             'uuid' => 1,
         ]);
 
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
         ]);
@@ -100,7 +110,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -109,12 +118,19 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
         ]);
 
         // Act & Assert
@@ -138,7 +154,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -149,11 +164,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
@@ -184,7 +206,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -193,11 +214,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
@@ -228,7 +256,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -239,11 +266,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
@@ -274,7 +308,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -285,11 +318,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
@@ -320,7 +360,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -331,11 +370,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
@@ -366,7 +412,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
 
@@ -377,11 +422,18 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyCustomMatchResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 
