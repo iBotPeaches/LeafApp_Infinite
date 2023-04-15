@@ -11,8 +11,12 @@ class MockXuidService extends BaseMock
     public function success(string $gamertag, ?string $xuid = null): array
     {
         return [
-            'gamertag' => $gamertag,
-            'xuid' => $xuid ?? $this->faker->numerify('################'),
+            'people' => [
+                [
+                    'gamertag' => $gamertag,
+                    'xuid' => $xuid ?? $this->faker->numerify('################'),
+                ],
+            ],
         ];
     }
 }
