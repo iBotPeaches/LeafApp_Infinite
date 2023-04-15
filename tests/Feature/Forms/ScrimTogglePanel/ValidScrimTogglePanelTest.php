@@ -7,7 +7,9 @@ namespace Tests\Feature\Forms\ScrimTogglePanel;
 use App\Http\Livewire\ScrimTogglePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
+use App\Models\Category;
 use App\Models\Game;
+use App\Models\Level;
 use App\Models\User;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;
@@ -45,6 +47,13 @@ class ValidScrimTogglePanelTest extends TestCase
 
         $user = User::factory()->createOne();
         $game = Game::factory()->createOne();
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
 
         // Act & Assert
         $this->actingAs($user);

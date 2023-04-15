@@ -12,14 +12,18 @@ class MockCsrAllService extends BaseMock
 {
     use HasErrorFunctions;
 
-    public function success(string $gamertag, int $season = 1): array
+    public function success(string $gamertag, string $seasonKey = 'CsrSeason2'): array
     {
         return [
             'data' => [
                 [
                     'id' => '1',
-                    'queue' => 'open',
-                    'input' => 'crossplay',
+                    'name' => 'Ranked Arena',
+                    'properties' => [
+                        'queue' => 'open',
+                        'input' => 'crossplay',
+                        'experience' => 'arena',
+                    ],
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
@@ -28,8 +32,12 @@ class MockCsrAllService extends BaseMock
                 ],
                 [
                     'id' => '1',
-                    'queue' => 'solo-duo',
-                    'input' => 'controller',
+                    'name' => 'Ranked FFA',
+                    'properties' => [
+                        'queue' => 'open-queue',
+                        'input' => 'crossplay',
+                        'experience' => 'arena',
+                    ],
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
@@ -38,8 +46,12 @@ class MockCsrAllService extends BaseMock
                 ],
                 [
                     'id' => '1',
-                    'queue' => 'solo-duo',
-                    'input' => 'mnk',
+                    'name' => 'Ranked Arena',
+                    'properties' => [
+                        'queue' => 'solo-duo',
+                        'input' => 'mnk',
+                        'experience' => 'arena',
+                    ],
                     'response' => [
                         'current' => $this->playlistResponse(),
                         'season' => $this->playlistResponse(),
@@ -48,8 +60,12 @@ class MockCsrAllService extends BaseMock
                 ],
             ],
             'additional' => [
-                'gamertag' => $gamertag,
-                'season' => $season,
+                'params' => [
+                    'gamertag' => $gamertag,
+                ],
+                'query' => [
+                    'season_csr' => $seasonKey,
+                ],
             ],
         ];
     }
@@ -60,8 +76,12 @@ class MockCsrAllService extends BaseMock
             'data' => [
                 [
                     'id' => '1',
-                    'queue' => 'open',
-                    'input' => 'crossplay',
+                    'name' => 'Ranked Arena',
+                    'properties' => [
+                        'queue' => 'open',
+                        'input' => 'crossplay',
+                        'experience' => 'Arena',
+                    ],
                     'response' => [
                         CompetitiveMode::SEASON => $this->playlistResponse(),
                         'c0rrent' => $this->playlistResponse(),
@@ -69,8 +89,12 @@ class MockCsrAllService extends BaseMock
                 ],
             ],
             'additional' => [
-                'gamertag' => '',
-                'season' => '',
+                'params' => [
+                    'gamertag' => '',
+                ],
+                'query' => [
+                    'season_csr' => '',
+                ],
             ],
         ];
     }

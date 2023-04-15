@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
+use Illuminate\Support\Str;
 
 /**
  * @method static static WIN()
@@ -20,4 +21,14 @@ final class Outcome extends Enum implements LocalizedEnum
     const LEFT = 3;
 
     const DRAW = 4;
+
+    public static function coerce(mixed $enumKeyOrValue): ?static
+    {
+        $enumKeyOrValue = match (Str::lower($enumKeyOrValue)) {
+            'dnf', => self::LEFT,
+            default => $enumKeyOrValue
+        };
+
+        return parent::coerce($enumKeyOrValue);
+    }
 }

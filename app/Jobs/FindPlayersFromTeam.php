@@ -7,7 +7,7 @@ namespace App\Jobs;
 use App\Enums\QueueName;
 use App\Models\MatchupTeam;
 use App\Models\Player;
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -43,7 +43,7 @@ class FindPlayersFromTeam implements ShouldQueue
 
         foreach ($this->team->faceitPlayers->whereNull('player_id') as $teamPlayer) {
             $player = Player::query()->firstWhere('gamertag', $teamPlayer->faceit_name);
-            if (empty($player) && ! config('services.autocode.disabled')) {
+            if (empty($player) && ! config('services.halodotapi.disabled')) {
                 $player = $this->client->appearance($teamPlayer->faceit_name);
             }
 

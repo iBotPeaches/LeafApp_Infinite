@@ -6,9 +6,11 @@ namespace Tests\Feature\Pages;
 
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
+use App\Models\Category;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\GameTeam;
+use App\Models\Level;
 use App\Models\Playlist;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -54,7 +56,47 @@ class GamePageTest extends TestCase
         Team::factory()->createOne(['internal_id' => 0]);
         Team::factory()->createOne(['internal_id' => 1]);
 
-        $uuid = Arr::get($mockMatchResponse, 'data.0.id');
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        $uuid = Arr::get($mockMatchResponse, 'data.id');
+
+        // Act
+        $response = $this->get('/game/'.$uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-page');
+
+        Queue::assertPushed(PullAppearance::class);
+        Queue::assertPushed(PullXuid::class);
+    }
+
+    public function testLoadingGamePageWithUnknownCategory(): void
+    {
+        // Arrange
+        Queue::fake([
+            PullAppearance::class,
+            PullXuid::class,
+        ]);
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        Team::factory()->createOne(['internal_id' => 0]);
+        Team::factory()->createOne(['internal_id' => 1]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        $uuid = Arr::get($mockMatchResponse, 'data.id');
 
         // Act
         $response = $this->get('/game/'.$uuid);
@@ -119,7 +161,7 @@ class GamePageTest extends TestCase
             ->forMap(['name' => 'Bazaar'])
             ->forPlaylist(['name' => 'Unknown', 'is_ranked' => true])
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 
@@ -155,7 +197,7 @@ class GamePageTest extends TestCase
 
         $game = Game::factory()
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 

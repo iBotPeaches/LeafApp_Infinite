@@ -15,7 +15,7 @@
                         {{ $game->map->name }}
                     </a>
                 </p>
-                <p class="subtitle">{{ $game->category->name }}</p>
+                <p class="subtitle">{{ $game->gamevariant?->name ?? $game->category?->name }}</p>
             </article>
         </div>
     </div>

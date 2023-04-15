@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Image;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ImageHelper
@@ -16,7 +17,9 @@ class ImageHelper
         $hash = $result['hash'] ?? null;
 
         // @phpstan-ignore-next-line
-        $filepath = base64_decode((string) $hash);
+        $payload = base64_decode((string) $hash);
+        $data = json_decode((string) $payload, true);
+        $filepath = Arr::get($data, 'path');
 
         return $filepath ? Str::afterLast($filepath, '/') : null;
     }

@@ -30,17 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'autocode' => [
-        'disabled' => env('AUTOCODE_DISABLED', false),
-        'key' => env('AUTOCODE_KEY'),
-        'domain' => env('AUTOCODE_DOMAIN', 'https://halo.api.stdlib.com'),
-        'version' => env('AUTOCODE_VERSION', '1.7.3'),
-        'cooldown' => env('AUTOCODE_COOLDOWN', 120),
+    'halodotapi' => [
+        'disabled' => env('HALODOTAPI_DISABLED', false),
+        'key' => env('HALODOTAPI_KEY'),
+        'domain' => env('HALODOTAPI_DOMAIN', 'https://api.halodotapi.com'),
+        'version' => env('HALODOTAPI_VERSION', '2023-04-07'),
+        'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
         'competitive' => [
-            'season' => env('AUTOCODE_CURRENT_SEASON', 3),
-            'version' => env('AUTOCODE_CURRENT_SEASON_VERSION', 1),
+            'key' => env('HALODOTAPI_CURRENT_SEASON_KEY', '3-1'),
+            'season' => env('HALODOTAPI_CURRENT_SEASON', 3),
         ],
-        'warning_message' => env('AUTOCODE_WARNING_MESSAGE'),
+        'warning_message' => env('HALODOTAPI_WARNING_MESSAGE'),
     ],
 
     'xboxapi' => [

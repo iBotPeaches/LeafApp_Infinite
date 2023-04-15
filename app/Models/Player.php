@@ -7,13 +7,12 @@ use App\Enums\PlayerTab;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
-use App\Jobs\PullMmr;
 use App\Jobs\PullServiceRecord;
 use App\Models\Contracts\HasHaloDotApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
-use App\Services\Autocode\Enums\Mode;
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\Enums\Mode;
+use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\XboxApi\XboxInterface;
 use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
@@ -23,7 +22,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -44,8 +42,6 @@ use Spatie\Sitemap\Tags\Url;
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
  * @property string $last_csr_key
- * @property float|null $mmr
- * @property int $mmr_game_id
  * @property string $emblem_url
  * @property string $backdrop_url
  * @property Carbon $created_at
@@ -53,9 +49,9 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
- * @property-read Game|null $mmrGame
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
+ * @property-read string $url_safe_gamertag
  *
  * @method static PlayerFactory factory(...$parameters)
  */
@@ -70,6 +66,11 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     public function getRouteKeyName(): string
     {
         return 'gamertag';
+    }
+
+    public function getUrlSafeGamertagAttribute(): string
+    {
+        return urlencode($this->gamertag);
     }
 
     public function resolveRouteBinding($value, $field = null): ?Model
@@ -115,6 +116,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public static function fromGamertag(string $gamertag): self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([
@@ -124,11 +126,11 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $player = self::fromGamertag(Arr::get($payload, 'additional.parameters.gamertag'));
+        $player = self::fromGamertag(Arr::get($payload, 'additional.params.gamertag'));
 
         $player->service_tag = Arr::get($payload, 'data.service_tag');
-        $player->emblem_url = Arr::get($payload, 'data.emblem_url');
-        $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
+        $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
+        $player->backdrop_url = Arr::get($payload, 'data.image_urls.backdrop');
 
         if ($player->isDirty()) {
             $player->saveOrFail();
@@ -146,7 +148,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
-        $seasonNumber = SeasonSession::get();
+        $seasonModel = SeasonSession::model();
 
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
@@ -159,56 +161,53 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         }
 
         if ($type === PlayerTab::OVERVIEW) {
-            PullCompetitive::dispatch($this, $seasonNumber);
+            PullCompetitive::dispatch($this, $seasonModel->csr_key);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
-            $client->serviceRecord($this, $seasonNumber);
+            $client->serviceRecord($this, $seasonModel->identifier);
         } elseif ($type === PlayerTab::COMPETITIVE) {
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullServiceRecord::dispatch($this, $seasonNumber);
-            $client->competitive($this, $seasonNumber);
-            $client->mmr($this);
+            PullServiceRecord::dispatch($this, $seasonModel->identifier);
+            $client->competitive($this, $seasonModel->csr_key);
         } elseif (in_array($type, [PlayerTab::MATCHES, PlayerTab::MODES])) {
-            PullCompetitive::dispatch($this, $seasonNumber);
+            PullCompetitive::dispatch($this, $seasonModel->csr_key);
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this, $seasonNumber);
+            PullServiceRecord::dispatch($this, $seasonModel->identifier);
             $client->matches($this, Mode::MATCHMADE(), $forceUpdate);
         } elseif ($type === PlayerTab::CUSTOM) {
-            PullCompetitive::dispatch($this, $seasonNumber);
+            PullCompetitive::dispatch($this, $seasonModel->csr_key);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
-            PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this, $seasonNumber);
+            PullServiceRecord::dispatch($this, $seasonModel->identifier);
             $client->matches($this, Mode::CUSTOM(), $forceUpdate);
         } elseif ($type === PlayerTab::LAN) {
-            PullCompetitive::dispatch($this, $seasonNumber);
+            PullCompetitive::dispatch($this, $seasonModel->csr_key);
             PullMatchHistory::dispatch($this, Mode::MATCHMADE());
             PullMatchHistory::dispatch($this, Mode::CUSTOM());
-            PullMmr::dispatch($this);
-            PullServiceRecord::dispatch($this, $seasonNumber);
+            PullServiceRecord::dispatch($this, $seasonModel->identifier);
             $client->matches($this, Mode::LAN(), $forceUpdate);
         }
     }
 
-    public function currentRanked(?int $season = null): Collection
+    public function currentRanked(?string $seasonKey = null, bool $isCurrentOrAll = true): Collection
     {
-        $season = $season === -1 ? null : $season;
-
-        return $this->csrs()
-            ->where('season', $season ?? config('services.autocode.competitive.season'))
+        $query = $this->csrs()
+            ->where('season_key', $seasonKey)
             ->where('mode', CompetitiveMode::CURRENT)
-            ->orderByDesc('csr')
-            ->get();
+            ->orderByDesc('csr');
+
+        // If a previous season (or all) - don't show categories that never left placements as no CSR.
+        if (! $isCurrentOrAll) {
+            $query->where('csr', '>', 0);
+        }
+
+        return $query->get();
     }
 
-    public function seasonHighRanked(?int $season = null): Collection
+    public function seasonHighRanked(?string $seasonKey = null): Collection
     {
-        $season = $season === -1 ? null : $season;
-
         return $this->csrs()
-            ->where('season', $season ?? config('services.autocode.competitive.season'))
+            ->where('season_key', $seasonKey)
             ->where('mode', CompetitiveMode::SEASON)
             ->orderByDesc('csr')
             ->get();
@@ -217,7 +216,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     public function allTimeRanked(): Collection
     {
         return $this->csrs()
-            ->whereNull('season')
+            ->whereNull('season_key')
             ->orderByDesc('csr')
             ->get();
     }
@@ -241,11 +240,6 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
-    }
-
-    public function mmrGame(): BelongsTo
-    {
-        return $this->belongsTo(Game::class, 'mmr_game_id');
     }
 
     public function csrs(): HasMany

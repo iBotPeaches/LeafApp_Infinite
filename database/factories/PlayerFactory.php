@@ -6,10 +6,13 @@ namespace Database\Factories;
 
 use App\Models\Player;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Tests\Traits\HasProxiedImageUrls;
 
 /** @extends Factory<Player> */
 class PlayerFactory extends Factory
 {
+    use HasProxiedImageUrls;
+
     protected $model = Player::class;
 
     public function definition(): array
@@ -19,13 +22,8 @@ class PlayerFactory extends Factory
             'gamertag' => $this->faker->word.$this->faker->unixTime,
             'service_tag' => $this->faker->lexify,
             'is_private' => false,
-            'emblem_url' => $this->assetUrl('test-image.png'),
-            'backdrop_url' => $this->assetUrl('test-image2.png'),
+            'emblem_url' => $this->getAssetUrl('test-image.png'),
+            'backdrop_url' => $this->getAssetUrl('test-image2.png'),
         ];
-    }
-
-    private function assetUrl(string $imageName): string
-    {
-        return 'https://assets.halo.autocode.gg/externals/infinite/cms-images/?hash='.base64_encode($imageName);
     }
 }

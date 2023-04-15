@@ -31,7 +31,7 @@ class FindPlayersOnTeamTest extends TestCase
             ->push($mockXuidResponse, Response::HTTP_OK);
 
         $matchupTeam = MatchupTeam::factory()->createOne();
-        $matchupPlayer = MatchupPlayer::factory()->createOne([
+        MatchupPlayer::factory()->createOne([
             'matchup_team_id' => $matchupTeam->id,
             'faceit_name' => $gamertag,
             'player_id' => null,
@@ -42,7 +42,7 @@ class FindPlayersOnTeamTest extends TestCase
 
         // Assert
         $this->assertDatabaseHas('players', [
-            'emblem_url' => Arr::get($mockAppearanceResponse, 'data.emblem_url'),
+            'emblem_url' => Arr::get($mockAppearanceResponse, 'data.image_urls.emblem'),
         ]);
     }
 }

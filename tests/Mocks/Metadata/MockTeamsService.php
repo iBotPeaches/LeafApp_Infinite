@@ -22,10 +22,7 @@ class MockTeamsService extends BaseMock
                 $this->team(),
             ],
             'additional' => [
-                'count' => $this->faker->numberBetween(0, 5),
-                'parameters' => [
-                    'ids' => [],
-                ],
+                'total' => $this->faker->numberBetween(0, 5),
             ],
         ];
     }
@@ -35,7 +32,9 @@ class MockTeamsService extends BaseMock
         return [
             'id' => $this->faker->numberBetween(1, 25),
             'name' => $this->faker->word,
-            'emblem_url' => $this->faker->imageUrl(),
+            'image_urls' => [
+                'icon' => $this->faker->imageUrl(),
+            ],
         ];
     }
 }

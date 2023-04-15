@@ -95,7 +95,7 @@ class ScrimPageTest extends TestCase
 
         $game = Game::factory()
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 
@@ -115,7 +115,7 @@ class ScrimPageTest extends TestCase
 
         $game2 = Game::factory()
             ->createOne([
-                'version' => config('services.autocode.version'),
+                'version' => config('services.halodotapi.version'),
                 'was_pulled' => true,
             ]);
 

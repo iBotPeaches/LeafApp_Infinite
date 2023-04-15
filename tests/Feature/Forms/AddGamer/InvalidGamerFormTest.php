@@ -47,7 +47,7 @@ class InvalidGamerFormTest extends TestCase
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService())->success();
-        $gamertag = Arr::get($mockAppearanceResponse, 'additional.parameters.gamertag');
+        $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

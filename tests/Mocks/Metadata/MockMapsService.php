@@ -22,10 +22,7 @@ class MockMapsService extends BaseMock
                 $this->map(),
             ],
             'additional' => [
-                'count' => $this->faker->numberBetween(0, 5),
-                'parameters' => [
-                    'ids' => [],
-                ],
+                'total' => $this->faker->numberBetween(0, 5),
             ],
         ];
     }
@@ -33,9 +30,11 @@ class MockMapsService extends BaseMock
     private function map(): array
     {
         return [
-            'level_id' => $this->faker->numberBetween(1, 500),
+            'id' => $this->faker->uuid,
             'name' => $this->faker->word,
-            'thumbnail_url' => $this->faker->imageUrl(),
+            'image_urls' => [
+                'thumbnail' => $this->faker->imageUrl,
+            ],
         ];
     }
 }

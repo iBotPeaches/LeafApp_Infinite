@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Autocode\Enums;
+namespace App\Services\HaloDotApi\Enums;
 
 use BenSampo\Enum\Enum;
 
@@ -18,6 +18,16 @@ final class Mode extends Enum
     const CUSTOM = 'custom';
 
     const LAN = 'local';
+
+    public static function coerce(mixed $enumKeyOrValue): ?static
+    {
+        $enumKeyOrValue = match (strtolower($enumKeyOrValue)) {
+            'matchmade' => self::MATCHMADE,
+            default => $enumKeyOrValue
+        };
+
+        return parent::coerce($enumKeyOrValue);
+    }
 
     public function getLastGameIdVariable(): string
     {

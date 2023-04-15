@@ -8,6 +8,7 @@ use App\Enums\Outcome;
 use App\Http\Livewire\ModePage;
 use App\Models\GamePlayer;
 use App\Models\Player;
+use App\Models\Season;
 use App\Support\Session\SeasonSession;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Livewire\Livewire;
@@ -31,7 +32,11 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
             ]);
 
-        SeasonSession::set((int) config('services.autocode.competitive.season'));
+        Season::factory()->createOne([
+            'key' => config('services.halodotapi.competitive.key'),
+        ]);
+
+        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
 
         // Act & Assert
         Livewire::test(ModePage::class, [
@@ -57,7 +62,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
             ]);
 
-        SeasonSession::set(-1);
+        SeasonSession::set(SeasonSession::$allSeasonKey);
 
         // Act & Assert
         Livewire::test(ModePage::class, [

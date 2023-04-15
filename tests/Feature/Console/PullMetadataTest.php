@@ -15,6 +15,7 @@ use Tests\Mocks\Metadata\MockCategoriesService;
 use Tests\Mocks\Metadata\MockMapsService;
 use Tests\Mocks\Metadata\MockMedalsService;
 use Tests\Mocks\Metadata\MockPlaylistsService;
+use Tests\Mocks\Metadata\MockSeasonService;
 use Tests\Mocks\Metadata\MockTeamsService;
 use Tests\TestCase;
 
@@ -30,6 +31,7 @@ class PullMetadataTest extends TestCase
         $mockTeamsResponse = (new MockTeamsService())->success();
         $mockPlaylistResponse = (new MockPlaylistsService())->success();
         $mockCategoriesResponse = (new MockCategoriesService())->success();
+        $mockSeasonsResponse = (new MockSeasonService())->success();
 
         Arr::set($mockMedalsResponse, 'data.2.category', MedalType::MODE);
         Arr::set($mockMedalsResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
@@ -39,7 +41,8 @@ class PullMetadataTest extends TestCase
             ->push($mockMapsResponse, Response::HTTP_OK)
             ->push($mockTeamsResponse, Response::HTTP_OK)
             ->push($mockPlaylistResponse, Response::HTTP_OK)
-            ->push($mockCategoriesResponse, Response::HTTP_OK);
+            ->push($mockCategoriesResponse, Response::HTTP_OK)
+            ->push($mockSeasonsResponse, Response::HTTP_OK);
 
         // Act & Assert
         $this
@@ -55,7 +58,7 @@ class PullMetadataTest extends TestCase
         // Arrange
         $mockMedalsResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMedalsResponse, 'data.0.type', 'invalid-category');
+        Arr::set($mockMedalsResponse, 'data.0.properties.type', 'invalid-category');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
 
         // Act & Assert
@@ -72,7 +75,7 @@ class PullMetadataTest extends TestCase
         // Arrange
         $mockMedalsResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMedalsResponse, 'data.0.difficulty', 'invalid-type');
+        Arr::set($mockMedalsResponse, 'data.0.attributes.difficulty', 'invalid-type');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
 
         // Act & Assert

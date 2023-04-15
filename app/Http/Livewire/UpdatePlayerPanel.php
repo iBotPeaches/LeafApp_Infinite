@@ -37,14 +37,14 @@ class UpdatePlayerPanel extends Component
         $color = 'is-success';
         $message = 'Profile updated!';
 
-        $seasonNumber = SeasonSession::get();
-        $cacheKey = 'player-profile-'.$this->player->id.$seasonNumber.md5($this->player->gamertag);
-        $isOlderSeason = $seasonNumber !== -1 && $seasonNumber < (int) config('services.autocode.competitive.season');
+        $season = SeasonSession::model();
+        $cacheKey = 'player-profile-'.$this->player->id.$season->key.md5($this->player->gamertag);
+        $isOlderSeason = $season->key !== SeasonSession::$allSeasonKey && $season->season_id < (int) config('services.halodotapi.competitive.season');
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
             $message = $isOlderSeason
-                ? 'Season is old. No more updates will happen.'
+                ? 'Season has ended. No more stat updates allowed.'
                 : 'Profile was recently updated (or updating). Check back soon.';
         } else {
             if (! $this->runUpdate) {
@@ -59,7 +59,7 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey, $isOlderSeason) {
-                    $cooldownMinutes = (int) config('services.autocode.cooldown');
+                    $cooldownMinutes = (int) config('services.halodotapi.cooldown');
                     $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
                     Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 

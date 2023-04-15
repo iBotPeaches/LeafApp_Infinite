@@ -6,7 +6,6 @@ namespace App\Enums;
 
 use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
-use Illuminate\Support\Str;
 
 /**
  * @method static static OPEN()
@@ -20,7 +19,11 @@ final class Queue extends Enum implements LocalizedEnum
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
-        $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+        $enumKeyOrValue = match (strtolower($enumKeyOrValue)) {
+            'open', 'open-queue' => self::OPEN,
+            'solo-duo' => self::SOLO_DUO,
+            default => $enumKeyOrValue
+        };
 
         return parent::coerce($enumKeyOrValue);
     }

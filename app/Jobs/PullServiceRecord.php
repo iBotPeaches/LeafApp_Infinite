@@ -6,7 +6,7 @@ namespace App\Jobs;
 
 use App\Enums\QueueName;
 use App\Models\Player;
-use App\Services\Autocode\InfiniteInterface;
+use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,19 +24,19 @@ class PullServiceRecord implements ShouldQueue
 
     private Player $player;
 
-    private int $seasonNumber;
+    private string $seasonIdentifier;
 
-    public function __construct(Player $player, ?int $seasonNumber)
+    public function __construct(Player $player, ?string $seasonIdentifier)
     {
         $this->player = $player;
-        $this->seasonNumber = $seasonNumber ?? (int) config('services.autocode.competitive.season');
+        $this->seasonIdentifier = $seasonIdentifier ?? (string) config('services.halodotapi.competitive.key');
         $this->onQueue(QueueName::RECORDS);
     }
 
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->player->id.$this->seasonNumber.'records'))->dontRelease(),
+            (new WithoutOverlapping($this->player->id.$this->seasonIdentifier.'records'))->dontRelease(),
         ];
     }
 
@@ -45,6 +45,6 @@ class PullServiceRecord implements ShouldQueue
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
 
-        $client->serviceRecord($this->player, $this->seasonNumber);
+        $client->serviceRecord($this->player, $this->seasonIdentifier);
     }
 }

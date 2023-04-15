@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
+use App\Models\Category;
+use App\Models\Level;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupPlayer;
@@ -35,6 +37,14 @@ class PullMatchupGameTest extends TestCase
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
         ]);
 
         /** @var Matchup $matchup */

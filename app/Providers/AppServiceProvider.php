@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use App\Adapters\FileUtilInterface;
 use App\Adapters\FileUtils;
-use App\Services\Autocode\ApiClient as HaloApiClient;
-use App\Services\Autocode\InfiniteInterface;
 use App\Services\FaceIt\ApiClient as FaceItApiClient;
 use App\Services\FaceIt\TournamentInterface;
+use App\Services\HaloDotApi\ApiClient as HaloApiClient;
+use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
 use App\Services\XboxApi\ApiClient as XboxApiClient;
@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! app()->isProduction());
 
         $this->app->singleton(InfiniteInterface::class, function ($app) {
-            return new HaloApiClient($app['config']['services']['autocode']);
+            return new HaloApiClient($app['config']['services']['halodotapi']);
         });
 
         $this->app->singleton(XboxInterface::class, function ($app) {

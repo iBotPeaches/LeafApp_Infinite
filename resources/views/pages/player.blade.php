@@ -27,7 +27,7 @@
                     <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
                 </div>
             @endif
-            @if (!config('services.autocode.disabled'))
+            @if (!config('services.halodotapi.disabled'))
                 @if (!$player->is_bot)
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif

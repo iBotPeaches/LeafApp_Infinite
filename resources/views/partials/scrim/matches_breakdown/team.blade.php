@@ -11,7 +11,7 @@
         </span>
     </p>
     <p class="subtitle">
-        {{ $game->category->name }}
+        {{ $game->gamevariant?->name ?? $game->category->name }}
         @if ($game->winner)
             <span class="is-pulled-right">
                 @foreach ($game->winner->players as $player)

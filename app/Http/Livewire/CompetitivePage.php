@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire;
 
 use App\Models\Player;
+use App\Models\Season;
 use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -26,15 +27,26 @@ class CompetitivePage extends Component
             ->orderByDesc('games.occurred_at')
             ->first();
 
-        $season = SeasonSession::get();
+        $seasonModel = SeasonSession::model();
+        $seasonKey = $seasonModel->key === SeasonSession::$allSeasonKey ? null : $seasonModel->key;
+        $isCurrentSeason = $seasonModel->key === config('services.halodotapi.competitive.key');
+        $isAllSeasons = $seasonModel->key === SeasonSession::$allSeasonKey;
+
+        // Support for Winter Season, which is a different Season for Service Records, but shared CSR
+        $seasonKey = $seasonKey === '2-2' ? '2-1' : $seasonKey;
+
+        if (! $seasonKey) {
+            $season = Season::latestOfSeason((int) config('services.halodotapi.competitive.season'));
+            $seasonKey = $season?->key;
+        }
 
         return view('livewire.competitive-page', [
-            'current' => $this->player->currentRanked($season),
-            'season' => $this->player->seasonHighRanked($season),
+            'current' => $this->player->currentRanked($seasonKey, ($isCurrentSeason || $isAllSeasons)),
+            'season' => $this->player->seasonHighRanked($seasonKey),
             'allTime' => $this->player->allTimeRanked(),
             'latestMmr' => $latestMmr,
-            'isCurrentSeason' => $season === (int) config('services.autocode.competitive.season'),
-            'isAllSeasons' => $season === -1,
+            'isCurrentSeason' => $isCurrentSeason,
+            'isAllSeasons' => $isAllSeasons,
         ]);
     }
 }

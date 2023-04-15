@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
+use App\Models\Category;
 use App\Models\Game;
+use App\Models\Level;
 use App\Models\Player;
 use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,8 +16,6 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
-use Tests\Mocks\Matches\MockMatchService;
-use Tests\Mocks\Mmr\MockMmrService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
 use Tests\TestCase;
 
@@ -35,8 +35,6 @@ class PullHaloDataTest extends TestCase
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
@@ -54,8 +52,6 @@ class PullHaloDataTest extends TestCase
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
-            ->push($mockMatchResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomMatchesResponse, Response::HTTP_OK)
@@ -66,6 +62,14 @@ class PullHaloDataTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
             'uuid' => 1,
         ]);
 

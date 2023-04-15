@@ -107,7 +107,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         // The individual match endpoint returns all players, so it keyed by player, thus doesn't need "player"
         $prefix = Arr::has($payload, 'player') ? 'player.' : null;
         if (empty($prefix)) {
-            $team = $game->findTeamFromInternalId((string) Arr::get($payload, 'team.id'));
+            $team = $game->findTeamFromInternalId((string) Arr::get($payload, 'properties.team.id'));
             $gamePlayer->team()->associate($team);
         }
 
@@ -134,28 +134,28 @@ class GamePlayer extends Model implements HasHaloDotApi
         $gamePlayer->max_spree = Arr::get($payload, $prefix.'stats.core.summary.max_killing_spree');
         $gamePlayer->vehicle_destroys ??= Arr::get($payload, $prefix.'stats.core.summary.vehicles.destroys');
         $gamePlayer->vehicle_hijacks ??= Arr::get($payload, $prefix.'stats.core.summary.vehicles.hijacks');
-        $gamePlayer->medal_count = Arr::get($payload, $prefix.'stats.core.summary.medals');
+        $gamePlayer->medal_count = Arr::get($payload, $prefix.'stats.core.summary.medals.total');
         $gamePlayer->damage_taken = Arr::get($payload, $prefix.'stats.core.damage.taken');
         $gamePlayer->damage_dealt = Arr::get($payload, $prefix.'stats.core.damage.dealt');
         $gamePlayer->shots_fired = Arr::get($payload, $prefix.'stats.core.shots.fired');
-        $gamePlayer->shots_landed = Arr::get($payload, $prefix.'stats.core.shots.landed');
+        $gamePlayer->shots_landed = Arr::get($payload, $prefix.'stats.core.shots.hit');
         $gamePlayer->shots_missed = Arr::get($payload, $prefix.'stats.core.shots.missed');
         $gamePlayer->accuracy = min((float) Arr::get($payload, $prefix.'stats.core.shots.accuracy'), 100);
         $gamePlayer->rounds_won ??= Arr::get($payload, $prefix.'stats.core.rounds.won');
         $gamePlayer->rounds_lost ??= Arr::get($payload, $prefix.'stats.core.rounds.lost');
         $gamePlayer->rounds_tied ??= Arr::get($payload, $prefix.'stats.core.rounds.tied');
-        $gamePlayer->kills_melee ??= Arr::get($payload, $prefix.'stats.core.breakdowns.kills.melee');
-        $gamePlayer->kills_grenade ??= Arr::get($payload, $prefix.'stats.core.breakdowns.kills.grenades');
-        $gamePlayer->kills_headshot ??= Arr::get($payload, $prefix.'stats.core.breakdowns.kills.headshots');
-        $gamePlayer->kills_power ??= Arr::get($payload, $prefix.'stats.core.breakdowns.kills.power_weapons');
-        $gamePlayer->assists_emp ??= Arr::get($payload, $prefix.'stats.core.breakdowns.assists.emp');
-        $gamePlayer->assists_driver ??= Arr::get($payload, $prefix.'stats.core.breakdowns.assists.driver');
-        $gamePlayer->assists_callout ??= Arr::get($payload, $prefix.'stats.core.breakdowns.assists.callouts');
+        $gamePlayer->kills_melee ??= Arr::get($payload, $prefix.'stats.core.breakdown.kills.melee');
+        $gamePlayer->kills_grenade ??= Arr::get($payload, $prefix.'stats.core.breakdown.kills.grenades');
+        $gamePlayer->kills_headshot ??= Arr::get($payload, $prefix.'stats.core.breakdown.kills.headshots');
+        $gamePlayer->kills_power ??= Arr::get($payload, $prefix.'stats.core.breakdown.kills.power_weapons');
+        $gamePlayer->assists_emp ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.emp');
+        $gamePlayer->assists_driver ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.driver');
+        $gamePlayer->assists_callout ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.callouts');
         $gamePlayer->expected_kills ??= Arr::get($payload, $prefix.'performances.kills.expected');
         $gamePlayer->expected_deaths ??= Arr::get($payload, $prefix.'performances.deaths.expected');
 
-        if (Arr::has($payload, 'stats.core.breakdowns.medals')) {
-            $gamePlayer->medals = collect((array) Arr::get($payload, $prefix.'stats.core.breakdowns.medals'))
+        if (Arr::has($payload, 'stats.core.breakdown.medals')) {
+            $gamePlayer->medals = collect((array) Arr::get($payload, $prefix.'stats.core.breakdown.medals'))
                 ->mapWithKeys(function (array $medal) {
                     return [
                         $medal['id'] => $medal['count'],

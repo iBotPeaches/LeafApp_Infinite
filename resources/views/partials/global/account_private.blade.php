@@ -10,5 +10,6 @@
             <li>Accessibility Tab (scroll to bottom)</li>
             <li>Share Matchmade Games</li>
         </ul>
+        Additionally, please try and ensure <a href="https://www.halowaypoint.com/settings/privacy">HaloWaypoint</a> has the same settings as in-game.
     </div>
 </article>

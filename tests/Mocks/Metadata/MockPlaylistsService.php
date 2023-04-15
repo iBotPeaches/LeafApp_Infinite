@@ -22,9 +22,9 @@ class MockPlaylistsService extends BaseMock
                 $this->playlist(),
             ],
             'additional' => [
-                'count' => $this->faker->numberBetween(0, 5),
-                'parameters' => [
-                    'ids' => [],
+                'total' => $this->faker->numberBetween(0, 5),
+                'query' => [
+                    'language' => 'en-US',
                 ],
             ],
         ];
@@ -33,20 +33,38 @@ class MockPlaylistsService extends BaseMock
     private function playlist(): array
     {
         return [
+            'id' => $this->faker->uuid,
+            'version' => $this->faker->uuid,
             'name' => $this->faker->word,
-            'asset' => [
-                'id' => $this->faker->uuid,
-                'version' => $this->faker->uuid,
-                'thumbnail_url' => $this->faker->imageUrl,
+            'description' => $this->faker->sentence,
+            'image_urls' => [
+                'hero' => $this->faker->imageUrl,
+                'thumbnail' => $this->faker->imageUrl,
+                'screenshots' => [
+                    $this->faker->imageUrl,
+                ],
             ],
-            'availability' => [
-                'start_date' => now()->toIso8601ZuluString(),
-                'end_date' => now()->toIso8601ZuluString(),
+            'attributes' => [
+                'active' => true,
+                'featured' => true,
+                'ranked' => true,
             ],
             'properties' => [
                 'queue' => 'solo-duo',
                 'input' => 'mnk',
-                'ranked' => $this->faker->boolean,
+                'experience' => 'arena',
+            ],
+            'rotation' => [
+                [
+                    'name' => $this->faker->word,
+                    'weight' => $this->faker->numberBetween(100, 115),
+                ],
+            ],
+            'availability' => [
+                [
+                    'start_date' => now()->toIso8601ZuluString(),
+                    'end_date' => now()->toIso8601ZuluString(),
+                ],
             ],
         ];
     }

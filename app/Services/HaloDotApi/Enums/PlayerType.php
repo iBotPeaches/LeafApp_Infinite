@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Autocode\Enums;
+namespace App\Services\HaloDotApi\Enums;
 
 use BenSampo\Enum\Enum;
 
@@ -12,7 +12,7 @@ use BenSampo\Enum\Enum;
  */
 final class PlayerType extends Enum
 {
-    const PLAYER = 'player';
+    const PLAYER = 'human';
 
     const BOT = 'bot';
 }

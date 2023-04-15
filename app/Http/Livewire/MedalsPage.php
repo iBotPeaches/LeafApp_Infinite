@@ -23,7 +23,7 @@ class MedalsPage extends Component
     public function render(): View
     {
         $serviceRecordType = ModeSession::get()->toPlayerRelation();
-        $season = SeasonSession::get();
+        $season = SeasonSession::model();
         $serviceRecord = $this->player->$serviceRecordType()->ofSeason($season)->first();
 
         $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecord) {

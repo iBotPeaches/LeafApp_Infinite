@@ -6,24 +6,31 @@ namespace Tests\Mocks\Appearance;
 
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
+use Tests\Traits\HasProxiedImageUrls;
 
 class MockAppearanceService extends BaseMock
 {
-    use HasErrorFunctions;
+    use HasErrorFunctions, HasProxiedImageUrls;
 
-    public function success(?string $gamertag = null, ?string $imageName = null, ?string $backdropName = null): array
+    public function success(?string $gamertag = null, ?string $emblemName = null, ?string $backdropName = null): array
     {
-        $imageName ??= 'images/file/progression/Inventory/Emblems/olympus_nicekitty_emblem.png';
+        $emblemName ??= 'images/file/progression/Inventory/Emblems/olympus_nicekitty_emblem.png';
+        $nameplateName = 'images/nameplates/104-001-olympus-nicek-3112937b_n1405407205.png';
         $backdropName ??= 'images/file/progression/backgrounds/ui_background_reach-helmet-1.png';
+        $actionPoseName = 'progression/Inventory/Spartan/ActionPoses/101-000-menu-stance-r-4c08c2fe-SM.png';
 
         return [
             'data' => [
-                'emblem_url' => $this->getAssetUrl($imageName),
-                'backdrop_image_url' => $this->getAssetUrl($backdropName),
                 'service_tag' => $this->faker->lexify('????'),
+                'image_urls' => [
+                    'emblem' => $this->getAssetUrl($emblemName),
+                    'nameplate' => $this->getAssetUrl($nameplateName),
+                    'backdrop' => $this->getAssetUrl($backdropName),
+                    'action_pose' => $this->getAssetUrl($actionPoseName),
+                ],
             ],
             'additional' => [
-                'parameters' => [
+                'params' => [
                     'gamertag' => $gamertag ?? $this->faker->word,
                 ],
             ],
@@ -34,20 +41,19 @@ class MockAppearanceService extends BaseMock
     {
         return [
             'data' => [
-                'emblem_url' => $this->faker->imageUrl,
-                'backdrop_image_url' => $this->faker->imageUrl,
                 'service_tag' => $this->faker->lexify('????'),
+                'image_urls' => [
+                    'emblem' => $this->faker->imageUrl,
+                    'nameplate' => $this->faker->imageUrl,
+                    'backdrop' => $this->faker->imageUrl,
+                    'action_pose' => $this->faker->imageUrl,
+                ],
             ],
             'additional' => [
-                'parameters' => [
+                'params' => [
                     'gamertag' => $gamertag ?? $this->faker->word,
                 ],
             ],
         ];
-    }
-
-    private function getAssetUrl(string $imageName): string
-    {
-        return 'https://assets.halo.autocode.gg/externals/infinite/cms-images/?hash='.base64_encode($imageName);
     }
 }
