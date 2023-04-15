@@ -58,7 +58,7 @@ class PullMetadataTest extends TestCase
         // Arrange
         $mockMedalsResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMedalsResponse, 'data.0.type', 'invalid-category');
+        Arr::set($mockMedalsResponse, 'data.0.properties.type', 'invalid-category');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
 
         // Act & Assert
@@ -75,7 +75,7 @@ class PullMetadataTest extends TestCase
         // Arrange
         $mockMedalsResponse = (new MockMedalsService())->success();
 
-        Arr::set($mockMedalsResponse, 'data.0.difficulty', 'invalid-type');
+        Arr::set($mockMedalsResponse, 'data.0.attributes.difficulty', 'invalid-type');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
 
         // Act & Assert
