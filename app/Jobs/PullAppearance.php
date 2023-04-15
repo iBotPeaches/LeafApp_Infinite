@@ -50,8 +50,8 @@ class PullAppearance implements ShouldQueue
         $client = resolve(InfiniteInterface::class);
 
         $player = $client->appearance($this->player->gamertag);
-        $emblemUrl = $player?->getRawOriginal('emblem_url');
-        $backdropUrl = $player?->getRawOriginal('backdrop_url');
+        $emblemUrl = $player?->getRawOriginal('image_urls.emblem');
+        $backdropUrl = $player?->getRawOriginal('image_urls.backdrop');
 
         $emblem = $this->getStoragePathFromUrl($emblemUrl, 'emblems');
         $this->downloadIfMissing($emblem, $emblemUrl);

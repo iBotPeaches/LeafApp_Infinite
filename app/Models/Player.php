@@ -126,11 +126,11 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public static function fromHaloDotApi(array $payload): ?self
     {
-        $player = self::fromGamertag(Arr::get($payload, 'additional.parameters.gamertag'));
+        $player = self::fromGamertag(Arr::get($payload, 'additional.params.gamertag'));
 
         $player->service_tag = Arr::get($payload, 'data.service_tag');
-        $player->emblem_url = Arr::get($payload, 'data.emblem_url');
-        $player->backdrop_url = Arr::get($payload, 'data.backdrop_image_url');
+        $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
+        $player->backdrop_url = Arr::get($payload, 'data.image_urls.backdrop');
 
         if ($player->isDirty()) {
             $player->saveOrFail();
