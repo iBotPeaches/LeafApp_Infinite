@@ -44,7 +44,7 @@ class MockMatchService extends BaseMock
                                     'thumbnail_url' => $this->faker->url,
                                 ],
                                 'properties' => [
-                                    'level_id' => $this->faker->randomNumber(1),
+                                    'level_id' => 1,
                                 ],
                             ],
                             'playlist' => [

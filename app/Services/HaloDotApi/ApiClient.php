@@ -84,7 +84,7 @@ class ApiClient implements InfiniteInterface
 
             if ($response->throw()->successful()) {
                 $data = $response->json();
-                $count = (int) Arr::get($data, 'additional.count');
+                $count = (int) Arr::get($data, 'additional.total');
                 $offset += $perPage;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
