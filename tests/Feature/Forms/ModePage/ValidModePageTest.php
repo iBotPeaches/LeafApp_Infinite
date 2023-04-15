@@ -33,7 +33,7 @@ class ValidModePageTest extends TestCase
             ]);
 
         Season::factory()->createOne([
-            'key' => config('services.halodotapi.competitive.key')
+            'key' => config('services.halodotapi.competitive.key'),
         ]);
 
         SeasonSession::set((string) config('services.halodotapi.competitive.key'));
