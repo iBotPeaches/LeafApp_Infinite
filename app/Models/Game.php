@@ -218,7 +218,7 @@ class Game extends Model implements HasHaloDotApi
         $game->season_version = Arr::get($payload, 'season.version');
         $game->version = config('services.halodotapi.version');
 
-        if (Arr::has($payload, 'teams.0.id')) {
+        if (Arr::has($payload, 'players.0.name')) {
             $game->was_pulled = true;
         }
 
