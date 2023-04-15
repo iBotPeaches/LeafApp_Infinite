@@ -60,7 +60,7 @@ class ValidGamerFormTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
-            'xuid' => Arr::get($mockXuidResponse, 'xuid'),
+            'xuid' => Arr::get($mockXuidResponse, 'people.0.xuid'),
         ]);
     }
 

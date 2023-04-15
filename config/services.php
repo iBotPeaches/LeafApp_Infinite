@@ -44,7 +44,8 @@ return [
     ],
 
     'xboxapi' => [
-        'domain' => env('XBOXAPI_DOMAIN', 'https://xbl-api.prouser123.me'),
+        'domain' => env('XBOXAPI_DOMAIN', 'https://xbl.io'),
+        'key' => env('XBOXAPI_KEY', ''),
         'enabled' => env('XBOXAPI_ENABLED', true),
     ],
 
