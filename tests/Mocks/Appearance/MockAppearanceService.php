@@ -46,7 +46,7 @@ class MockAppearanceService extends BaseMock
                     'nameplate' => $this->faker->imageUrl,
                     'backdrop' => $this->faker->imageUrl,
                     'action_pose' => $this->faker->imageUrl,
-                ]
+                ],
             ],
             'additional' => [
                 'params' => [
@@ -62,11 +62,12 @@ class MockAppearanceService extends BaseMock
             'identifier' => 'hi',
             'path' => $imageName,
             'options' => [
-                'branch' => 'Waypoint'
-            ]
+                'branch' => 'Waypoint',
+            ],
         ];
 
         $imageJson = json_encode($imageObject);
+
         return 'https://api.halodotapi.com/games/halo-infinite/tooling/cms-images?hash='.base64_encode($imageJson);
     }
 }
