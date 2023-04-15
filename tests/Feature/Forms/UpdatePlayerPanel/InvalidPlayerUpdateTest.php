@@ -19,7 +19,6 @@ use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
 use Tests\Mocks\Matches\MockMatchService;
-use Tests\Mocks\Mmr\MockMmrService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
 use Tests\TestCase;
 
@@ -62,7 +61,6 @@ class InvalidPlayerUpdateTest extends TestCase
         $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMmrResponse = (new MockMmrService())->success($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->error429();
 
         Http::fakeSequence()
@@ -71,7 +69,6 @@ class InvalidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockMmrResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_TOO_MANY_REQUESTS);
 
         Playlist::factory()->createOne([
