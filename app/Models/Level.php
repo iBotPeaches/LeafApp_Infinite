@@ -8,8 +8,6 @@ use Database\Factories\LevelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
