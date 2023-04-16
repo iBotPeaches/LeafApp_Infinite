@@ -24,12 +24,12 @@ class PullServiceRecord implements ShouldQueue
 
     private Player $player;
 
-    private string $seasonIdentifier;
+    private ?string $seasonIdentifier;
 
     public function __construct(Player $player, ?string $seasonIdentifier)
     {
         $this->player = $player;
-        $this->seasonIdentifier = $seasonIdentifier ?? (string) config('services.halodotapi.competitive.key');
+        $this->seasonIdentifier = $seasonIdentifier;
         $this->onQueue(QueueName::RECORDS);
     }
 

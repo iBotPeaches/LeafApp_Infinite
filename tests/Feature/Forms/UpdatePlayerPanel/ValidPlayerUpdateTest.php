@@ -20,6 +20,7 @@ use App\Models\Level;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Models\Playlist;
+use App\Models\Season;
 use App\Services\HaloDotApi\Enums\Mode;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
@@ -151,6 +152,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
+        ]);
+
+        Season::factory()->createOne([
+            'season_id' => config('services.halodotapi.competitive.season'),
         ]);
 
         $player = Player::factory()->createOne([
@@ -494,6 +499,8 @@ class ValidPlayerUpdateTest extends TestCase
     public function testValidResponseFromAllHaloDotApiServicesAsOverview(): void
     {
         // Arrange
+        SeasonSession::set(config('services.halodotapi.competitive.key'));
+
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
         $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
@@ -523,6 +530,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
+        ]);
+
+        Season::factory()->createOne([
+            'key' => config('services.halodotapi.competitive.key'),
         ]);
 
         $player = Player::factory()->createOne([
