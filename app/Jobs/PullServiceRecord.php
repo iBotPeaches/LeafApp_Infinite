@@ -6,7 +6,6 @@ namespace App\Jobs;
 
 use App\Enums\QueueName;
 use App\Models\Player;
-use App\Models\Season;
 use App\Services\HaloDotApi\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,12 +24,12 @@ class PullServiceRecord implements ShouldQueue
 
     private Player $player;
 
-    private string $seasonIdentifier;
+    private ?string $seasonIdentifier;
 
     public function __construct(Player $player, ?string $seasonIdentifier)
     {
         $this->player = $player;
-        $this->seasonIdentifier = $seasonIdentifier ?? (string) Season::latestOfSeason((int) config('services.halodotapi.competitive.season'))?->identifier;
+        $this->seasonIdentifier = $seasonIdentifier;
         $this->onQueue(QueueName::RECORDS);
     }
 
