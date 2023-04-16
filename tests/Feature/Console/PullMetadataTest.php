@@ -67,6 +67,56 @@ class PullMetadataTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
+    public function testInvalidInputForPlaylist(): void
+    {
+        // Expectations
+        $this->expectException(\InvalidArgumentException::class);
+
+        // Arrange
+        $mockMedalsResponse = (new MockMedalsService())->success();
+        $mockMapsResponse = (new MockMapsService())->success();
+        $mockTeamsResponse = (new MockTeamsService())->success();
+        $mockPlaylistResponse = (new MockPlaylistsService())->success();
+
+        Arr::set($mockPlaylistResponse, 'data.0.properties.input', 'unknown-input');
+
+        Http::fakeSequence()
+            ->push($mockMedalsResponse, Response::HTTP_OK)
+            ->push($mockMapsResponse, Response::HTTP_OK)
+            ->push($mockTeamsResponse, Response::HTTP_OK)
+            ->push($mockPlaylistResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        $this
+            ->artisan('app:pull-metadata')
+            ->assertExitCode(CommandAlias::FAILURE);
+    }
+
+    public function testInvalidQueueForPlaylist(): void
+    {
+        // Expectations
+        $this->expectException(\InvalidArgumentException::class);
+
+        // Arrange
+        $mockMedalsResponse = (new MockMedalsService())->success();
+        $mockMapsResponse = (new MockMapsService())->success();
+        $mockTeamsResponse = (new MockTeamsService())->success();
+        $mockPlaylistResponse = (new MockPlaylistsService())->success();
+
+        Arr::set($mockPlaylistResponse, 'data.0.properties.queue', 'unknown-queue');
+
+        Http::fakeSequence()
+            ->push($mockMedalsResponse, Response::HTTP_OK)
+            ->push($mockMapsResponse, Response::HTTP_OK)
+            ->push($mockTeamsResponse, Response::HTTP_OK)
+            ->push($mockPlaylistResponse, Response::HTTP_OK);
+
+        // Act & Assert
+        $this
+            ->artisan('app:pull-metadata')
+            ->assertExitCode(CommandAlias::FAILURE);
+    }
+
     public function testInvalidPullNewDifficulty(): void
     {
         // Expectations

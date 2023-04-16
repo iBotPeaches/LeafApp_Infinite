@@ -10,6 +10,7 @@ use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
+use App\Models\Playlist;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -37,6 +38,10 @@ class PullMatchupGameTest extends TestCase
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
+        ]);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1,
         ]);
 
         Level::factory()->createOne([

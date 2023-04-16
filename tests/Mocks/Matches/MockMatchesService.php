@@ -98,7 +98,7 @@ class MockMatchesService extends BaseMock
                     ],
                 ],
                 'playlist' => [
-                    'id' => $this->faker->uuid,
+                    'id' => 1,
                     'version' => $this->faker->uuid,
                     'name' => $this->faker->word,
                     'image_urls' => [
