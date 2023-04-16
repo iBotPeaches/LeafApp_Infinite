@@ -10,9 +10,9 @@ use App\Support\Session\SeasonSession;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use function Sentry\captureException;
 
 class UpdatePlayerPanel extends Component
 {
@@ -67,12 +67,13 @@ class UpdatePlayerPanel extends Component
                     $this->player->updateFromHaloDotApi(false, $this->type);
                 });
             } catch (RequestException $exception) {
+                captureException($exception);
                 $color = 'is-danger';
                 $message = $exception->getCode() === 429
                     ? 'Rate Limit Hit :( - Try later.'
                     : 'Oops - something went wrong.';
             } catch (\Throwable $exception) {
-                Log::error($exception->getMessage());
+                captureException($exception);
                 $color = 'is-danger';
                 $message = 'Oops - something went wrong.';
             }
