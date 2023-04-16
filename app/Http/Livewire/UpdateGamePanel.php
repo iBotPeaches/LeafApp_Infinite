@@ -7,9 +7,9 @@ namespace App\Http\Livewire;
 use App\Models\Game;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Component;
+use function Sentry\captureException;
 
 class UpdateGamePanel extends Component
 {
@@ -41,12 +41,13 @@ class UpdateGamePanel extends Component
             });
             $this->emitTo(GamePage::class, '$refresh');
         } catch (RequestException $exception) {
+            captureException($exception);
             $color = 'is-danger';
             $message = $exception->getCode() === 429
                 ? 'Rate Limit Hit :( - Try later.'
                 : 'Oops - something went wrong.';
         } catch (\Throwable $exception) {
-            Log::error($exception->getMessage());
+            captureException($exception);
             $color = 'is-danger';
             $message = 'Oops - something went wrong.';
         }
