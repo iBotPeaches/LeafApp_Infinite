@@ -166,10 +166,9 @@ return [
     */
 
     'defaults' => [
-        'supervisor-1' => [
+        'main' => [
             'connection' => 'redis',
             'queue' => [
-                'default',
                 QueueName::APPEARANCE,
                 QueueName::COMPETITIVE,
                 QueueName::HCS,
@@ -185,7 +184,7 @@ return [
             'timeout' => 1024,
             'nice' => 0,
         ],
-        'supervisor-2' => [
+        'xuid' => [
             'connection' => 'redis',
             'queue' => [
                 QueueName::XUID,
@@ -194,21 +193,21 @@ return [
             'maxProcesses' => 1,
             'maxTime' => 0,
             'maxJobs' => 0,
-            'memory' => 2048,
+            'memory' => 256,
             'tries' => 1,
-            'timeout' => 500,
+            'timeout' => 15,
             'nice' => 0,
         ],
     ],
 
     'environments' => [
         'production' => [
-            'supervisor-1' => [
+            'main' => [
                 'maxProcesses' => 20,
                 'balanceMaxShift' => 2,
                 'balanceCooldown' => 3,
             ],
-            'supervisor-2' => [
+            'xuid' => [
                 'maxProcesses' => 1,
                 'balanceMaxShift' => 2,
                 'balanceCooldown' => 3,
@@ -216,10 +215,10 @@ return [
         ],
 
         'local' => [
-            'supervisor-1' => [
+            'main' => [
                 'maxProcesses' => 3,
             ],
-            'supervisor-2' => [
+            'xuid' => [
                 'maxProcesses' => 1,
             ],
         ],
