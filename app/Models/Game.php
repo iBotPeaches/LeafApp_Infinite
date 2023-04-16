@@ -185,7 +185,7 @@ class Game extends Model implements HasHaloDotApi
         // Customs do not have a Playlist
         $playlistData = Arr::get($payload, 'details.playlist');
         if ($playlistData) {
-            $playlist = Playlist::fromHaloDotApi($playlistData);
+            $playlist = Playlist::fromPlaylistId(Arr::get($playlistData, 'id'));
         }
 
         /** @var Mode|null $mode */
