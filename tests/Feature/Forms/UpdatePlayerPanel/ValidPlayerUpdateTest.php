@@ -533,7 +533,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Season::factory()->createOne([
-            'key' => config('services.halodotapi.competitive.key')
+            'key' => config('services.halodotapi.competitive.key'),
         ]);
 
         $player = Player::factory()->createOne([
