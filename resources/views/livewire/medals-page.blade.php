@@ -8,6 +8,11 @@
             No Medals pulled yet! Hold tight.
         </div>
     @else
+        @if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED()) && !$isAllSeasons)
+            <div class="notification is-warning">
+                We currently cannot pull filtered medal data (ie ranked) from a specific season. If you have data it's from an older Leaf that could.
+            </div>
+        @endif
         @if ($player->is_private)
             @include('partials.global.account_private')
         @else

@@ -21,10 +21,14 @@ class OverviewPage extends Component
 
     public function render(): View
     {
-        $serviceRecordType = ModeSession::get()->toPlayerRelation();
+        $mode = ModeSession::get();
+        $serviceRecordType = $mode->toPlayerRelation();
         $season = SeasonSession::model();
+        $isAllSeasons = $season->key === SeasonSession::$allSeasonKey;
 
         return view('livewire.overview-page', [
+            'mode' => $mode,
+            'isAllSeasons' => $isAllSeasons,
             'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first(),
             'season' => $season,
         ]);
