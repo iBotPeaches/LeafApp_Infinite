@@ -65,7 +65,7 @@ class UpdatePlayerPanel extends Component
 
                     $this->player->lockForUpdate();
                     $this->player->updateFromHaloDotApi(false, $this->type);
-                });
+                }, 3);
             } catch (RequestException $exception) {
                 captureException($exception);
                 $color = 'is-danger';
