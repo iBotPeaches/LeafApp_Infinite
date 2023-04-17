@@ -201,10 +201,12 @@ class ApiClient implements InfiniteInterface
 
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord
     {
-        foreach ([SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()] as $filter) {
-            $url = "stats/multiplayer/players/{$player->url_safe_gamertag}/service-record/matchmade/";
-            $season = $seasonIdentifier === SeasonSession::$allSeasonKey ? null : $seasonIdentifier;
+        $url = "stats/multiplayer/players/{$player->url_safe_gamertag}/service-record/matchmade/";
+        $season = $seasonIdentifier === SeasonSession::$allSeasonKey ? null : $seasonIdentifier;
+        $seasonModel = Season::ofSeasonIdentifierOrKey($seasonIdentifier);
+        $defaultFilters = [SystemMode::MATCHMADE_PVP(), SystemMode::MATCHMADE_RANKED()];
 
+        foreach (($seasonModel?->getAvailableFilters() ?? $defaultFilters) as $filter) {
             $queryParams = [
                 'filter' => $filter->toUrlSlug(),
             ];
@@ -226,7 +228,7 @@ class ApiClient implements InfiniteInterface
             $item = Arr::get($data, 'data');
             $item['_leaf']['player'] = $player;
             $item['_leaf']['filter'] = $filter;
-            $item['_leaf']['season'] = Season::ofSeasonIdentifierOrKey($seasonIdentifier);
+            $item['_leaf']['season'] = $seasonModel;
 
             ServiceRecord::fromHaloDotApi($item);
         }
