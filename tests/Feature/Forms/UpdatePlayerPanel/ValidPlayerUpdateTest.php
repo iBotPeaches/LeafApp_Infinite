@@ -46,6 +46,7 @@ class ValidPlayerUpdateTest extends TestCase
     public function testAutomaticallyMarkedPrivateIfInvalidRecord(): void
     {
         // Arrange
+        SeasonSession::set(SeasonSession::$allSeasonKey);
         Bus::fake([
             PullAppearance::class,
             PullCompetitive::class,
@@ -496,10 +497,70 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsOverview(): void
+    public function testValidResponseFromAllHaloDotApiServicesAsOverviewScopedToSeason(): void
     {
         // Arrange
         SeasonSession::set(config('services.halodotapi.competitive.key'));
+
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Season::factory()->createOne([
+            'key' => config('services.halodotapi.competitive.key'),
+        ]);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id,
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => true,
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('overview-page', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 1);
+    }
+
+    public function testValidResponseFromAllHaloDotApiServicesAsOverviewScopedToAll(): void
+    {
+        // Arrange
+        SeasonSession::set(SeasonSession::$allSeasonKey);
 
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
@@ -530,10 +591,6 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
-        ]);
-
-        Season::factory()->createOne([
-            'key' => config('services.halodotapi.competitive.key'),
         ]);
 
         $player = Player::factory()->createOne([

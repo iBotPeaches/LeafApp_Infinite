@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Mode;
 use App\Models\Contracts\HasHaloDotApi;
 use Database\Factories\SeasonFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,5 +81,12 @@ class Season extends Model implements HasHaloDotApi
         }
 
         return $season;
+    }
+
+    public function getAvailableFilters(): array
+    {
+        return [
+            Mode::MATCHMADE_PVP(),
+        ];
     }
 }

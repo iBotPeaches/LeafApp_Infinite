@@ -212,7 +212,9 @@ class ServiceRecord extends Model implements HasHaloDotApi
             $serviceRecord->player->is_private = false;
         }
 
-        if ($serviceRecord->player->isDirty(['is_private'])) {
+        // Old seasons shouldn't be used to determine private-ness, since new players will be marked as inactive.
+        // Just flag the account if the all seasons (merged) returns no data.
+        if ($serviceRecord->player->isDirty(['is_private']) && ($season === null || $season->key === SeasonSession::$allSeasonKey)) {
             $serviceRecord->player->saveOrFail();
         }
 

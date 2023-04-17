@@ -24,6 +24,8 @@ class MedalsPage extends Component
     {
         $serviceRecordType = ModeSession::get()->toPlayerRelation();
         $season = SeasonSession::model();
+        $mode = ModeSession::get();
+        $isAllSeasons = $season->key === SeasonSession::$allSeasonKey;
         $serviceRecord = $this->player->$serviceRecordType()->ofSeason($season)->first();
 
         $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecord) {
@@ -33,6 +35,8 @@ class MedalsPage extends Component
         })->sortBy('name');
 
         return view('livewire.medals-page', [
+            'mode' => $mode,
+            'isAllSeasons' => $isAllSeasons,
             'player' => $this->player,
             'medals' => $medals,
         ]);
