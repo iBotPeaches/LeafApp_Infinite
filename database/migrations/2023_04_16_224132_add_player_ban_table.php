@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Models\Player;
@@ -12,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('player_bans', function (Blueprint $table) {
             $table->id();
+            $table->string('key', 32)->unique();
             $table->foreignIdFor(Player::class)->constrained();
             $table->string('message');
             $table->dateTime('ends_at');
