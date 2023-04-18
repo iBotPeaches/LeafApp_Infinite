@@ -237,16 +237,18 @@ class ApiClient implements InfiniteInterface
         return $player->serviceRecord;
     }
 
-    public function banSummary(Player $player): Player
+    public function banSummary(Player $player): Collection
     {
-        $response = $this->getPendingRequest()->get('tooling/players/' . $player->url_safe_gamertag . '/bansummary')->throw();
+        $response = $this->getPendingRequest()->get('tooling/players/'.$player->url_safe_gamertag.'/bansummary')->throw();
         $data = $response->json();
 
         foreach (Arr::get($data, 'data') as $ban) {
+            $ban['_leaf']['player'] = $player;
+
             PlayerBan::fromHaloDotApi($ban);
         }
 
-        return $player;
+        return $player->bans;
     }
 
     private function getPendingRequest(): PendingRequest
