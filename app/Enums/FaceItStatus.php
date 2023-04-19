@@ -33,6 +33,10 @@ final class FaceItStatus extends Enum implements LocalizedEnum
 
     const SCHEDULED = 6;
 
+    const PAUSED = 7;
+
+    const JOIN = 8;
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match (Str::lower($enumKeyOrValue)) {
@@ -42,6 +46,8 @@ final class FaceItStatus extends Enum implements LocalizedEnum
             'manual_result', 'manual-result' => self::MANUAL_RESULT,
             'scheduling' => self::SCHEDULING,
             'scheduled' => self::SCHEDULED,
+            'paused' => self::PAUSED,
+            'join' => self::JOIN,
             default => $enumKeyOrValue
         };
 

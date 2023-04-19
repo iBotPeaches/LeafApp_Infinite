@@ -65,5 +65,7 @@ return [
         FaceItStatus::MANUAL_RESULT => 'Manual Result',
         FaceItStatus::SCHEDULING => 'Scheduling',
         FaceItStatus::SCHEDULED => 'Scheduled',
+        FaceItStatus::PAUSED => 'Paused',
+        FaceItStatus::JOIN => 'Join',
     ],
 ];
