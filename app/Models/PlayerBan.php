@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
 use Carbon\Carbon;
+use Database\Factories\PlayerBanFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,8 @@ use Illuminate\Support\Str;
  * @property string $type
  * @property string $scope
  * @property-read Player $player
+ *
+ * @method static PlayerBanFactory factory(...$parameters)
  */
 class PlayerBan extends Model implements HasHaloDotApi
 {
