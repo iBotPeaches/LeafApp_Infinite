@@ -11,6 +11,7 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect;
 use Livewire\Component;
 use function Sentry\captureException;
 
@@ -29,7 +30,7 @@ class UpdatePlayerPanel extends Component
 
     public function processUpdate(): void
     {
-        $this->runUpdate = true;
+        $this->runUpdate = ! LaravelCrawlerDetect::isCrawler();
     }
 
     public function render(): View
