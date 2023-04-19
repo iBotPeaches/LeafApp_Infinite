@@ -38,6 +38,7 @@
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
+            @include('partials.player.ban-header')
             @include('partials.player.tabs.' . $type, ['player' => $player])
         </div>
     </div>

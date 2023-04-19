@@ -12,6 +12,7 @@ use App\Models\GamePlayer;
 use App\Models\Level;
 use App\Models\Medal;
 use App\Models\Player;
+use App\Models\PlayerBan;
 use App\Models\Playlist;
 use App\Models\Season;
 use App\Models\ServiceRecord;
@@ -234,6 +235,20 @@ class ApiClient implements InfiniteInterface
         }
 
         return $player->serviceRecord;
+    }
+
+    public function banSummary(Player $player): Collection
+    {
+        $response = $this->getPendingRequest()->get('tooling/players/'.$player->url_safe_gamertag.'/bansummary')->throw();
+        $data = $response->json();
+
+        foreach (Arr::get($data, 'data') as $ban) {
+            $ban['_leaf']['player'] = $player;
+
+            PlayerBan::fromHaloDotApi($ban);
+        }
+
+        return $player->bans;
     }
 
     private function getPendingRequest(): PendingRequest

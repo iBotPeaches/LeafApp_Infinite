@@ -34,4 +34,6 @@ interface InfiniteInterface
     public function metadataSeasons(): Collection;
 
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord;
+
+    public function banSummary(Player $player): Collection;
 }
