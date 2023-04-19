@@ -9,6 +9,7 @@ use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
+use App\Models\PlayerBan;
 use App\Models\ServiceRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
@@ -132,6 +133,26 @@ class PlayerPageTest extends TestCase
 
         // Act
         $response = $this->get('/player/'.urlencode($serviceRecord->player->gamertag).'/overview');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('update-player-panel');
+    }
+
+    public function testLoadingPlayerOverviewPageAsBannedUser(): void
+    {
+        // Arrange
+        Http::fake();
+
+        /** @var Player $player */
+        $player = Player::factory()->createOne();
+        PlayerBan::factory()->createOne([
+            'player_id' => $player->id,
+        ]);
+
+        // Act
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/overview');
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
