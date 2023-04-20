@@ -19,10 +19,13 @@ use App\Models\ServiceRecord;
 use App\Models\Team;
 use App\Services\HaloDotApi\Enums\Mode;
 use App\Support\Session\SeasonSession;
+use GuzzleHttp\Middleware;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ApiClient implements InfiniteInterface
@@ -253,7 +256,15 @@ class ApiClient implements InfiniteInterface
 
     private function getPendingRequest(): PendingRequest
     {
-        return Http::asJson()
+        $responseParser = function (ResponseInterface $response) {
+            Cache::put('ratelimit-limit', $response->getHeader('Ratelimit-Limit'));
+            Cache::put('ratelimit-remaining', $response->getHeader('Ratelimit-Remaining'));
+            Cache::put('ratelimit-reset', $response->getHeader('Ratelimit-Reset'));
+
+            return $response;
+        };
+
+        return Http::withMiddleware(Middleware::mapResponse($responseParser))
             ->baseUrl($this->config['domain'].'/games/halo-infinite/')
             ->withUserAgent('Leaf - v'.config('sentry.release', 'dirty'))
             ->withHeaders([
