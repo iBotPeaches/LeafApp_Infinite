@@ -18,12 +18,22 @@ export default defineConfig({
                 greedy: [
                     /orange/,
                     /purple/,
-                    /unranked/
+                    /unranked/,
                 ],
                 deep: [
                     /has-tooltip-info/,
+                    /has-tooltip-success/,
+                    /has-tooltip-warning/,
+                    /has-tooltip-danger/,
+                    /has-text-success/,
                     /has-text-info/,
+                    /has-text-warning/,
+                    /has-text-danger/,
                     /has-text-primary/,
+                    /has-background-success-light/,
+                    /has-background-info-light/,
+                    /has-background-warning-light/,
+                    /has-background-danger-light/,
                 ]
             },
         }),
