@@ -68,6 +68,7 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
+    /** @param  Collection<int, Game>|null  $games */
     private function handleGameResults(?Collection $games): void
     {
         $games?->each(function (Game $game) {
@@ -79,6 +80,7 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
+    /** @param  Collection<int, GamePlayer>|null  $gamePlayers */
     private function handleGamePlayerResults(?Collection $gamePlayers): void
     {
         $gamePlayers?->each(function (GamePlayer $gamePlayer) {
@@ -91,6 +93,7 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
+    /** @param  Collection<int, ServiceRecord>|null  $serviceRecords */
     private function handleServiceRecordResults(?Collection $serviceRecords): void
     {
         $serviceRecords?->each(function (ServiceRecord $serviceRecord) {
@@ -102,6 +105,7 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
+    /** @param  Collection<int, Map>|null  $maps */
     private function handleMapResults(?Collection $maps): void
     {
         $maps?->each(function (Map $map) {
