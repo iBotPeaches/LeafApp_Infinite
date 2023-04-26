@@ -30,10 +30,12 @@ Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit'
 Route::redirect('sitemap.xml', '/sitemaps/sitemap.xml', Response::HTTP_PERMANENTLY_REDIRECT);
 
 // Leaderboard
-Route::get('/leaderboards/top-ten', [LeaderboardController::class, 'topTenList'])->name('topTenLeaderboards');
-Route::get('/leaderboards/top-ten/{key}', [LeaderboardController::class, 'topTen'])->name('topTenLeaderboard');
-Route::get('/leaderboards/medal', [LeaderboardController::class, 'medalList'])->name('medalLeaderboards');
-Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
+Route::middleware('cache.headers:public;max_age=21600;etag')->group(function () {
+    Route::get('/leaderboards/top-ten', [LeaderboardController::class, 'topTenList'])->name('topTenLeaderboards');
+    Route::get('/leaderboards/top-ten/{key}', [LeaderboardController::class, 'topTen'])->name('topTenLeaderboard');
+    Route::get('/leaderboards/medal', [LeaderboardController::class, 'medalList'])->name('medalLeaderboards');
+    Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
+});
 
 // Scrim
 Route::pattern('scrimType', 'overview|matches|players');
@@ -53,9 +55,11 @@ Route::get('/game/{game}/csv', [GameController::class, 'csv'])->name('gameCsv');
 Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 
 // HCS
-Route::get('/hcs/{championship}/matchup/{matchup}', [HcsController::class, 'matchup'])->name('matchup');
-Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])->name('championship');
-Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
+Route::middleware('cache.headers:public;max_age=300;etag')->group(function () {
+    Route::get('/hcs/{championship}/matchup/{matchup}', [HcsController::class, 'matchup'])->name('matchup');
+    Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])->name('championship');
+    Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
+});
 
 // Auth
 Route::redirect('/login', '/auth/google/redirect')->name('login');
