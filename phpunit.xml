@@ -36,7 +36,7 @@
         <server name="TELESCOPE_ENABLED" value="false"/>
         <server name="XBOXAPI_ENABLED" value="true"/>
         <server name="AUTOCODE_DISABLED" value="false"/>
-	<server name="AUTOCODE_CURRENT_SEASON" value="2"/>
-	<server name="AUTOCODE_CURRENT_SEASON_VERSION" value="1"/>
+        <server name="AUTOCODE_CURRENT_SEASON" value="2"/>
+        <server name="AUTOCODE_CURRENT_SEASON_VERSION" value="1"/>
     </php>
 </phpunit>
