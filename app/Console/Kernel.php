@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\PullMetadata;
 use App\Console\Commands\RefreshAnalytics;
+use App\Console\Commands\RefreshMedals;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,7 +29,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(RefreshAnalytics::class)
             ->withoutOverlapping()
-            ->daily();
+            ->dailyAt(12)
+            ->timezone('America/New_York');
+
+        $schedule->command(RefreshMedals::class)
+            ->withoutOverlapping()
+            ->dailyAt(3)
+            ->timezone('America/New_York');
 
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes();
