@@ -27,13 +27,13 @@ class RefreshMedals extends Command
 
         // ALL
         $medals->each(function (Medal $medal) {
-            ProcessMedalAnalytic::dispatch($medal);
+            ProcessMedalAnalytic::dispatchSync($medal);
         });
 
         // Seasons
         $seasons->each(function (Season $season) use ($medals) {
             $medals->each(function (Medal $medal) use ($season) {
-                ProcessMedalAnalytic::dispatch($medal, $season);
+                ProcessMedalAnalytic::dispatchSync($medal, $season);
             });
         });
 
