@@ -48,29 +48,24 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
 
     public function results(int $limit = 10): ?Collection
     {
-        $mapOutcomesQuery = Game::query()
-            ->selectRaw('map_id, outcome, count(*) as total')
-            ->join('game_players', 'games.id', '=', 'game_players.game_id', 'right')
-            ->whereNotNull('games.playlist_id')
-            ->groupBy(['map_id', 'outcome']);
-
         $lssVariants = Gamevariant::query()
             ->where('name', '=', 'Last Spartan Standing')
             ->pluck('id');
 
-        $mapOutcomesQuery->whereNotIn('games.gamevariant_id', $lssVariants);
-
-        $outcomePercentQuery = DB::query()
-            ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as '.$this->property())
-            ->from($mapOutcomesQuery);
+        $mapOutcomesQuery = Game::query()
+            ->selectRaw('maps.name as map_name, outcome, count(*) as total')
+            ->join('game_players', 'games.id', '=', 'game_players.game_id', 'right')
+            ->join('maps', 'maps.id', '=', 'games.map_id', 'right')
+            ->whereNotNull('games.playlist_id')
+            ->whereNotIn('games.gamevariant_id', $lssVariants)
+            ->groupBy(['map_name', 'outcome']);
 
         return $this->builder()
-            ->selectRaw('maps.*, '.$this->property())
-            ->joinSub($outcomePercentQuery, 'outcome_percent', 'map_id', '=', 'id', 'right')
+            ->selectRaw('map_name, outcome, total, (total / (sum(total) over (partition by map_name))) * 100 as '.$this->property())
+            ->from($mapOutcomesQuery)
             ->where('outcome', '=', Outcome::LEFT)
             ->orderByDesc($this->property())
-            ->orderBy('name')
-            ->limit($limit)
+            ->orderBy('map_name')
             ->get();
     }
 }
