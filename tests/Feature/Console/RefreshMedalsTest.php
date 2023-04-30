@@ -6,6 +6,7 @@ namespace Tests\Feature\Console;
 
 use App\Jobs\ProcessMedalAnalytic;
 use App\Models\Medal;
+use App\Models\Season;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -20,6 +21,7 @@ class RefreshMedalsTest extends TestCase
         // Arrange
         Queue::fake();
         Medal::factory()->createOne();
+        Season::factory()->createOne();
 
         // Act
         $this

@@ -7,6 +7,7 @@ namespace Tests\Feature\Jobs;
 use App\Enums\Mode;
 use App\Jobs\ProcessMedalAnalytic;
 use App\Models\Medal;
+use App\Models\Season;
 use App\Models\ServiceRecord;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
@@ -20,7 +21,7 @@ class ProcessMedalAnalyticTest extends TestCase
     {
         // Arrange
         Http::fake()->preventStrayRequests();
-        $sr = ServiceRecord::factory()
+        ServiceRecord::factory()
             ->withMedals()
             ->createOne([
                 'mode' => Mode::MATCHMADE_PVP,
@@ -38,7 +39,38 @@ class ProcessMedalAnalyticTest extends TestCase
         // Assert
         $this->assertDatabaseHas('medal_analytics', [
             'medal_id' => $medal->id,
+            'mode' => Mode::MATCHMADE_PVP,
             'season_id' => null
+        ]);
+    }
+
+    public function testProcessingAsSeason(): void
+    {
+        // Arrange
+        Http::fake()->preventStrayRequests();
+        ServiceRecord::factory()
+            ->withMedals()
+            ->createOne([
+                'mode' => Mode::MATCHMADE_RANKED,
+                'total_matches' => 1102,
+            ]);
+
+        /** @var Medal $medal */
+        $medal = Medal::query()->first();
+
+        /** @var Season $season */
+        $season = Season::factory()->createOne([
+            'key' => '1-1'
+        ]);
+
+        // Act
+        ProcessMedalAnalytic::dispatchSync($medal, $season);
+
+        // Assert
+        $this->assertDatabaseHas('medal_analytics', [
+            'medal_id' => $medal->id,
+            'mode' => Mode::MATCHMADE_RANKED,
+            'season_id' => $season->id
         ]);
     }
 }
