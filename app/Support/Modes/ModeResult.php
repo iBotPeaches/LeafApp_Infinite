@@ -13,7 +13,7 @@ class ModeResult
 {
     public Outcome $outcome;
 
-    public int $mapId;
+    public string $mapName;
 
     public ?Map $map = null;
 
@@ -30,13 +30,13 @@ class ModeResult
     public function __construct(stdClass $data)
     {
         $this->outcome = Outcome::coerce($data->outcome) ?? Outcome::DRAW();
-        $this->mapId = $data->map_id;
+        $this->mapName = $data->name;
         $this->categoryId = $data->category_id;
         $this->total = $data->total;
     }
 
     public function key(): string
     {
-        return $this->mapId.$this->categoryId;
+        return $this->mapName.$this->categoryId;
     }
 }
