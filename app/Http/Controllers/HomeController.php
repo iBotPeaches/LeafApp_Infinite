@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\Mode;
 use App\Models\Analytic;
-use App\Models\Medal;
+use App\Models\MedalAnalytic;
 use App\Models\Player;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Contracts\View\View;
@@ -23,9 +24,12 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        $randomMedal = Medal::query()
+        $medalAnalytic = MedalAnalytic::query()
             ->limit(1)
             ->inRandomOrder()
+            ->where('mode', Mode::MATCHMADE_PVP)
+            ->whereNull('season_id')
+            ->where('place', 1)
             ->first();
 
         $availableAnalytics = Storage::disk('stats')->files();
@@ -43,7 +47,7 @@ class HomeController extends Controller
 
         return view('pages.home', [
             'lastUpdated' => $lastUpdated,
-            'medal' => $randomMedal,
+            'medalAnalytic' => $medalAnalytic,
             'analyticClass' => $randomAnalyticClass,
             'analytic' => $randomAnalytic,
         ]);

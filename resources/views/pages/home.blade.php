@@ -16,7 +16,7 @@
     <div class="columns">
         <div class="column">
             <livewire:add-gamer-form />
-            @if ($medal)
+            @if ($medalAnalytic)
                 @include('partials.home.random_medal')
             @endif
             @include('partials.home.random_stat')
