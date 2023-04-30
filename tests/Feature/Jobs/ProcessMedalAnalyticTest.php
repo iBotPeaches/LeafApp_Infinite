@@ -40,7 +40,7 @@ class ProcessMedalAnalyticTest extends TestCase
         $this->assertDatabaseHas('medal_analytics', [
             'medal_id' => $medal->id,
             'mode' => Mode::MATCHMADE_PVP,
-            'season_id' => null
+            'season_id' => null,
         ]);
     }
 
@@ -60,7 +60,7 @@ class ProcessMedalAnalyticTest extends TestCase
 
         /** @var Season $season */
         $season = Season::factory()->createOne([
-            'key' => '1-1'
+            'key' => '1-1',
         ]);
 
         // Act
@@ -70,7 +70,7 @@ class ProcessMedalAnalyticTest extends TestCase
         $this->assertDatabaseHas('medal_analytics', [
             'medal_id' => $medal->id,
             'mode' => Mode::MATCHMADE_RANKED,
-            'season_id' => $season->id
+            'season_id' => $season->id,
         ]);
     }
 }

@@ -25,7 +25,7 @@ class MedalAnalyticFactory extends Factory
             'mode' => Mode::MATCHMADE_PVP,
             'place' => 1,
             'value' => $this->faker->randomFloat(2, 0, 20),
-            'total_seconds_played' => $this->faker->numberBetween(1, 600)
+            'total_seconds_played' => $this->faker->numberBetween(1, 600),
         ];
     }
 }

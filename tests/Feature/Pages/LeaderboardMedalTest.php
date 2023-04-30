@@ -26,7 +26,7 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create([
                 'season_key' => $season->key,
-                'season_number' => $season->season_id
+                'season_number' => $season->season_id,
             ]);
 
         /** @var Medal $medal */
@@ -36,10 +36,10 @@ class LeaderboardMedalTest extends TestCase
             'medal_id' => $medal->id,
             'mode' => $serviceRecord->mode,
             'player_id' => $serviceRecord->player_id,
-            'season_id' => $season->id
+            'season_id' => $season->id,
         ]);
 
-        ModeSession::set((int)$serviceRecord->mode->value);
+        ModeSession::set((int) $serviceRecord->mode->value);
         SeasonSession::set($season->key);
 
         // Acts & Assert
@@ -62,10 +62,10 @@ class LeaderboardMedalTest extends TestCase
             ->withMedals()
             ->create([
                 'season_key' => null,
-                'season_number' => null
+                'season_number' => null,
             ]);
 
-        ModeSession::set((int)$serviceRecord->mode->value);
+        ModeSession::set((int) $serviceRecord->mode->value);
         SeasonSession::set(SeasonSession::$allSeasonKey);
 
         /** @var Medal $medal */
@@ -75,7 +75,7 @@ class LeaderboardMedalTest extends TestCase
             'medal_id' => $medal->id,
             'mode' => $serviceRecord->mode,
             'player_id' => $serviceRecord->player_id,
-            'season_id' => null
+            'season_id' => null,
         ]);
 
         // Acts & Assert
