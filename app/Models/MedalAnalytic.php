@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Mode;
+use Database\Factories\MedalAnalyticFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,10 +23,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Player $player
  * @property-read Season|null $season
  * @property-read Medal $medal
+ *
+ * @method static MedalAnalyticFactory factory(...$parameters)
  */
 class MedalAnalytic extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     public $casts = [
         'mode' => Mode::class,
