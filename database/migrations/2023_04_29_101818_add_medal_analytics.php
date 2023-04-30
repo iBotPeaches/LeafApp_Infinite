@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Player::class)->constrained();
             $table->foreignIdFor(Season::class)->nullable()->constrained();
             $table->integer('medal_id', false, true);
+            $table->tinyInteger('mode', false, true);
             $table->mediumInteger('value', false, true);
             $table->smallInteger('place', false, true);
             $table->bigInteger('total_seconds_played');

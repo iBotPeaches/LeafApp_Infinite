@@ -39,7 +39,22 @@ class ProcessMedalAnalytic implements ShouldQueue
             foreach (Mode::serviceRecordModes() as $mode) {
                 $results = $this->obtainResults($mode);
 
-                $seasonName = $this->season?->name ?? 'All Seasons';
+                $dataToInsert = $results->map(function (ServiceRecord $serviceRecord) use ($mode) { // @phpstan-ignore-line
+                    return [
+                        'player_id' => $serviceRecord->player_id,
+                        'season_id' => $this->season?->id,
+                        'medal_id' => $this->medal->id,
+                        'mode' => $mode->value,
+                        'value' => $serviceRecord->getAttribute('value'),
+                        'place' => $serviceRecord->getAttribute('place'),
+                        'total_seconds_played' => $serviceRecord->total_seconds_played,
+                    ];
+                })->toArray();
+
+                MedalAnalytic::query()->insert($dataToInsert);
+
+                $seasonName = $this->season?->name ?? 'Combined';
+
                 $topHeader = [
                     $this->medal->name,
                     $seasonName,
@@ -53,28 +68,22 @@ class ProcessMedalAnalytic implements ShouldQueue
                     'HoursPlayed',
                 ];
 
-                $topTen = $results->slice(0, 10);
-                $topHundred = $results->slice(0, 100);
-                $topThousand = $results->slice(0, 1000);
+                $writer = Writer::createFromString();
+                $writer->insertOne($topHeader);
+                $writer->insertOne($header);
+                $writer->insertAll($results->map(function (ServiceRecord $record) { // @phpstan-ignore-line
+                    return [
+                        'player' => $record->player->gamertag,
+                        'place' => $record->getAttribute('place'),
+                        'count' => $record->getAttribute('count'),
+                        'hours' => $record->time_played,
+                    ];
+                }));
 
-                foreach ([$topTen, $topHundred, $topThousand] as $resultSet) {
-                    $writer = Writer::createFromString();
-                    $writer->insertOne($topHeader);
-                    $writer->insertOne($header);
-                    $writer->insertAll($resultSet->map(function (ServiceRecord $record) {
-                        return [
-                            'player' => $record->player->gamertag,
-                            'place' => $record->place,
-                            'count' => $record->value,
-                            'hours' => $record->time_played,
-                        ];
-                    }));
+                $slug = Str::slug($seasonName.'-'.$mode->toUrlSlug().'-'.$this->medal->name.'-top-1000');
 
-                    $slug = Str::slug($seasonName.'-'.$mode->toUrlSlug().'-'.$this->medal->name.'-top-'.count($resultSet));
-
-                    $folder = 'medals/'.Str::slug($seasonName).'/'.$mode->toUrlSlug().'/';
-                    Storage::disk('public')->put($folder.$slug.'.csv', $writer->toString());
-                }
+                $folder = 'medals/'.$mode->toUrlSlug().'/'.Str::slug($seasonName).'/';
+                Storage::disk('public')->put($folder.$slug.'.csv', $writer->toString());
             }
         });
     }
@@ -86,7 +95,7 @@ class ProcessMedalAnalytic implements ShouldQueue
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
             ->where('is_cheater', false)
             ->where('mode', $mode->value)
-            ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC) AS place,
+            ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC, total_seconds_played DESC) AS place,
                 CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) as value,
                 mode, total_seconds_played, player_id')
             ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')

@@ -1,7 +1,20 @@
 <?php
-/** @var App\Models\ServiceRecord[] $results */
+/** @var App\Models\MedalAnalytic[]|Illuminate\Support\Collection $results */
+/** @var App\Models\Season $season */
+/** @var App\Enums\Mode $mode */
 ?>
 <div>
+    @if ($season->key !== App\Support\Session\SeasonSession::$allSeasonKey && $mode->is(App\Enums\Mode::MATCHMADE_RANKED()))
+        <div class="notification is-warning">
+            We currently cannot locate filtered data (ie ranked) from a specific season. So this data is misleading as
+            it only shows data that was recorded as "current" when it was that previous season.
+
+            <br /><br />
+            <span class="is-size-7">
+                tldr - don't trust this.
+            </span>
+        </div>
+    @endif
     @if ($results->isEmpty())
         <div class="notification is-warning">
             Oops. No one with this medal in this category yet.

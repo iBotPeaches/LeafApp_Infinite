@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Mode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,9 +14,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $player_id
  * @property int $season_id
  * @property int $medal_id
+ * @property int $mode
  * @property int $value
  * @property int $place
- * @property float $hours_played
+ * @property int $total_seconds_played
+ * @property-read float $time_played
  * @property-read Player $player
  * @property-read Season|null $season
  * @property-read Medal $medal
@@ -23,6 +26,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class MedalAnalytic extends Model
 {
     use HasFactory;
+
+    public $casts = [
+        'mode' => Mode::class,
+    ];
 
     public $guarded = [
         'id',
@@ -40,6 +47,11 @@ class MedalAnalytic extends Model
         }
 
         $query->delete();
+    }
+
+    public function getTimePlayedAttribute(): int
+    {
+        return now()->addSeconds($this->total_seconds_played)->diffInHours();
     }
 
     public function medal(): BelongsTo

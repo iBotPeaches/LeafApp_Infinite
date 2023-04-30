@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Livewire;
 
 use App\Models\Medal;
-use App\Models\ServiceRecord;
+use App\Models\MedalAnalytic;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
@@ -23,36 +23,33 @@ class MedalsLeaderboard extends Component
         '$refresh',
     ];
 
-    public function paginationSimpleView(): string
+    public function paginationView(): string
     {
-        return 'pagination::bulma-simple';
+        return 'pagination::bulma';
     }
 
     public function render(): View
     {
-        $modeSession = ModeSession::get();
-        $seasonSession = SeasonSession::get();
+        $mode = ModeSession::get();
+        $season = SeasonSession::model();
 
-        $query = ServiceRecord::query()
+        $query = MedalAnalytic::query()
             ->with('player')
-            ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
-            ->where('is_cheater', false)
-            ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC) AS place,
-                CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) as value,
-                mode, total_seconds_played, player_id')
-            ->where('mode', $modeSession->value)
-            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')
+            ->where('medal_id', $this->medal->id)
+            ->where('mode', $mode->value)
             ->orderByRaw('value DESC, total_seconds_played DESC');
 
-        if ($seasonSession === SeasonSession::$allSeasonKey) {
-            $query->whereNull('season_number');
+        if ($season->key === SeasonSession::$allSeasonKey) {
+            $query->whereNull('season_id');
         } else {
-            $query->where('season_number', $seasonSession);
+            $query->where('season_id', $season->id);
         }
-        $results = $query->simplePaginate(15);
+        $results = $query->paginate(15);
 
         return view('livewire.medals-leaderboard', [
             'results' => $results,
+            'season' => $season,
+            'mode' => $mode,
         ]);
     }
 }

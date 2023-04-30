@@ -29,12 +29,12 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(RefreshAnalytics::class)
             ->withoutOverlapping()
-            ->dailyAt(12)
+            ->dailyAt('12:01')
             ->timezone('America/New_York');
 
         $schedule->command(RefreshMedals::class)
             ->withoutOverlapping()
-            ->dailyAt(3)
+            ->dailyAt('3:01')
             ->timezone('America/New_York');
 
         $schedule->command('horizon:snapshot')
