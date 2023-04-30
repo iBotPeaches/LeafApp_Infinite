@@ -206,9 +206,9 @@ class ServiceRecord extends Model implements HasHaloDotApi
                 ];
             })->toArray();
 
-        if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0) {
+        if ($serviceRecord->total_seconds_played === 0 && $serviceRecord->total_score === 0 && $serviceRecord->mode->is(Mode::MATCHMADE_PVP())) {
             $serviceRecord->player->is_private = true;
-        } elseif ($serviceRecord->player->is_private) {
+        } elseif ($serviceRecord->player->is_private && $serviceRecord->mode->is(Mode::MATCHMADE_PVP())) {
             $serviceRecord->player->is_private = false;
         }
 
