@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $player_id
  * @property int $season_id
  * @property int $medal_id
- * @property int $mode
+ * @property Mode $mode
  * @property int $value
  * @property int $place
  * @property int $total_seconds_played
