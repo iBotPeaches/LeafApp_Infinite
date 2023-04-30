@@ -23,13 +23,14 @@ class ModeDecorator
 
         $query = DB::query()
             ->from('game_players')
-            ->select('outcome', 'map_id', 'gamevariants.category_id', new Expression('COUNT(*) as total'))
+            ->select('outcome', 'maps.name', 'gamevariants.category_id', new Expression('COUNT(*) as total'))
             ->where('player_id', $player->id)
             ->where('playlists.is_ranked', true)
             ->join('games', 'game_players.game_id', '=', 'games.id')
+            ->join('maps', 'games.map_id', '=', 'maps.id')
             ->join('gamevariants', 'games.gamevariant_id', '=', 'gamevariants.id')
             ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->groupBy('map_id', 'category_id', 'outcome');
+            ->groupBy('maps.name', 'category_id', 'outcome');
 
         if ($season?->season_id && $season->season_version) {
             $query->where('games.season_number', $season->season_id);
@@ -59,13 +60,13 @@ class ModeDecorator
                 $modeResult->summedTotal = $sums[$modeResult->key()];
             });
 
-        $mapIds = $modes->pluck('mapId');
+        $mapNames = $modes->pluck('mapName');
         $categoryIds = $modes->pluck('categoryId');
 
         $maps = Map::query()
-            ->whereIn('id', $mapIds)
+            ->whereIn('name', $mapNames)
             ->get()
-            ->keyBy('id');
+            ->keyBy('name');
 
         $categories = Category::query()
             ->whereIn('id', $categoryIds)
@@ -74,7 +75,7 @@ class ModeDecorator
 
         $this->modes = $modes
             ->map(function (ModeResult $modeResult) use ($maps, $categories) {
-                $modeResult->map = $maps[$modeResult->mapId];
+                $modeResult->map = $maps[$modeResult->mapName];
                 $modeResult->category = $categories[$modeResult->categoryId] ?? null;
 
                 return $modeResult;
