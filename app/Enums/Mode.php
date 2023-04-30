@@ -33,6 +33,14 @@ final class Mode extends Enum
         };
     }
 
+    public static function serviceRecordModes(): array
+    {
+        return [
+            self::MATCHMADE_PVP(),
+            self::MATCHMADE_RANKED(),
+        ];
+    }
+
     public function toUrlSlug(): string
     {
         return match ($this->value) {
