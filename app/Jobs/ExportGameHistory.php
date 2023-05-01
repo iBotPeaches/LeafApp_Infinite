@@ -66,6 +66,7 @@ class ExportGameHistory implements ShouldQueue
     public function handle(): array
     {
         $query = GamePlayer::query()
+            ->select('game_players.*')
             ->with([
                 'player',
                 'game.map',
