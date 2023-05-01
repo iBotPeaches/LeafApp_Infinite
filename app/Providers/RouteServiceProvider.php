@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +29,8 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         // @codeCoverageIgnoreStart
-        RateLimiter::for('uploads', function () {
-            return Limit::perHour(1)->response(function () {
+        RateLimiter::for('uploads', function (Request $request) {
+            return Limit::perHour(5)->by($request->ip())->response(function () {
                 return response()->view('pages.errors.429', [], Response::HTTP_TOO_MANY_REQUESTS);
             });
         });
