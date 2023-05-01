@@ -12,11 +12,14 @@ use Illuminate\Support\Collection;
  */
 trait HasMedals
 {
+    public static ?Collection $medalCache = null;
+
     public function getHydratedMedalsAttribute(): Collection
     {
         $medals = $this->medals;
+        $allMedals = self::$medalCache ?? Medal::all();
 
-        return Medal::all()->map(function (Medal $medal) use ($medals) {
+        return $allMedals->map(function (Medal $medal) use ($medals) {
             $medal['count'] = $medals[$medal->id] ?? 0;
 
             return $medal;
