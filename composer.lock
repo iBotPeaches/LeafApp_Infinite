@@ -5728,16 +5728,16 @@
         },
         {
             "name": "spatie/laravel-markdown",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-markdown.git",
-                "reference": "066cdc0828a4d549e6913b4d84dd9c5726a0e7f9"
+                "reference": "1cdde7aafd638c6df2ee12868635399968035b08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-markdown/zipball/066cdc0828a4d549e6913b4d84dd9c5726a0e7f9",
-                "reference": "066cdc0828a4d549e6913b4d84dd9c5726a0e7f9",
+                "url": "https://api.github.com/repos/spatie/laravel-markdown/zipball/1cdde7aafd638c6df2ee12868635399968035b08",
+                "reference": "1cdde7aafd638c6df2ee12868635399968035b08",
                 "shasum": ""
             },
             "require": {
@@ -5792,7 +5792,7 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/spatie/laravel-markdown/tree/2.3.0"
+                "source": "https://github.com/spatie/laravel-markdown/tree/2.3.1"
             },
             "funding": [
                 {
@@ -5800,7 +5800,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-03T09:01:23+00:00"
+            "time": "2023-05-05T08:09:13+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
