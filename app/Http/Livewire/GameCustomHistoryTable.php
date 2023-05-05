@@ -53,7 +53,7 @@ class GameCustomHistoryTable extends Component
                         ->where('is_lan', '=', false)
                         ->orWhereNull('is_lan');
                 })
-                ->whereDoesntHave('playlist')
+                ->whereNull('playlist_id')
                 ->orderByDesc('occurred_at')
                 ->paginate(16),
         ]);

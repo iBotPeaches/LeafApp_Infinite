@@ -31,7 +31,7 @@ class GameHistoryTable extends Component
             'games' => $this->player
                 ->games()
                 ->with(['playlist', 'map', 'category'])
-                ->whereHas('playlist')
+                ->whereNotNull('playlist_id')
                 ->orderByDesc('occurred_at')
                 ->paginate(16),
         ]);
