@@ -18,8 +18,10 @@ use Illuminate\Support\Arr;
  * @property string $uuid
  * @property string $name
  * @property bool $is_ranked
+ * @property bool $is_active
  * @property Queue|null $queue
  * @property Input|null $input
+ * @property array|null $rotations
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
@@ -37,6 +39,8 @@ class Playlist extends Model implements HasHaloDotApi
         'queue' => Queue::class,
         'input' => Input::class,
         'is_ranked' => 'bool',
+        'is_active' => 'bool',
+        'rotations' => 'array',
     ];
 
     public function getNameAttribute(string $value): string
@@ -69,8 +73,10 @@ class Playlist extends Model implements HasHaloDotApi
 
         $playlist->name = Arr::get($payload, 'name');
         $playlist->is_ranked = Arr::get($payload, 'attributes.ranked');
+        $playlist->is_active = Arr::get($payload, 'attributes.active');
         $playlist->queue = Arr::get($payload, 'properties.queue');
         $playlist->input = Arr::get($payload, 'properties.input');
+        $playlist->rotations = Arr::get($payload, 'rotation', []);
 
         if ($playlist->isDirty()) {
             $playlist->saveOrFail();
