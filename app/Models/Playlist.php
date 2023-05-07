@@ -52,6 +52,11 @@ class Playlist extends Model implements HasHaloDotApi
         return $value;
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
     public static function fromPlaylistId(string $playlistId): ?self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */

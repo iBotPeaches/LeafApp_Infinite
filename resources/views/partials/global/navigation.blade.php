@@ -32,6 +32,9 @@
             <a href="{{ route('medalLeaderboards') }}" class="navbar-item">
                 Medals
             </a>
+            <a href="{{ route('playlist') }}" class="navbar-item">
+                Playlists
+            </a>
             <a href="{{ route('scrims') }}" class="navbar-item">
                 Scrims
             </a>
