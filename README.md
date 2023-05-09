@@ -46,6 +46,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
  * `HALODOTAPI_DISABLED` - Defaults to false, if toggled disables all Autocode API calls.
+ * `HALODOTAPI_XUID_DISABLED` - Defaults to false, if toggled disables XUID resolution.
  * `HALODOTAPI_KEY` - The API key given [Cryptum](https://developers.halodotapi.com/)
  * `HALODOTAPI_DOMAIN` - The base domain for Autocode
  * `HALODOTAPI_VERSION` - The version of the Autocode to use
@@ -53,13 +54,6 @@ Used for the API for Infinite information, an amazing service that proxies some 
  * `HALODOTAPI_CURRENT_SEASON` - Current Halo Infinite Season
  * `HALODOTAPI_CURRENT_SEASON_VERSION` - Current Halo Infinite Season Version
  * `HALODOTAPI_WARNING_MESSAGE` - If populated, puts site into warning mode.
-
-#### XboxApi
-Used for resolving XUIDs so renames are possible without data loss.
-
- * `XBOXAPI_DOMAIN` - The base domain for [Unofficial XboxAPI](https://xbl.io).
- * `XBOXAPI_KEY` - The key to use the service.
- * `XBOXAPI_ENABLED` - Boolean to enable the XUID resolving or not.
 
 #### FaceIt
 Used for HCS features for listing championships.

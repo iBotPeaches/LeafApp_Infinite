@@ -13,7 +13,6 @@ use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
 use App\Services\HaloDotApi\Enums\Mode;
 use App\Services\HaloDotApi\InfiniteInterface;
-use App\Services\XboxApi\XboxInterface;
 use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
 use Carbon\Carbon;
@@ -142,9 +141,9 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public function syncXuidFromXboxApi(): void
     {
-        /** @var XboxInterface $client */
-        $client = resolve(XboxInterface::class);
-        $this->xuid = $client->xuid($this->gamertag);
+        /** @var InfiniteInterface $client */
+        $client = resolve(InfiniteInterface::class);
+        $this->xuid = $client->xuid($this->url_safe_gamertag);
     }
 
     public function updateFromHaloDotApi(bool $forceUpdate = false, ?string $type = null): void

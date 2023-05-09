@@ -32,6 +32,7 @@ return [
 
     'halodotapi' => [
         'disabled' => env('HALODOTAPI_DISABLED', false),
+        'xuid_disabled' => env('HALODOTAPI_XUID_DISABLED', false),
         'key' => env('HALODOTAPI_KEY'),
         'domain' => env('HALODOTAPI_DOMAIN', 'https://api.halodotapi.com'),
         'version' => env('HALODOTAPI_VERSION', '2023-04-07'),
@@ -41,12 +42,6 @@ return [
             'season' => env('HALODOTAPI_CURRENT_SEASON', 3),
         ],
         'warning_message' => env('HALODOTAPI_WARNING_MESSAGE'),
-    ],
-
-    'xboxapi' => [
-        'domain' => env('XBOXAPI_DOMAIN', 'https://xbl.io'),
-        'key' => env('XBOXAPI_KEY', ''),
-        'enabled' => env('XBOXAPI_ENABLED', true),
     ],
 
     'faceit' => [
