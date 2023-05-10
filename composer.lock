@@ -79,16 +79,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "v6.3.1",
+            "version": "v6.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "b7a69853b1c8f2dcc8c03270a7d5229cb575f594"
+                "reference": "df9dce93d2887e7b63dce267386a250b2875d711"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/b7a69853b1c8f2dcc8c03270a7d5229cb575f594",
-                "reference": "b7a69853b1c8f2dcc8c03270a7d5229cb575f594",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/df9dce93d2887e7b63dce267386a250b2875d711",
+                "reference": "df9dce93d2887e7b63dce267386a250b2875d711",
                 "shasum": ""
             },
             "require": {
@@ -151,7 +151,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BenSampo/laravel-enum/issues",
-                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.3.1"
+                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.3.2"
             },
             "funding": [
                 {
@@ -159,7 +159,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-13T14:09:29+00:00"
+            "time": "2023-05-09T17:43:47+00:00"
         },
         {
             "name": "brick/math",
