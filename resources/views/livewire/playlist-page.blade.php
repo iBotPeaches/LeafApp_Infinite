@@ -1,3 +1,12 @@
+<?php
+    /** @var App\Models\Playlist $playlist */
+?>
 <div>
-    {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
+    <div class="notification is-light mb-2">
+        {{ $playlist->description }}
+    </div>
+    <pre>
+        {!! var_dump($playlist->rotations) !!}
+    </pre>
 </div>
+
