@@ -251,6 +251,15 @@ class ApiClient implements InfiniteInterface
         return $player->bans;
     }
 
+    public function xuid(string $gamertag): ?string
+    {
+        $url = '/tooling/xbox-network/players/'.$gamertag.'/details';
+        $response = $this->getPendingRequest()->get($url)->throw();
+        $data = $response->json();
+
+        return Arr::get($data, 'data.xuid');
+    }
+
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()

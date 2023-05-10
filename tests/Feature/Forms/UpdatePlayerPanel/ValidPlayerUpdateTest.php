@@ -175,7 +175,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'xuid' => Arr::get($mockXuidResponse, 'people.0.xuid'),
+            'xuid' => Arr::get($mockXuidResponse, 'data.xuid'),
         ]);
 
         Bus::assertDispatched(PullAppearance::class);
@@ -239,7 +239,7 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,
-            'xuid' => Arr::get($mockXuidResponse, 'people.0.xuid'),
+            'xuid' => Arr::get($mockXuidResponse, 'data.xuid'),
         ]);
 
         $this->assertDatabaseMissing('players', [

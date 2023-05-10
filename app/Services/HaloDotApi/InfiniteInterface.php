@@ -36,4 +36,6 @@ interface InfiniteInterface
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord;
 
     public function banSummary(Player $player): Collection;
+
+    public function xuid(string $gamertag): ?string;
 }

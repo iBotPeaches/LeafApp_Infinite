@@ -10,8 +10,6 @@ use App\Services\HaloDotApi\ApiClient as HaloApiClient;
 use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
-use App\Services\XboxApi\ApiClient as XboxApiClient;
-use App\Services\XboxApi\XboxInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -29,10 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(InfiniteInterface::class, function ($app) {
             return new HaloApiClient($app['config']['services']['halodotapi']);
-        });
-
-        $this->app->singleton(XboxInterface::class, function ($app) {
-            return new XboxApiClient($app['config']['services']['xboxapi']);
         });
 
         $this->app->singleton(TournamentInterface::class, function ($app) {

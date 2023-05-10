@@ -50,7 +50,7 @@ class PullXuid implements ShouldQueue
 
     public function handle(): void
     {
-        if (! config('services.xboxapi.enabled') || $this->player->xuid) {
+        if (config('services.halodotapi.xuid_disabled') || $this->player->xuid) {
             $this->delete();
 
             return;

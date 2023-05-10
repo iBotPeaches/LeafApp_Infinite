@@ -60,14 +60,14 @@ class ValidGamerFormTest extends TestCase
 
         $this->assertDatabaseHas('players', [
             'gamertag' => $gamertag,
-            'xuid' => Arr::get($mockXuidResponse, 'people.0.xuid'),
+            'xuid' => Arr::get($mockXuidResponse, 'data.xuid'),
         ]);
     }
 
     public function testValidResponseIfXuidServiceDisabled(): void
     {
         // Arrange
-        Config::set('services.xboxapi.enabled', false);
+        Config::set('services.halodotapi.xuid_disabled', true);
         $mockAppearanceResponse = (new MockAppearanceService())->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
