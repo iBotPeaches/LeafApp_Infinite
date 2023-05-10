@@ -18,9 +18,9 @@ class MockXuidService extends BaseMock
             ],
             'additional' => [
                 'params' => [
-                    'gamertag' => $gamertag
-                ]
-            ]
+                    'gamertag' => $gamertag,
+                ],
+            ],
         ];
     }
 }
