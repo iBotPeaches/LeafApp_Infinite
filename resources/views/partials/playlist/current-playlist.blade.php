@@ -4,7 +4,7 @@
 <div class="card mb-2">
     <div class="card-image">
         <figure class="image">
-
+            <img src="{{ $playlist->image }}" alt="{{ $playlist->name }}">
         </figure>
     </div>
     <div class="card-content">
