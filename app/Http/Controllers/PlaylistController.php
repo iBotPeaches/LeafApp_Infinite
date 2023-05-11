@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\Playlist;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PlaylistController extends Controller
