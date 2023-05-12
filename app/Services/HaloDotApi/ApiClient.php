@@ -253,7 +253,7 @@ class ApiClient implements InfiniteInterface
 
     public function xuid(string $gamertag): ?string
     {
-        $url = '/tooling/xbox-network/players/'.$gamertag.'/details';
+        $url = 'players/'.$gamertag.'/details';
         $response = $this->asXbox()->get($url)->throw();
         $data = $response->json();
 
