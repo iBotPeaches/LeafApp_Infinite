@@ -36,7 +36,7 @@ class ApiClient implements InfiniteInterface
     public function appearance(string $gamertag): ?Player
     {
         $urlSafeGamertag = urlencode($gamertag);
-        $response = $this->getPendingRequest()->get("appearance/players/{$urlSafeGamertag}/spartan-id");
+        $response = $this->asHaloInfinite()->get("appearance/players/{$urlSafeGamertag}/spartan-id");
 
         if ($response->successful()) {
             return Player::fromHaloDotApi($response->json());
@@ -57,7 +57,7 @@ class ApiClient implements InfiniteInterface
             $queryParams['season_csr'] = $season;
         }
 
-        $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/csrs", $queryParams);
+        $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/csrs", $queryParams);
 
         if ($response->throw()->successful()) {
             $data = $response->json();
@@ -77,7 +77,7 @@ class ApiClient implements InfiniteInterface
         $lastGameIdVariable = $mode->getLastGameIdVariable();
 
         while ($count !== 0) {
-            $response = $this->getPendingRequest()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/matches", [
+            $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$player->url_safe_gamertag}/matches", [
                 'type' => (string) $mode->value,
                 'count' => $perPage,
                 'offset' => $offset,
@@ -122,7 +122,7 @@ class ApiClient implements InfiniteInterface
 
     public function match(string $matchUuid): ?Game
     {
-        $response = $this->getPendingRequest()->get("stats/multiplayer/matches/{$matchUuid}")->throw();
+        $response = $this->asHaloInfinite()->get("stats/multiplayer/matches/{$matchUuid}")->throw();
         $data = $response->json();
 
         return Game::fromHaloDotApi((array) (Arr::get($data, 'data')));
@@ -130,7 +130,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMedals(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/medals')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/medals')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $medal) {
@@ -142,7 +142,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataMaps(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/maps')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/maps')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $map) {
@@ -154,7 +154,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataTeams(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/teams')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/teams')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $team) {
@@ -166,7 +166,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataPlaylists(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/playlists')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/playlists')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $playlist) {
@@ -178,7 +178,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataCategories(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/modes/categories')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/modes/categories')->throw();
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $category) {
@@ -190,7 +190,7 @@ class ApiClient implements InfiniteInterface
 
     public function metadataSeasons(): Collection
     {
-        $response = $this->getPendingRequest()->get('metadata/multiplayer/seasons')->throw();
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/seasons')->throw();
         $data = $response->json();
 
         foreach (Arr::get($data, 'data') as $season) {
@@ -216,7 +216,7 @@ class ApiClient implements InfiniteInterface
                 $queryParams['season_id'] = $seasonIdentifier;
             }
 
-            $response = $this->getPendingRequest()->get($url, $queryParams);
+            $response = $this->asHaloInfinite()->get($url, $queryParams);
 
             // If we have a 403 - Chances are its because season x is not available.
             // This is recoverable. Just return and say its okay (because its empty and ok)
@@ -239,7 +239,7 @@ class ApiClient implements InfiniteInterface
 
     public function banSummary(Player $player): Collection
     {
-        $response = $this->getPendingRequest()->get('tooling/players/'.$player->url_safe_gamertag.'/bansummary')->throw();
+        $response = $this->asHaloInfinite()->get('tooling/players/'.$player->url_safe_gamertag.'/bansummary')->throw();
         $data = $response->json();
 
         foreach (Arr::get($data, 'data') as $ban) {
@@ -254,7 +254,7 @@ class ApiClient implements InfiniteInterface
     public function xuid(string $gamertag): ?string
     {
         $url = '/tooling/xbox-network/players/'.$gamertag.'/details';
-        $response = $this->getPendingRequest()->get($url)->throw();
+        $response = $this->asXbox()->get($url)->throw();
         $data = $response->json();
 
         return Arr::get($data, 'data.xuid');
@@ -263,12 +263,23 @@ class ApiClient implements InfiniteInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->baseUrl($this->config['domain'].'/games/halo-infinite/')
             ->withUserAgent('Leaf - '.config('sentry.release', 'dirty'))
             ->withHeaders([
                 'Halo.API-Version' => config('services.halodotapi.version', '2023-04-07'),
             ])
             ->timeout(180)
             ->withToken($this->config['key']);
+    }
+
+    private function asXbox(): PendingRequest
+    {
+        return $this->getPendingRequest()
+            ->baseUrl($this->config['domain'].'/tooling/xbox-network');
+    }
+
+    private function asHaloInfinite(): PendingRequest
+    {
+        return $this->getPendingRequest()
+            ->baseUrl($this->config['domain'].'/games/halo-infinite/');
     }
 }
