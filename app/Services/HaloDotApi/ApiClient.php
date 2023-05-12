@@ -263,7 +263,7 @@ class ApiClient implements InfiniteInterface
     private function getPendingRequest(): PendingRequest
     {
         return Http::asJson()
-            ->withUserAgent('Leaf - v'.config('sentry.release', 'dirty'))
+            ->withUserAgent('Leaf - '.config('sentry.release', 'dirty'))
             ->withHeaders([
                 'Halo.API-Version' => config('services.halodotapi.version', '2023-04-07'),
             ])
