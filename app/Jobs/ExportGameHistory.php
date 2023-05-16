@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class ExportGameHistory implements ShouldQueue
 {
@@ -106,42 +107,43 @@ class ExportGameHistory implements ShouldQueue
 
         $query
             ->orderBy('games.occurred_at')
-            ->cursor()
-            ->each(function (GamePlayer $gamePlayer) {
-                $perfectMedal = $gamePlayer->hydrated_medals->firstWhere('name', 'Perfect');
+            ->chunk(500, function (Collection $players) {
+                $players->each(function (GamePlayer $gamePlayer) {
+                    $perfectMedal = $gamePlayer->hydrated_medals->firstWhere('name', 'Perfect');
 
-                $this->data[] = [
-                    $gamePlayer->game->occurred_at->toDateTimeString(),
-                    $gamePlayer->player->gamertag,
-                    $gamePlayer->game->uuid,
-                    $gamePlayer->game->map->name,
-                    $gamePlayer->game->gamevariant?->name ?? $gamePlayer->game->category?->name,
-                    $gamePlayer->game->playlist?->name,
-                    $gamePlayer->game->playlist?->input?->description,
-                    $gamePlayer->game->playlist?->queue?->description,
-                    $gamePlayer->pre_csr ?? 0,
-                    $gamePlayer->mmr,
-                    $gamePlayer->outcome->description,
-                    $gamePlayer->accuracy,
-                    $gamePlayer->damage_dealt,
-                    $gamePlayer->damage_taken,
-                    $gamePlayer->shots_fired,
-                    $gamePlayer->shots_landed,
-                    $gamePlayer->shots_missed,
-                    $gamePlayer->kd,
-                    $gamePlayer->kda,
-                    $gamePlayer->kills,
-                    $gamePlayer->deaths,
-                    $gamePlayer->assists,
-                    $gamePlayer->betrayals,
-                    $gamePlayer->suicides,
-                    $gamePlayer->expected_kills,
-                    $gamePlayer->expected_deaths,
-                    $gamePlayer->getRawOriginal('score'),
-                    $perfectMedal->count ?? 0,
-                    $gamePlayer->medal_count,
-                    $gamePlayer->game->duration_seconds,
-                ];
+                    $this->data[] = [
+                        $gamePlayer->game->occurred_at->toDateTimeString(),
+                        $gamePlayer->player->gamertag,
+                        $gamePlayer->game->uuid,
+                        $gamePlayer->game->map->name,
+                        $gamePlayer->game->gamevariant?->name ?? $gamePlayer->game->category?->name,
+                        $gamePlayer->game->playlist?->name,
+                        $gamePlayer->game->playlist?->input?->description,
+                        $gamePlayer->game->playlist?->queue?->description,
+                        $gamePlayer->pre_csr ?? 0,
+                        $gamePlayer->mmr,
+                        $gamePlayer->outcome->description,
+                        $gamePlayer->accuracy,
+                        $gamePlayer->damage_dealt,
+                        $gamePlayer->damage_taken,
+                        $gamePlayer->shots_fired,
+                        $gamePlayer->shots_landed,
+                        $gamePlayer->shots_missed,
+                        $gamePlayer->kd,
+                        $gamePlayer->kda,
+                        $gamePlayer->kills,
+                        $gamePlayer->deaths,
+                        $gamePlayer->assists,
+                        $gamePlayer->betrayals,
+                        $gamePlayer->suicides,
+                        $gamePlayer->expected_kills,
+                        $gamePlayer->expected_deaths,
+                        $gamePlayer->getRawOriginal('score'),
+                        $perfectMedal->count ?? 0,
+                        $gamePlayer->medal_count,
+                        $gamePlayer->game->duration_seconds,
+                    ];
+                });
             });
 
         GamePlayer::$medalCache = null;
