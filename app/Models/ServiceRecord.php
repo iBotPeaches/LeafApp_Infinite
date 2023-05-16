@@ -170,7 +170,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         $serviceRecord->season_key = $season?->key;
         $serviceRecord->kd = (float) Arr::get($payload, 'stats.core.kdr');
         $serviceRecord->kda = (float) Arr::get($payload, 'stats.core.kda');
-        $serviceRecord->total_score = min((int) Arr::get($payload, 'stats.core.scores.personal'), 0);
+        $serviceRecord->total_score = max((int) Arr::get($payload, 'stats.core.scores.personal'), 0);
         $serviceRecord->total_matches = Arr::get($payload, 'matches.completed');
         $serviceRecord->matches_won = Arr::get($payload, 'matches.wins');
         $serviceRecord->matches_lost = Arr::get($payload, 'matches.losses');
