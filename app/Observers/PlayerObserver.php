@@ -14,7 +14,7 @@ class PlayerObserver
     {
         $cacheKey = 'xuid-pull-'.$player->id;
 
-        if (empty($player->xuid) && Cache::missing($cacheKey)) {
+        if (empty($player->xuid) && Cache::missing($cacheKey) && ! $player->is_bot) {
             PullXuid::dispatch($player);
             Cache::put($cacheKey, time(), now()->addDays(30));
         }
