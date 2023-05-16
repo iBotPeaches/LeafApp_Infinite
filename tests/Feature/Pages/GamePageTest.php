@@ -77,6 +77,38 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
+    public function testLoadingGamePageWithRawValidUuidAndUnknownLevel(): void
+    {
+        // Arrange
+        Queue::fake([
+            PullAppearance::class,
+            PullXuid::class,
+        ]);
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+
+        Http::fakeSequence()
+            ->push($mockMatchResponse, Response::HTTP_OK);
+
+        Team::factory()->createOne(['internal_id' => 0]);
+        Team::factory()->createOne(['internal_id' => 1]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        $uuid = Arr::get($mockMatchResponse, 'data.id');
+
+        // Act
+        $response = $this->get('/game/'.$uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-page');
+
+        Queue::assertPushed(PullAppearance::class);
+        Queue::assertPushed(PullXuid::class);
+    }
+
     public function testLoadingGamePageWithUnknownCategory(): void
     {
         // Arrange
