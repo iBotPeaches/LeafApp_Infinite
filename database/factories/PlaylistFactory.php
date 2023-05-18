@@ -19,9 +19,22 @@ class PlaylistFactory extends Factory
         return [
             'uuid' => $this->faker->unique()->uuid,
             'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'is_active' => true,
             'is_ranked' => $this->faker->boolean,
             'queue' => Queue::getRandomValue(),
             'input' => Input::getRandomValue(),
+            'rotations' => [
+                [
+                    'name' => 'Arena:Slayer on Map',
+                    'weight' => 100,
+                ],
+                [
+                    'name' => 'Arena:CTF on Map',
+                    'weight' => 110,
+                ],
+            ],
+            'image_url' => $this->faker->imageUrl,
         ];
     }
 }
