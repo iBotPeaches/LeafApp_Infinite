@@ -15,11 +15,13 @@ class PlaylistPage extends Component
 
     public function render(): View
     {
-        $rotations = new RotationDecorator($this->playlist->rotations);
+        $decorator = new RotationDecorator((array) $this->playlist->rotations);
 
         return view('livewire.playlist-page', [
             'playlist' => $this->playlist,
-            'rotations' => $rotations,
+            'rotations' => $decorator->rotations->sortBy('mapName'),
+            'maps' => $decorator->mapNames->sortDesc(),
+            'gametypes' => $decorator->gametypeNames->sortDesc(),
         ]);
     }
 }

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Rotations;
 
-use App\Models\Category;
-use App\Models\Map;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class RotationResult
 {
@@ -16,14 +15,20 @@ class RotationResult
 
     public ?float $weightPercent;
 
-    public ?Category $category;
+    public string $mapName;
 
-    public ?Map $map;
+    public string $gametypeName;
 
     public function __construct(array $data)
     {
         $this->name = Arr::get($data, 'name');
         $this->weight = (int) Arr::get($data, 'weight', 0);
+
+        // Support parsing "Arena:Team Slayer on Argyle" into [Team Slayer][Argyle]
+        [$gametypeName, $mapName] = explode(' on ', $this->name);
+
+        $this->gametypeName = Str::after($gametypeName, ':');
+        $this->mapName = $mapName;
     }
 
     public function setWeight(int $total): void

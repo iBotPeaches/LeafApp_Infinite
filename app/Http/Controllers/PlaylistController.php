@@ -8,6 +8,7 @@ use App\Models\Playlist;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlaylistController extends Controller
 {
@@ -19,7 +20,9 @@ class PlaylistController extends Controller
             ->orderBy('id')
             ->first();
 
-        assert($playlist !== null);
+        if (! $playlist) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
         SEOTools::setTitle($playlist->name);
         SEOTools::setDescription($playlist->title);
