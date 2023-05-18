@@ -12,14 +12,21 @@ use Database\Factories\PlaylistFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
  * @property string $uuid
  * @property string $name
+ * @property string $description
  * @property bool $is_ranked
+ * @property bool $is_active
  * @property Queue|null $queue
  * @property Input|null $input
+ * @property array|null $rotations
+ * @property string $image_url
+ * @property-read string $image
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
@@ -37,6 +44,8 @@ class Playlist extends Model implements HasHaloDotApi
         'queue' => Queue::class,
         'input' => Input::class,
         'is_ranked' => 'bool',
+        'is_active' => 'bool',
+        'rotations' => 'array',
     ];
 
     public function getNameAttribute(string $value): string
@@ -46,6 +55,22 @@ class Playlist extends Model implements HasHaloDotApi
         }
 
         return $value;
+    }
+
+    public function getImageAttribute(): string
+    {
+        $filename = Str::slug($this->name).'.jpg';
+
+        if (File::exists(public_path('images/playlists/'.$filename))) {
+            return asset('images/playlists/'.$filename);
+        }
+
+        return $this->image_url;
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 
     public static function fromPlaylistId(string $playlistId): ?self
@@ -68,9 +93,13 @@ class Playlist extends Model implements HasHaloDotApi
             ]);
 
         $playlist->name = Arr::get($payload, 'name');
+        $playlist->description = Arr::get($payload, 'description');
         $playlist->is_ranked = Arr::get($payload, 'attributes.ranked');
+        $playlist->is_active = Arr::get($payload, 'attributes.active');
         $playlist->queue = Arr::get($payload, 'properties.queue');
         $playlist->input = Arr::get($payload, 'properties.input');
+        $playlist->rotations = Arr::get($payload, 'rotation', []);
+        $playlist->image_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($playlist->isDirty()) {
             $playlist->saveOrFail();
