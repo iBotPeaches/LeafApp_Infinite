@@ -22,10 +22,25 @@ class PlaylistPageTest extends TestCase
     public function testExamplePlaylistLoading(): void
     {
         // Arrange
-        $playlist = Playlist::factory()->createOne();
+        Playlist::factory()->createOne();
 
         // Act
         $response = $this->get('/playlists');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function testExamplePlaylistLoadingSpecificName(): void
+    {
+        // Arrange
+        /** @var Playlist $playlist */
+        $playlist = Playlist::factory()->createOne([
+            'name' => 'Rumble Pit',
+        ]);
+
+        // Act
+        $response = $this->get('/playlists/'.$playlist->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
