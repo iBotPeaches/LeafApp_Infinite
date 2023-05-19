@@ -80,16 +80,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "v6.3.2",
+            "version": "v6.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "df9dce93d2887e7b63dce267386a250b2875d711"
+                "reference": "680355c9533594852a088bf21fb209124258d705"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/df9dce93d2887e7b63dce267386a250b2875d711",
-                "reference": "df9dce93d2887e7b63dce267386a250b2875d711",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/680355c9533594852a088bf21fb209124258d705",
+                "reference": "680355c9533594852a088bf21fb209124258d705",
                 "shasum": ""
             },
             "require": {
@@ -152,7 +152,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BenSampo/laravel-enum/issues",
-                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.3.2"
+                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.3.3"
             },
             "funding": [
                 {
@@ -160,7 +160,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-09T17:43:47+00:00"
+            "time": "2023-05-18T09:13:17+00:00"
         },
         {
             "name": "brick/math",
@@ -2002,16 +2002,16 @@
         },
         {
             "name": "laminas/laminas-code",
-            "version": "4.10.0",
+            "version": "4.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-code.git",
-                "reference": "ad8b36073f9ac792716478befadca0798cc15635"
+                "reference": "169123b3ede20a9193480c53de2a8194f8c073ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/ad8b36073f9ac792716478befadca0798cc15635",
-                "reference": "ad8b36073f9ac792716478befadca0798cc15635",
+                "url": "https://api.github.com/repos/laminas/laminas-code/zipball/169123b3ede20a9193480c53de2a8194f8c073ec",
+                "reference": "169123b3ede20a9193480c53de2a8194f8c073ec",
                 "shasum": ""
             },
             "require": {
@@ -2061,7 +2061,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-03-08T11:55:01+00:00"
+            "time": "2023-05-14T12:05:38+00:00"
         },
         {
             "name": "laravel/framework",
