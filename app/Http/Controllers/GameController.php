@@ -42,6 +42,7 @@ class GameController extends Controller
             echo $writer->toString();
         }, $title, [
             'Content-Type' => 'text/csv; charset=UTF-8',
+            'X-Robots-Tag' => 'noindex',
         ]);
     }
 }
