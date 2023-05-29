@@ -6,11 +6,14 @@ namespace App\Support\Analytics;
 
 use App\Enums\AnalyticType;
 use App\Models\Analytic;
+use App\Models\Season;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 interface AnalyticInterface
 {
+    public function __construct(?Season $season = null);
+
     public function type(): AnalyticType;
 
     public function key(): string;
