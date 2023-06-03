@@ -18,3 +18,6 @@
         </a>
     @endforeach
 </article>
+@if ($championship->type->isPoolPlay())
+    @include('partials.hcs.summary.pool_play')
+@endif
