@@ -6,6 +6,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\Bracket;
 use App\Models\Championship;
+use App\Support\Bracket\BracketDecorator;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -35,7 +36,13 @@ class ChampionshipBracket extends Component
                 return $row->count();
             });
 
+        $roundMatchups = $this->championship->matchups
+            ->where('group', $bracketEnum->toNumerical());
+
+        $brackets = new BracketDecorator($roundMatchups);
+
         return view('livewire.championship-bracket', [
+            'summary' => $brackets->data,
             'bracket' => $this->bracket,
             'round' => $this->round,
             'matchups' => $matchups,

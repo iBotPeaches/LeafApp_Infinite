@@ -1,4 +1,5 @@
 <?php
+/** @var App\Models\Championship $championship */
 /** @var App\Models\Matchup[]|Illuminate\Support\Collection $matchups */
 ?>
 <div class="table-container">
