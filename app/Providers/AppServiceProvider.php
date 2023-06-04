@@ -10,6 +10,9 @@ use App\Services\HaloDotApi\ApiClient as HaloApiClient;
 use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
+use App\Support\Schedule\ScheduleTimer;
+use App\Support\Schedule\ScheduleTimerInterface;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -35,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(ImageInterface::class, function ($app) {
             return new ImageApiClient($app['config']['services']['tinify']);
+        });
+
+        $this->app->singleton(ScheduleTimerInterface::class, function ($app) {
+            return new ScheduleTimer();
         });
 
         // @codeCoverageIgnoreStart
