@@ -83,3 +83,4 @@ use App\Enums\AnalyticType;
         </div>
     @endif
 </div>
+@include('partials.leaderboard.common.next_refresh')
