@@ -5,5 +5,4 @@
 @section('content')
     @include('partials.leaderboard.topten.breadcrumbs')
     <livewire:top-ten-leaderboard :analyticKey="$analyticClass->key()"/>
-    @include('partials.leaderboard.common.notice')
 @endsection

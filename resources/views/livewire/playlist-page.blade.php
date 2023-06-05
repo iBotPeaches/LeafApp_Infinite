@@ -47,4 +47,4 @@
         </div>
     </div>
 </div>
-
+@include('partials.leaderboard.common.next_refresh')
