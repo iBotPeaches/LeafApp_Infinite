@@ -6,6 +6,7 @@ namespace Tests\Feature\Pages;
 
 use App\Enums\Bracket;
 use App\Enums\ChampionshipType;
+use App\Enums\Outcome;
 use App\Models\Championship;
 use App\Models\Matchup;
 use App\Models\MatchupTeam;
@@ -31,6 +32,15 @@ class HcsBracketPageTest extends TestCase
             ->createOne([
                 'matchup_id' => $championship->matchups->first()->id,
                 'points' => 2,
+                'outcome' => Outcome::LOSS,
+            ]);
+
+        MatchupTeam::factory()
+            ->has(MatchupPlayer::factory(), 'faceitPlayers')
+            ->createOne([
+                'matchup_id' => $championship->matchups->first()->id,
+                'points' => 2,
+                'outcome' => Outcome::WIN,
             ]);
 
         // Act
