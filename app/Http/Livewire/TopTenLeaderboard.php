@@ -32,7 +32,7 @@ class TopTenLeaderboard extends Component
         return view('livewire.top-ten-leaderboard', [
             'results' => $topTen,
             'analyticClass' => Analytic::getStatFromEnum($analyticEnumKey),
-            'nextDate' => $timer?->topTenRefreshDate
+            'nextDate' => $timer->topTenRefreshDate,
         ]);
     }
 }

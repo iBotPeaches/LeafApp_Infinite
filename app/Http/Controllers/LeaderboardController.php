@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Models\Medal;
+use App\Support\Schedule\ScheduleTimer;
+use App\Support\Schedule\ScheduleTimerInterface;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\View\View;
 
@@ -30,8 +32,12 @@ class LeaderboardController extends Controller
         ]);
         SEOTools::setDescription('Halo Infinite Medal: '.$medal->name.' Leaderboards');
 
+        /** @var ScheduleTimer $timer */
+        $timer = resolve(ScheduleTimerInterface::class);
+
         return view('pages.medal-leaderboard', [
             'medal' => $medal,
+            'nextDate' => $timer->medalRefreshDate,
         ]);
     }
 

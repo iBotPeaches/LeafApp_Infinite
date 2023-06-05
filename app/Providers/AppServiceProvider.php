@@ -12,7 +12,6 @@ use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
 use App\Support\Schedule\ScheduleTimer;
 use App\Support\Schedule\ScheduleTimerInterface;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
