@@ -20,12 +20,15 @@ final class ChampionshipType extends Enum implements LocalizedEnum
 
     const STAGE = 3;
 
+    const BRACKET = 4;
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match ($enumKeyOrValue) {
             'roundRobin' => self::ROUND_ROBIN,
             'doubleElimination' => self::DOUBLE_ELIM,
             'stage' => self::STAGE,
+            'bracket' => self::BRACKET,
             default => $enumKeyOrValue
         };
 
