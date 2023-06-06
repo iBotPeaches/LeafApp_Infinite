@@ -151,6 +151,13 @@ class HcsBracketPageTest extends TestCase
                     'type' => ChampionshipType::ROUND_ROBIN,
                 ],
             ],
+            [
+                'round' => 1,
+                'group' => Bracket::OTHER,
+                'attributes' => [
+                    'type' => ChampionshipType::BRACKET,
+                ],
+            ],
         ];
     }
 }
