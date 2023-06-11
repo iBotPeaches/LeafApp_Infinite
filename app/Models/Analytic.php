@@ -83,11 +83,17 @@ class Analytic extends Model
         };
     }
 
-    public static function purgeKey(string $key): void
+    public static function purgeKey(string $key, ?Season $season = null): void
     {
-        self::query()
-            ->where('key', $key)
-            ->delete();
+        $query = self::query()->where('key', $key);
+
+        if ($season) {
+            $query->where('season_id', $season->id);
+        } else {
+            $query->whereNull('season_id');
+        }
+
+        $query->delete();
     }
 
     public function game(): BelongsTo

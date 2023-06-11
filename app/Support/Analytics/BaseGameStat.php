@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BaseGameStat
 {
-    public function __construct(protected readonly ?Season $season = null)
+    public function __construct(public readonly ?Season $season = null)
     {
         //
     }

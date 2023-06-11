@@ -31,7 +31,7 @@ class RefreshAnalytics extends Command
             $analyticClass = new $analytic();
 
             $startTime = time();
-            $this->output->writeln('Processing: '.$analyticClass->title());
+            $this->output->writeln('Processing (All Seasons): '.$analyticClass->title());
 
             ProcessAnalytic::dispatchSync($analyticClass);
 
@@ -47,7 +47,7 @@ class RefreshAnalytics extends Command
                 $analyticClass = new $analytic($season);
 
                 $startTime = time();
-                $this->output->writeln('Processing: '.$analyticClass->title());
+                $this->output->writeln('Processing (' . $season->name . '): '.$analyticClass->title());
 
                 ProcessAnalytic::dispatchSync($analyticClass);
 
