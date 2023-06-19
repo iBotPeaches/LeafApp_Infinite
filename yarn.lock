@@ -19,13 +19,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@erbelion/vite-plugin-laravel-purgecss@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@erbelion/vite-plugin-laravel-purgecss@npm:0.2.1"
+"@erbelion/vite-plugin-laravel-purgecss@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@erbelion/vite-plugin-laravel-purgecss@npm:0.2.2"
   dependencies:
     purgecss: ^5.0.0
     vite: ^4.3.9
-  checksum: 380df692de97a383b68206e2d7805ef99969d523c32071a8468f04c132b083d897f7ccdeb8de7353ee8de7ce8fc9fd29f47c578fedf25eaddd0c433a1713d0ce
+  checksum: 1e587b964ebaaff8c0b49792983b559428570a4822a7d9de3d2d4fad56610f025e214db61844f9ec3596ce2bf102fd89cc7b3792d299829c96f68b5942813268
   languageName: node
   linkType: hard
 
@@ -1310,7 +1310,7 @@ __metadata:
   dependencies:
     "@creativebulma/bulma-divider": ^1.1.0
     "@creativebulma/bulma-tooltip": ^1.2.0
-    "@erbelion/vite-plugin-laravel-purgecss": ^0.2.1
+    "@erbelion/vite-plugin-laravel-purgecss": ^0.2.2
     "@fortawesome/fontawesome-free": ^6.4.0
     bulma: ^0.9.4
     bulma-ribbon: ^0.1.1
