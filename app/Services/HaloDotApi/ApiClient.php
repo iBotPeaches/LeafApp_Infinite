@@ -46,6 +46,18 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
+    public function careerRank(Player $player): Player
+    {
+        $urlSafeGamertag = ($player->url_safe_gamertag);
+        $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$urlSafeGamertag}/career-rank");
+
+        if ($response->successful()) {
+            return Player::fromHaloDotApi($response->json());
+        }
+
+        return $player;
+    }
+
     public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr
     {
         // Handle when -1 (no season) is sent here.
