@@ -15,7 +15,14 @@ class RankFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => 1,
             'name' => $this->faker->word,
+            'subtitle' => $this->faker->word,
+            'grade' => 1,
+            'tier' => 1,
+            'type' => 'Bronze',
+            'threshold' => 1510,
+            'required' => 0,
         ];
     }
 }
