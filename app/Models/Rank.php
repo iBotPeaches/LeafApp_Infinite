@@ -59,7 +59,7 @@ class Rank extends Model implements HasHaloDotApi
         $rank->threshold = (int)Arr::get($payload, 'properties.threshold');
 
         $lastThreshold = $previous?->threshold ?? 0;
-        $rank->required = min(0, abs($lastThreshold - $rank->threshold));
+        $rank->required = max(0, $rank->threshold - $lastThreshold);
 
         if ($rank->isDirty()) {
             $rank->saveOrFail();
