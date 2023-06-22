@@ -15,7 +15,7 @@ interface InfiniteInterface
 {
     public function appearance(string $gamertag): ?Player;
 
-    public function careerRank(Player $player): Player;
+    public function careerRank(Player $player): ?Player;
 
     public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr;
 

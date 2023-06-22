@@ -46,7 +46,7 @@ class ApiClient implements InfiniteInterface
         return null;
     }
 
-    public function careerRank(Player $player): Player
+    public function careerRank(Player $player): ?Player
     {
         $urlSafeGamertag = ($player->url_safe_gamertag);
         $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$urlSafeGamertag}/career-rank");
