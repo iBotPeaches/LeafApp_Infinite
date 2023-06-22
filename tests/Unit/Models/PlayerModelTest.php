@@ -46,4 +46,17 @@ class PlayerModelTest extends TestCase
         // Assert
         Bus::assertDispatched(PullXuid::class);
     }
+
+    public function testNextRankPercentageWithNoRank(): void
+    {
+        // Arrange
+        $player = Player::factory()->makeOne([
+            'rank_id' => null,
+            'next_rank_id' => null,
+            'is_bot' => false,
+        ]);
+
+        // Act && Assert
+        $this->assertEquals(100.0, $player->percentage_next_rank);
+    }
 }

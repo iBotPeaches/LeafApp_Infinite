@@ -912,4 +912,66 @@ class ValidPlayerUpdateTest extends TestCase
 
         $this->assertDatabaseCount('service_records', 2);
     }
+
+    public function testValidResponseFromAllHaloDotApiServicesExceptForCareerRank(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id,
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::LAN,
+            'runUpdate' => true,
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertEmittedTo('game-lan-history-table', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'rank_id' => null,
+            'next_rank_id' => null,
+        ]);
+    }
 }
