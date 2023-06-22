@@ -3,14 +3,10 @@
 namespace App\Models;
 
 use App\Models\Contracts\HasHaloDotApi;
-use Database\Factories\MapFactory;
 use Database\Factories\RankFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -21,6 +17,8 @@ use Illuminate\Support\Str;
  * @property string $type
  * @property int $threshold
  * @property int $required
+ * @property-read string $icon
+ * @property-read string $largeIcon
  *
  * @method static RankFactory factory(...$parameters)
  */
@@ -36,9 +34,32 @@ class Rank extends Model implements HasHaloDotApi
 
     public function getIconAttribute(): string
     {
-        $filename = Str::slug($this->id).'.jpg';
+        $filename = $this->id.'.png';
 
         return asset('images/ranks/icons/'.$filename);
+    }
+
+    public function getLargeIconAttribute(): string
+    {
+        $filename = $this->id.'.png';
+
+        return asset('images/ranks/large/'.$filename);
+    }
+
+    public function getTitleAttribute(): string
+    {
+        $title = [];
+        $title[] = $this->name;
+
+        if ($this->subtitle) {
+            $title[] = $this->subtitle;
+        }
+
+        if ($this->grade) {
+            $title[] = '(Tier '.$this->grade.')';
+        }
+
+        return implode(' ', $title);
     }
 
     public static function fromHaloDotApi(array $payload, Rank $previous = null): ?self
@@ -56,7 +77,7 @@ class Rank extends Model implements HasHaloDotApi
         $rank->grade = Arr::get($payload, 'attributes.grade');
         $rank->tier = Arr::get($payload, 'attributes.tier');
         $rank->type = Arr::get($payload, 'properties.type');
-        $rank->threshold = (int)Arr::get($payload, 'properties.threshold');
+        $rank->threshold = (int) Arr::get($payload, 'properties.threshold');
 
         $lastThreshold = $previous?->threshold ?? 0;
         $rank->required = max(0, $rank->threshold - $lastThreshold);

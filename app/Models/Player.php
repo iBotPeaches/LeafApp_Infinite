@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -31,8 +32,11 @@ use Spatie\Sitemap\Tags\Url;
 
 /**
  * @property int $id
+ * @property int|null $rank_id
+ * @property int|null $next_rank_id
  * @property string|null $xuid
  * @property string $gamertag
+ * @property int|null $xp
  * @property string $service_tag
  * @property bool $is_private
  * @property bool $is_bot
@@ -45,6 +49,10 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $backdrop_url
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read Rank|null $rank
+ * @property-read Rank|null $nextRank
+ * @property-read float $percentage_next_rank
+ * @property-read string $percentage_next_rank_color
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
@@ -114,6 +122,31 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         return $value;
     }
 
+    public function getPercentageNextRankAttribute(): float
+    {
+        $threshold = $this->rank?->threshold;
+
+        if ($threshold) {
+            return (float) number_format((($this->xp / $threshold) * 100));
+        }
+
+        return 100.0;
+    }
+
+    public function getPercentageNextRankColorAttribute(): string
+    {
+        if ($this->percentage_next_rank === 0.0) {
+            return 'is-dark';
+        }
+
+        return match (true) {
+            $this->percentage_next_rank > 80 => 'is-success',
+            $this->percentage_next_rank > 60 && $this->percentage_next_rank <= 80 => 'is-primary',
+            $this->percentage_next_rank > 40 && $this->percentage_next_rank <= 60 => 'is-warning',
+            default => 'is-danger',
+        };
+    }
+
     public static function fromGamertag(string $gamertag): self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
@@ -126,11 +159,18 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public static function fromHaloDotApi(array $payload): ?self
     {
+        $isRankPayload = Arr::has($payload, 'data.current.rank');
         $player = self::fromGamertag(Arr::get($payload, 'additional.params.gamertag'));
 
-        $player->service_tag = Arr::get($payload, 'data.service_tag');
-        $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
-        $player->backdrop_url = Arr::get($payload, 'data.image_urls.backdrop');
+        if ($isRankPayload) {
+            $player->rank_id = (int) Arr::get($payload, 'data.current.rank');
+            $player->next_rank_id = (int) Arr::get($payload, 'data.next.rank');
+            $player->xp = (int) Arr::get($payload, 'data.current.progression');
+        } else {
+            $player->service_tag = Arr::get($payload, 'data.service_tag');
+            $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
+            $player->backdrop_url = Arr::get($payload, 'data.image_urls.backdrop');
+        }
 
         if ($player->isDirty()) {
             $player->saveOrFail();
@@ -187,6 +227,8 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
             PullServiceRecord::dispatch($this, $seasonModel->identifier);
             $client->matches($this, Mode::LAN(), $forceUpdate);
         }
+
+        $client->careerRank($this);
     }
 
     public function currentRanked(?string $seasonKey = null, bool $isCurrentOrAll = true): Collection
@@ -228,6 +270,16 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         $url->setChangeFrequency('always');
 
         return $url;
+    }
+
+    public function rank(): BelongsTo
+    {
+        return $this->belongsTo(Rank::class, 'rank_id');
+    }
+
+    public function nextRank(): BelongsTo
+    {
+        return $this->belongsTo(Rank::class, 'next_rank_id');
     }
 
     public function serviceRecord(): HasOne
