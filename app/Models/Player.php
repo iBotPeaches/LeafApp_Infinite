@@ -127,7 +127,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         $threshold = $this->rank?->threshold;
 
         if ($threshold) {
-            return (float) number_format((($this->xp / $threshold) * 100));
+            return (float) number_format((($this->xp / $threshold) * 100), 2);
         }
 
         return 100.0;
