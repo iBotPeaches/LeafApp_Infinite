@@ -14,6 +14,7 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\PlayerBan;
 use App\Models\Playlist;
+use App\Models\Rank;
 use App\Models\Season;
 use App\Models\ServiceRecord;
 use App\Models\Team;
@@ -43,6 +44,18 @@ class ApiClient implements InfiniteInterface
         }
 
         return null;
+    }
+
+    public function careerRank(Player $player): ?Player
+    {
+        $urlSafeGamertag = ($player->url_safe_gamertag);
+        $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$urlSafeGamertag}/career-rank");
+
+        if ($response->successful()) {
+            return Player::fromHaloDotApi($response->json());
+        }
+
+        return $player;
     }
 
     public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr
@@ -198,6 +211,19 @@ class ApiClient implements InfiniteInterface
         }
 
         return Season::all();
+    }
+
+    public function metadataCareerRanks(): Collection
+    {
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/career-ranks')->throw();
+        $data = $response->json();
+
+        $lastRank = null;
+        foreach (Arr::get($data, 'data') as $rank) {
+            $lastRank = Rank::fromHaloDotApi($rank, $lastRank);
+        }
+
+        return Rank::all();
     }
 
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord

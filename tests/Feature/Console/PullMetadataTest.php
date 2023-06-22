@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Mocks\Metadata\MockCareerRankService;
 use Tests\Mocks\Metadata\MockCategoriesService;
 use Tests\Mocks\Metadata\MockMapsService;
 use Tests\Mocks\Metadata\MockMedalsService;
@@ -32,6 +33,7 @@ class PullMetadataTest extends TestCase
         $mockPlaylistResponse = (new MockPlaylistsService())->success();
         $mockCategoriesResponse = (new MockCategoriesService())->success();
         $mockSeasonsResponse = (new MockSeasonService())->success();
+        $mockCareerRankResponse = (new MockCareerRankService())->success();
 
         Arr::set($mockMedalsResponse, 'data.2.category', MedalType::MODE);
         Arr::set($mockMedalsResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
@@ -42,7 +44,8 @@ class PullMetadataTest extends TestCase
             ->push($mockTeamsResponse, Response::HTTP_OK)
             ->push($mockPlaylistResponse, Response::HTTP_OK)
             ->push($mockCategoriesResponse, Response::HTTP_OK)
-            ->push($mockSeasonsResponse, Response::HTTP_OK);
+            ->push($mockSeasonsResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         // Act & Assert
         $this

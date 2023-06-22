@@ -10,6 +10,7 @@ use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\PlayerBan;
+use App\Models\Rank;
 use App\Models\ServiceRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
@@ -25,9 +26,15 @@ class PlayerPageTest extends TestCase
         // Arrange
         Http::fake();
 
+        Rank::factory()->createOne([
+            'id' => 12,
+        ]);
+
         $player = Player::factory()
             ->createOne([
                 'gamertag' => $gamertag,
+                'xp' => 1000,
+                'rank_id' => 12,
             ]);
 
         $user = User::factory()

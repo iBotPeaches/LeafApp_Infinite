@@ -15,6 +15,8 @@ interface InfiniteInterface
 {
     public function appearance(string $gamertag): ?Player;
 
+    public function careerRank(Player $player): ?Player;
+
     public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr;
 
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
@@ -32,6 +34,8 @@ interface InfiniteInterface
     public function metadataCategories(): Collection;
 
     public function metadataSeasons(): Collection;
+
+    public function metadataCareerRanks(): Collection;
 
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord;
 

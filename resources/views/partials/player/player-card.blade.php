@@ -1,3 +1,6 @@
+<?php
+/** @var App\Models\Player $player */
+?>
 @if ($player->is_bot)
     <div class="card has-background-grey-light mb-2">
         <div class="card-content">
@@ -8,12 +11,16 @@
         </div>
     </div>
 @else
-    <div class="card {{ $player->is_cheater ? 'has-background-danger-light' : 'has-background-success-light' }} mb-2">
-        <div class="card-image">
-            <figure class="image is-4by3">
-                <img src="{{ $player->backdrop_url }}" alt="{{ $player->gamertag }} Backdrop Emblem">
-            </figure>
-        </div>
+    <div class="card {{ $player->is_cheater ? 'has-background-danger-light' : 'has-background-success-light' }} mb-2"
+         style="background-image: url({{ $player->backdrop_url }}); background-repeat: no-repeat; background-position: center top;"
+    >
+        @if ($player->rank?->largeIcon)
+            <div class="card-image pt-4">
+                <figure class="image is-4by3">
+                    <img src="{{ $player->rank->largeIcon }}" alt="{{ $player->gamertag }} Rank Image">
+                </figure>
+            </div>
+        @endif
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
@@ -28,4 +35,21 @@
             </div>
         </div>
     </div>
+    @if ($player->rank)
+        <div class="notification has-text-centered">
+            <span class="title is-6">
+                {{ $player->rank->title }}
+            </span>
+            <div class="progress-wrapper">
+                <progress
+                    class="progress {{ $player->percentage_next_rank_color }}"
+                    value="{{ $player->xp }}"
+                    max="{{ $player->rank->threshold }}">
+                </progress>
+                @if ($player->nextRank)
+                    <p class="progress-value has-text-white">{{ $player->percentage_next_rank }}% to next rank.</p>
+                @endif
+            </div>
+        </div>
+    @endif
 @endif
