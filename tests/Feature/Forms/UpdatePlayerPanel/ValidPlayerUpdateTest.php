@@ -20,6 +20,7 @@ use App\Models\Level;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Models\Playlist;
+use App\Models\Rank;
 use App\Models\Season;
 use App\Services\HaloDotApi\Enums\Mode;
 use App\Support\Session\ModeSession;
@@ -32,9 +33,9 @@ use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
+use Tests\Mocks\CareerRank\MockCareerRankService;
 use Tests\Mocks\Csrs\MockCsrAllService;
 use Tests\Mocks\Matches\MockMatchesService;
-use Tests\Mocks\Matches\MockMatchService;
 use Tests\Mocks\ServiceRecord\MockServiceRecordService;
 use Tests\Mocks\Xuid\MockXuidService;
 use Tests\TestCase;
@@ -54,6 +55,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
         Arr::set($mockServiceResponse, 'data.time_played.seconds', 0);
@@ -61,10 +63,15 @@ class ValidPlayerUpdateTest extends TestCase
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -97,13 +104,19 @@ class ValidPlayerUpdateTest extends TestCase
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockServiceResponse = (new MockServiceRecordService())->error403();
         $mockSuccessfulServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_FORBIDDEN)
-            ->push($mockSuccessfulServiceResponse, Response::HTTP_OK);
+            ->push($mockSuccessfulServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         $player = Player::factory()->createOne([
             'gamertag' => $gamertag,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -133,6 +146,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -141,7 +155,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -157,6 +172,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Season::factory()->createOne([
             'season_id' => config('services.halodotapi.competitive.season'),
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         $player = Player::factory()->createOne([
@@ -196,6 +215,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
         $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -204,7 +224,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -216,6 +237,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         $oldPlayer = Player::factory()->createOne([
@@ -261,6 +286,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -268,7 +294,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         $playlist = Playlist::factory()->createOne([
             'uuid' => 1,
@@ -280,6 +307,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         $player = Player::factory()
@@ -328,10 +359,12 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
         ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
         Http::fakeSequence()
-            ->push($mockMatchesResponse, Response::HTTP_OK);
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -343,6 +376,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Category::factory()->createOne([
             'uuid' => 1,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         $player = Player::factory()->createOne([
@@ -453,6 +490,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -463,7 +501,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -483,6 +522,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -510,6 +553,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -518,7 +562,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockMatchesResponse, Response::HTTP_OK)
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -534,6 +579,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         Season::factory()->createOne([
             'key' => config('services.halodotapi.competitive.key'),
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         $player = Player::factory()->createOne([
@@ -570,6 +619,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -579,7 +629,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK);
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -599,6 +650,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -624,8 +679,8 @@ class ValidPlayerUpdateTest extends TestCase
         $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -636,7 +691,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMatchResponse, Response::HTTP_OK);
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -656,6 +711,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -682,6 +741,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -691,7 +751,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -711,6 +772,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -737,6 +802,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -746,7 +812,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockEmptyMatchesResponse, Response::HTTP_OK);
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -766,6 +833,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
@@ -792,6 +863,7 @@ class ValidPlayerUpdateTest extends TestCase
         $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
         $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -801,7 +873,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
             ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK);
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         Playlist::factory()->createOne([
             'uuid' => 1,
@@ -821,6 +894,10 @@ class ValidPlayerUpdateTest extends TestCase
 
         MatchupPlayer::factory()->createOne([
             'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
         ]);
 
         // Act & Assert
