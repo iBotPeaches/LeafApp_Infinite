@@ -26,6 +26,8 @@ class Rank extends Model implements HasHaloDotApi
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     public $guarded = [
         'id',
     ];

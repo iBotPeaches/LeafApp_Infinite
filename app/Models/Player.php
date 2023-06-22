@@ -135,10 +135,6 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public function getPercentageNextRankColorAttribute(): string
     {
-        if ($this->percentage_next_rank === 0.0) {
-            return 'is-dark';
-        }
-
         return match (true) {
             $this->percentage_next_rank > 80 => 'is-success',
             $this->percentage_next_rank > 60 && $this->percentage_next_rank <= 80 => 'is-primary',
