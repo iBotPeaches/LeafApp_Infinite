@@ -16,7 +16,7 @@
     >
         @if ($player->rank?->largeIcon)
             <div class="card-image pt-4">
-                <figure class="image is-4by3">
+                <figure class="image is-square">
                     <img src="{{ $player->rank->largeIcon }}" alt="{{ $player->gamertag }} Rank Image">
                 </figure>
             </div>
@@ -40,15 +40,15 @@
             <span class="title is-6">
                 {{ $player->rank->title }}
             </span>
-            <div class="progress-wrapper">
+            <div class="progress-wrapper pt-4">
+                @if ($player->nextRank)
+                    <p class="progress-value has-text-white pt-4">{{ $player->percentage_next_rank }}% to next rank.</p>
+                @endif
                 <progress
                     class="progress {{ $player->percentage_next_rank_color }}"
                     value="{{ $player->xp }}"
                     max="{{ $player->rank->threshold }}">
                 </progress>
-                @if ($player->nextRank)
-                    <p class="progress-value has-text-white">{{ $player->percentage_next_rank }}% to next rank.</p>
-                @endif
             </div>
         </div>
     @endif
