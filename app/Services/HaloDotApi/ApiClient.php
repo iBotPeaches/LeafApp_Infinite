@@ -14,6 +14,7 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\PlayerBan;
 use App\Models\Playlist;
+use App\Models\Rank;
 use App\Models\Season;
 use App\Models\ServiceRecord;
 use App\Models\Team;
@@ -198,6 +199,19 @@ class ApiClient implements InfiniteInterface
         }
 
         return Season::all();
+    }
+
+    public function metadataCareerRanks(): Collection
+    {
+        $response = $this->asHaloInfinite()->get('metadata/multiplayer/career-ranks')->throw();
+        $data = $response->json();
+
+        $lastRank = null;
+        foreach (Arr::get($data, 'data') as $rank) {
+            $lastRank = Rank::fromHaloDotApi($rank, $lastRank);
+        }
+
+        return Rank::all();
     }
 
     public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord

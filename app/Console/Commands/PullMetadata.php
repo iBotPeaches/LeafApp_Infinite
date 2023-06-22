@@ -40,6 +40,9 @@ class PullMetadata extends Command
         $this->line('Pulling Seasons...');
         $this->client->metadataSeasons();
 
+        $this->line('Pulling Career Ranks...');
+        $this->client->metadataCareerRanks();
+
         return CommandAlias::SUCCESS;
     }
 }
