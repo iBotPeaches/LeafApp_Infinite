@@ -47,6 +47,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property string $last_csr_key
  * @property string $emblem_url
  * @property string $backdrop_url
+ * @property string $nameplate_url
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Rank|null $rank
@@ -122,6 +123,17 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         return $value;
     }
 
+    public function getNameplateUrlAttribute(?string $value): ?string
+    {
+        $filename = ImageHelper::getInternalFilenameFromAutocode($value);
+
+        if ($filename && File::exists(public_path('storage/images/nameplates/'.$filename))) {
+            return asset('storage/images/nameplates/'.$filename);
+        }
+
+        return $value;
+    }
+
     public function getPercentageNextRankAttribute(): float
     {
         $threshold = $this->rank?->threshold;
@@ -166,6 +178,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
             $player->service_tag = Arr::get($payload, 'data.service_tag');
             $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
             $player->backdrop_url = Arr::get($payload, 'data.image_urls.backdrop');
+            $player->nameplate_url = Arr::get($payload, 'data.image_urls.nameplate');
         }
 
         if ($player->isDirty()) {

@@ -52,12 +52,16 @@ class PullAppearance implements ShouldQueue
         $player = $client->appearance($this->player->gamertag);
         $emblemUrl = $player?->getRawOriginal('emblem_url');
         $backdropUrl = $player?->getRawOriginal('backdrop_url');
+        $nameplateUrl = $player?->getRawOriginal('nameplate_url');
 
         $emblem = $this->getStoragePathFromUrl($emblemUrl, 'emblems');
         $this->downloadIfMissing($emblem, $emblemUrl);
 
         $backdrop = $this->getStoragePathFromUrl($backdropUrl, 'backdrops');
         $this->downloadIfMissing($backdrop, $backdropUrl);
+
+        $nameplate = $this->getStoragePathFromUrl($nameplateUrl, 'nameplates');
+        $this->downloadIfMissing($nameplate, $nameplateUrl);
     }
 
     private function downloadIfMissing(?string $filename, ?string $url): void

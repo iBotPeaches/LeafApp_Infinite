@@ -19,6 +19,7 @@ use Illuminate\Support\Arr;
  * @property int $required
  * @property-read string $icon
  * @property-read string $largeIcon
+ * @property-read string $adornmentIcon
  *
  * @method static RankFactory factory(...$parameters)
  */
@@ -46,6 +47,13 @@ class Rank extends Model implements HasHaloDotApi
         $filename = $this->id.'.png';
 
         return asset('images/ranks/large/'.$filename);
+    }
+
+    public function getAdornmentIconAttribute(): string
+    {
+        $filename = $this->id.'.png';
+
+        return asset('images/ranks/adornments/'.$filename);
     }
 
     public function getTitleAttribute(): string
