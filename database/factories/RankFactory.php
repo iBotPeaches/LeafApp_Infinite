@@ -22,7 +22,7 @@ class RankFactory extends Factory
             'tier' => 1,
             'type' => 'Bronze',
             'threshold' => 1510,
-            'required' => 0,
+            'required' => 100,
         ];
     }
 }

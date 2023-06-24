@@ -35,7 +35,7 @@ return [
         'xuid_disabled' => env('HALODOTAPI_XUID_DISABLED', false),
         'key' => env('HALODOTAPI_KEY'),
         'domain' => env('HALODOTAPI_DOMAIN', 'https://api.halodotapi.com'),
-        'version' => env('HALODOTAPI_VERSION', '2023-04-07'),
+        'version' => env('HALODOTAPI_VERSION', '2023-06-24'),
         'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
         'competitive' => [
             'key' => env('HALODOTAPI_CURRENT_SEASON_KEY', '3-1'),
