@@ -53,6 +53,8 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Rank|null $nextRank
  * @property-read float $percentage_next_rank
  * @property-read string $percentage_next_rank_color
+ * @property-read int $xp_towards_next_rank
+ * @property-read int $xp_required_for_next_rank
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
@@ -128,13 +130,33 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public function getPercentageNextRankAttribute(): float
     {
-        $threshold = $this->rank?->threshold;
+        $lastThreshold = $this->rank?->threshold;
+        $threshold = $this->nextRank?->threshold;
 
-        if ($threshold) {
-            return (float) number_format((($this->xp / $threshold) * 100), 2);
+        if ($threshold && $lastThreshold) {
+            $xpTowardsNext = $this->xp_towards_next_rank;
+
+            return (float) number_format(($xpTowardsNext / ($this->nextRank?->required ?? 1)) * 100, 2);
         }
 
         return 100.0;
+    }
+
+    public function getXpTowardsNextRankAttribute(): int
+    {
+        $lastThreshold = $this->rank?->threshold;
+        $threshold = $this->nextRank?->threshold;
+
+        if ($threshold && $lastThreshold) {
+            return $this->xp - $lastThreshold;
+        }
+
+        return 0;
+    }
+
+    public function getXpRequiredForNextRankAttribute(): int
+    {
+        return $this->nextRank?->required ?? 100;
     }
 
     public function getPercentageNextRankColorAttribute(): string
@@ -165,7 +187,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         if ($isRankPayload) {
             $player->rank_id = (int) Arr::get($payload, 'data.current.rank');
             $player->next_rank_id = (int) Arr::get($payload, 'data.next.rank');
-            $player->xp = (int) Arr::get($payload, 'data.current.progression');
+            $player->xp = (int) Arr::get($payload, 'data.level.total_xp');
         } else {
             $player->service_tag = Arr::get($payload, 'data.service_tag');
             $player->emblem_url = Arr::get($payload, 'data.image_urls.emblem');
