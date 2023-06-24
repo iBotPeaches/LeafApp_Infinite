@@ -71,6 +71,10 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         'id',
     ];
 
+    public $with = [
+        'rank',
+    ];
+
     public function getRouteKeyName(): string
     {
         return 'gamertag';

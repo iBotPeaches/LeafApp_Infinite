@@ -19,6 +19,7 @@ use Illuminate\Support\Arr;
  * @property int $required
  * @property-read string $icon
  * @property-read string $largeIcon
+ * @property-read string $title
  *
  * @method static RankFactory factory(...$parameters)
  */
