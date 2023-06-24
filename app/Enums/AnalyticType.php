@@ -34,4 +34,9 @@ final class AnalyticType extends Enum
     {
         return $this->is(self::MAP());
     }
+
+    public function isPlayer(): bool
+    {
+        return $this->is(self::ONLY_PLAYER());
+    }
 }
