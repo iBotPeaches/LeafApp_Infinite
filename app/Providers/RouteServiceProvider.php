@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         // @codeCoverageIgnoreStart
         RateLimiter::for('uploads', function (Request $request) {
-            return Limit::perHour(5)->by($request->ip())->response(function () {
+            return Limit::perHour(10)->by($request->ip())->response(function () {
                 return response()->view('pages.errors.429', [], Response::HTTP_TOO_MANY_REQUESTS);
             });
         });
