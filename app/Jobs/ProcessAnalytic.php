@@ -8,6 +8,7 @@ use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Map;
+use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Bus\Queueable;
@@ -53,6 +54,9 @@ class ProcessAnalytic implements ShouldQueue
                     break;
                 case AnalyticType::MAP():
                     $this->handleMapResults($topTen);
+                    break;
+                case AnalyticType::ONLY_PLAYER():
+                    $this->handleOnlyPlayerResults($topTen);
                     break;
             }
 
@@ -113,6 +117,18 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $map->{$this->analytic->property()};
             $analytic->map()->associate($map);
+            $analytic->saveOrFail();
+        });
+    }
+
+    /** @param  Collection<int, Player>|null  $players */
+    private function handleOnlyPlayerResults(?Collection $players): void
+    {
+        $players?->each(function (Player $player) {
+            $analytic = new Analytic();
+            $analytic->key = $this->analytic->key();
+            $analytic->value = (float) $player->{$this->analytic->property()};
+            $analytic->player()->associate($player);
             $analytic->saveOrFail();
         });
     }

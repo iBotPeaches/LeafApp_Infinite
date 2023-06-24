@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  * @method static static PLAYER()
  * @method static static ONLY_GAME()
  * @method static static MAP()
+ * @method static static ONLY_PLAYER()
  */
 final class AnalyticType extends Enum
 {
@@ -21,6 +22,8 @@ final class AnalyticType extends Enum
     const ONLY_GAME = 'only_game';
 
     const MAP = 'map';
+
+    const ONLY_PLAYER = 'only_player';
 
     public function isGame(): bool
     {

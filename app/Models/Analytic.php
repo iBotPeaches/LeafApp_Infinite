@@ -22,6 +22,7 @@ use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
+use App\Support\Analytics\Stats\MostXpPlayer;
 use Carbon\Carbon;
 use Database\Factories\AnalyticFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -76,6 +77,7 @@ class Analytic extends Model
             AnalyticKey::BEST_KD_SR => new BestKDServiceRecord(),
             AnalyticKey::BEST_KDA_SR => new BestKDAServiceRecord(),
             AnalyticKey::MOST_QUIT_MAP => new MostQuitMap(),
+            AnalyticKey::MOST_XP => new MostXpPlayer(),
             default => throw new UnexpectedValueException('Unknown value in getStatFromEnum')
         };
     }

@@ -24,4 +24,6 @@ enum AnalyticKey: string
     case LONGEST_MATCHMAKING_GAME = 'longest_matchmaking_game';
 
     case MOST_QUIT_MAP = 'most_quit_map';
+
+    case MOST_XP = 'most_xp';
 }
