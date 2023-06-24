@@ -7,7 +7,7 @@
             @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
                 <livewire:player-toggle-panel :type="$type" />
             @endif
-            @include('partials.player.player-card')
+            <livewire:player-card :player="$player" />
             @if (in_array($type, ['matches', 'custom', 'lan']))
                 <div class="notification">
                     <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>

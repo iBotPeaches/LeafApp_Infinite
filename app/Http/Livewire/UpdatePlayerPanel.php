@@ -110,5 +110,6 @@ class UpdatePlayerPanel extends Component
                 $this->emitTo(ModePage::class, '$refresh');
                 break;
         }
+        $this->emitTo(PlayerCard::class, '$refresh');
     }
 }
