@@ -20,6 +20,7 @@ use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
+use App\Support\Analytics\Stats\MostXpPlayer;
 
 trait HasAnalyticDataProvider
 {
@@ -73,6 +74,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostQuitMap(),
+            ],
+            [
+                new MostXpPlayer(),
             ],
         ];
     }
