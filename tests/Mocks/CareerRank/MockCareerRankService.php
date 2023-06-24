@@ -12,6 +12,11 @@ class MockCareerRankService extends BaseMock
     {
         return [
             'data' => [
+                'level' => [
+                    'total_xp' => 900,
+                    'remaining_xp_to_next_level' => 100,
+                    'next_level_threshold' => 1000,
+                ],
                 'current' => $this->careerBlock(),
                 'next' => $this->careerBlock(),
             ],
@@ -32,7 +37,6 @@ class MockCareerRankService extends BaseMock
             'rank' => 12,
             'title' => 'Corporal',
             'subtitle' => 'Bronze',
-            'progression' => 14510,
             'image_urls' => [
                 'icon' => $this->faker->imageUrl,
                 'large_icon' => $this->faker->imageUrl,
@@ -41,6 +45,9 @@ class MockCareerRankService extends BaseMock
             'attributes' => [
                 'tier' => 2,
                 'grade' => 2,
+                'colors' => [
+
+                ],
             ],
             'properties' => [
                 'type' => 'Bronze',

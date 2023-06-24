@@ -291,7 +291,7 @@ class ApiClient implements InfiniteInterface
         return Http::asJson()
             ->withUserAgent('Leaf - '.config('sentry.release', 'dirty'))
             ->withHeaders([
-                'Halo.API-Version' => config('services.halodotapi.version', '2023-04-07'),
+                'Halo.API-Version' => config('services.halodotapi.version'),
             ])
             ->timeout(180)
             ->withToken($this->config['key']);

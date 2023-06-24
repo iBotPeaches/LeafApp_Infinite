@@ -27,6 +27,9 @@ class MockCareerRankService extends BaseMock
                     'attributes' => [
                         'tier' => null,
                         'grade' => 1,
+                        'colors' => [
+
+                        ],
                     ],
                     'properties' => [
                         'type' => 'Bronze',

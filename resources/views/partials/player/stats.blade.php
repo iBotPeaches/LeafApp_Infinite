@@ -1,5 +1,6 @@
 <?php
 /** @var App\Models\ServiceRecord $serviceRecord */
+/** @var App\Models\Player $player */
 ?>
 <div>
     <div class="divider">Quick Peek</div>
@@ -107,6 +108,12 @@
     </div>
     <div class="divider">Other</div>
     <div class="level">
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">XP</p>
+                <p class="title">{{ number_format($player->xp) }}</p>
+            </div>
+        </div>
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Time Played (hours)</p>

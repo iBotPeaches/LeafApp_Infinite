@@ -43,12 +43,12 @@
                 </span>
                 <div class="progress-wrapper pt-4">
                     @if ($player->nextRank)
-                        <p class="progress-value has-text-white pt-4">{{ $player->percentage_next_rank }}% to next rank.</p>
+                        <p class="progress-value has-text-white pt-4">{{ number_format($player->xp_towards_next_rank) }} / {{ number_format($player->xp_required_for_next_rank) }} XP to go.</p>
                     @endif
                     <progress
                         class="progress {{ $player->percentage_next_rank_color }}"
-                        value="{{ $player->xp }}"
-                        max="{{ $player->rank->threshold }}">
+                        value="{{ $player->xp_towards_next_rank }}"
+                        max="{{ $player->xp_required_for_next_rank }}">
                     </progress>
                 </div>
             </div>
