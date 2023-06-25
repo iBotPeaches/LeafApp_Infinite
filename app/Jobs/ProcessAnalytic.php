@@ -34,7 +34,7 @@ class ProcessAnalytic implements ShouldQueue
     public function handle(): void
     {
         DB::transaction(function () {
-            Analytic::purgeKey($this->analytic->key());
+            Analytic::purgeKey($this->analytic->key(), $this->analytic->season);
 
             $results = $this->analytic->results(1000);
 
@@ -80,6 +80,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $game->{$this->analytic->property()};
             $analytic->game()->associate($game);
+            $analytic->season()->associate($this->analytic->season);
             $analytic->saveOrFail();
         });
     }
@@ -93,6 +94,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->value = (float) $gamePlayer->{$this->analytic->property()};
             $analytic->game()->associate($gamePlayer->game);
             $analytic->player()->associate($gamePlayer->player);
+            $analytic->season()->associate($this->analytic->season);
             $analytic->saveOrFail();
         });
     }
@@ -105,6 +107,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $serviceRecord->{$this->analytic->property()};
             $analytic->player()->associate($serviceRecord->player);
+            $analytic->season()->associate($this->analytic->season);
             $analytic->saveOrFail();
         });
     }
@@ -117,6 +120,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->key = $this->analytic->key();
             $analytic->value = (float) $map->{$this->analytic->property()};
             $analytic->map()->associate($map);
+            $analytic->season()->associate($this->analytic->season);
             $analytic->saveOrFail();
         });
     }

@@ -35,12 +35,15 @@ use UnexpectedValueException;
  * @property string $key
  * @property ?int $game_id
  * @property ?int $player_id
+ * @property ?int $map_id
+ * @property ?int $season_id
  * @property float $value
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read ?Game $game
  * @property-read ?Player $player
  * @property-read ?Map $map
+ * @property-read ?Season $season
  * @property-read AnalyticInterface $stat
  *
  * @method static AnalyticFactory factory(...$parameters)
@@ -82,11 +85,17 @@ class Analytic extends Model
         };
     }
 
-    public static function purgeKey(string $key): void
+    public static function purgeKey(string $key, ?Season $season = null): void
     {
-        self::query()
-            ->where('key', $key)
-            ->delete();
+        $query = self::query()->where('key', $key);
+
+        if ($season) {
+            $query->where('season_id', $season->id);
+        } else {
+            $query->whereNull('season_id');
+        }
+
+        $query->delete();
     }
 
     public function game(): BelongsTo
@@ -102,5 +111,10 @@ class Analytic extends Model
     public function map(): BelongsTo
     {
         return $this->belongsTo(Map::class);
+    }
+
+    public function season(): BelongsTo
+    {
+        return $this->belongsTo(Season::class);
     }
 }
