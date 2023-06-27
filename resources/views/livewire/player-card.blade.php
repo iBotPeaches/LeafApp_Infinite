@@ -41,7 +41,7 @@
                 <span class="title is-6">
                     {{ $player->rank->title }}
                 </span>
-                <div class="progress-wrapper pt-4">
+                <div class="progress-wrapper pt-4 is-clipped">
                     @if ($player->nextRank)
                         <p class="progress-value has-text-white pt-4">{{ number_format($player->xp_towards_next_rank) }} / {{ number_format($player->xp_required_for_next_rank) }} XP to go.</p>
                     @endif
