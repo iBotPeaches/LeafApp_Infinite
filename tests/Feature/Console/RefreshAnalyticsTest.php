@@ -27,4 +27,18 @@ class RefreshAnalyticsTest extends TestCase
         // Assert
         Queue::assertPushed(ProcessAnalytic::class);
     }
+
+    public function testValidDispatchOfSpecificJob(): void
+    {
+        // Arrange
+        Queue::fake();
+
+        // Act
+        $this
+            ->artisan('analytics:refresh', ['analytic' => 'MostXpPlayer'])
+            ->assertExitCode(CommandAlias::SUCCESS);
+
+        // Assert
+        Queue::assertPushed(ProcessAnalytic::class);
+    }
 }
