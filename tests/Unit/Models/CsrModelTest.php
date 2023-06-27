@@ -47,6 +47,19 @@ class CsrModelTest extends TestCase
         $this->assertEquals($expected, $csr->next_rank);
     }
 
+    public function testNoPercentWith0Xp(): void
+    {
+        // Arrange
+        $csr = Csr::factory()
+            ->create([
+                'next_csr' => 1500,
+                'tier_start_csr' => 1500,
+            ]);
+
+        // Act & Assert
+        $this->assertEquals(0.0, $csr->next_rank_percent);
+    }
+
     public static function nextRankDataProvider(): array
     {
         return [
