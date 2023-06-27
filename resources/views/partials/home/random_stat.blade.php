@@ -8,4 +8,6 @@
     @include('partials.home.random_stat_game', ['gamePlayer' => $analytic])
 @elseif ($analyticClass->type()->is(App\Enums\AnalyticType::ONLY_GAME()) && $analytic)
     @include('partials.home.random_stat_only_game', ['game' => $analytic])
+@elseif ($analyticClass->type()->is(App\Enums\AnalyticType::ONLY_PLAYER()) && $analytic)
+    @include('partials.home.random_stat_only_player', ['record' => $analytic])
 @endif
