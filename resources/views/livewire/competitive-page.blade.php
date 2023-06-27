@@ -1,5 +1,5 @@
 <?php
-/** @var App\Models\Csr[] $ranked */
+/** @var App\Models\Csr[] $current */
 ?>
 <div>
     @if ($player->is_private)
@@ -54,17 +54,23 @@
                                     </td>
                                     <td>
                                         @if (! $playlist->isOnyx())
-                                            <span
+                                            <div
                                                 class="has-tooltip-arrow has-tooltip-text-centered"
                                                 data-tooltip="{{ $playlist->getRankPercentTooltip() }}"
                                             >
-                                                <progress
-                                                    class="progress {{ $playlist->getRankPercentColor() }}"
-                                                    value="{{ $playlist->current_xp_for_level }}"
-                                                    max="{{ $playlist->next_xp_for_level }}">
-                                                    %{{ number_format($playlist->next_rank_percent, 2) }}
-                                                </progress>
-                                            </span>
+                                                <div class="progress-wrapper is-clipped">
+                                                    @if ($playlist->matches_remaining > 0)
+                                                        <p class="progress-value has-text-white">{{ $playlist->matches_remaining }} matches left.</p>
+                                                    @else
+                                                        <p class="progress-value has-text-white">{{ number_format($playlist->csr) }} / {{ number_format($playlist->next_csr) }} CSR</p>
+                                                    @endif
+                                                    <progress
+                                                        class="progress {{ $playlist->getRankPercentColor() }}"
+                                                        value="{{ $playlist->current_xp_for_level }}"
+                                                        max="{{ $playlist->next_xp_for_level }}">
+                                                    </progress>
+                                                </div>
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>
