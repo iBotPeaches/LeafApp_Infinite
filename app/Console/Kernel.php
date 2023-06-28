@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('3:01')
             ->timezone('America/New_York');
 
-        $schedule->command(RefreshAnalytics::class, ['analytic' => 'MostXpPlayer'])
+        $schedule->command(RefreshAnalytics::class, ['MostXpPlayer'])
             ->withoutOverlapping()
             ->everyFifteenMinutes()
             ->timezone('America/New_York');
