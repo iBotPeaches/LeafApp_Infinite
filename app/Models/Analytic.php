@@ -33,6 +33,7 @@ use UnexpectedValueException;
 /**
  * @property int $id
  * @property string $key
+ * @property ?int $place
  * @property ?int $game_id
  * @property ?int $player_id
  * @property float $value

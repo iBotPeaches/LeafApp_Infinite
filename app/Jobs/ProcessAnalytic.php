@@ -44,19 +44,19 @@ class ProcessAnalytic implements ShouldQueue
 
             switch ($this->analytic->type()) {
                 case AnalyticType::PLAYER():
-                    $this->handleServiceRecordResults($topTen);
+                    $this->handleServiceRecordResults($topThousand);
                     break;
                 case AnalyticType::GAME():
-                    $this->handleGamePlayerResults($topTen);
+                    $this->handleGamePlayerResults($topThousand);
                     break;
                 case AnalyticType::ONLY_GAME():
-                    $this->handleGameResults($topTen);
+                    $this->handleGameResults($topThousand);
                     break;
                 case AnalyticType::MAP():
-                    $this->handleMapResults($topTen);
+                    $this->handleMapResults($topThousand);
                     break;
                 case AnalyticType::ONLY_PLAYER():
-                    $this->handleOnlyPlayerResults($topTen);
+                    $this->handleOnlyPlayerResults($topThousand);
                     break;
             }
 
@@ -75,9 +75,10 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, Game>|null  $games */
     private function handleGameResults(?Collection $games): void
     {
-        $games?->each(function (Game $game) {
+        $games?->each(function (Game $game, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
+            $analytic->place = $index + 1;
             $analytic->value = (float) $game->{$this->analytic->property()};
             $analytic->game()->associate($game);
             $analytic->saveOrFail();
@@ -87,9 +88,10 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, GamePlayer>|null  $gamePlayers */
     private function handleGamePlayerResults(?Collection $gamePlayers): void
     {
-        $gamePlayers?->each(function (GamePlayer $gamePlayer) {
+        $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
+            $analytic->place = $index + 1;
             $analytic->value = (float) $gamePlayer->{$this->analytic->property()};
             $analytic->game()->associate($gamePlayer->game);
             $analytic->player()->associate($gamePlayer->player);
@@ -100,9 +102,10 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, ServiceRecord>|null  $serviceRecords */
     private function handleServiceRecordResults(?Collection $serviceRecords): void
     {
-        $serviceRecords?->each(function (ServiceRecord $serviceRecord) {
+        $serviceRecords?->each(function (ServiceRecord $serviceRecord, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
+            $analytic->place = $index + 1;
             $analytic->value = (float) $serviceRecord->{$this->analytic->property()};
             $analytic->player()->associate($serviceRecord->player);
             $analytic->saveOrFail();
@@ -112,9 +115,10 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, Map>|null  $maps */
     private function handleMapResults(?Collection $maps): void
     {
-        $maps?->each(function (Map $map) {
+        $maps?->each(function (Map $map, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
+            $analytic->place = $index + 1;
             $analytic->value = (float) $map->{$this->analytic->property()};
             $analytic->map()->associate($map);
             $analytic->saveOrFail();
@@ -124,9 +128,10 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, Player>|null  $players */
     private function handleOnlyPlayerResults(?Collection $players): void
     {
-        $players?->each(function (Player $player) {
+        $players?->each(function (Player $player, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
+            $analytic->place = $index + 1;
             $analytic->value = (float) $player->{$this->analytic->property()};
             $analytic->player()->associate($player);
             $analytic->saveOrFail();
