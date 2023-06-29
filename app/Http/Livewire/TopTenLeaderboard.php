@@ -10,9 +10,16 @@ use App\Support\Schedule\ScheduleTimer;
 use App\Support\Schedule\ScheduleTimerInterface;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TopTenLeaderboard extends Component
 {
+    use WithPagination;
+
+    public function paginationView(): string
+    {
+        return 'pagination::bulma';
+    }
     public string $analyticKey;
 
     public function render(): View
@@ -21,8 +28,7 @@ class TopTenLeaderboard extends Component
             ->with(['player', 'game', 'map'])
             ->where('key', $this->analyticKey)
             ->orderByDesc('value')
-            ->limit(10)
-            ->get();
+            ->paginate(10);
 
         $analyticEnumKey = AnalyticKey::tryFrom($this->analyticKey);
 
