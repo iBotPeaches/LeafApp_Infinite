@@ -39,7 +39,7 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                 @foreach ($results as $result)
                     <tr>
                         <td>
-                            @th($loop->iteration)
+                            @th($result->place)
                         </td>
                         @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <td>
@@ -82,11 +82,12 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                 @endforeach
                 </tbody>
             </table>
-            <div class="notification is-light is-hidden-mobile mt-2">
-                export to csv: <a href="{{ $analyticClass->displayExportUrl(10) }}" rel="nofollow">top 10</a>,
-                <a href="{{ $analyticClass->displayExportUrl(100) }}" rel="nofollow">top 100</a> or
-                <a href="{{ $analyticClass->displayExportUrl(1000) }}" rel="nofollow">top 1,000</a>.
-            </div>
+        </div>
+        {{ $results->links() }}
+        <div class="notification is-light is-hidden-mobile mt-2">
+            export to csv: <a href="{{ $analyticClass->displayExportUrl(10) }}" rel="nofollow">top 10</a>,
+            <a href="{{ $analyticClass->displayExportUrl(100) }}" rel="nofollow">top 100</a> or
+            <a href="{{ $analyticClass->displayExportUrl(1000) }}" rel="nofollow">top 1,000</a>.
         </div>
     @endif
 </div>
