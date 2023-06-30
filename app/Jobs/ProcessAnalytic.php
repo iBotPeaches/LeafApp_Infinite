@@ -44,19 +44,19 @@ class ProcessAnalytic implements ShouldQueue
 
             switch ($this->analytic->type()) {
                 case AnalyticType::PLAYER():
-                    $this->handleServiceRecordResults($topThousand);
+                    $this->handleServiceRecordResults($topHundred);
                     break;
                 case AnalyticType::GAME():
-                    $this->handleGamePlayerResults($topThousand);
+                    $this->handleGamePlayerResults($topHundred);
                     break;
                 case AnalyticType::ONLY_GAME():
-                    $this->handleGameResults($topThousand);
+                    $this->handleGameResults($topHundred);
                     break;
                 case AnalyticType::MAP():
-                    $this->handleMapResults($topThousand);
+                    $this->handleMapResults($topHundred);
                     break;
                 case AnalyticType::ONLY_PLAYER():
-                    $this->handleOnlyPlayerResults($topThousand);
+                    $this->handleOnlyPlayerResults($topHundred);
                     break;
             }
 
