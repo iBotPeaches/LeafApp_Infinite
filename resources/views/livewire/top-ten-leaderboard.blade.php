@@ -39,7 +39,7 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                 @foreach ($results as $result)
                     <tr>
                         <td>
-                            @th($loop->iteration)
+                            @th($result->place)
                         </td>
                         @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <td>

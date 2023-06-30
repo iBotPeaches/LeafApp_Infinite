@@ -20,6 +20,7 @@ class TopTenLeaderboard extends Component
     {
         return 'pagination::bulma';
     }
+
     public string $analyticKey;
 
     public function render(): View
@@ -27,7 +28,7 @@ class TopTenLeaderboard extends Component
         $topTen = Analytic::query()
             ->with(['player', 'game', 'map'])
             ->where('key', $this->analyticKey)
-            ->orderByDesc('value')
+            ->orderBy('place')
             ->paginate(10);
 
         $analyticEnumKey = AnalyticKey::tryFrom($this->analyticKey);
