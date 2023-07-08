@@ -51,7 +51,7 @@ class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
             ->where('is_cheater', false)
             ->where('mode', Mode::MATCHMADE_PVP)
-            ->whereNull('season_number')
+            ->whereNull('season_key')
             ->where('total_matches', '>=', 1000)
             ->orderByDesc($this->property())
             ->limit($limit)

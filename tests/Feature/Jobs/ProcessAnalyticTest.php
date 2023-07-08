@@ -28,7 +28,7 @@ class ProcessAnalyticTest extends TestCase
         Http::fake()->preventStrayRequests();
         ServiceRecord::factory()->createOne([
             'mode' => Mode::MATCHMADE_PVP,
-            'season_number' => null,
+            'season_key' => null,
             'total_matches' => 1102,
         ]);
         GamePlayer::factory()
