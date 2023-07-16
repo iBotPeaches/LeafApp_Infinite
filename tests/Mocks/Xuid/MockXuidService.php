@@ -8,7 +8,7 @@ use Tests\Mocks\BaseMock;
 
 class MockXuidService extends BaseMock
 {
-    public function success(string $gamertag, ?string $xuid = null): array
+    public function success(string $gamertag, string $xuid = null): array
     {
         return [
             'data' => [
