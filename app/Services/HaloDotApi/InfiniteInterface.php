@@ -17,7 +17,7 @@ interface InfiniteInterface
 
     public function careerRank(Player $player): ?Player;
 
-    public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr;
+    public function competitive(Player $player, string $seasonCsrKey = null): ?Csr;
 
     public function matches(Player $player, Mode $mode, bool $forceUpdate = false): Collection;
 
@@ -37,7 +37,7 @@ interface InfiniteInterface
 
     public function metadataCareerRanks(): Collection;
 
-    public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord;
+    public function serviceRecord(Player $player, string $seasonIdentifier = null): ?ServiceRecord;
 
     public function banSummary(Player $player): Collection;
 
