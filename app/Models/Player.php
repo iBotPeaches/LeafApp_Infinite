@@ -186,7 +186,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
         if ($isRankPayload) {
             $player->rank_id = (int) Arr::get($payload, 'data.current.rank');
-            $player->next_rank_id = (int) Arr::get($payload, 'data.next.rank');
+            $player->next_rank_id = Arr::get($payload, 'data.next.rank');
             $player->xp = max(0, (int) Arr::get($payload, 'data.level.total_xp'));
         } else {
             $player->service_tag = Arr::get($payload, 'data.service_tag');
