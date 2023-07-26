@@ -12,6 +12,7 @@ use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
 use App\Support\Analytics\Stats\MostDeathsInGame;
+use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
@@ -19,6 +20,7 @@ use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostQuitMap;
+use App\Support\Analytics\Stats\MostScoreServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostXpPlayer;
 
@@ -77,6 +79,12 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostXpPlayer(),
+            ],
+            [
+                new MostScoreServiceRecord(),
+            ],
+            [
+                new MostGamesPlayedServiceRecord(),
             ],
         ];
     }
