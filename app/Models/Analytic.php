@@ -14,6 +14,7 @@ use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
 use App\Support\Analytics\Stats\MostDeathsInGame;
+use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInGame;
 use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use App\Support\Analytics\Stats\MostKillsServiceRecord;
@@ -21,6 +22,7 @@ use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
 use App\Support\Analytics\Stats\MostQuitMap;
+use App\Support\Analytics\Stats\MostScoreServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
 use App\Support\Analytics\Stats\MostXpPlayer;
 use Carbon\Carbon;
@@ -79,6 +81,8 @@ class Analytic extends Model
             AnalyticKey::BEST_KDA_SR => new BestKDAServiceRecord(),
             AnalyticKey::MOST_QUIT_MAP => new MostQuitMap(),
             AnalyticKey::MOST_XP => new MostXpPlayer(),
+            AnalyticKey::MOST_SCORE_SR => new MostScoreServiceRecord(),
+            AnalyticKey::MOST_GAMES_PLAYED_SR => new MostGamesPlayedServiceRecord(),
             default => throw new UnexpectedValueException('Unknown value in getStatFromEnum')
         };
     }

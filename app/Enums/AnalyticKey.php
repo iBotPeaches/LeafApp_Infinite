@@ -14,6 +14,10 @@ enum AnalyticKey: string
     case MOST_MEDALS_SR = 'most_medals_sr';
     case MOST_TIME_PLAYED_SR = 'most_time_played_sr';
 
+    case MOST_GAMES_PLAYED_SR = 'most_games_played_sr';
+
+    case MOST_SCORE_SR = 'most_score_sr';
+
     case MOST_KILLS_RANKED_GAME = 'most_kills_ranked_game';
     case MOST_KILLS_ZERO_DEATHS_GAME = 'most_kills_zero_deaths_game';
     case MOST_KILLS_GAME = 'most_kills_game';
