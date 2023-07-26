@@ -29,7 +29,7 @@ final class Experience extends Enum implements LocalizedEnum
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
-        $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+        $enumKeyOrValue = Str::upper(str_replace('-', '_', $enumKeyOrValue));
 
         return parent::coerce($enumKeyOrValue);
     }

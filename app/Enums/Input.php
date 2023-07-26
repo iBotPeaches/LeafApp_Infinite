@@ -28,7 +28,7 @@ final class Input extends Enum implements LocalizedEnum
             $enumKeyOrValue = 'kbm';
         }
 
-        $enumKeyOrValue = Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+        $enumKeyOrValue = Str::upper(str_replace('-', '_', $enumKeyOrValue));
 
         return parent::coerce($enumKeyOrValue);
     }

@@ -25,7 +25,7 @@ final class CompetitiveMode extends Enum implements LocalizedEnum
     {
         $enumKeyOrValue = is_numeric($enumKeyOrValue)
             ? $enumKeyOrValue
-            : Str::upper(Str::replace('-', '_', $enumKeyOrValue));
+            : Str::upper(str_replace('-', '_', $enumKeyOrValue));
 
         return parent::coerce($enumKeyOrValue);
     }
