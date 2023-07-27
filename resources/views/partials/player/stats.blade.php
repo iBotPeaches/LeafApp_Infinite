@@ -126,5 +126,11 @@
                 <p class="title">{{ number_format($serviceRecord->average_score, 2) }}</p>
             </div>
         </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Total Score</p>
+                <p class="title">{{ number_format($serviceRecord->total_score) }}</p>
+            </div>
+        </div>
     </div>
 </div>
