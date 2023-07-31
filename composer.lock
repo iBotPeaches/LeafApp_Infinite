@@ -80,16 +80,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "v6.4.1",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "0e48455d59c7ad043be01ef6aef9db3da15e59b2"
+                "reference": "0631c70e59fe38a0ffa6bb8052b5275ce06e1545"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/0e48455d59c7ad043be01ef6aef9db3da15e59b2",
-                "reference": "0e48455d59c7ad043be01ef6aef9db3da15e59b2",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/0631c70e59fe38a0ffa6bb8052b5275ce06e1545",
+                "reference": "0631c70e59fe38a0ffa6bb8052b5275ce06e1545",
                 "shasum": ""
             },
             "require": {
@@ -105,12 +105,14 @@
                 "ergebnis/composer-normalize": "^2.28.3",
                 "mll-lab/php-cs-fixer-config": "^5.4",
                 "mockery/mockery": "^1.5",
-                "nunomaduro/larastan": "^2.1.12",
+                "nunomaduro/larastan": "^2.6.3",
                 "orchestra/testbench": "^7.6.1 || ^8",
                 "phpstan/phpstan": "^1.8.2",
                 "phpstan/phpstan-mockery": "^1.1",
                 "phpstan/phpstan-phpunit": "^1.1.1",
-                "phpunit/phpunit": "^9.5.21"
+                "phpunit/phpunit": "^9.5.21 || ^10",
+                "rector/rector": "^0.17.6",
+                "symplify/rule-doc-generator": "^11"
             },
             "type": "library",
             "extra": {
@@ -157,7 +159,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BenSampo/laravel-enum/issues",
-                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.4.1"
+                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.5.0"
             },
             "funding": [
                 {
@@ -165,7 +167,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-10T18:42:50+00:00"
+            "time": "2023-07-31T09:19:59+00:00"
         },
         {
             "name": "brick/math",
