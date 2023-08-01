@@ -13,7 +13,7 @@
         "bulma-ribbon": "^0.1.1",
         "laravel-vite-plugin": "^0.7.8",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.64.1",
+        "sass": "^1.64.2",
         "vite": "^4.4.7",
         "vite-plugin-manifest-sri": "^0.1.0"
     },
