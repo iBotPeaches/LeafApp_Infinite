@@ -59,6 +59,8 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
  * @property-read Collection<int, PlayerBan> $bans
+ * @property-read Collection<int, MedalAnalytic> $medals
+ * @property-read Collection<int, Analytic> $analytics
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @property-read string $url_safe_gamertag
@@ -329,6 +331,16 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
     public function bans(): HasMany
     {
         return $this->hasMany(PlayerBan::class);
+    }
+
+    public function medals(): HasMany
+    {
+        return $this->hasMany(MedalAnalytic::class);
+    }
+
+    public function analytics(): HasMany
+    {
+        return $this->hasMany(Analytic::class);
     }
 
     public function games(): BelongsToMany
