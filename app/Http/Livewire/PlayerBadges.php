@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\AnalyticKey;
+use App\Enums\Mode;
 use App\Models\Analytic;
 use App\Models\Player;
 use Illuminate\View\View;
@@ -34,6 +35,7 @@ class PlayerBadges extends Component
         $medals = $this->player->medals()
             ->with('medal')
             ->whereNull('season_id')
+            ->where('mode', Mode::MATCHMADE_PVP)
             ->where('place', '<=', 10)
             ->orderBy('place', 'ASC')
             ->orderBy('value', 'DESC')
