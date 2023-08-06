@@ -32,6 +32,7 @@
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
             @endif
+            <livewire:player-badges :player="$player" />
             @auth
                 @include('partials.player.linkable-card')
             @endauth
