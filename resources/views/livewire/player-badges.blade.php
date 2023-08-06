@@ -3,8 +3,8 @@
     /** @var App\Models\Analytic[]|null $topTen */
 ?>
 <div wire:init="loadBadges">
-    @if ($medals != null)
-        <article class="message is-small">
+    @if ($medals != null && count($medals) > 0)
+        <article class="message is-small mb-2">
             <div class="message-header">
                 <p>Medal Leaderboard</p>
             </div>
@@ -26,14 +26,14 @@
             </div>
         </article>
     @endif
-    @if ($topTen != null)
-        <article class="message is-small">
+    @if ($topTen != null && count($topTen) > 0)
+        <article class="message is-small mb-2">
             <div class="message-header">
-                <p>Analaytic Leaderboard</p>
+                <p>Analytic Leaderboard</p>
             </div>
             <div class="message-body">
                 @foreach ($topTen as $analytic)
-                    @th($analytic->place) in <a href="{{ route('topTenLeaderboard', [$analytic->enum->key()]) }}">{{ $analytic->enum->title() }}</a> with {{ $analytic->value }}{{ $analytic->enum->unit() }}
+                    @th($analytic->place) in <a href="{{ route('topTenLeaderboard', [$analytic->enum->key()]) }}">{{ $analytic->enum->title() }}</a> with {{ $analytic->enum->displayProperty($analytic) }}{{ $analytic->enum->unit() }}
                     <br />
                 @endforeach
             </div>
