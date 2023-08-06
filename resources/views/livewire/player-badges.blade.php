@@ -10,14 +10,14 @@
             </div>
             <div class="message-body">
                 @foreach ($medals as $medal)
-                    <article class="tile">
+                    <article class="tile is-flex">
                         <figure class="media-left">
                             <p class="image is-24x24">
                                 <img src="{{ $medal['medal']->image }}" alt="{{ $medal['medal']->name }}"/>
                             </p>
                         </figure>
                         <div class="media-content">
-                            <div class="content">
+                            <div class="content is-clipped">
                                 @th($medal->place) in <a href="{{ route('medalLeaderboard', [$medal->medal]) }}">{{ $medal->medal->name }}</a> medals with {{ number_format($medal->value) }}
                             </div>
                         </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="message-body">
                 @foreach ($topTen as $analytic)
-                    @th($analytic->place) in <a href="{{ route('topTenLeaderboard', [$analytic->enum->key()]) }}">{{ $analytic->enum->title() }}</a> with {{ $analytic->enum->displayProperty($analytic) }}{{ $analytic->enum->unit() }}
+                    @th($analytic->place) in <a href="{{ route('topTenLeaderboard', [$analytic->enum->key()]) }}">{{ $analytic->enum->title() }}</a> with {{ $analytic->enum->displayProperty($analytic) }}&nbsp;{{ $analytic->enum->unit() }}
                     <br />
                 @endforeach
             </div>
