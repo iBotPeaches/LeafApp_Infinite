@@ -1,4 +1,4 @@
-<article class="message is-small {{ $color }}">
+<article class="message is-small {{ $color }} mb-2">
     <div class="message-header">
         <p>Want an update?</p>
     </div>
