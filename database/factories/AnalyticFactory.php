@@ -23,6 +23,7 @@ class AnalyticFactory extends Factory
             'game_id' => Game::factory(),
             'player_id' => Player::factory(),
             'map_id' => Map::factory(),
+            'place' => 1,
             'value' => $this->faker->randomFloat(2, 0, 20),
         ];
     }
