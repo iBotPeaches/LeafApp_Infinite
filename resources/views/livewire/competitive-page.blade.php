@@ -52,7 +52,7 @@
                                             CSR: {{ number_format($playlist->csr) }}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td style="min-width: 200px;">
                                         @if (! $playlist->isOnyx())
                                             <div
                                                 class="has-tooltip-arrow has-tooltip-text-centered"
