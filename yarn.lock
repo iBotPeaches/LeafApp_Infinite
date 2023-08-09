@@ -991,15 +991,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"laravel-vite-plugin@npm:^0.7.8":
-  version: 0.7.8
-  resolution: "laravel-vite-plugin@npm:0.7.8"
+"laravel-vite-plugin@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "laravel-vite-plugin@npm:0.8.0"
   dependencies:
     picocolors: ^1.0.0
     vite-plugin-full-reload: ^1.0.5
   peerDependencies:
     vite: ^3.0.0 || ^4.0.0
-  checksum: be55634367b37fdc4168efbb9506b90257544e171ba6aca397066f100161b6c1692e6cd0d9068a18a9d1605f158dbb7208c78fa2a1ff6bd7add2fff00096635d
+  checksum: 645f1690bc07e01199a8ebedde8c299c58d997e3707f820af0b0628e538af3951634f85aeb2092323b250aa3eb50dad2f0b09ebfccfd93cd49ce21e01552b473
   languageName: node
   linkType: hard
 
@@ -1444,7 +1444,7 @@ __metadata:
     "@fortawesome/fontawesome-free": ^6.4.2
     bulma: ^0.9.4
     bulma-ribbon: ^0.1.1
-    laravel-vite-plugin: ^0.7.8
+    laravel-vite-plugin: ^0.8.0
     resolve-url-loader: ^5.0.0
     sass: ^1.64.2
     vite: ^4.4.9
