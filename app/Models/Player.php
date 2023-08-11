@@ -25,7 +25,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
@@ -258,6 +260,23 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         }
 
         $client->careerRank($this);
+
+        // Check for "Bot Farmer" status - aka a ton of Bot Bootcamp
+        $playlistBreakdown = DB::query()
+            ->from('game_players')
+            ->select('playlists.name', new Expression('COUNT(*) as total'))
+            ->where('player_id', $this->id)
+            ->join('games', 'game_players.game_id', '=', 'games.id')
+            ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
+            ->groupBy('playlists.name')
+            ->get();
+
+        $totalGames = $playlistBreakdown->sum('total');
+        if ($totalGames >= 100) {
+            $botBootcampPercent = $playlistBreakdown->firstWhere('name', 'Bot Bootcamp')?->total / $totalGames;
+            $playsTooMuchBotBootcamp = $botBootcampPercent >= config('services.halo.botfarmer_threshold');
+            $this->is_botfarmer = $playsTooMuchBotBootcamp;
+        }
     }
 
     public function currentRanked(string $seasonKey = null, bool $isCurrentOrAll = true): Collection
