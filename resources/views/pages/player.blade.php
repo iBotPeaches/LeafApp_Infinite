@@ -27,6 +27,14 @@
                     <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
                 </div>
             @endif
+            @if ($player->is_botfarmer)
+                <div class="notification is-info">
+                    <i class="fas fa-robot"></i>
+                    <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp and thus excluded from leaderboards.">
+                        Flagged as Bot Farmer
+                    </span>
+                </div>
+            @endif
             @if (!config('services.halodotapi.disabled'))
                 @if (!$player->is_bot)
                     <livewire:update-player-panel :player="$player" :type="$type" />
