@@ -41,6 +41,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property bool $is_private
  * @property bool $is_bot
  * @property bool $is_cheater
+ * @property bool $is_botfarmer
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
@@ -77,6 +78,10 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
 
     public $with = [
         'rank',
+    ];
+
+    public $casts = [
+        'is_botfarmer' => 'bool',
     ];
 
     public function getRouteKeyName(): string
