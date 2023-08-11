@@ -46,6 +46,7 @@ class MostXpPlayer extends BaseOnlyPlayerStat implements AnalyticInterface
     {
         return $this->builder()
             ->where('is_cheater', false)
+            ->where('is_botfarmer', false)
             ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
