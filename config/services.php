@@ -74,6 +74,7 @@ return [
         'playlists' => [
             'bot-bootcamp' => env('HALO_PLAYLISTS_BOT_BOOTCAMP', 'a446725e-b281-414c-a21e-31b8700e95a1'),
         ],
+        'botfarmer_threshold' => env('HALO_BOTFARMER_THRESHOLD', .50),
     ],
 
 ];

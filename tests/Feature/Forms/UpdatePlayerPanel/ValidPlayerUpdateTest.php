@@ -200,6 +200,85 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
+    public function testAutomaticallyMarkingAsBotFarmer(): void
+    {
+        // Arrange
+        Bus::fake([
+            PullAppearance::class,
+        ]);
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockXuidResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
+
+        $playlist = Playlist::factory()->createOne([
+            'uuid' => 1,
+            'name' => 'Bot Bootcamp',
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Season::factory()->createOne([
+            'season_id' => config('services.halodotapi.competitive.season'),
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
+        ]);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+            'xuid' => null,
+        ]);
+
+        GamePlayer::factory()
+            ->count(100)
+            ->state([
+                'player_id' => $player->id,
+                'game_id' => Game::factory()->state([
+                    'playlist_id' => $playlist->id,
+                ]),
+            ])
+            ->create();
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+        ])
+            ->call('processUpdate')
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!');
+
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'xuid' => Arr::get($mockXuidResponse, 'data.xuid'),
+            'is_botfarmer' => true,
+        ]);
+
+        Bus::assertDispatched(PullAppearance::class);
+    }
+
     public function testAutomaticallyRemovingOldAgentIfXuidMoved(): void
     {
         // Arrange
