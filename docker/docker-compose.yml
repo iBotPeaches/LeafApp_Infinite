@@ -24,6 +24,7 @@ services:
         environment:
             MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
             MARIADB_PASSWORD: ${DB_PASSWORD}
             MARIADB_USER: ${DB_USERNAME}
         networks:
