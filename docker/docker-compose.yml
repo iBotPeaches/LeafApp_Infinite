@@ -17,13 +17,14 @@ services:
             - leaf
 
     db:
-        image: mariadb:10.4
+        image: mariadb:10.6
         container_name: leaf-db
         ports:
             - '3306:3306'
         environment:
             MARIADB_DATABASE: ${DB_DATABASE}
             MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
             MARIADB_PASSWORD: ${DB_PASSWORD}
             MARIADB_USER: ${DB_USERNAME}
         networks:
