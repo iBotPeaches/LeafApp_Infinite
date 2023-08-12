@@ -11,7 +11,7 @@ services:
             - ../:/var/www
         working_dir: /var/www/
         environment:
-            XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003 start_with_request=yes idekey=leaf
+            XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003 start_with_request=trigger idekey=leaf
             XDEBUG_MODE: develop,debug,coverage
         networks:
             - leaf
