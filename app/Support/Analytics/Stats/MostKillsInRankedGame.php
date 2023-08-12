@@ -51,7 +51,6 @@ class MostKillsInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('players.is_cheater', false)
-            ->where('playlists.uuid', '!=', config('services.halo.playlists.bot-bootcamp'))
             ->where('playlists.is_ranked', true)
             ->orderByDesc($this->property())
             ->limit($limit)

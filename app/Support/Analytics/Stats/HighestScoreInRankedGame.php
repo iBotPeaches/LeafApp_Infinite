@@ -50,7 +50,6 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->where('playlists.uuid', '!=', config('services.halo.playlists.bot-bootcamp'))
             ->where('playlists.is_ranked', true)
             ->where('players.is_cheater', false)
             ->orderByDesc($this->property())
