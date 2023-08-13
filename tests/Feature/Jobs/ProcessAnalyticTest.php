@@ -9,8 +9,11 @@ use App\Enums\Outcome;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
+use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
+use App\Support\Analytics\Stats\MostXpPlayer;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -45,6 +48,50 @@ class ProcessAnalyticTest extends TestCase
             ->create();
 
         // Act
+        ProcessAnalytic::dispatchSync($analyticClass);
+
+        // Assert
+        $this->assertDatabaseHas('analytics', [
+            'key' => $analyticClass->key(),
+        ]);
+    }
+
+    public function testProcessingXpPlayerWithDuplicateXpValues(): void
+    {
+        // Arrange
+        Http::fake()->preventStrayRequests();
+        Player::factory()
+            ->sequence(
+                ['xp' => 1111],
+                ['xp' => 1111],
+            )
+            ->count(2)
+            ->create();
+
+        // Act
+        $analyticClass = new MostXpPlayer();
+        ProcessAnalytic::dispatchSync($analyticClass);
+
+        // Assert
+        $this->assertDatabaseHas('analytics', [
+            'key' => $analyticClass->key(),
+        ]);
+    }
+
+    public function testProcessingMostGamesPlayedWithDuplicateValues(): void
+    {
+        // Arrange
+        Http::fake()->preventStrayRequests();
+        ServiceRecord::factory()
+            ->count(2)
+            ->create([
+                'mode' => Mode::MATCHMADE_PVP,
+                'season_key' => null,
+                'total_matches' => 1102,
+            ]);
+
+        // Act
+        $analyticClass = new MostGamesPlayedServiceRecord();
         ProcessAnalytic::dispatchSync($analyticClass);
 
         // Assert
