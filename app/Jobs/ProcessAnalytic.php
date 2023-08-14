@@ -88,27 +88,53 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, GamePlayer>|null  $gamePlayers */
     private function handleGamePlayerResults(?Collection $gamePlayers): void
     {
-        $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) {
+        $lastIndex = null;
+        $lastValue = null;
+
+        $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) use (&$lastIndex, &$lastValue) {
+            $value = (float) $gamePlayer->{$this->analytic->property()};
+            $place = $index + 1;
+            if ($value === $lastValue) {
+                $place = $lastIndex;
+            }
+
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
-            $analytic->place = $index + 1;
-            $analytic->value = (float) $gamePlayer->{$this->analytic->property()};
+            $analytic->place = $place;
+            $analytic->value = $value;
             $analytic->game()->associate($gamePlayer->game);
             $analytic->player()->associate($gamePlayer->player);
             $analytic->saveOrFail();
+
+            // Store our last values in case users share the value.
+            $lastIndex = $analytic->place;
+            $lastValue = $analytic->value;
         });
     }
 
     /** @param  Collection<int, ServiceRecord>|null  $serviceRecords */
     private function handleServiceRecordResults(?Collection $serviceRecords): void
     {
-        $serviceRecords?->each(function (ServiceRecord $serviceRecord, int $index) {
+        $lastIndex = null;
+        $lastValue = null;
+
+        $serviceRecords?->each(function (ServiceRecord $serviceRecord, int $index) use (&$lastIndex, &$lastValue) {
+            $value = (float) $serviceRecord->{$this->analytic->property()};
+            $place = $index + 1;
+            if ($value === $lastValue) {
+                $place = $lastIndex;
+            }
+
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
-            $analytic->place = $index + 1;
-            $analytic->value = (float) $serviceRecord->{$this->analytic->property()};
+            $analytic->place = $place;
+            $analytic->value = $value;
             $analytic->player()->associate($serviceRecord->player);
             $analytic->saveOrFail();
+
+            // Store our last values in case users share the value.
+            $lastIndex = $analytic->place;
+            $lastValue = $analytic->value;
         });
     }
 
@@ -128,13 +154,26 @@ class ProcessAnalytic implements ShouldQueue
     /** @param  Collection<int, Player>|null  $players */
     private function handleOnlyPlayerResults(?Collection $players): void
     {
-        $players?->each(function (Player $player, int $index) {
+        $lastIndex = null;
+        $lastValue = null;
+
+        $players?->each(function (Player $player, int $index) use (&$lastIndex, &$lastValue) {
+            $value = (float) $player->{$this->analytic->property()};
+            $place = $index + 1;
+            if ($value === $lastValue) {
+                $place = $lastIndex;
+            }
+
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
-            $analytic->place = $index + 1;
-            $analytic->value = (float) $player->{$this->analytic->property()};
+            $analytic->place = $place;
+            $analytic->value = $value;
             $analytic->player()->associate($player);
             $analytic->saveOrFail();
+
+            // Store our last values in case users share the value.
+            $lastIndex = $analytic->place;
+            $lastValue = $analytic->value;
         });
     }
 }
