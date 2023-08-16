@@ -6,6 +6,7 @@ namespace App\Models\Traits;
 
 use App\Enums\Outcome;
 use Illuminate\Support\Str;
+
 use function is_numeric;
 
 trait HasOutcome

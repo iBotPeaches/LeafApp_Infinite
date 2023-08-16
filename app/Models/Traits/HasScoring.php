@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Traits;
 
 use App\Enums\Outcome;
+
 use function number_format;
 
 /**

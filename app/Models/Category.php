@@ -9,8 +9,9 @@ use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use function Sentry\captureException;
 use Throwable;
+
+use function Sentry\captureException;
 
 /**
  * @property int $id
