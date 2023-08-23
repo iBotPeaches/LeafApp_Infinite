@@ -38,6 +38,7 @@ Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'
 
 // Scrim
 Route::pattern('scrimType', 'overview|matches|players');
+Route::get('/scrims/{scrim}/players/csv', [ScrimController::class, 'csvPlayers'])->name('scrimPlayersCsv');
 Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->name('scrim');
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
