@@ -34,7 +34,7 @@ return [
         'disabled' => env('HALODOTIP_DISABLED', false),
         'xuid_disabled' => env('HALODOTIP_XUID_DISABLED', false),
         'key' => env('HALODOTIP_KEY'),
-        'domain' => env('HALODOTIP_DOMAIN', 'https://api.dotapi.com'),
+        'domain' => env('HALODOTIP_DOMAIN', 'https://grunt.api.dotapi.gg'),
         'version' => env('HALODOTIP_VERSION', '2023-06-24'),
         'cooldown' => env('HALODOTIP_COOLDOWN', 120),
         'competitive' => [
