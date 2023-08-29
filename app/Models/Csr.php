@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\Queue;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasPlaylist;
 use App\Support\Csr\CsrHelper;
 use Carbon\Carbon;
@@ -46,7 +46,7 @@ use InvalidArgumentException;
  *
  * @method static CsrFactory factory(...$parameters)
  */
-class Csr extends Model implements HasHaloDotApi
+class Csr extends Model implements HasDotApi
 {
     use HasFactory, HasPlaylist;
 
@@ -175,7 +175,7 @@ class Csr extends Model implements HasHaloDotApi
         return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining);
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         /** @var Player $player */
         $player = Arr::get($payload, 'player');
@@ -222,7 +222,7 @@ class Csr extends Model implements HasHaloDotApi
                     ->where('input', $input->value)
                     ->firstOrNew();
 
-                // Due to an older HaloDotAPI issue(?) - the `season` parameter is nulled out during mid-season reset.
+                // Due to an older grunt.api issue(?) - the `season` parameter is nulled out during mid-season reset.
                 // This keeps the value for allTime or season if the newer value is less.
                 $newCsrValue = Arr::get($playlistMode, 'value');
                 if ($mode->isNot(CompetitiveMode::CURRENT()) && $csr->csr > $newCsrValue) {

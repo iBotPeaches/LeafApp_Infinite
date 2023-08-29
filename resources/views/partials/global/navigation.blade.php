@@ -1,7 +1,7 @@
 <?php
-    $color = config('services.halodotapi.disabled')
+    $color = config('services.dotapi.disabled')
         ? 'is-danger'
-        : (is_null(config('services.halodotapi.warning_message')) ? 'is-success' : 'is-warning');
+        : (is_null(config('services.dotapi.warning_message')) ? 'is-success' : 'is-warning');
 ?>
 <nav class="navbar is-fixed-top {{ $color }}" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">

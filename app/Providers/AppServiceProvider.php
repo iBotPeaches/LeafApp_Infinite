@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use App\Adapters\FileUtilInterface;
 use App\Adapters\FileUtils;
+use App\Services\DotApi\ApiClient as HaloApiClient;
+use App\Services\DotApi\InfiniteInterface;
 use App\Services\FaceIt\ApiClient as FaceItApiClient;
 use App\Services\FaceIt\TournamentInterface;
-use App\Services\HaloDotApi\ApiClient as HaloApiClient;
-use App\Services\HaloDotApi\InfiniteInterface;
 use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
 use App\Support\Schedule\ScheduleTimer;
@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! app()->isProduction());
 
         $this->app->singleton(InfiniteInterface::class, function ($app) {
-            return new HaloApiClient($app['config']['services']['halodotapi']);
+            return new HaloApiClient($app['config']['services']['dotapi']);
         });
 
         $this->app->singleton(TournamentInterface::class, function ($app) {

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Mode;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasMedals;
 use App\Support\Session\SeasonSession;
@@ -63,7 +63,7 @@ use Illuminate\Support\Collection;
  *
  * @method static ServiceRecordFactory factory(...$parameters)
  */
-class ServiceRecord extends Model implements HasHaloDotApi
+class ServiceRecord extends Model implements HasDotApi
 {
     use HasFactory, HasMedals, HasAccuracy;
 
@@ -149,7 +149,7 @@ class ServiceRecord extends Model implements HasHaloDotApi
         }
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         /** @var Player $player */
         $player = Arr::get($payload, '_leaf.player');

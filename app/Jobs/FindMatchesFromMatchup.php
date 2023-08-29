@@ -8,8 +8,8 @@ use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupGame;
 use App\Models\Player;
-use App\Services\HaloDotApi\Enums\Mode;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\Enums\Mode;
+use App\Services\DotApi\InfiniteInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,7 +35,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     public function handle(): void
     {
-        if (config('services.halodotapi.disabled') || is_null($this->matchup->started_at)) {
+        if (config('services.dotapi.disabled') || is_null($this->matchup->started_at)) {
             return;
         }
 

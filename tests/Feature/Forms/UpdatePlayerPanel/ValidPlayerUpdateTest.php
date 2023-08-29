@@ -22,7 +22,7 @@ use App\Models\Player;
 use App\Models\Playlist;
 use App\Models\Rank;
 use App\Models\Season;
-use App\Services\HaloDotApi\Enums\Mode;
+use App\Services\DotApi\Enums\Mode;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -171,7 +171,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Season::factory()->createOne([
-            'season_id' => config('services.halodotapi.competitive.season'),
+            'season_id' => config('services.dotapi.competitive.season'),
         ]);
 
         Rank::factory()->createOne([
@@ -239,7 +239,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Season::factory()->createOne([
-            'season_id' => config('services.halodotapi.competitive.season'),
+            'season_id' => config('services.dotapi.competitive.season'),
         ]);
 
         Rank::factory()->createOne([
@@ -557,7 +557,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsFaceItPlayer(): void
+    public function testValidResponseFromAllDotApiServicesAsFaceItPlayer(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -619,10 +619,10 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsOverviewScopedToSeason(): void
+    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToSeason(): void
     {
         // Arrange
-        SeasonSession::set(config('services.halodotapi.competitive.key'));
+        SeasonSession::set(config('services.dotapi.competitive.key'));
 
         $gamertag = $this->faker->word.$this->faker->numerify;
         $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
@@ -657,7 +657,7 @@ class ValidPlayerUpdateTest extends TestCase
         ]);
 
         Season::factory()->createOne([
-            'key' => config('services.halodotapi.competitive.key'),
+            'key' => config('services.dotapi.competitive.key'),
         ]);
 
         Rank::factory()->createOne([
@@ -686,7 +686,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 1);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsOverviewScopedToAll(): void
+    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToAll(): void
     {
         // Arrange
         SeasonSession::set(SeasonSession::$allSeasonKey);
@@ -750,7 +750,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsCompetitive(): void
+    public function testValidResponseFromAllDotApiServicesAsCompetitive(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -812,7 +812,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsMatches(): void
+    public function testValidResponseFromAllDotApiServicesAsMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -874,7 +874,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsCustomMatches(): void
+    public function testValidResponseFromAllDotApiServicesAsCustomMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -936,7 +936,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsLanMatches(): void
+    public function testValidResponseFromAllDotApiServicesAsLanMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -998,7 +998,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesExceptForCareerRank(): void
+    public function testValidResponseFromAllDotApiServicesExceptForCareerRank(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

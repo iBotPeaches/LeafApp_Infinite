@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\RankFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ use Illuminate\Support\Arr;
  *
  * @method static RankFactory factory(...$parameters)
  */
-class Rank extends Model implements HasHaloDotApi
+class Rank extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -65,7 +65,7 @@ class Rank extends Model implements HasHaloDotApi
         return implode(' ', $title);
     }
 
-    public static function fromHaloDotApi(array $payload, Rank $previous = null): ?self
+    public static function fromDotApi(array $payload, Rank $previous = null): ?self
     {
         $rankId = Arr::get($payload, 'rank');
 

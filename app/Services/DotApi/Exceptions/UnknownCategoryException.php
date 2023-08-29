@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\HaloDotApi\Exceptions;
+namespace App\Services\DotApi\Exceptions;
 
 use Exception;
 use Illuminate\Support\Arr;

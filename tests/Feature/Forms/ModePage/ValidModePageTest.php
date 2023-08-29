@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class ValidModePageTest extends TestCase
 {
-    public function testValidResponseFromHaloDotApi(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         $player = Player::factory()->createOne();
@@ -33,10 +33,10 @@ class ValidModePageTest extends TestCase
             ]);
 
         Season::factory()->createOne([
-            'key' => config('services.halodotapi.competitive.key'),
+            'key' => config('services.dotapi.competitive.key'),
         ]);
 
-        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
+        SeasonSession::set((string) config('services.dotapi.competitive.key'));
 
         // Act & Assert
         Livewire::test(ModePage::class, [
@@ -46,7 +46,7 @@ class ValidModePageTest extends TestCase
             ->assertViewHas('worse');
     }
 
-    public function testValidResponseFromHaloDotApiAsMergedSeason(): void
+    public function testValidResponseFromDotApiAsMergedSeason(): void
     {
         // Arrange
         $player = Player::factory()->createOne();

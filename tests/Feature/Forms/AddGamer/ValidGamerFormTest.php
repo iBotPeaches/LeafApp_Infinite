@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class ValidGamerFormTest extends TestCase
 {
-    public function testValidResponseFromHaloDotApi(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();
@@ -67,7 +67,7 @@ class ValidGamerFormTest extends TestCase
     public function testValidResponseIfXuidServiceDisabled(): void
     {
         // Arrange
-        Config::set('services.halodotapi.xuid_disabled', true);
+        Config::set('services.dotapi.xuid_disabled', true);
         $mockAppearanceResponse = (new MockAppearanceService())->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
@@ -99,7 +99,7 @@ class ValidGamerFormTest extends TestCase
             ->assertRedirect('/player/'.$gamertag);
     }
 
-    public function testValidResponseFromHaloDotApiIfAccountAlreadyExists(): void
+    public function testValidResponseFromDotApiIfAccountAlreadyExists(): void
     {
         // Arrange
         $mockResponse = (new MockAppearanceService())->success();

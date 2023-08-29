@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,7 @@ use Illuminate\Support\Arr;
  *
  * @method static TeamFactory factory(...$parameters)
  */
-class Team extends Model implements HasHaloDotApi
+class Team extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -26,7 +26,7 @@ class Team extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $teamId = Arr::get($payload, 'id');
 

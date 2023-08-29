@@ -35,7 +35,7 @@
                     </span>
                 </div>
             @endif
-            @if (!config('services.halodotapi.disabled'))
+            @if (!config('services.dotapi.disabled'))
                 @if (!$player->is_bot)
                     <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif

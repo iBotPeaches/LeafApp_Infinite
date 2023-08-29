@@ -5,7 +5,7 @@
     <div class="column">
         @include('partials.game.game-card')
         @include('partials.game.team-breakdown')
-        @if ($game->outdated && !config('services.halodotapi.disabled'))
+        @if ($game->outdated && !config('services.dotapi.disabled'))
             <livewire:update-game-panel :game="$game" />
         @endif
         <hr />

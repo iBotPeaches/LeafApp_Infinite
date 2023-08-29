@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\HaloDotApi;
+namespace App\Services\DotApi;
 
 use App\Enums\Mode as SystemMode;
 use App\Models\Category;
@@ -18,7 +18,7 @@ use App\Models\Rank;
 use App\Models\Season;
 use App\Models\ServiceRecord;
 use App\Models\Team;
-use App\Services\HaloDotApi\Enums\Mode;
+use App\Services\DotApi\Enums\Mode;
 use App\Support\Session\SeasonSession;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\PendingRequest;
@@ -40,7 +40,7 @@ class ApiClient implements InfiniteInterface
         $response = $this->asHaloInfinite()->get("appearance/players/{$urlSafeGamertag}/spartan-id");
 
         if ($response->successful()) {
-            return Player::fromHaloDotApi($response->json());
+            return Player::fromDotApi($response->json());
         }
 
         return null;
@@ -52,7 +52,7 @@ class ApiClient implements InfiniteInterface
         $response = $this->asHaloInfinite()->get("stats/multiplayer/players/{$urlSafeGamertag}/career-rank");
 
         if ($response->successful()) {
-            return Player::fromHaloDotApi($response->json());
+            return Player::fromDotApi($response->json());
         }
 
         return $player;
@@ -62,7 +62,7 @@ class ApiClient implements InfiniteInterface
     {
         // Handle when -1 (no season) is sent here.
         $season = $seasonCsrKey === SeasonSession::$allSeasonKey ? null : $seasonCsrKey;
-        $currentSeasonNumber = (int) config('services.halodotapi.competitive.season');
+        $currentSeasonNumber = (int) config('services.dotapi.competitive.season');
         $season ??= Season::latestOfSeason($currentSeasonNumber)?->csr_key;
 
         $queryParams = [];
@@ -75,7 +75,7 @@ class ApiClient implements InfiniteInterface
         if ($response->throw()->successful()) {
             $data = $response->json();
             $data['player'] = $player;
-            Csr::fromHaloDotApi($data);
+            Csr::fromDotApi($data);
         }
 
         return $player->csrs->first();
@@ -102,19 +102,19 @@ class ApiClient implements InfiniteInterface
                 $offset += $perPage;
 
                 foreach (Arr::get($data, 'data') as $gameData) {
-                    // HaloDotAPI - We can longer trust "type" as its not returning the matching value from the filtered search.
+                    // grunt.api - We can longer trust "type" as its not returning the matching value from the filtered search.
                     // This field may be deprecated in future. So force set it based on filter param.
                     // https://github.com/iBotPeaches/LeafApp_Infinite/issues/560
                     Arr::set($gameData, 'properties.type', (string) $mode->value);
 
-                    $game = Game::fromHaloDotApi((array) $gameData);
+                    $game = Game::fromDotApi((array) $gameData);
                     $firstPulledGameId = $firstPulledGameId ?? $game->id ?? null;
 
-                    // Due to limitation `fromHaloDotApi` only takes an array.
+                    // Due to limitation `fromDotApi` only takes an array.
                     $gameData['_leaf']['player'] = $player;
                     $gameData['_leaf']['game'] = $game;
 
-                    GamePlayer::fromHaloDotApi($gameData);
+                    GamePlayer::fromDotApi($gameData);
 
                     if (! $forceUpdate && $game && $game->id === $player->$lastGameIdVariable) {
                         break 2;
@@ -138,7 +138,7 @@ class ApiClient implements InfiniteInterface
         $response = $this->asHaloInfinite()->get("stats/multiplayer/matches/{$matchUuid}")->throw();
         $data = $response->json();
 
-        return Game::fromHaloDotApi((array) (Arr::get($data, 'data')));
+        return Game::fromDotApi((array) (Arr::get($data, 'data')));
     }
 
     public function metadataMedals(): Collection
@@ -147,7 +147,7 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $medal) {
-            Medal::fromHaloDotApi($medal);
+            Medal::fromDotApi($medal);
         }
 
         return Medal::all();
@@ -159,7 +159,7 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $map) {
-            Level::fromHaloDotApi($map);
+            Level::fromDotApi($map);
         }
 
         return Level::all();
@@ -171,7 +171,7 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $team) {
-            Team::fromHaloDotApi($team);
+            Team::fromDotApi($team);
         }
 
         return Team::all();
@@ -183,7 +183,7 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $playlist) {
-            Playlist::fromHaloDotApi($playlist);
+            Playlist::fromDotApi($playlist);
         }
 
         return Playlist::all();
@@ -195,7 +195,7 @@ class ApiClient implements InfiniteInterface
 
         $data = $response->json();
         foreach (Arr::get($data, 'data') as $category) {
-            Category::fromHaloDotApi($category);
+            Category::fromDotApi($category);
         }
 
         return Category::all();
@@ -207,7 +207,7 @@ class ApiClient implements InfiniteInterface
         $data = $response->json();
 
         foreach (Arr::get($data, 'data') as $season) {
-            Season::fromHaloDotApi($season);
+            Season::fromDotApi($season);
         }
 
         return Season::all();
@@ -220,7 +220,7 @@ class ApiClient implements InfiniteInterface
 
         $lastRank = null;
         foreach (Arr::get($data, 'data') as $rank) {
-            $lastRank = Rank::fromHaloDotApi($rank, $lastRank);
+            $lastRank = Rank::fromDotApi($rank, $lastRank);
         }
 
         return Rank::all();
@@ -257,7 +257,7 @@ class ApiClient implements InfiniteInterface
             $item['_leaf']['filter'] = $filter;
             $item['_leaf']['season'] = $seasonModel;
 
-            ServiceRecord::fromHaloDotApi($item);
+            ServiceRecord::fromDotApi($item);
         }
 
         return $player->serviceRecord;
@@ -271,7 +271,7 @@ class ApiClient implements InfiniteInterface
         foreach (Arr::get($data, 'data') as $ban) {
             $ban['_leaf']['player'] = $player;
 
-            PlayerBan::fromHaloDotApi($ban);
+            PlayerBan::fromDotApi($ban);
         }
 
         return $player->bans;
@@ -291,7 +291,7 @@ class ApiClient implements InfiniteInterface
         return Http::asJson()
             ->withUserAgent('Leaf - '.config('sentry.release', 'dirty'))
             ->withHeaders([
-                'Halo.API-Version' => config('services.halodotapi.version'),
+                'API-Version' => config('services.dotapi.version'),
             ])
             ->timeout(180)
             ->withToken($this->config['key']);

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
-use App\Models\Contracts\HasHaloDotApiMetadata;
-use App\Services\HaloDotApi\Exceptions\UnknownCategoryException;
+use App\Models\Contracts\HasDotApi;
+use App\Models\Contracts\HasDotApiMetadata;
+use App\Services\DotApi\Exceptions\UnknownCategoryException;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ use function Sentry\captureException;
  *
  * @method static CategoryFactory factory(...$parameters)
  */
-class Category extends Model implements HasHaloDotApi, HasHaloDotApiMetadata
+class Category extends Model implements HasDotApi, HasDotApiMetadata
 {
     use HasFactory;
 
@@ -48,7 +48,7 @@ class Category extends Model implements HasHaloDotApi, HasHaloDotApiMetadata
         }
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $categoryId = (string) Arr::get($payload, 'id');
 

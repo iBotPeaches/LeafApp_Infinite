@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class ValidCompetitivePageTest extends TestCase
 {
-    public function testValidResponseFromHaloDotApi(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         Carbon::setTestNow(now());
@@ -77,7 +77,7 @@ class ValidCompetitivePageTest extends TestCase
         }
     }
 
-    public function testValidUnrankedResponseFromHaloDotApi(): void
+    public function testValidUnrankedResponseFromDotApi(): void
     {
         // Arrange
         Carbon::setTestNow(now());
@@ -126,7 +126,7 @@ class ValidCompetitivePageTest extends TestCase
         }
     }
 
-    public function testValidUnrankedResponseFromHaloDotApiInOldSeason(): void
+    public function testValidUnrankedResponseFromDotApiInOldSeason(): void
     {
         // Arrange
         Carbon::setTestNow(now());

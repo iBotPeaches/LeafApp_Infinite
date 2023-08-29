@@ -34,7 +34,7 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
-        <server name="HALODOTAPI_XUID_DISABLED" value="false"/>
+        <server name="HALODOTIP_XUID_DISABLED" value="false"/>
         <server name="AUTOCODE_DISABLED" value="false"/>
         <server name="AUTOCODE_CURRENT_SEASON" value="2"/>
         <server name="AUTOCODE_CURRENT_SEASON_VERSION" value="1"/>

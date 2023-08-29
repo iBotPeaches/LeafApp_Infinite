@@ -29,7 +29,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
             ->assertSet('isScrimEditor', true);
     }
 
-    public function testValidResponseFromHaloDotApi(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         Carbon::setTestNow(now());

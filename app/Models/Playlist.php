@@ -6,7 +6,7 @@ namespace App\Models;
 
 use App\Enums\Input;
 use App\Enums\Queue;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasPlaylist;
 use Database\Factories\PlaylistFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +30,7 @@ use Illuminate\Support\Str;
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
-class Playlist extends Model implements HasHaloDotApi
+class Playlist extends Model implements HasDotApi
 {
     use HasFactory, HasPlaylist;
 
@@ -81,7 +81,7 @@ class Playlist extends Model implements HasHaloDotApi
             ->first();
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $playlistId = Arr::get($payload, 'id');
 

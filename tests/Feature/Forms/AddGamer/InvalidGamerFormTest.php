@@ -27,7 +27,7 @@ class InvalidGamerFormTest extends TestCase
     }
 
     /** @dataProvider invalidApiDataProvider */
-    public function testInvalidResponseFromHaloDotApi(callable $mockResponse, int $statusCode): void
+    public function testInvalidResponseFromDotApi(callable $mockResponse, int $statusCode): void
     {
         // Arrange
         $mockResponse = call_user_func($mockResponse);

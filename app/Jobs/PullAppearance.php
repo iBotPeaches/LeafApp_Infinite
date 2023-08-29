@@ -7,7 +7,7 @@ namespace App\Jobs;
 use App\Adapters\FileUtilInterface;
 use App\Enums\QueueName;
 use App\Models\Player;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\InfiniteInterface;
 use App\Services\Tinify\ImageInterface;
 use App\Support\Image\ImageHelper;
 use Illuminate\Bus\Queueable;

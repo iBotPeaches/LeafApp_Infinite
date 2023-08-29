@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Outcome;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasOutcome;
 use Database\Factories\GameTeamFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,7 +36,7 @@ use Illuminate\Support\Arr;
  *
  * @method static GameTeamFactory factory(...$parameters)
  */
-class GameTeam extends Model implements HasHaloDotApi
+class GameTeam extends Model implements HasDotApi
 {
     use HasFactory, HasOutcome;
 
@@ -83,7 +83,7 @@ class GameTeam extends Model implements HasHaloDotApi
         };
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $internalTeamId = (int) Arr::get($payload, 'id');
 

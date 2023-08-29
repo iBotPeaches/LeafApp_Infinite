@@ -1,12 +1,12 @@
 <?php
 $version = App\Support\System\VersionHelper::getVersionString();
-$color = config('services.halodotapi.disabled') ? 'is-danger' : 'is-warning';
+$color = config('services.dotapi.disabled') ? 'is-danger' : 'is-warning';
 ?>
 <footer class="footer mt-auto">
     <div class="content has-text-centered">
-        @if (config('services.halodotapi.warning_message'))
+        @if (config('services.dotapi.warning_message'))
             <div class="notification {{ $color }}">
-                {!! config('services.halodotapi.warning_message') !!}
+                {!! config('services.dotapi.warning_message') !!}
             </div>
         @endif
         <p>
@@ -41,9 +41,9 @@ $color = config('services.halodotapi.disabled') ? 'is-danger' : 'is-warning';
 
                 API via <a
                     target="_blank"
-                    href="https://twitter.com/halodotapi"
+                    href="https://dotapi.gg"
                     rel="noreferrer"
-                >HaloDotAPI ({{ config('services.halodotapi.version') }})</a>.
+                >grunt.api ({{ config('services.dotapi.version') }})</a>.
             </span>
         </p>
     </div>
