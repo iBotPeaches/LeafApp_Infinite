@@ -5,11 +5,11 @@ namespace App\Models;
 use App\Enums\Experience;
 use App\Enums\Outcome;
 use App\Jobs\PullAppearance;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Pivots\PersonalResult;
-use App\Services\HaloDotApi\Enums\Mode;
-use App\Services\HaloDotApi\Enums\PlayerType;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\Enums\Mode;
+use App\Services\DotApi\Enums\PlayerType;
+use App\Services\DotApi\InfiniteInterface;
 use Carbon\Carbon;
 use Database\Factories\GameFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -52,7 +52,7 @@ use Illuminate\Support\Str;
  *
  * @method static GameFactory factory(...$parameters)
  */
-class Game extends Model implements HasHaloDotApi
+class Game extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -132,7 +132,7 @@ class Game extends Model implements HasHaloDotApi
             return true;
         }
 
-        return $this->version !== config('services.halodotapi.version');
+        return $this->version !== config('services.dotapi.version');
     }
 
     public function getDurationAttribute(): string
@@ -143,7 +143,7 @@ class Game extends Model implements HasHaloDotApi
         return $minutes.'min'.', '.$seconds.' '.Str::plural('sec', $seconds);
     }
 
-    public function updateFromHaloDotApi(): void
+    public function updateFromDotApi(): void
     {
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
@@ -176,11 +176,11 @@ class Game extends Model implements HasHaloDotApi
         return $this->winner?->final_score.'-'.$this->loser?->final_score;
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $gameId = Arr::get($payload, 'id');
-        $map = Map::fromHaloDotApi(Arr::get($payload, 'details.map'));
-        $gamevariant = Gamevariant::fromHaloDotApi(Arr::get($payload, 'details.ugcgamevariant'));
+        $map = Map::fromDotApi(Arr::get($payload, 'details.map'));
+        $gamevariant = Gamevariant::fromDotApi(Arr::get($payload, 'details.ugcgamevariant'));
 
         // Customs do not have a Playlist
         $playlistData = Arr::get($payload, 'details.playlist');
@@ -216,7 +216,7 @@ class Game extends Model implements HasHaloDotApi
         $game->duration_seconds = Arr::get($payload, 'playable_duration.seconds');
         $game->season_number = Arr::get($payload, 'season.id');
         $game->season_version = Arr::get($payload, 'season.version');
-        $game->version = config('services.halodotapi.version');
+        $game->version = config('services.dotapi.version');
 
         if (Arr::has($payload, 'players.0.name')) {
             $game->was_pulled = true;
@@ -229,7 +229,7 @@ class Game extends Model implements HasHaloDotApi
         if (Arr::has($payload, 'teams.0.id')) {
             foreach (Arr::get($payload, 'teams', []) as $teamData) {
                 $teamData['_leaf']['game'] = $game;
-                GameTeam::fromHaloDotApi($teamData);
+                GameTeam::fromDotApi($teamData);
             }
         }
 
@@ -255,7 +255,7 @@ class Game extends Model implements HasHaloDotApi
                 }
                 $playerData['_leaf']['player'] = $player;
                 $playerData['_leaf']['game'] = $game;
-                GamePlayer::fromHaloDotApi($playerData);
+                GamePlayer::fromDotApi($playerData);
             }
         }
 

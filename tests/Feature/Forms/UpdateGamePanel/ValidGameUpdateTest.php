@@ -10,7 +10,7 @@ use App\Jobs\PullXuid;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Level;
-use App\Services\HaloDotApi\Enums\PlayerType;
+use App\Services\DotApi\Enums\PlayerType;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Bus;
@@ -44,7 +44,7 @@ class ValidGameUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesForUnresolvedGamer(): void
+    public function testValidResponseFromAllDotApiServicesForUnresolvedGamer(): void
     {
         // Arrange
         Queue::fake();
@@ -90,7 +90,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesForABot(): void
+    public function testValidResponseFromAllDotApiServicesForABot(): void
     {
         // Arrange
         Queue::fake();
@@ -127,7 +127,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesForUnranked(): void
+    public function testValidResponseFromAllDotApiServicesForUnranked(): void
     {
         // Arrange
         Queue::fake();
@@ -167,7 +167,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServices(): void
+    public function testValidResponseFromAllDotApiServices(): void
     {
         // Arrange
         Queue::fake();
@@ -202,7 +202,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsSlayer(): void
+    public function testValidResponseFromAllDotApiServicesAsSlayer(): void
     {
         // Arrange
         Queue::fake();
@@ -239,7 +239,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsCtf(): void
+    public function testValidResponseFromAllDotApiServicesAsCtf(): void
     {
         // Arrange
         Queue::fake();
@@ -276,7 +276,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsOddball(): void
+    public function testValidResponseFromAllDotApiServicesAsOddball(): void
     {
         // Arrange
         Queue::fake();
@@ -313,7 +313,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesAsStrongholds(): void
+    public function testValidResponseFromAllDotApiServicesAsStrongholds(): void
     {
         // Arrange
         Queue::fake();
@@ -350,7 +350,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllHaloDotApiServicesIncludingAppearance(): void
+    public function testValidResponseFromAllDotApiServicesIncludingAppearance(): void
     {
         // Arrange
         Bus::fake(PullXuid::class);

@@ -193,7 +193,7 @@ class GamePageTest extends TestCase
             ->forMap(['name' => 'Bazaar'])
             ->forPlaylist(['name' => 'Unknown', 'is_ranked' => true])
             ->createOne([
-                'version' => config('services.halodotapi.version'),
+                'version' => config('services.dotapi.version'),
                 'was_pulled' => true,
             ]);
 
@@ -229,7 +229,7 @@ class GamePageTest extends TestCase
 
         $game = Game::factory()
             ->createOne([
-                'version' => config('services.halodotapi.version'),
+                'version' => config('services.dotapi.version'),
                 'was_pulled' => true,
             ]);
 

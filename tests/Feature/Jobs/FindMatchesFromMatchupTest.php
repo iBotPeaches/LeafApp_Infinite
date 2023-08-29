@@ -15,10 +15,10 @@ class FindMatchesFromMatchupTest extends TestCase
 {
     use WithFaker;
 
-    public function testHaloDotApiMarkedAsDisabled(): void
+    public function testDotApiMarkedAsDisabled(): void
     {
         // Arrange
-        Config::set('services.halodotapi.disabled', true);
+        Config::set('services.dotapi.disabled', true);
 
         Http::preventStrayRequests();
 

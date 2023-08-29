@@ -30,14 +30,14 @@ class CompetitivePage extends Component
 
         $seasonModel = SeasonSession::model();
         $seasonKey = $seasonModel->key === SeasonSession::$allSeasonKey ? null : $seasonModel->key;
-        $isCurrentSeason = $seasonModel->key === config('services.halodotapi.competitive.key');
+        $isCurrentSeason = $seasonModel->key === config('services.dotapi.competitive.key');
         $isAllSeasons = $seasonModel->key === SeasonSession::$allSeasonKey;
 
         // Support for Winter Season, which is a different Season for Service Records, but shared CSR
         $seasonKey = $seasonKey === '2-2' ? '2-1' : $seasonKey;
 
         if (! $seasonKey) {
-            $season = Season::latestOfSeason((int) config('services.halodotapi.competitive.season'));
+            $season = Season::latestOfSeason((int) config('services.dotapi.competitive.season'));
             $seasonKey = $season?->key;
         }
 

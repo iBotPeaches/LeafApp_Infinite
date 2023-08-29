@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Enums\MedalDifficulty;
 use App\Enums\MedalType;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\MedalFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +26,7 @@ use Spatie\Sitemap\Tags\Url;
  *
  * @method static MedalFactory factory(...$parameters)
  */
-class Medal extends Model implements HasHaloDotApi, Sitemapable
+class Medal extends Model implements HasDotApi, Sitemapable
 {
     use HasFactory;
 
@@ -107,7 +107,7 @@ class Medal extends Model implements HasHaloDotApi, Sitemapable
         return $url;
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $medalId = Arr::get($payload, 'id');
 

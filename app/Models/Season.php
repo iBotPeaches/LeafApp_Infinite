@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\Mode;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\SeasonFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ use Illuminate\Support\Arr;
  *
  * @method static SeasonFactory factory(...$parameters)
  */
-class Season extends Model implements HasHaloDotApi
+class Season extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -55,7 +55,7 @@ class Season extends Model implements HasHaloDotApi
             ->first();
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $seasonId = Arr::get($payload, 'id');
         $seasonVersion = Arr::get($payload, 'version');

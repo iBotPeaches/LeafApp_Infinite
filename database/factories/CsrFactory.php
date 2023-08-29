@@ -20,7 +20,7 @@ class CsrFactory extends Factory
             'player_id' => Player::factory(),
             'queue' => Queue::getRandomValue(),
             'input' => Input::getRandomValue(),
-            'season' => config('services.halodotapi.competitive.season'),
+            'season' => config('services.dotapi.competitive.season'),
             'mode' => CompetitiveMode::CURRENT,
             'csr' => 1225,
             'matches_remaining' => 0,

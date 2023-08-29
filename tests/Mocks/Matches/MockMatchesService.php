@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks\Matches;
 
-use App\Services\HaloDotApi\Enums\Language;
+use App\Services\DotApi\Enums\Language;
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
 

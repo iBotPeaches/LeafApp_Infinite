@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks\ServiceRecord;
 
-use App\Services\HaloDotApi\Enums\Filter;
+use App\Services\DotApi\Enums\Filter;
 use Tests\Mocks\BaseMock;
 use Tests\Mocks\Traits\HasErrorFunctions;
 

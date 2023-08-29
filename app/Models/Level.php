@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
-use App\Models\Contracts\HasHaloDotApiMetadata;
+use App\Models\Contracts\HasDotApi;
+use App\Models\Contracts\HasDotApiMetadata;
 use Database\Factories\LevelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ use Illuminate\Support\Arr;
  *
  * @method static LevelFactory factory(...$parameters)
  */
-class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
+class Level extends Model implements HasDotApiMetadata, HasDotApi
 {
     use HasFactory;
 
@@ -46,7 +46,7 @@ class Level extends Model implements HasHaloDotApiMetadata, HasHaloDotApi
             ->first();
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $levelId = Arr::get($payload, 'id');
         $levelName = Arr::get($payload, 'name');

@@ -41,7 +41,7 @@ class UpdatePlayerPanel extends Component
 
         $season = SeasonSession::model();
         $cacheKey = 'player-profile-'.$this->player->id.$season->key.md5($this->player->gamertag);
-        $isOlderSeason = $season->key !== SeasonSession::$allSeasonKey && $season->season_id < (int) config('services.halodotapi.competitive.season');
+        $isOlderSeason = $season->key !== SeasonSession::$allSeasonKey && $season->season_id < (int) config('services.dotapi.competitive.season');
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
@@ -61,12 +61,12 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey, $isOlderSeason) {
-                    $cooldownMinutes = (int) config('services.halodotapi.cooldown');
+                    $cooldownMinutes = (int) config('services.dotapi.cooldown');
                     $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
                     Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 
                     $this->player->lockForUpdate();
-                    $this->player->updateFromHaloDotApi(false, $this->type);
+                    $this->player->updateFromDotApi(false, $this->type);
                     if ($this->player->isDirty()) {
                         $this->player->saveOrFail();
                     }

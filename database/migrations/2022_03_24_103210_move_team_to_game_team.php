@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Models\GameTeam;
 use App\Models\Team;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\InfiniteInterface;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\App;

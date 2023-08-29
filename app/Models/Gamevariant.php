@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\GamevariantFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
  *
  * @method static GamevariantFactory factory(...$parameters)
  */
-class Gamevariant extends Model implements HasHaloDotApi
+class Gamevariant extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -32,7 +32,7 @@ class Gamevariant extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $gamevariantId = (string) Arr::get($payload, 'id');
 

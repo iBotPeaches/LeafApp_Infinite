@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Player;
 use App\Models\PlayerBan;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 

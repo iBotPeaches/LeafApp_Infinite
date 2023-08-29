@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Outcome;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
@@ -69,7 +69,7 @@ use Illuminate\Support\Collection;
  *
  * @method static GamePlayerFactory factory(...$parameters)
  */
-class GamePlayer extends Model implements HasHaloDotApi
+class GamePlayer extends Model implements HasDotApi
 {
     use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals, HasAccuracy, HasPerformance;
 
@@ -89,7 +89,7 @@ class GamePlayer extends Model implements HasHaloDotApi
         'player',
     ];
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         /** @var Player $player */
         $player = Arr::get($payload, '_leaf.player');

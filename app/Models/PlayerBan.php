@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Carbon\Carbon;
 use Database\Factories\PlayerBanFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
  *
  * @method static PlayerBanFactory factory(...$parameters)
  */
-class PlayerBan extends Model implements HasHaloDotApi
+class PlayerBan extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -37,7 +37,7 @@ class PlayerBan extends Model implements HasHaloDotApi
 
     public $timestamps = false;
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         /** @var Player $player */
         $player = Arr::get($payload, '_leaf.player');

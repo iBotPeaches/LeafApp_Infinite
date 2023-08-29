@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\InfiniteInterface;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidInfiniteAccount implements Rule
@@ -16,7 +16,7 @@ class ValidInfiniteAccount implements Rule
 
     public function passes($attribute, $value): bool
     {
-        if (is_string($value) && ! config('services.halodotapi.disabled')) {
+        if (is_string($value) && ! config('services.dotapi.disabled')) {
             $player = $this->apiClient->appearance($value);
 
             if ($player) {

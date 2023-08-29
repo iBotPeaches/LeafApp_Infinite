@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  *
  * @method static MapFactory factory(...$parameters)
  */
-class Map extends Model implements HasHaloDotApi
+class Map extends Model implements HasDotApi
 {
     use HasFactory;
 
@@ -44,7 +44,7 @@ class Map extends Model implements HasHaloDotApi
         return $this->thumbnail_url;
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $mapId = Arr::get($payload, 'id');
         $mapName = Arr::get($payload, 'name');

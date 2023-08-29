@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Player;
-use App\Services\HaloDotApi\Enums\Mode;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\Enums\Mode;
+use App\Services\DotApi\InfiniteInterface;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 

@@ -13,14 +13,14 @@ use Tests\TestCase;
 
 class ValidMedalsPageTest extends TestCase
 {
-    public function testValidResponseFromHaloDotApi(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         $player = Player::factory()
             ->has(ServiceRecord::factory()->withMedals())
             ->createOne();
 
-        SeasonSession::set((string) config('services.halodotapi.competitive.key'));
+        SeasonSession::set((string) config('services.dotapi.competitive.key'));
 
         // Act & Assert
         Livewire::test(MedalsPage::class, [
@@ -30,7 +30,7 @@ class ValidMedalsPageTest extends TestCase
             ->assertViewHas('medals');
     }
 
-    public function testValidResponseFromHaloDotApiAsMergedSeason(): void
+    public function testValidResponseFromDotApiAsMergedSeason(): void
     {
         // Arrange
         $player = Player::factory()

@@ -8,11 +8,11 @@ use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
 use App\Jobs\PullServiceRecord;
-use App\Models\Contracts\HasHaloDotApi;
+use App\Models\Contracts\HasDotApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
-use App\Services\HaloDotApi\Enums\Mode;
-use App\Services\HaloDotApi\InfiniteInterface;
+use App\Services\DotApi\Enums\Mode;
+use App\Services\DotApi\InfiniteInterface;
 use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
 use Carbon\Carbon;
@@ -70,7 +70,7 @@ use Spatie\Sitemap\Tags\Url;
  *
  * @method static PlayerFactory factory(...$parameters)
  */
-class Player extends Model implements HasHaloDotApi, Sitemapable
+class Player extends Model implements HasDotApi, Sitemapable
 {
     use HasFactory;
 
@@ -188,7 +188,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
             ]);
     }
 
-    public static function fromHaloDotApi(array $payload): ?self
+    public static function fromDotApi(array $payload): ?self
     {
         $isRankPayload = Arr::has($payload, 'data.current.rank');
         $player = self::fromGamertag(Arr::get($payload, 'additional.params.gamertag'));
@@ -217,7 +217,7 @@ class Player extends Model implements HasHaloDotApi, Sitemapable
         $this->xuid = $client->xuid($this->url_safe_gamertag);
     }
 
-    public function updateFromHaloDotApi(bool $forceUpdate = false, string $type = null): void
+    public function updateFromDotApi(bool $forceUpdate = false, string $type = null): void
     {
         $seasonModel = SeasonSession::model();
 

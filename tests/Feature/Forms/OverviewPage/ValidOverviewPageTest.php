@@ -16,7 +16,7 @@ use Tests\TestCase;
 class ValidOverviewPageTest extends TestCase
 {
     /** @dataProvider validAttributesDataProvider */
-    public function testValidResponseFromHaloDotApi(array $attributes, ?Mode $mode): void
+    public function testValidResponseFromDotApi(array $attributes, ?Mode $mode): void
     {
         // Arrange
         $attributes['mode'] = $mode->value ?? Mode::MATCHMADE_RANKED;
@@ -42,7 +42,7 @@ class ValidOverviewPageTest extends TestCase
             ->assertSee($serviceRecord->kd);
     }
 
-    public function testValidPrivateResponseFromHaloDotApi(): void
+    public function testValidPrivateResponseFromDotApi(): void
     {
         // Arrange
         $player = Player::factory()

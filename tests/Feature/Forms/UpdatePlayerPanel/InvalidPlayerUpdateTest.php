@@ -28,7 +28,7 @@ class InvalidPlayerUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function testInvalidResponseFromAllHaloDotApiServices(): void
+    public function testInvalidResponseFromAllDotApiServices(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

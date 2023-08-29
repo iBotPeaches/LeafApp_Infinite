@@ -30,18 +30,18 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'halodotapi' => [
-        'disabled' => env('HALODOTAPI_DISABLED', false),
-        'xuid_disabled' => env('HALODOTAPI_XUID_DISABLED', false),
-        'key' => env('HALODOTAPI_KEY'),
-        'domain' => env('HALODOTAPI_DOMAIN', 'https://api.halodotapi.com'),
-        'version' => env('HALODOTAPI_VERSION', '2023-06-24'),
-        'cooldown' => env('HALODOTAPI_COOLDOWN', 120),
+    'dotapi' => [
+        'disabled' => env('HALODOTIP_DISABLED', false),
+        'xuid_disabled' => env('HALODOTIP_XUID_DISABLED', false),
+        'key' => env('HALODOTIP_KEY'),
+        'domain' => env('HALODOTIP_DOMAIN', 'https://api.dotapi.com'),
+        'version' => env('HALODOTIP_VERSION', '2023-06-24'),
+        'cooldown' => env('HALODOTIP_COOLDOWN', 120),
         'competitive' => [
-            'key' => env('HALODOTAPI_CURRENT_SEASON_KEY', '3-1'),
-            'season' => env('HALODOTAPI_CURRENT_SEASON', 3),
+            'key' => env('HALODOTIP_CURRENT_SEASON_KEY', '3-1'),
+            'season' => env('HALODOTIP_CURRENT_SEASON', 3),
         ],
-        'warning_message' => env('HALODOTAPI_WARNING_MESSAGE'),
+        'warning_message' => env('HALODOTIP_WARNING_MESSAGE'),
     ],
 
     'faceit' => [
