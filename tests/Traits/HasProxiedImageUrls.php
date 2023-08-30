@@ -18,6 +18,6 @@ trait HasProxiedImageUrls
 
         $imageJson = json_encode($imageObject);
 
-        return 'https://api.dotapi.com/games/halo-infinite/tooling/cms-images?hash='.base64_encode($imageJson);
+        return 'https://grunt.api.dotapi.gg/games/halo-infinite/tooling/cms-images?hash='.base64_encode($imageJson);
     }
 }
