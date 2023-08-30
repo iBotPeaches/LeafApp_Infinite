@@ -42,18 +42,18 @@ A docker-based infrastructure is available for development. If you wish to run d
 
 ### Configuration
 
-#### HaloDotIP (Cryptum)
+#### DotAPI
 Used for the API for Infinite information, an amazing service that proxies some internal HaloWaypoint/Live calls.
 
- * `HALODOTIP_DISABLED` - Defaults to false, if toggled disables all Autocode API calls.
- * `HALODOTIP_XUID_DISABLED` - Defaults to false, if toggled disables XUID resolution.
- * `HALODOTIP_KEY` - The API key given [Cryptum](https://grunt.api.dotapi.gg/)
- * `HALODOTIP_DOMAIN` - The base domain for Autocode
- * `HALODOTIP_VERSION` - The version of the Autocode to use
- * `HALODOTIP_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
- * `HALODOTIP_CURRENT_SEASON` - Current Halo Infinite Season
- * `HALODOTIP_CURRENT_SEASON_VERSION` - Current Halo Infinite Season Version
- * `HALODOTIP_WARNING_MESSAGE` - If populated, puts site into warning mode.
+ * `DOTAPI_DISABLED` - Defaults to false, if toggled disables all Autocode API calls.
+ * `DOTAPI_XUID_DISABLED` - Defaults to false, if toggled disables XUID resolution.
+ * `DOTAPI_KEY` - The API key given [dotapi.gg](https://dotapi.gg)
+ * `DOTAPI_DOMAIN` - The base domain for Autocode
+ * `DOTAPI_VERSION` - The version of the Autocode to use
+ * `DOTAPI_COOLDOWN` - The amount of time to wait between refreshing profiles automatically.
+ * `DOTAPI_CURRENT_SEASON` - Current Halo Infinite Season
+ * `DOTAPI_CURRENT_SEASON_VERSION` - Current Halo Infinite Season Version
+ * `DOTAPI_WARNING_MESSAGE` - If populated, puts site into warning mode.
 
 #### FaceIt
 Used for HCS features for listing championships.
