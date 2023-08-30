@@ -10,9 +10,11 @@ DROP TABLE IF EXISTS `analytics`;
 CREATE TABLE `analytics` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(32) NOT NULL,
+  `place` smallint(5) unsigned DEFAULT NULL,
   `game_id` bigint(20) unsigned DEFAULT NULL,
   `player_id` bigint(20) unsigned DEFAULT NULL,
   `map_id` bigint(20) unsigned DEFAULT NULL,
+  `season_id` bigint(20) unsigned DEFAULT NULL,
   `value` double(14,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -20,8 +22,10 @@ CREATE TABLE `analytics` (
   KEY `analytics_game_id_foreign` (`game_id`),
   KEY `analytics_player_id_foreign` (`player_id`),
   KEY `analytics_key_index` (`key`),
+  KEY `analytics_season_id_foreign` (`season_id`),
   CONSTRAINT `analytics_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`)
+  CONSTRAINT `analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `analytics_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cache`;
@@ -200,7 +204,7 @@ CREATE TABLE `game_teams` (
   `score` mediumint(9) NOT NULL,
   `mmr` decimal(7,3) DEFAULT NULL,
   `winning_percent` decimal(5,2) DEFAULT NULL,
-  `final_score` mediumint(8) unsigned DEFAULT NULL,
+  `final_score` mediumint(8) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `game_teams_game_id_internal_team_id_unique` (`game_id`,`internal_team_id`),
   KEY `game_teams_team_id_foreign` (`team_id`),
@@ -356,6 +360,28 @@ CREATE TABLE `matchups` (
   CONSTRAINT `matchups_championship_id_foreign` FOREIGN KEY (`championship_id`) REFERENCES `championships` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `medal_analytics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medal_analytics` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` bigint(20) unsigned NOT NULL,
+  `season_id` bigint(20) unsigned DEFAULT NULL,
+  `medal_id` int(10) unsigned NOT NULL,
+  `mode` tinyint(3) unsigned NOT NULL,
+  `value` mediumint(8) unsigned NOT NULL,
+  `place` smallint(5) unsigned NOT NULL,
+  `total_seconds_played` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `medal_analytics_season_id_foreign` (`season_id`),
+  KEY `medal_analytics_medal_id_foreign` (`medal_id`),
+  KEY `medal_analytics_place_mode_season_id_index` (`place`,`mode`,`season_id`),
+  KEY `medal_analytics_player_id_foreign` (`player_id`),
+  CONSTRAINT `medal_analytics_medal_id_foreign` FOREIGN KEY (`medal_id`) REFERENCES `medals` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `medal_analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `medal_analytics_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `medals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -378,23 +404,45 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `player_bans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `player_bans` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(32) NOT NULL,
+  `player_id` bigint(20) unsigned NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `ends_at` datetime NOT NULL,
+  `type` varchar(24) NOT NULL,
+  `scope` varchar(24) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `player_bans_key_unique` (`key`),
+  KEY `player_bans_player_id_foreign` (`player_id`),
+  CONSTRAINT `player_bans_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `players`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `players` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_id` mediumint(8) unsigned DEFAULT NULL,
+  `next_rank_id` mediumint(8) unsigned DEFAULT NULL,
   `xuid` varchar(32) DEFAULT NULL,
   `gamertag` varchar(32) NOT NULL,
+  `xp` int(10) unsigned DEFAULT NULL,
   `service_tag` varchar(8) DEFAULT NULL,
   `is_private` tinyint(1) NOT NULL DEFAULT 0,
   `is_bot` tinyint(1) NOT NULL DEFAULT 0,
   `is_cheater` tinyint(1) NOT NULL DEFAULT 0,
+  `is_botfarmer` tinyint(1) NOT NULL DEFAULT 0,
   `last_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
   `last_custom_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
   `last_lan_game_id_pulled` bigint(20) unsigned DEFAULT NULL,
   `last_csr_key` varchar(8) DEFAULT NULL,
-  `emblem_url` varchar(255) DEFAULT NULL,
-  `backdrop_url` varchar(255) DEFAULT NULL,
+  `emblem_url` varchar(512) DEFAULT NULL,
+  `backdrop_url` varchar(512) DEFAULT NULL,
+  `nameplate_url` varchar(512) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -405,9 +453,14 @@ CREATE TABLE `players` (
   KEY `players_last_lan_game_id_pulled_foreign` (`last_lan_game_id_pulled`),
   KEY `players_updated_at_index` (`updated_at`),
   KEY `players_is_cheater_index` (`is_cheater`),
+  KEY `players_rank_id_foreign` (`rank_id`),
+  KEY `players_next_rank_id_foreign` (`next_rank_id`),
+  KEY `players_is_botfarmer_index` (`is_botfarmer`),
   CONSTRAINT `players_last_custom_game_id_pulled_foreign` FOREIGN KEY (`last_custom_game_id_pulled`) REFERENCES `games` (`id`),
   CONSTRAINT `players_last_game_id_pulled_foreign` FOREIGN KEY (`last_game_id_pulled`) REFERENCES `games` (`id`),
-  CONSTRAINT `players_last_lan_game_id_pulled_foreign` FOREIGN KEY (`last_lan_game_id_pulled`) REFERENCES `games` (`id`)
+  CONSTRAINT `players_last_lan_game_id_pulled_foreign` FOREIGN KEY (`last_lan_game_id_pulled`) REFERENCES `games` (`id`),
+  CONSTRAINT `players_next_rank_id_foreign` FOREIGN KEY (`next_rank_id`) REFERENCES `ranks` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `players_rank_id_foreign` FOREIGN KEY (`rank_id`) REFERENCES `ranks` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `playlists`;
@@ -417,9 +470,28 @@ CREATE TABLE `playlists` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` char(36) NOT NULL,
   `name` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `is_ranked` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `queue` tinyint(3) unsigned DEFAULT NULL,
   `input` tinyint(3) unsigned DEFAULT NULL,
+  `rotations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`rotations`)),
+  `image_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `ranks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks` (
+  `id` mediumint(8) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `subtitle` varchar(32) NOT NULL,
+  `grade` tinyint(4) DEFAULT NULL,
+  `tier` tinyint(4) DEFAULT NULL,
+  `type` varchar(12) NOT NULL,
+  `threshold` int(11) NOT NULL,
+  `required` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -536,101 +608,118 @@ CREATE TABLE `users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
-INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
-INSERT INTO `migrations` VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
-INSERT INTO `migrations` VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
-INSERT INTO `migrations` VALUES (5,'2021_11_20_135838_add_players_table',2);
-INSERT INTO `migrations` VALUES (6,'2021_11_20_142006_add_metadata_tables',2);
-INSERT INTO `migrations` VALUES (7,'2021_11_21_175835_add_matches_table',2);
-INSERT INTO `migrations` VALUES (8,'2021_11_24_104219_fix_unsigned_nature_of_score',3);
-INSERT INTO `migrations` VALUES (9,'2021_11_25_111532_add_xuid_to_players',4);
-INSERT INTO `migrations` VALUES (10,'2021_11_26_111551_add_competitive_table',5);
-INSERT INTO `migrations` VALUES (11,'2021_11_26_163918_add_ranked_to_games',5);
-INSERT INTO `migrations` VALUES (12,'2021_11_26_165929_add_service_record',5);
-INSERT INTO `migrations` VALUES (13,'2021_11_27_111516_add_is_private_to_players',6);
-INSERT INTO `migrations` VALUES (14,'2021_11_28_185710_drop_useless_tables',7);
-INSERT INTO `migrations` VALUES (15,'2021_11_28_234442_add_start_tier_to_csr',7);
-INSERT INTO `migrations` VALUES (16,'2021_11_29_123143_create_jobs_table',8);
-INSERT INTO `migrations` VALUES (17,'2021_11_30_105825_add_unique_to_uuid_games',9);
-INSERT INTO `migrations` VALUES (18,'2021_11_30_105922_add_unique_to_metadata',9);
-INSERT INTO `migrations` VALUES (19,'2021_12_11_160822_create_game_teams_table',10);
-INSERT INTO `migrations` VALUES (20,'2021_12_11_170733_add_internal_team_id_to_game_players',10);
-INSERT INTO `migrations` VALUES (21,'2021_12_14_010203_add_missing_fields_to_game',10);
-INSERT INTO `migrations` VALUES (22,'2021_12_14_111623_add_version_to_game',11);
-INSERT INTO `migrations` VALUES (23,'2021_12_14_115208_add_was_pulled_bool_to_games',12);
-INSERT INTO `migrations` VALUES (24,'2021_12_15_113038_add_playlist_table',13);
-INSERT INTO `migrations` VALUES (25,'2021_12_15_113623_drop_unused_game_columns',13);
-INSERT INTO `migrations` VALUES (26,'2021_12_15_115237_add_playlist_id_to_games',13);
-INSERT INTO `migrations` VALUES (27,'2021_12_15_115906_drop_is_ranked_from_games',13);
-INSERT INTO `migrations` VALUES (28,'2021_12_15_120331_add_partipation_columns',13);
-INSERT INTO `migrations` VALUES (29,'2021_12_25_124053_add_medals_to_service_record',14);
-INSERT INTO `migrations` VALUES (30,'2021_12_25_124732_create_medals_table',14);
-INSERT INTO `migrations` VALUES (31,'2021_12_28_103825_add_csr_to_game_players',15);
-INSERT INTO `migrations` VALUES (32,'2022_01_08_122126_add_last_game_id_to_players',16);
-INSERT INTO `migrations` VALUES (33,'2022_01_09_115837_add_final_score_to_teams',17);
-INSERT INTO `migrations` VALUES (34,'2022_01_15_152306_drop_image_url_from_csrs',18);
-INSERT INTO `migrations` VALUES (35,'2022_01_15_202728_add_medals_to_game_players',18);
-INSERT INTO `migrations` VALUES (36,'2022_01_15_214941_create_cache_table',18);
-INSERT INTO `migrations` VALUES (37,'2022_01_23_200035_add_faceit_championship',19);
-INSERT INTO `migrations` VALUES (38,'2022_01_24_111258_add_matchups',19);
-INSERT INTO `migrations` VALUES (39,'2022_02_01_235047_add_mmr_to_gameteam',20);
-INSERT INTO `migrations` VALUES (40,'2022_02_06_112708_add_game_id_to_players',21);
-INSERT INTO `migrations` VALUES (41,'2022_02_07_004937_add_multiple_record_support',22);
-INSERT INTO `migrations` VALUES (42,'2022_02_12_112013_add_type_to_championship',23);
-INSERT INTO `migrations` VALUES (43,'2022_02_06_164854_create_matchup_games',24);
-INSERT INTO `migrations` VALUES (44,'2022_02_21_105933_tweak_csr_for_all_modes',24);
-INSERT INTO `migrations` VALUES (45,'2022_02_21_112301_remove_fk_csrs',24);
-INSERT INTO `migrations` VALUES (46,'2022_02_21_113039_remake_csr_fks',24);
-INSERT INTO `migrations` VALUES (47,'2022_03_02_115047_add_csr_key_to_players',25);
-INSERT INTO `migrations` VALUES (48,'2022_03_05_121859_add_users_table',26);
-INSERT INTO `migrations` VALUES (49,'2022_03_05_140233_add_scrim_tables',27);
-INSERT INTO `migrations` VALUES (50,'2022_03_06_015134_add_remember_token_to_users',27);
-INSERT INTO `migrations` VALUES (51,'2022_03_09_110315_correct_questionmark_gamertags',28);
-INSERT INTO `migrations` VALUES (52,'2022_03_22_221818_add_last_lan_game_id_pulled',29);
-INSERT INTO `migrations` VALUES (53,'2022_03_23_095041_drop_version_from_metadata',29);
-INSERT INTO `migrations` VALUES (54,'2022_03_23_095607_add_team_model',29);
-INSERT INTO `migrations` VALUES (55,'2022_03_23_101009_rename_medal_tables',29);
-INSERT INTO `migrations` VALUES (56,'2022_03_24_102807_expand_length_of_game_version',29);
-INSERT INTO `migrations` VALUES (57,'2022_03_24_103210_move_team_to_game_team',30);
-INSERT INTO `migrations` VALUES (58,'2022_03_24_104012_drop_team_info_from_game_team',30);
-INSERT INTO `migrations` VALUES (59,'2022_03_24_110213_add_is_local_to_game',30);
-INSERT INTO `migrations` VALUES (60,'2022_03_25_105934_drop_image_from_medals',30);
-INSERT INTO `migrations` VALUES (61,'2022_04_15_111651_add_mmr_to_gameplayers',31);
-INSERT INTO `migrations` VALUES (62,'2022_04_19_101328_add_gamevariants_table',32);
-INSERT INTO `migrations` VALUES (63,'2022_04_21_104947_add_mmr_to_players',33);
-INSERT INTO `migrations` VALUES (64,'2022_04_23_173246_add_winning_chance_to_teams',33);
-INSERT INTO `migrations` VALUES (65,'2022_04_24_151832_add_stddev_for_players',33);
-INSERT INTO `migrations` VALUES (66,'2022_05_02_101046_add_season_fields_to_games',34);
-INSERT INTO `migrations` VALUES (67,'2022_05_02_105022_add_season_to_service_record',34);
-INSERT INTO `migrations` VALUES (68,'2022_05_14_103445_make_season_number_nullable',35);
-INSERT INTO `migrations` VALUES (69,'2022_06_07_154628_expand_length_of_gamevariant_name',36);
-INSERT INTO `migrations` VALUES (70,'2022_06_11_104525_add_is_bot_to_players',37);
-INSERT INTO `migrations` VALUES (71,'2022_06_25_222554_add_analytic_table',38);
-INSERT INTO `migrations` VALUES (72,'2022_06_27_232325_add_is_cheater_to_players',39);
-INSERT INTO `migrations` VALUES (73,'2022_06_29_103356_make_player_id_nullable_on_analytics',40);
-INSERT INTO `migrations` VALUES (74,'2022_07_02_102829_grow_columns_on_sr',41);
-INSERT INTO `migrations` VALUES (75,'2022_08_06_114444_add_max_spree',42);
-INSERT INTO `migrations` VALUES (76,'2022_08_23_223752_add_playlist_id_to_csr',43);
-INSERT INTO `migrations` VALUES (77,'2022_08_23_225503_remake_csr_fks_part2',43);
-INSERT INTO `migrations` VALUES (78,'2022_08_25_102520_add_matches_remaining_to_game_players',44);
-INSERT INTO `migrations` VALUES (79,'2023_02_16_114304_adjust_nullable_for_matchups',45);
-INSERT INTO `migrations` VALUES (80,'2023_02_17_115610_add_new_fields_to_faceit',45);
-INSERT INTO `migrations` VALUES (81,'2023_02_17_122109_add_nulls_for_points_on_teams',45);
-INSERT INTO `migrations` VALUES (82,'2023_02_21_012419_add_index_for_where',45);
-INSERT INTO `migrations` VALUES (83,'2023_02_25_122500_cleanup_lan_issue',46);
-INSERT INTO `migrations` VALUES (84,'2023_02_25_124855_indexes_for_service_records',46);
-INSERT INTO `migrations` VALUES (85,'2023_03_25_171951_drop_thumbnail_from_playlist',47);
-INSERT INTO `migrations` VALUES (86,'2023_03_26_220946_migrate_maps',47);
-INSERT INTO `migrations` VALUES (87,'2023_03_26_222711_migrate_categories',48);
-INSERT INTO `migrations` VALUES (88,'2023_03_28_222943_add_map_id_to_analytics',49);
-INSERT INTO `migrations` VALUES (89,'2023_04_01_190024_add_is_cheater_index',49);
-INSERT INTO `migrations` VALUES (96,'2023_04_08_111909_add_levels_table',50);
-INSERT INTO `migrations` VALUES (97,'2023_04_08_192431_add_category_id_to_gamevariants',50);
-INSERT INTO `migrations` VALUES (98,'2023_04_08_202251_add_level_id_to_maps',50);
-INSERT INTO `migrations` VALUES (99,'2023_04_08_210941_make_category_nullable',50);
-INSERT INTO `migrations` VALUES (100,'2023_04_09_114604_drop_is_scored_from_games',50);
-INSERT INTO `migrations` VALUES (101,'2023_04_09_152451_add_seasons_table',50);
-INSERT INTO `migrations` VALUES (104,'2023_04_13_104347_add_season_key_to_service_record',51);
-INSERT INTO `migrations` VALUES (105,'2023_04_14_100302_add_season_key_to_csrs',52);
-INSERT INTO `migrations` VALUES (106,'2023_04_14_231405_remove_mmr_on_players',53);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2021_11_20_135838_add_players_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2021_11_20_142006_add_metadata_tables',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2021_11_21_175835_add_matches_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2021_11_24_104219_fix_unsigned_nature_of_score',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2021_11_25_111532_add_xuid_to_players',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2021_11_26_111551_add_competitive_table',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (11,'2021_11_26_163918_add_ranked_to_games',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (12,'2021_11_26_165929_add_service_record',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2021_11_27_111516_add_is_private_to_players',6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2021_11_28_185710_drop_useless_tables',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2021_11_28_234442_add_start_tier_to_csr',7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (16,'2021_11_29_123143_create_jobs_table',8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (17,'2021_11_30_105825_add_unique_to_uuid_games',9);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (18,'2021_11_30_105922_add_unique_to_metadata',9);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (19,'2021_12_11_160822_create_game_teams_table',10);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (20,'2021_12_11_170733_add_internal_team_id_to_game_players',10);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (21,'2021_12_14_010203_add_missing_fields_to_game',10);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (22,'2021_12_14_111623_add_version_to_game',11);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (23,'2021_12_14_115208_add_was_pulled_bool_to_games',12);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (24,'2021_12_15_113038_add_playlist_table',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (25,'2021_12_15_113623_drop_unused_game_columns',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (26,'2021_12_15_115237_add_playlist_id_to_games',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (27,'2021_12_15_115906_drop_is_ranked_from_games',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (28,'2021_12_15_120331_add_partipation_columns',13);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (29,'2021_12_25_124053_add_medals_to_service_record',14);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (30,'2021_12_25_124732_create_medals_table',14);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (31,'2021_12_28_103825_add_csr_to_game_players',15);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (32,'2022_01_08_122126_add_last_game_id_to_players',16);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (33,'2022_01_09_115837_add_final_score_to_teams',17);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (34,'2022_01_15_152306_drop_image_url_from_csrs',18);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (35,'2022_01_15_202728_add_medals_to_game_players',18);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (36,'2022_01_15_214941_create_cache_table',18);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (37,'2022_01_23_200035_add_faceit_championship',19);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (38,'2022_01_24_111258_add_matchups',19);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (39,'2022_02_01_235047_add_mmr_to_gameteam',20);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (40,'2022_02_06_112708_add_game_id_to_players',21);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (41,'2022_02_07_004937_add_multiple_record_support',22);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (42,'2022_02_12_112013_add_type_to_championship',23);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (43,'2022_02_06_164854_create_matchup_games',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (44,'2022_02_21_105933_tweak_csr_for_all_modes',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (45,'2022_02_21_112301_remove_fk_csrs',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (46,'2022_02_21_113039_remake_csr_fks',24);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (47,'2022_03_02_115047_add_csr_key_to_players',25);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (48,'2022_03_05_121859_add_users_table',26);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (49,'2022_03_05_140233_add_scrim_tables',27);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (50,'2022_03_06_015134_add_remember_token_to_users',27);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (51,'2022_03_09_110315_correct_questionmark_gamertags',28);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (52,'2022_03_22_221818_add_last_lan_game_id_pulled',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (53,'2022_03_23_095041_drop_version_from_metadata',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (54,'2022_03_23_095607_add_team_model',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (55,'2022_03_23_101009_rename_medal_tables',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (56,'2022_03_24_102807_expand_length_of_game_version',29);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (57,'2022_03_24_103210_move_team_to_game_team',30);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (58,'2022_03_24_104012_drop_team_info_from_game_team',30);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (59,'2022_03_24_110213_add_is_local_to_game',30);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (60,'2022_03_25_105934_drop_image_from_medals',30);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (61,'2022_04_15_111651_add_mmr_to_gameplayers',31);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (62,'2022_04_19_101328_add_gamevariants_table',32);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (63,'2022_04_21_104947_add_mmr_to_players',33);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (64,'2022_04_23_173246_add_winning_chance_to_teams',33);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (65,'2022_04_24_151832_add_stddev_for_players',33);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (66,'2022_05_02_101046_add_season_fields_to_games',34);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (67,'2022_05_02_105022_add_season_to_service_record',34);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (68,'2022_05_14_103445_make_season_number_nullable',35);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (69,'2022_06_07_154628_expand_length_of_gamevariant_name',36);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (70,'2022_06_11_104525_add_is_bot_to_players',37);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (71,'2022_06_25_222554_add_analytic_table',38);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (72,'2022_06_27_232325_add_is_cheater_to_players',39);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (73,'2022_06_29_103356_make_player_id_nullable_on_analytics',40);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (74,'2022_07_02_102829_grow_columns_on_sr',41);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (75,'2022_08_06_114444_add_max_spree',42);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (76,'2022_08_23_223752_add_playlist_id_to_csr',43);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (77,'2022_08_23_225503_remake_csr_fks_part2',43);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (78,'2022_08_25_102520_add_matches_remaining_to_game_players',44);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (79,'2023_02_16_114304_adjust_nullable_for_matchups',45);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (80,'2023_02_17_115610_add_new_fields_to_faceit',45);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (81,'2023_02_17_122109_add_nulls_for_points_on_teams',45);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (82,'2023_02_21_012419_add_index_for_where',45);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (83,'2023_02_25_122500_cleanup_lan_issue',46);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (84,'2023_02_25_124855_indexes_for_service_records',46);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (85,'2023_03_25_171951_drop_thumbnail_from_playlist',47);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (86,'2023_03_26_220946_migrate_maps',47);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (87,'2023_03_26_222711_migrate_categories',48);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (88,'2023_03_28_222943_add_map_id_to_analytics',49);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (89,'2023_04_01_190024_add_is_cheater_index',49);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (90,'2023_04_08_111909_add_levels_table',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (91,'2023_04_08_192431_add_category_id_to_gamevariants',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (92,'2023_04_08_202251_add_level_id_to_maps',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (93,'2023_04_08_210941_make_category_nullable',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (94,'2023_04_08_210941_make_category_nullable',51);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (95,'2023_04_09_114604_drop_is_scored_from_games',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (96,'2023_04_09_152451_add_seasons_table',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (97,'2023_04_13_104347_add_season_key_to_service_record',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (98,'2023_04_14_100302_add_season_key_to_csrs',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (99,'2023_04_14_231405_remove_mmr_on_players',50);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (100,'2023_04_16_224132_add_player_ban_table',52);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (101,'2023_04_19_104829_make_final_score_signed',52);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (102,'2023_04_29_101818_add_medal_analytics',53);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (104,'2023_04_30_204534_add_mode_place',54);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (105,'2023_05_06_172314_add_rotation_json_to_playlists',55);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (106,'2023_05_06_172821_add_is_active_to_playlists',56);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (107,'2023_05_08_101909_cascade_player_on_analytics',57);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (108,'2023_05_10_103016_add_more_fields_to_playlists',58);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (109,'2023_05_16_110144_add_unknown_level',59);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (110,'2023_05_29_120051_add_season_id_to_analytics',60);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (112,'2023_06_22_005112_add_career_ranks',61);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (114,'2023_06_22_094554_add_career_rank_to_player',62);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (115,'2023_06_23_103646_add_nameplate_to_players',63);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (116,'2023_06_29_101044_add_place_to_analytics',64);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (117,'2023_08_11_095401_add_is_botfarmer_to_players',65);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (118,'2023_08_30_093058_swap_urls_to_text',66);
