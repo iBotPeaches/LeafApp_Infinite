@@ -13,7 +13,6 @@ return new class extends Migration
         Schema::table('players', function (Blueprint $table) {
             $table->string('emblem_url', 512)->change();
             $table->string('backdrop_url', 512)->change();
-            $table->string('nameplate_url', 512)->change();
         });
     }
 
@@ -22,7 +21,6 @@ return new class extends Migration
         Schema::table('players', function (Blueprint $table) {
             $table->string('emblem_url')->change();
             $table->string('backdrop_url')->change();
-            $table->string('nameplate_url')->change();
         });
     }
 };
