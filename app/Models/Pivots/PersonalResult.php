@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class PersonalResult extends Pivot
 {
-    use HasKd, HasScoring, HasCsr, HasAccuracy;
+    use HasAccuracy, HasCsr, HasKd, HasScoring;
 
     public $casts = [
         'outcome' => Outcome::class,

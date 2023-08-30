@@ -7,6 +7,6 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use LazilyRefreshDatabase;
     use CreatesApplication;
+    use LazilyRefreshDatabase;
 }

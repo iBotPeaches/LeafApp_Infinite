@@ -18,7 +18,7 @@ use Illuminate\Support\Arr;
  *
  * @method static LevelFactory factory(...$parameters)
  */
-class Level extends Model implements HasDotApiMetadata, HasDotApi
+class Level extends Model implements HasDotApi, HasDotApiMetadata
 {
     use HasFactory;
 

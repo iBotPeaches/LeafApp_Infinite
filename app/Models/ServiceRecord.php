@@ -65,7 +65,7 @@ use Illuminate\Support\Collection;
  */
 class ServiceRecord extends Model implements HasDotApi
 {
-    use HasFactory, HasMedals, HasAccuracy;
+    use HasAccuracy, HasFactory, HasMedals;
 
     public $guarded = [
         'id',

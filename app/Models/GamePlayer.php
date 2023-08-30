@@ -71,7 +71,7 @@ use Illuminate\Support\Collection;
  */
 class GamePlayer extends Model implements HasDotApi
 {
-    use HasFactory, HasOutcome, HasKd, HasScoring, HasCsr, HasMedals, HasAccuracy, HasPerformance;
+    use HasAccuracy, HasCsr, HasFactory, HasKd, HasMedals, HasOutcome, HasPerformance, HasScoring;
 
     public $casts = [
         'medals' => 'array',
