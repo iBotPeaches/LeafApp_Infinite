@@ -15,8 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BestKDAServiceRecord extends BasePlayerStat implements AnalyticInterface
 {
-    use HasServiceRecordExport;
     use HasExportUrlGeneration;
+    use HasServiceRecordExport;
 
     public function title(): string
     {
