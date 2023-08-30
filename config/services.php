@@ -31,17 +31,17 @@ return [
     ],
 
     'dotapi' => [
-        'disabled' => env('HALODOTIP_DISABLED', false),
-        'xuid_disabled' => env('HALODOTIP_XUID_DISABLED', false),
-        'key' => env('HALODOTIP_KEY'),
-        'domain' => env('HALODOTIP_DOMAIN', 'https://grunt.api.dotapi.gg'),
-        'version' => env('HALODOTIP_VERSION', '2023-06-24'),
-        'cooldown' => env('HALODOTIP_COOLDOWN', 120),
+        'disabled' => env('DOTAPI_DISABLED', false),
+        'xuid_disabled' => env('DOTAPI_XUID_DISABLED', false),
+        'key' => env('DOTAPI_KEY'),
+        'domain' => env('DOTAPI_DOMAIN', 'https://grunt.api.dotapi.gg'),
+        'version' => env('DOTAPI_VERSION', '2023-06-24'),
+        'cooldown' => env('DOTAPI_COOLDOWN', 120),
         'competitive' => [
-            'key' => env('HALODOTIP_CURRENT_SEASON_KEY', '3-1'),
-            'season' => env('HALODOTIP_CURRENT_SEASON', 3),
+            'key' => env('DOTAPI_CURRENT_SEASON_KEY', '3-1'),
+            'season' => env('DOTAPI_CURRENT_SEASON', 3),
         ],
-        'warning_message' => env('HALODOTIP_WARNING_MESSAGE'),
+        'warning_message' => env('DOTAPI_WARNING_MESSAGE'),
     ],
 
     'faceit' => [

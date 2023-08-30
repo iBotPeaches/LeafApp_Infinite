@@ -23,7 +23,7 @@ final class Input extends Enum implements LocalizedEnum
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
-        // The HaloDotIP uses 'mnk', I prefer 'kbm'
+        // The DotAPI uses 'mnk', I prefer 'kbm'
         if ($enumKeyOrValue === 'mnk') {
             $enumKeyOrValue = 'kbm';
         }
