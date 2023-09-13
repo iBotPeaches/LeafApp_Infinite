@@ -10,6 +10,7 @@ use App\Support\Analytics\Stats\BestAccuracyServiceRecord;
 use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
+use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
@@ -73,6 +74,7 @@ class Analytic extends Model
             AnalyticKey::MOST_KILLS_GAME => new MostKillsInGame(),
             AnalyticKey::MOST_MEDALS_GAME => new MostMedalsInGame(),
             AnalyticKey::HIGHEST_SCORE_RANKED_GAME => new HighestScoreInRankedGame(),
+            AnalyticKey::HIGHEST_SCORE_UNRANKED_GAME => new HighestScoreInUnrankedGame(),
             AnalyticKey::LONGEST_MATCHMAKING_GAME => new LongestMatchmakingGame(),
             AnalyticKey::MOST_BETRAYALS_SR => new MostBetrayalsServiceRecord(),
             AnalyticKey::MOST_MEDALS_SR => new MostMedalsServiceRecord(),

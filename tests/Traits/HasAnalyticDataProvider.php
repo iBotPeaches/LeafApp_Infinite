@@ -8,6 +8,7 @@ use App\Support\Analytics\Stats\BestAccuracyServiceRecord;
 use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
+use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
@@ -61,6 +62,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new HighestScoreInRankedGame(),
+            ],
+            [
+                new HighestScoreInUnrankedGame(),
             ],
             [
                 new MostKillsInGame(),
