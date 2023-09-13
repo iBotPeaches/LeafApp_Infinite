@@ -47,6 +47,19 @@ class ProcessAnalyticTest extends TestCase
             ->count(2)
             ->create();
 
+        GamePlayer::factory()
+            ->for(
+                Game::factory()
+                    ->forPlaylist(['is_ranked' => false])
+                    ->forMap([])
+            )
+            ->sequence(
+                ['deaths' => 0, 'outcome' => Outcome::LEFT],
+                ['deaths' => 0, 'outcome' => Outcome::WIN],
+            )
+            ->count(2)
+            ->create();
+
         // Act
         ProcessAnalytic::dispatchSync($analyticClass);
 
