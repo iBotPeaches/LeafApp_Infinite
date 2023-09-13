@@ -52,6 +52,7 @@ class MostAssistsInGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('playlists.uuid', '!=', config('services.halo.playlists.bot-bootcamp'))
             ->where('players.is_cheater', false)
+            ->where('players.is_bot', false)
             ->whereNotNull('games.playlist_id')
             ->orderByDesc($this->property())
             ->limit($limit)

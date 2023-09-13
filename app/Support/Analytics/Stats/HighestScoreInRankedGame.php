@@ -52,6 +52,7 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('playlists.is_ranked', true)
             ->where('players.is_cheater', false)
+            ->where('players.is_bot', false)
             ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
