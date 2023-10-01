@@ -11,6 +11,8 @@
         <hr />
         @include('partials.game.export_card')
         @include('partials.game.player-rank-changes')
+        <livewire:game-badges :game="$game" />
+
     </div>
     <div class="column is-four-fifths">
         @foreach ($groupedGamePlayers as $teamId => $gamePlayers)

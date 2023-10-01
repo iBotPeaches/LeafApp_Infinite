@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Forms\PlayerBadges;
+namespace Tests\Feature\Forms\GameBadges;
 
-use App\Http\Livewire\PlayerBadges;
+use App\Http\Livewire\GameBadges;
 use App\Models\Analytic;
-use App\Models\Player;
+use App\Models\Game;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class AnalyticPlayerBadgeTest extends TestCase
+class AnalyticGameBadgeTest extends TestCase
 {
     public function testLoadingAnalyticsOnBadges(): void
     {
         // Arrange
-        $player = Player::factory()->createOne();
+        $game = Game::factory()->createOne();
 
         Analytic::factory()->createOne([
-            'player_id' => $player->id,
+            'game_id' => $game->id,
         ]);
 
         // Act & Assert
-        Livewire::test(PlayerBadges::class, [
-            'player' => $player,
+        Livewire::test(GameBadges::class, [
+            'game' => $game,
         ])
             ->call('loadBadges')
             ->assertSuccessful();
