@@ -42,6 +42,7 @@ use Illuminate\Support\Str;
  * @property-read PersonalResult $personal
  * @property-read GamePlayer[]|Collection $players
  * @property-read GameTeam[]|Collection $teams
+ * @property-read Analytic[]|Collection $analytics
  * @property-read bool $outdated
  * @property-read string $name
  * @property-read string $description
@@ -291,5 +292,10 @@ class Game extends Model implements HasDotApi
     {
         return $this->hasMany(GameTeam::class)
             ->orderBy('rank');
+    }
+
+    public function analytics(): HasMany
+    {
+        return $this->hasMany(Analytic::class);
     }
 }
