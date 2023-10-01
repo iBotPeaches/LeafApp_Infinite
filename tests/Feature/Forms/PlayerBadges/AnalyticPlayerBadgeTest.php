@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Forms;
+namespace Tests\Feature\Forms\PlayerBadges;
 
 use App\Http\Livewire\PlayerBadges;
 use App\Models\Analytic;
