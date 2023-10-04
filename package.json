@@ -14,7 +14,7 @@
         "laravel-vite-plugin": "^0.8.1",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.68.0",
-        "vite": "^4.4.9",
+        "vite": "^4.4.10",
         "vite-plugin-manifest-sri": "^0.1.0"
     },
     "packageManager": "yarn@3.5.0"
