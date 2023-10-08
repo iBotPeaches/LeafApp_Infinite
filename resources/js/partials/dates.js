@@ -1,4 +1,4 @@
-document.addEventListener('livewire:load', () => {
+document.addEventListener('livewire:init', () => {
     parseLocalDates();
 
     Livewire.hook('element.updated', () => parseLocalDates());

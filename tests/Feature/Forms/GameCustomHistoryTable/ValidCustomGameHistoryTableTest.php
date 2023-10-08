@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\GameCustomHistoryTable;
 
 use App\Enums\Outcome;
-use App\Http\Livewire\GameCustomHistoryTable;
+use App\Livewire\GameCustomHistoryTable;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;

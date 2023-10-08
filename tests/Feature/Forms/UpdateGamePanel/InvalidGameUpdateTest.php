@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdateGamePanel;
 
-use App\Http\Livewire\UpdateGamePanel;
+use App\Livewire\UpdateGamePanel;
 use App\Models\Game;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Game;
 use Illuminate\Http\Client\RequestException;
@@ -54,7 +54,7 @@ class UpdateGamePanel extends Component
             $message = 'Oops - something went wrong.';
         }
 
-        return view('livewire.update-game-panel', [
+        return view('', [
             'color' => $color,
             'message' => $message,
         ]);

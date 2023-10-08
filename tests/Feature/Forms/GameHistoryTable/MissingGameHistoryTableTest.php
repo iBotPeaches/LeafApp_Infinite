@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\GameHistoryTable;
 
-use App\Http\Livewire\GameHistoryTable;
+use App\Livewire\GameHistoryTable;
 use App\Models\Player;
 use Livewire\Livewire;
 use Tests\TestCase;

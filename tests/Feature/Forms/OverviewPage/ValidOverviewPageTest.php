@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\OverviewPage;
 
 use App\Enums\Mode;
-use App\Http\Livewire\OverviewPage;
+use App\Livewire\OverviewPage;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;

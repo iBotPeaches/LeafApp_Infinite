@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\UpdateGamePanel;
 
-use App\Http\Livewire\UpdateGamePanel;
+use App\Livewire\UpdateGamePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
 use App\Models\Category;
@@ -76,7 +76,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         $this->assertDatabaseMissing('players', [
             'gamertag' => $gamertag2,
@@ -122,7 +122,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -162,7 +162,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -197,7 +197,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -234,7 +234,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -271,7 +271,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -308,7 +308,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -345,7 +345,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Queue::assertPushed(PullAppearance::class);
     }
@@ -385,7 +385,7 @@ class ValidGameUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Game updated!')
-            ->assertEmittedTo('game-page', '$refresh');
+            ->assertDispatchedTo('game-page', '$refresh');
 
         Bus::assertDispatchedTimes(PullXuid::class, 2);
     }

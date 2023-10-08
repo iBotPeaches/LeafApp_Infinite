@@ -7,7 +7,7 @@ namespace Tests\Feature\Forms\UpdatePlayerPanel;
 use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\PlayerTab;
-use App\Http\Livewire\UpdatePlayerPanel;
+use App\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
@@ -484,7 +484,7 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmitted('$refresh');
+            ->assertDispatched('$refresh');
 
         Bus::assertDispatched(PullAppearance::class);
         Bus::assertDispatched(PullMatchHistory::class, function (PullMatchHistory $job) {
@@ -680,8 +680,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('overview-page', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 1);
     }
@@ -744,8 +744,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('overview-page', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
@@ -806,8 +806,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('competitive-page', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('competitive-page', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
@@ -868,8 +868,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('game-history-table', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('game-history-table', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
@@ -930,8 +930,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('game-custom-history-table', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('game-custom-history-table', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
@@ -992,8 +992,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('game-lan-history-table', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('game-lan-history-table', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
@@ -1050,8 +1050,8 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertEmittedTo('game-lan-history-table', '$refresh')
-            ->assertEmittedTo('player-card', '$refresh');
+            ->assertDispatchedTo('game-lan-history-table', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
         $this->assertDatabaseHas('players', [

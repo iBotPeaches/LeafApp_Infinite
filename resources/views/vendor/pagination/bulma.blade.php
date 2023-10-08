@@ -1,7 +1,16 @@
+@php
+    if (! isset($scrollTo)) {
+        $scrollTo = 'body';
+    }
+
+    $scrollIntoViewJsSnippet = ($scrollTo !== false)
+        ? <<<JS
+           (\$el.closest('{$scrollTo}') || document.querySelector('{$scrollTo}')).scrollIntoView()
+        JS
+        : '';
+@endphp
 <div>
     @if ($paginator->hasPages())
-        @php(isset($this->numberOfPaginatorsRendered[$paginator->getPageName()]) ? $this->numberOfPaginatorsRendered[$paginator->getPageName()]++ : $this->numberOfPaginatorsRendered[$paginator->getPageName()] = 1)
-
         <nav class="pagination is-centered">
             @if ($paginator->onFirstPage())
                 <a class="pagination-previous" wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-dead-previous" disabled>Previous</a>

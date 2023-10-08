@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\ScrimTogglePanel;
 
-use App\Http\Livewire\ScrimTogglePanel;
+use App\Livewire\ScrimTogglePanel;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullXuid;
 use App\Models\Category;
@@ -77,6 +77,6 @@ class ValidScrimTogglePanelTest extends TestCase
             'gameIds' => [],
         ])
             ->call('createScrim')
-            ->assertEmittedTo('game-custom-history-table', 'toggleScrimMode');
+            ->assertDispatchedTo('game-custom-history-table', 'toggleScrimMode');
     }
 }
