@@ -6,6 +6,7 @@ namespace App\Support\Modes;
 
 use App\Enums\Outcome;
 use App\Models\Category;
+use App\Models\GamePlayer;
 use App\Models\Map;
 use App\Models\Player;
 use App\Models\Season;
@@ -21,11 +22,18 @@ class ModeDecorator
     {
         $sums = [];
 
+        // If we pre-query the gameIds in for the player. We can cut the next query down by millions
+        $gameIds = GamePlayer::query()
+            ->select('game_id')
+            ->where('player_id', $player->id)
+            ->pluck('game_id');
+
         $query = DB::query()
             ->from('game_players')
             ->select('outcome', 'maps.name', 'gamevariants.category_id', new Expression('COUNT(*) as total'))
             ->where('player_id', $player->id)
             ->where('playlists.is_ranked', true)
+            ->whereIn('game_id', $gameIds)
             ->join('games', 'game_players.game_id', '=', 'games.id')
             ->join('maps', 'games.map_id', '=', 'maps.id')
             ->join('gamevariants', 'games.gamevariant_id', '=', 'gamevariants.id')
@@ -60,8 +68,8 @@ class ModeDecorator
                 $modeResult->summedTotal = $sums[$modeResult->key()];
             });
 
-        $mapNames = $modes->pluck('mapName');
-        $categoryIds = $modes->pluck('categoryId');
+        $mapNames = $modes->pluck('mapName')->unique();
+        $categoryIds = $modes->pluck('categoryId')->unique();
 
         $maps = Map::query()
             ->whereIn('name', $mapNames)
