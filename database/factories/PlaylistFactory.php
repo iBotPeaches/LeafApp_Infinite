@@ -33,6 +33,11 @@ class PlaylistFactory extends Factory
                     'name' => 'Arena:CTF on Map',
                     'weight' => 110,
                 ],
+                [
+                    'name' => 'Super Husky Raid:CTF on Map',
+                    'weight' => 110,
+                ],
+
             ],
             'image_url' => $this->faker->imageUrl,
         ];
