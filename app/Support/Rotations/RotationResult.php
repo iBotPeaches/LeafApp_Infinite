@@ -28,6 +28,9 @@ class RotationResult
         [$gametypeName, $mapName] = explode(' on ', $this->name);
 
         $this->gametypeName = Str::after($gametypeName, ':');
+        if (Str::contains($gametypeName, 'Super') && ! Str::contains($this->gametypeName, 'Super')) {
+            $this->gametypeName .= ' (Super)';
+        }
         $this->mapName = $mapName;
     }
 

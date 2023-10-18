@@ -16,7 +16,7 @@ class MockPlaylistsService extends BaseMock
         return [
             'data' => [
                 $this->playlist(),
-                $this->playlist(),
+                $this->playlist('Super Husky Raid:CTF on Smallhalla'),
                 $this->playlist(),
                 $this->playlist(),
                 $this->playlist(),
@@ -30,7 +30,7 @@ class MockPlaylistsService extends BaseMock
         ];
     }
 
-    private function playlist(): array
+    private function playlist(string $name = null): array
     {
         return [
             'id' => $this->faker->uuid,
@@ -56,7 +56,7 @@ class MockPlaylistsService extends BaseMock
             ],
             'rotation' => [
                 [
-                    'name' => $this->faker->word,
+                    'name' => $name ?? $this->faker->word,
                     'weight' => $this->faker->numberBetween(100, 115),
                 ],
             ],
