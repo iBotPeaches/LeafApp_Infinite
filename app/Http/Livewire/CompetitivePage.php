@@ -39,6 +39,11 @@ class CompetitivePage extends Component
         if (! $seasonKey) {
             $season = Season::latestOfSeason((int) config('services.dotapi.competitive.season'));
             $seasonKey = $season?->key;
+
+            // Hack - 5-2 and 5-3 were pre-published, but not yet out.
+            if ($seasonKey === '5-2' || $seasonKey === '5-3') {
+                $seasonKey = '5-1';
+            }
         }
 
         return view('livewire.competitive-page', [
