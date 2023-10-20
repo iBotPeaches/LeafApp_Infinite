@@ -39,6 +39,10 @@ class CompetitivePage extends Component
         if (! $seasonKey) {
             $season = Season::latestOfSeason((int) config('services.dotapi.competitive.season'));
             $seasonKey = $season?->key;
+
+            // Hack - 5-2 and 5-3 were pre-published, but not yet out.
+            // As of now they have the same CSR Key as 5-1, so we'll just use that.
+            $seasonKey = ($seasonKey === '5-2' || $seasonKey === '5-3') ? '5-1' : $seasonKey;
         }
 
         return view('livewire.competitive-page', [
