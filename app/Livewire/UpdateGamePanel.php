@@ -41,7 +41,7 @@ class UpdateGamePanel extends Component
                 $this->game->lockForUpdate();
                 $this->game->updateFromDotApi();
             }, 3);
-            $this->dispatch(GamePage::class, '$refresh');
+            $this->dispatch('$refresh')->to(GamePage::class);
         } catch (RequestException $exception) {
             captureException($exception);
             $color = 'is-danger';

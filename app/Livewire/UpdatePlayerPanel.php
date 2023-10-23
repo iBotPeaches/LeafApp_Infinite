@@ -96,24 +96,24 @@ class UpdatePlayerPanel extends Component
     {
         switch ($this->type) {
             case PlayerTab::OVERVIEW:
-                $this->dispatch(OverviewPage::class, '$refresh');
+                $this->dispatch('$refresh')->to(OverviewPage::class);
                 break;
             case PlayerTab::COMPETITIVE:
-                $this->dispatch(CompetitivePage::class, '$refresh');
+                $this->dispatch('$refresh')->to(CompetitivePage::class);
                 break;
             case PlayerTab::MATCHES:
-                $this->dispatch(GameHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameHistoryTable::class);
                 break;
             case PlayerTab::CUSTOM:
-                $this->dispatch(GameCustomHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameCustomHistoryTable::class);
                 break;
             case PlayerTab::LAN:
-                $this->dispatch(GameLanHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameLanHistoryTable::class);
                 break;
             case PlayerTab::MODES:
-                $this->dispatch(ModePage::class, '$refresh');
+                $this->dispatch('$refresh')->to(ModePage::class);
                 break;
         }
-        $this->dispatch(PlayerCard::class, '$refresh');
+        $this->dispatch('$refresh')->to(PlayerCard::class);
     }
 }
