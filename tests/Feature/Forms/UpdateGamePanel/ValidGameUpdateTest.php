@@ -37,7 +37,6 @@ class ValidGameUpdateTest extends TestCase
             'game' => $game,
             'runUpdate' => false,
         ])
-            ->call('render')
             ->assertViewHas('color', 'is-info')
             ->assertViewHas('message', 'Checking for missing players.');
 

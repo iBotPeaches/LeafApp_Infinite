@@ -20,7 +20,6 @@ class MissingLanGameHistoryTableTest extends TestCase
         Livewire::test(GameLanHistoryTable::class, [
             'player' => $player,
         ])
-            ->call('render')
             ->assertViewHas('games');
     }
 }

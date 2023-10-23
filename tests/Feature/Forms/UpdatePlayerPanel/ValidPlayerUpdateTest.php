@@ -505,7 +505,6 @@ class ValidPlayerUpdateTest extends TestCase
             'type' => PlayerTab::OVERVIEW,
             'runUpdate' => false,
         ])
-            ->call('render')
             ->assertViewHas('color', 'is-info')
             ->assertViewHas('message', 'Checking for updated stats.');
 
@@ -527,7 +526,6 @@ class ValidPlayerUpdateTest extends TestCase
             'type' => PlayerTab::OVERVIEW,
             'runUpdate' => false,
         ])
-            ->call('render')
             ->assertViewHas('color', 'is-dark')
             ->assertViewHas('message', 'Profile was recently updated (or updating). Check back soon.');
 
@@ -550,7 +548,6 @@ class ValidPlayerUpdateTest extends TestCase
             'type' => PlayerTab::OVERVIEW,
             'runUpdate' => false,
         ])
-            ->call('render')
             ->assertViewHas('color', 'is-dark')
             ->assertViewHas('message', 'Season has ended. No more stat updates allowed.');
 
