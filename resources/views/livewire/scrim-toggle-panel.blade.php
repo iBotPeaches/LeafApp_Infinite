@@ -8,4 +8,6 @@
             @endif
         </a>
     </span>
+@elseauth
+    <span></span>
 @endauth
