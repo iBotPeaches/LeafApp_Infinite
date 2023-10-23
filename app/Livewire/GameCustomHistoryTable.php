@@ -33,7 +33,7 @@ class GameCustomHistoryTable extends Component
     /** @codeCoverageIgnore */
     public function updatedScrimGameIds(): void
     {
-        $this->emitTo(ScrimTogglePanel::class, 'syncGameIds', $this->scrimGameIds);
+        $this->dispatch(ScrimTogglePanel::class, 'syncGameIds', $this->scrimGameIds);
     }
 
     public function paginationView(): string

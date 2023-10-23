@@ -49,12 +49,12 @@ class PlayerTogglePanel extends Component
 
     private function emitToComponents(): void
     {
-        $this->emitTo(OverviewPage::class, '$refresh');
-        $this->emitTo(MedalsPage::class, '$refresh');
-        $this->emitTo(MedalsLeaderboard::class, '$refresh');
-        $this->emitTo(CompetitivePage::class, '$refresh');
+        $this->dispatch(OverviewPage::class, '$refresh');
+        $this->dispatch(MedalsPage::class, '$refresh');
+        $this->dispatch(MedalsLeaderboard::class, '$refresh');
+        $this->dispatch(CompetitivePage::class, '$refresh');
 
         // We will refresh the UpdatePlayerPanel so someone swapping between seasons can immediately get a stat update.
-        $this->emitTo(UpdatePlayerPanel::class, '$refresh');
+        $this->dispatch(UpdatePlayerPanel::class, '$refresh');
     }
 }

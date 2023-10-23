@@ -36,7 +36,7 @@ class ScrimTogglePanel extends Component
             $this->redirectRoute('scrim', $scrim);
         }
 
-        $this->emitTo(GameCustomHistoryTable::class, 'toggleScrimMode');
+        $this->dispatch(GameCustomHistoryTable::class, 'toggleScrimMode');
     }
 
     public function render(): View
