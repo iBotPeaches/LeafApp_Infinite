@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect;
 use Livewire\Component;
+
 use function Sentry\captureException;
 
 class UpdateGamePanel extends Component
