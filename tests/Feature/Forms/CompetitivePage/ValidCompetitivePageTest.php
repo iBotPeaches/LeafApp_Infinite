@@ -6,7 +6,7 @@ namespace Tests\Feature\Forms\CompetitivePage;
 
 use App\Enums\Input;
 use App\Enums\Queue;
-use App\Http\Livewire\CompetitivePage;
+use App\Livewire\CompetitivePage;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\Playlist;

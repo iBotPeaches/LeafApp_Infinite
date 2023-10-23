@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
-use App\Models\Scrim;
+use App\Models\Championship;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ScrimsTable extends Component
+class ChampionshipsTable extends Component
 {
     use WithPagination;
 
@@ -20,13 +20,12 @@ class ScrimsTable extends Component
 
     public function render(): View
     {
-        $scrims = Scrim::query()
-            ->with('user.player')
-            ->orderByDesc('created_at')
+        $championships = Championship::query()
+            ->orderByDesc('started_at')
             ->paginate();
 
-        return view('livewire.scrims-table', [
-            'scrims' => $scrims,
+        return view('livewire.championships-table', [
+            'championships' => $championships,
         ]);
     }
 }

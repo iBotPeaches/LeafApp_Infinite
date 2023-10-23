@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Player;
 use App\Rules\ValidInfiniteAccount;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class AddGamerForm extends Component
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Game;
 use Illuminate\Http\Client\RequestException;
@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect;
 use Livewire\Component;
-
 use function Sentry\captureException;
 
 class UpdateGamePanel extends Component

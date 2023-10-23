@@ -44,7 +44,8 @@
                     @include('partials.playlist.mode-breakdown', ['items' => $gametypes, 'title' => 'Gametypes'])
                 </p>
             </article>
+            @include('partials.leaderboard.common.next_refresh')
+
         </div>
     </div>
 </div>
-@include('partials.leaderboard.common.next_refresh')

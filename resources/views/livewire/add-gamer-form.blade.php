@@ -5,10 +5,10 @@
                 Add Account
             </p>
         </header>
-        <form wire:submit.prevent="submit" class="card-content">
+        <form wire:submit="submit" class="card-content">
             <div class="field has-addons">
                 <div class="control is-expanded has-icons-left @error('gamertag') has-icons-right @enderror">
-                    <input class="input @error('gamertag') is-danger @enderror" type="text" wire:model="gamertag" placeholder="Gamertag">
+                    <input class="input @error('gamertag') is-danger @enderror" type="text" wire:model.live="gamertag" placeholder="Gamertag">
                     <span class="icon is-small is-left">
                         <i class="fab fa-xbox"></i>
                     </span>
