@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\MedalsPage;
 
-use App\Http\Livewire\MedalsPage;
+use App\Livewire\MedalsPage;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Session\SeasonSession;

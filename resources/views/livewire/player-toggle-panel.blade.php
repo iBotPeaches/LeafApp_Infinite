@@ -4,7 +4,7 @@
             <span class="icon is-large is-left">
                 <i class="fas fa-box"></i>
             </span>
-            <select wire:model="seasonKey" wire:change="onSeasonChange">
+            <select wire:model.live="seasonKey" wire:change="onSeasonChange">
                 @foreach ($seasons as $seasonModel)
                     <option value="{{ $seasonModel->key }}">
                         {{ $seasonModel->season_id }}-{{ $seasonModel->name }}
@@ -20,7 +20,7 @@
                 <span class="icon is-large is-left">
                     <i class="fas fa-globe"></i>
                 </span>
-                <select wire:model="playerType" wire:change="onChange">
+                <select wire:model.live="playerType" wire:change="onChange">
                     <option value="{{ App\Enums\Mode::MATCHMADE_RANKED }}">Ranked Only</option>
                     <option value="{{ App\Enums\Mode::MATCHMADE_PVP }}">All PVP</option>
                 </select>

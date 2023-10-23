@@ -90,5 +90,5 @@ use App\Support\Analytics\Stats\MostXpPlayer;
             <a href="{{ $analyticClass->displayExportUrl(1000) }}" rel="nofollow">top 1,000</a>.
         </div>
     @endif
+    @include('partials.leaderboard.common.next_refresh')
 </div>
-@include('partials.leaderboard.common.next_refresh')

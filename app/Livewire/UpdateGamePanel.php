@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Game;
 use Illuminate\Http\Client\RequestException;
@@ -41,7 +41,7 @@ class UpdateGamePanel extends Component
                 $this->game->lockForUpdate();
                 $this->game->updateFromDotApi();
             }, 3);
-            $this->emitTo(GamePage::class, '$refresh');
+            $this->dispatch('$refresh')->to(GamePage::class);
         } catch (RequestException $exception) {
             captureException($exception);
             $color = 'is-danger';

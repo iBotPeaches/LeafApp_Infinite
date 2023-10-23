@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Jobs\ProcessScrim;
 use App\Models\Scrim;
@@ -36,7 +36,7 @@ class ScrimTogglePanel extends Component
             $this->redirectRoute('scrim', $scrim);
         }
 
-        $this->emitTo(GameCustomHistoryTable::class, 'toggleScrimMode');
+        $this->dispatch('toggleScrimMode')->to(GameCustomHistoryTable::class);
     }
 
     public function render(): View

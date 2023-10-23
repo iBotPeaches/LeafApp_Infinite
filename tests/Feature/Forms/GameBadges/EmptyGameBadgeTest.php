@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms;
 
-use App\Http\Livewire\GameBadges;
+use App\Livewire\GameBadges;
 use App\Models\Game;
 use Livewire\Livewire;
 use Tests\TestCase;

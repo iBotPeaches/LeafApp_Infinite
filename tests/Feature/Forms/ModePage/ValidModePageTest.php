@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\ModePage;
 
 use App\Enums\Outcome;
-use App\Http\Livewire\ModePage;
+use App\Livewire\ModePage;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use App\Models\Season;

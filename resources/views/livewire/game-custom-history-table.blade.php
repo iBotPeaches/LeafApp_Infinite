@@ -68,7 +68,7 @@
                         </td>
                         @if ($isScrimEditor)
                             <td>
-                                <input type="checkbox" wire:model="scrimGameIds" value="{{ $game->id }}">
+                                <input type="checkbox" wire:model.live="scrimGameIds" value="{{ $game->id }}">
                             </td>
                         @endif
                     </tr>

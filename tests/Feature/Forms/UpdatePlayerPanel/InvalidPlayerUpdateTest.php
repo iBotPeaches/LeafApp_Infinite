@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\UpdatePlayerPanel;
 
 use App\Enums\PlayerTab;
-use App\Http\Livewire\UpdatePlayerPanel;
 use App\Jobs\PullAppearance;
+use App\Livewire\UpdatePlayerPanel;
 use App\Models\Category;
 use App\Models\Level;
 use App\Models\Player;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Forms\AddGamer;
 
-use App\Http\Livewire\AddGamerForm;
+use App\Livewire\AddGamerForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;

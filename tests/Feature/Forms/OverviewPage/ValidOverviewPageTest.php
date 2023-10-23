@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\OverviewPage;
 
 use App\Enums\Mode;
-use App\Http\Livewire\OverviewPage;
+use App\Livewire\OverviewPage;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;
@@ -56,7 +56,6 @@ class ValidOverviewPageTest extends TestCase
         Livewire::test(OverviewPage::class, [
             'player' => $player,
         ])
-            ->call('render')
             ->assertViewHas('serviceRecord')
             ->assertSee('Warning - Account Private')
             ->assertDontSee('Quick Peek')

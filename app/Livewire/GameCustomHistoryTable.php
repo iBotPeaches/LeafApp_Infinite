@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Player;
 use Illuminate\View\View;
@@ -33,7 +33,7 @@ class GameCustomHistoryTable extends Component
     /** @codeCoverageIgnore */
     public function updatedScrimGameIds(): void
     {
-        $this->emitTo(ScrimTogglePanel::class, 'syncGameIds', $this->scrimGameIds);
+        $this->dispatch('syncGameIds', $this->scrimGameIds)->to(ScrimTogglePanel::class);
     }
 
     public function paginationView(): string

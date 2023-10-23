@@ -1,5 +1,5 @@
+<span>
 @auth
-    <span>
         | <a class="is-small" wire:click="createScrim">
             create scrim
 
@@ -7,5 +7,5 @@
                 ({{ $gameCount }})
             @endif
         </a>
-    </span>
 @endauth
+</span>

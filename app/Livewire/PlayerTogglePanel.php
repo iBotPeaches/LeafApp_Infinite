@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Season;
 use App\Support\Session\ModeSession;
@@ -49,12 +49,12 @@ class PlayerTogglePanel extends Component
 
     private function emitToComponents(): void
     {
-        $this->emitTo(OverviewPage::class, '$refresh');
-        $this->emitTo(MedalsPage::class, '$refresh');
-        $this->emitTo(MedalsLeaderboard::class, '$refresh');
-        $this->emitTo(CompetitivePage::class, '$refresh');
+        $this->dispatch('$refresh')->to(OverviewPage::class);
+        $this->dispatch('$refresh')->to(MedalsPage::class);
+        $this->dispatch('$refresh')->to(MedalsLeaderboard::class);
+        $this->dispatch('$refresh')->to(CompetitivePage::class);
 
         // We will refresh the UpdatePlayerPanel so someone swapping between seasons can immediately get a stat update.
-        $this->emitTo(UpdatePlayerPanel::class, '$refresh');
+        $this->dispatch('$refresh')->to(UpdatePlayerPanel::class);
     }
 }

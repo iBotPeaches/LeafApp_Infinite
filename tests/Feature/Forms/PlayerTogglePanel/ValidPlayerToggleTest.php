@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\PlayerTogglePanel;
 
 use App\Enums\Mode;
-use App\Http\Livewire\PlayerTogglePanel;
+use App\Livewire\PlayerTogglePanel;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Livewire\Livewire;
@@ -22,8 +22,8 @@ class ValidPlayerToggleTest extends TestCase
             'playerType' => Mode::MATCHMADE_PVP,
         ])
             ->call('onChange')
-            ->assertEmittedTo('overview-page', '$refresh')
-            ->assertEmittedTo('medals-page', '$refresh');
+            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('medals-page', '$refresh');
 
         $mode = ModeSession::get();
         $this->assertEquals(Mode::MATCHMADE_PVP(), $mode);
@@ -37,8 +37,8 @@ class ValidPlayerToggleTest extends TestCase
         Livewire::test(PlayerTogglePanel::class)
             ->set('seasonKey', '1-1')
             ->call('onSeasonChange')
-            ->assertEmittedTo('overview-page', '$refresh')
-            ->assertEmittedTo('medals-page', '$refresh');
+            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('medals-page', '$refresh');
 
         $this->assertEquals('1-1', SeasonSession::get());
     }

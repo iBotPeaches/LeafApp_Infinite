@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Enums\PlayerTab;
 use App\Models\Player;
@@ -96,24 +96,24 @@ class UpdatePlayerPanel extends Component
     {
         switch ($this->type) {
             case PlayerTab::OVERVIEW:
-                $this->emitTo(OverviewPage::class, '$refresh');
+                $this->dispatch('$refresh')->to(OverviewPage::class);
                 break;
             case PlayerTab::COMPETITIVE:
-                $this->emitTo(CompetitivePage::class, '$refresh');
+                $this->dispatch('$refresh')->to(CompetitivePage::class);
                 break;
             case PlayerTab::MATCHES:
-                $this->emitTo(GameHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameHistoryTable::class);
                 break;
             case PlayerTab::CUSTOM:
-                $this->emitTo(GameCustomHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameCustomHistoryTable::class);
                 break;
             case PlayerTab::LAN:
-                $this->emitTo(GameLanHistoryTable::class, '$refresh');
+                $this->dispatch('$refresh')->to(GameLanHistoryTable::class);
                 break;
             case PlayerTab::MODES:
-                $this->emitTo(ModePage::class, '$refresh');
+                $this->dispatch('$refresh')->to(ModePage::class);
                 break;
         }
-        $this->emitTo(PlayerCard::class, '$refresh');
+        $this->dispatch('$refresh')->to(PlayerCard::class);
     }
 }
