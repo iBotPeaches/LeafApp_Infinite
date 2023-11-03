@@ -2,7 +2,7 @@
 /** @var App\Models\Rank $rank */
 ?>
 <article class="column">
-    <div class="notification is-flex is-light is-info">
+    <div class="notification is-flex is-light {{ $rank->threshold > $player?->xp ? 'is-danger' : 'is-success' }}">
         <figure class="media-left">
             <p class="image is-32x32">
                 <img src="{{ $rank->icon }}" alt="{{ $rank->name }}"/>
