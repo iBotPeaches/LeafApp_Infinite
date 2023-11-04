@@ -15,7 +15,7 @@
                         {{ $rank->name }}
                     </span>
                     <span class="is-clipped" style="display: block;">
-                        {{ number_format($rank->threshold, 0) }}
+                        {{ number_format($rank->threshold) }}
                     </span>
                 </p>
             </div>
