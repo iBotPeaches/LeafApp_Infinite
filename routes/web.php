@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\RankController;
 use App\Http\Controllers\ScrimController;
 use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +66,9 @@ Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Playlists
 Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name('playlist');
+
+// Ranks
+Route::get('/ranks', RankController::class)->name('ranks');
 
 // Auth
 Route::redirect('/login', '/auth/google/redirect')->name('login');

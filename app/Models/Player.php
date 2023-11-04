@@ -58,6 +58,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read string $percentage_next_rank_color
  * @property-read int $xp_towards_next_rank
  * @property-read int $xp_required_for_next_rank
+ * @property-read string $percent_progress_to_hero
  * @property-read Collection<int, Game> $games
  * @property-read Collection<int, Csr> $csrs
  * @property-read Collection<int, MatchupPlayer> $faceitPlayers
@@ -166,6 +167,11 @@ class Player extends Model implements HasDotApi, Sitemapable
     public function getXpRequiredForNextRankAttribute(): int
     {
         return $this->nextRank?->required ?? 100;
+    }
+
+    public function getPercentProgressToHeroAttribute(): string
+    {
+        return number_format(($this->xp / 9_319_350) * 100, 2);
     }
 
     public function getPercentageNextRankColorAttribute(): string
