@@ -1439,7 +1439,7 @@ __metadata:
     resolve-url-loader: ^5.0.0
     sass: ^1.69.5
     vite: ^4.5.0
-    vite-plugin-manifest-sri: ^0.1.0
+    vite-plugin-manifest-sri: ^0.2.0
   languageName: unknown
   linkType: soft
 
@@ -1678,10 +1678,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-manifest-sri@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "vite-plugin-manifest-sri@npm:0.1.0"
-  checksum: fbbba255dae0f07c58290e7eadca7ec636b3c850e3130aa82a1573d14194c59e1434e7c89214f7bb78987372e9584a33eaeec6b439f65fb9107dd45a9b9fc0f0
+"vite-plugin-manifest-sri@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "vite-plugin-manifest-sri@npm:0.2.0"
+  checksum: f76b8cd176ba58a6dc6ec90527bd64c2d31bfbe6d215f4f4ebb2fd85f28503398a54e5d6fc9c8cc098ab11b92f34b9cd07017e6d8ec051379c69833036eb4803
   languageName: node
   linkType: hard
 
