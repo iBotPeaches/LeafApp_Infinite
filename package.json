@@ -17,5 +17,5 @@
         "vite": "^4.5.0",
         "vite-plugin-manifest-sri": "^0.2.0"
     },
-    "packageManager": "yarn@3.5.0"
+    "packageManager": "yarn@4.0.2"
 }
