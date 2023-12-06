@@ -4,7 +4,6 @@ namespace Deployer;
 
 require 'recipe/laravel.php';
 require 'contrib/php-fpm.php';
-require 'contrib/yarn.php';
 
 set('application', 'Leafapp');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
@@ -25,7 +24,7 @@ task('deploy', [
     'artisan:view:cache',
     'artisan:migrate',
     'artisan:storage:link',
-    'yarn:local:upload',
+    'npm:local:upload',
     'artisan:horizon:assets',
     'app:version:file',
     'app:sentry:version',
@@ -35,7 +34,7 @@ task('deploy', [
     'artisan:horizon:terminate',
 ]);
 
-task('yarn:local:upload', function () {
+task('npm:local:upload', function () {
     upload('public/build', '{{release_or_current_path}}/public');
 });
 

@@ -39,14 +39,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'yarn'
+          node-version: '16'
+          cache: 'npm'
 
       - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      - name: Install Yarn Dependencies
-        run: yarn install
+      - name: Install NPM Dependencies
+        run: npm ci
 
       - name: Generate key
         run: php artisan key:generate
@@ -55,7 +55,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Asset Packaging
-        run: yarn run build
+        run: npm run build
 
       - name: Asset Storage Link
         run: php artisan storage:link

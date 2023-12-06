@@ -4,7 +4,7 @@ ARG HOST_UID
 RUN usermod -u $HOST_UID www-data
 
 # Setup node repo
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 
 # Install system dependencies
 #  * git zip unzip - Required by Composer
@@ -15,9 +15,6 @@ RUN apt update && apt install -y git zip unzip mariadb-client nodejs libicu-dev
 
 # Clear apt cache
 RUN apt clean && rm -rf /var/lib/apt/lists/*
-
-# Install yarn
-RUN npm install -g yarn
 
 # Install PHP extensions
 #  * bcmath pdo_mysql intl - Required by laravel/framework
