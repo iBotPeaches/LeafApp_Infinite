@@ -13,10 +13,10 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. Set the database hostname in `.env` like `DB_HOST=leaf-db`
 1. `HOST_UID=$(id -u) docker compose --env-file .env -p leaf -f docker/docker-compose.yml up -d`
 1. `docker exec -it leaf-php composer install`
-1. `docker exec -it leaf-php yarn install`
+1. `docker exec -it leaf-php npm ci`
 1. `docker exec -it leaf-php php artisan key:generate`
 1. `docker exec -it leaf-php php artisan migrate`
-1. `docker exec -it leaf-php yarn run dev`
+1. `docker exec -it leaf-php npm run dev`
 
 * Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 * MariaDB container's port 3306 is mapped to the host.
@@ -24,15 +24,15 @@ A docker-based infrastructure is available for development. If you wish to run d
 
 ### Setup
 1. PHP8.2
-1. Node + Yarn installed
+1. Node + NPM installed
 1. MariaDB 10.4+
 1. [Composer](https://getcomposer.org/) installed.
 1. `cp .env.example .env`
 1. `composer install`
-1. `yarn install`
+1. `npm ci`
 1. `php artisan key:generate`
 1. `php artisan migrate`
-1. `yarn run dev`
+1. `npm run dev`
 1. `php artisan serve`
 
 ### Contributions

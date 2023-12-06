@@ -19,8 +19,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '14'
-          cache: 'yarn'
+          node-version: '16'
+          cache: 'npm'
 
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -28,11 +28,11 @@ jobs:
       - name: Set version file
         run: echo "${GITHUB_REF#refs/*/}" > VERSION
 
-      - name: Install Yarn Dependencies
-        run: yarn install
+      - name: Install NPM Dependencies
+        run: npm ci
 
       - name: Asset Packaging
-        run: yarn run build
+        run: npm run build
 
       - name: Deploy
         uses: deployphp/action@v1
