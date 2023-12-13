@@ -223,7 +223,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         $this->xuid = $client->xuid($this->url_safe_gamertag);
     }
 
-    public function updateFromDotApi(bool $forceUpdate = false, string $type = null): void
+    public function updateFromDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
         $seasonModel = SeasonSession::model();
 
@@ -285,7 +285,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         }
     }
 
-    public function currentRanked(string $seasonKey = null, bool $isCurrentOrAll = true): Collection
+    public function currentRanked(?string $seasonKey = null, bool $isCurrentOrAll = true): Collection
     {
         $query = $this->csrs()
             ->where('season_key', $seasonKey)
@@ -300,7 +300,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         return $query->get();
     }
 
-    public function seasonHighRanked(string $seasonKey = null): Collection
+    public function seasonHighRanked(?string $seasonKey = null): Collection
     {
         return $this->csrs()
             ->where('season_key', $seasonKey)

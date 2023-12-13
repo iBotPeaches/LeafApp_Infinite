@@ -18,7 +18,7 @@ class ModeDecorator
 {
     public Collection $modes;
 
-    public function __construct(Player $player, Season $season = null)
+    public function __construct(Player $player, ?Season $season = null)
     {
         $sums = [];
 
