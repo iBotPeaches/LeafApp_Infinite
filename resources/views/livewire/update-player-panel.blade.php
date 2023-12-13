@@ -11,6 +11,12 @@
             >
                 Request Stat Update
             </button>
+            <small wire:loading.remove>
+                last updated:
+                <time class="local-date" datetime="{{ $player->updated_at->toIso8601ZuluString() }}">
+                    {{ $player->updated_at->toDayDateTimeString() }} (UTC)
+                </time>
+            </small>
         @else
             {{ $message }}
         @endif

@@ -11,7 +11,7 @@ function parseLocalDates()
     if ($dates.length > 0) {
         $dates.forEach(el => {
             const date = new Date(el.getAttribute('datetime'));
-            el.innerHTML = date.toDateString() + '<br>' + date.toLocaleTimeString();
+            el.innerHTML = date.toDateString() + '&nbsp;' + date.toLocaleTimeString();
         });
     }
 }
