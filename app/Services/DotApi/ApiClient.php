@@ -58,7 +58,7 @@ class ApiClient implements InfiniteInterface
         return $player;
     }
 
-    public function competitive(Player $player, string $seasonCsrKey = null): ?Csr
+    public function competitive(Player $player, ?string $seasonCsrKey = null): ?Csr
     {
         // Handle when -1 (no season) is sent here.
         $season = $seasonCsrKey === SeasonSession::$allSeasonKey ? null : $seasonCsrKey;
@@ -226,7 +226,7 @@ class ApiClient implements InfiniteInterface
         return Rank::all();
     }
 
-    public function serviceRecord(Player $player, string $seasonIdentifier = null): ?ServiceRecord
+    public function serviceRecord(Player $player, ?string $seasonIdentifier = null): ?ServiceRecord
     {
         $url = "stats/multiplayer/players/{$player->url_safe_gamertag}/service-record/matchmade/";
         $season = $seasonIdentifier === SeasonSession::$allSeasonKey ? null : $seasonIdentifier;

@@ -8,7 +8,7 @@ use Tests\Mocks\BaseMock;
 
 class MockChampionshipService extends BaseMock
 {
-    public function success(string $championshipId = null): array
+    public function success(?string $championshipId = null): array
     {
         $championshipId ??= $this->faker->uuid;
 

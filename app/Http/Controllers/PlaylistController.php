@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PlaylistController extends Controller
 {
-    public function index(Request $request, Playlist $playlist = null): View
+    public function index(Request $request, ?Playlist $playlist = null): View
     {
         /** @var Playlist|null $playlist */
         $playlist ??= Playlist::query()

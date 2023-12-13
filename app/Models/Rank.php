@@ -65,7 +65,7 @@ class Rank extends Model implements HasDotApi
         return implode(' ', $title);
     }
 
-    public static function fromDotApi(array $payload, Rank $previous = null): ?self
+    public static function fromDotApi(array $payload, ?Rank $previous = null): ?self
     {
         $rankId = Arr::get($payload, 'rank');
 

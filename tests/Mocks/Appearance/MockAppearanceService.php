@@ -12,7 +12,7 @@ class MockAppearanceService extends BaseMock
 {
     use HasErrorFunctions, HasProxiedImageUrls;
 
-    public function success(string $gamertag = null, string $emblemName = null, string $backdropName = null): array
+    public function success(?string $gamertag = null, ?string $emblemName = null, ?string $backdropName = null): array
     {
         $emblemName ??= 'images/file/progression/Inventory/Emblems/olympus_nicekitty_emblem.png';
         $nameplateName = 'images/nameplates/104-001-olympus-nicek-3112937b_n1405407205.png';
@@ -37,7 +37,7 @@ class MockAppearanceService extends BaseMock
         ];
     }
 
-    public function invalidSuccess(string $gamertag = null): array
+    public function invalidSuccess(?string $gamertag = null): array
     {
         return [
             'data' => [

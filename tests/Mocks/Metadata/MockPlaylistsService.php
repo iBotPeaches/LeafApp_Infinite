@@ -30,7 +30,7 @@ class MockPlaylistsService extends BaseMock
         ];
     }
 
-    private function playlist(string $name = null): array
+    private function playlist(?string $name = null): array
     {
         return [
             'id' => $this->faker->uuid,

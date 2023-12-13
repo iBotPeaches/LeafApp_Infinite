@@ -40,7 +40,7 @@ class MedalAnalytic extends Model
         'id',
     ];
 
-    public static function purgeSeason(Medal $medal, Season $season = null): void
+    public static function purgeSeason(Medal $medal, ?Season $season = null): void
     {
         $query = self::query()
             ->where('medal_id', $medal->id);

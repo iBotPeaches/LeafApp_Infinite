@@ -33,7 +33,7 @@ class Season extends Model implements HasDotApi
 
     public $timestamps = false;
 
-    public static function ofSeasonIdentifierOrKey(string $key = null): ?self
+    public static function ofSeasonIdentifierOrKey(?string $key = null): ?self
     {
         if (! $key) {
             return null;
