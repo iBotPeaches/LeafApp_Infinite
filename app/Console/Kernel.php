@@ -37,11 +37,6 @@ class Kernel extends ConsoleKernel
             ->dailyAt('3:01')
             ->timezone('America/New_York');
 
-        $schedule->command(RefreshAnalytics::class, ['MostXpPlayer'])
-            ->withoutOverlapping()
-            ->everyThirtyMinutes()
-            ->timezone('America/New_York');
-
         $schedule->command('horizon:snapshot')
             ->everyFiveMinutes();
     }
