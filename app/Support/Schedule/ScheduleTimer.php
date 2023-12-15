@@ -18,8 +18,6 @@ class ScheduleTimer implements ScheduleTimerInterface
 
     public ?Carbon $medalRefreshDate = null;
 
-    public ?Carbon $topTenXpDate = null;
-
     public function __construct()
     {
         // We must load the Console Kernel, as it contains information about our Scheduled Jobs
@@ -38,10 +36,6 @@ class ScheduleTimer implements ScheduleTimerInterface
 
             if (Str::contains((string) $event->command, 'analytics:medals:refresh')) {
                 $this->medalRefreshDate = $event->nextRunDate();
-            }
-
-            if (Str::contains((string) $event->command, 'MostXpPlayer')) {
-                $this->topTenXpDate = $event->nextRunDate();
             }
         });
     }
