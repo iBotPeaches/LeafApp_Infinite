@@ -71,7 +71,7 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse --xdebug
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: coverage-html
