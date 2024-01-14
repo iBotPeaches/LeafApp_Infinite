@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  * @method static static ROUND_ROBIN()
  * @method static static DOUBLE_ELIM()
  * @method static static STAGE()
+ * @method static static SWISS()
  */
 final class ChampionshipType extends Enum implements LocalizedEnum
 {
@@ -22,6 +23,8 @@ final class ChampionshipType extends Enum implements LocalizedEnum
 
     const BRACKET = 4;
 
+    const SWISS = 5;
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match ($enumKeyOrValue) {
@@ -29,6 +32,7 @@ final class ChampionshipType extends Enum implements LocalizedEnum
             'doubleElimination' => self::DOUBLE_ELIM,
             'stage' => self::STAGE,
             'bracket' => self::BRACKET,
+            'swiss' => self::SWISS,
             default => $enumKeyOrValue
         };
 
@@ -43,5 +47,10 @@ final class ChampionshipType extends Enum implements LocalizedEnum
     public function isPoolPlay(): bool
     {
         return $this->is(ChampionshipType::ROUND_ROBIN());
+    }
+
+    public function isSwiss(): bool
+    {
+        return $this->is(ChampionshipType::SWISS());
     }
 }
