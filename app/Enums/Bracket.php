@@ -17,6 +17,8 @@ use BenSampo\Enum\Enum;
  * @method static static POOL_C()
  * @method static static POOL_D()
  * @method static static RULES()
+ * @method static static MATCHES()
+ * @method static static SUMMARY()
  */
 final class Bracket extends Enum implements LocalizedEnum
 {
@@ -38,10 +40,14 @@ final class Bracket extends Enum implements LocalizedEnum
 
     const RULES = 'rules';
 
+    const MATCHES = 'matches';
+
+    const SUMMARY = 'summary';
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match ($enumKeyOrValue) {
-            1, self::POOL_A => self::WINNERS,
+            1, self::POOL_A , self::MATCHES => self::WINNERS,
             2, self::POOL_B => self::LOSERS,
             3, self::POOL_C => self::GRAND,
             4, self::POOL_D => self::OTHER,
@@ -55,7 +61,7 @@ final class Bracket extends Enum implements LocalizedEnum
     public function toNumerical(): ?int
     {
         return match ((string) $this->value) {
-            self::WINNERS => 1,
+            self::WINNERS, self::MATCHES => 1,
             self::LOSERS => 2,
             self::GRAND => 3,
             self::OTHER => 4,

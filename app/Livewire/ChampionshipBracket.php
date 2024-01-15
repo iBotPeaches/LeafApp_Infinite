@@ -36,10 +36,13 @@ class ChampionshipBracket extends Component
                 return $row->count();
             });
 
-        $roundMatchups = $this->championship->matchups
-            ->where('group', $bracketEnum->toNumerical());
+        $roundMatchups = $this->championship->matchups;
 
-        $brackets = new BracketDecorator($roundMatchups);
+        if (! $bracketEnum->is(Bracket::SUMMARY())) {
+            $roundMatchups = $roundMatchups->where('round', $this->round);
+        }
+
+        $brackets = new BracketDecorator($bracketEnum, $roundMatchups);
 
         return view('livewire.championship-bracket', [
             'summary' => $brackets->data,
