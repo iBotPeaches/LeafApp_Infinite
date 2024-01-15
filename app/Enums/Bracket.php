@@ -18,6 +18,7 @@ use BenSampo\Enum\Enum;
  * @method static static POOL_D()
  * @method static static RULES()
  * @method static static MATCHES()
+ * @method static static SUMMARY()
  */
 final class Bracket extends Enum implements LocalizedEnum
 {
@@ -40,6 +41,8 @@ final class Bracket extends Enum implements LocalizedEnum
     const RULES = 'rules';
 
     const MATCHES = 'matches';
+
+    const SUMMARY = 'summary';
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {

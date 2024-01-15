@@ -26,6 +26,10 @@
                     {{ $championship->description }}
                 </x-markdown>
             </div>
+        @elseif ($bracket === App\Enums\Bracket::SUMMARY)
+            <div class="column">
+                @include('partials.hcs.bracket_table.summary')
+            </div>
         @else
             <div class="column is-one-fifth">
                 @if ($championship->status?->is(App\Enums\FaceItStatus::CANCELLED))

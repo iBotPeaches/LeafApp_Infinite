@@ -10,6 +10,12 @@
                 <span>Matches</span>
             </a>
         </li>
+        <li class="<?= $bracket === App\Enums\Bracket::SUMMARY ? 'is-active' : null; ?>">
+            <a href="<?= route('championship', [$championship, App\Enums\Bracket::SUMMARY]); ?>">
+                <span class="icon is-small"><i class="fas fa-trophy" aria-hidden="true"></i></span>
+                <span>Summary</span>
+            </a>
+        </li>
         @if ($championship->description)
             <li class="<?= $bracket === App\Enums\Bracket::RULES ? 'is-active' : null; ?>">
                 <a href="<?= route('championship', [$championship, App\Enums\Bracket::RULES]); ?>">

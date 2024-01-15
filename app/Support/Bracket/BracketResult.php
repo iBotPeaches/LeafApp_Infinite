@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Bracket;
 
+use App\Enums\Bracket;
 use App\Enums\Outcome;
 use App\Models\MatchupTeam;
 
@@ -15,7 +16,7 @@ class BracketResult
 
     public int $points = 0;
 
-    public function __construct(public MatchupTeam $matchupTeam)
+    public function __construct(public Bracket $bracket, public MatchupTeam $matchupTeam)
     {
         //
     }
