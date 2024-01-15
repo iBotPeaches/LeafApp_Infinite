@@ -89,6 +89,44 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
+    public function testLoadingMatchupPageForSwiss(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $championship = Championship::factory()->createOne([
+            'type' => ChampionshipType::SWISS,
+        ]);
+
+        $matchup = Matchup::factory()
+            ->createOne([
+                'championship_id' => $championship->id,
+            ]);
+
+        MatchupTeam::factory()->createOne([
+            'outcome' => Outcome::WIN,
+            'matchup_id' => $matchup->id,
+        ]);
+
+        MatchupTeam::factory()->createOne([
+            'outcome' => Outcome::LOSS,
+            'matchup_id' => $matchup->id,
+        ]);
+
+        $matchupGame = MatchupGame::factory()
+            ->for(Game::factory()->has(GamePlayer::factory(), 'players'))
+            ->createOne([
+                'matchup_id' => $matchup->id,
+            ]);
+
+        // Act
+        $response = $this->get(route('matchup', [$matchup->championship, $matchup]));
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('championship-matchup');
+    }
+
     public function testLoadingMatchupPageWithNoData(): void
     {
         // Arrange

@@ -158,6 +158,20 @@ class HcsBracketPageTest extends TestCase
                     'type' => ChampionshipType::BRACKET,
                 ],
             ],
+            [
+                'round' => 1,
+                'group' => Bracket::MATCHES,
+                'attributes' => [
+                    'type' => ChampionshipType::SWISS,
+                ],
+            ],
+            [
+                'round' => 1,
+                'group' => Bracket::SUMMARY,
+                'attributes' => [
+                    'type' => ChampionshipType::SWISS,
+                ],
+            ],
         ];
     }
 }
