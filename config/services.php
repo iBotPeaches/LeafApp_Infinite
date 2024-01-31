@@ -38,8 +38,8 @@ return [
         'version' => env('DOTAPI_VERSION', '2023-06-24'),
         'cooldown' => env('DOTAPI_COOLDOWN', 120),
         'competitive' => [
-            'key' => env('DOTAPI_CURRENT_SEASON_KEY', '5-1'),
-            'season' => env('DOTAPI_CURRENT_SEASON', 5),
+            'key' => env('DOTAPI_CURRENT_SEASON_KEY', '6-1'),
+            'season' => env('DOTAPI_CURRENT_SEASON', 6),
         ],
         'warning_message' => env('DOTAPI_WARNING_MESSAGE'),
     ],
