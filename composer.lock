@@ -2146,16 +2146,16 @@
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.22.0",
+            "version": "v5.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "151f7fc544fd7711499512b736b30036dfaa5bc0"
+                "reference": "8618d65fad70308b8a5e438c4cfc0a1c6c14eea6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/151f7fc544fd7711499512b736b30036dfaa5bc0",
-                "reference": "151f7fc544fd7711499512b736b30036dfaa5bc0",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/8618d65fad70308b8a5e438c4cfc0a1c6c14eea6",
+                "reference": "8618d65fad70308b8a5e438c4cfc0a1c6c14eea6",
                 "shasum": ""
             },
             "require": {
@@ -2165,7 +2165,7 @@
                 "illuminate/contracts": "^8.17|^9.0|^10.0|^11.0",
                 "illuminate/queue": "^8.17|^9.0|^10.0|^11.0",
                 "illuminate/support": "^8.17|^9.0|^10.0|^11.0",
-                "nesbot/carbon": "^2.17",
+                "nesbot/carbon": "^2.17|^3.0",
                 "php": "^7.3|^8.0",
                 "ramsey/uuid": "^4.0",
                 "symfony/error-handler": "^5.0|^6.0|^7.0",
@@ -2218,9 +2218,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.22.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.22.1"
             },
-            "time": "2024-01-16T15:06:40+00:00"
+            "time": "2024-01-30T03:04:51+00:00"
         },
         {
             "name": "laravel/prompts",
