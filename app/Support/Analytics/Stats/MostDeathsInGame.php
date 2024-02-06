@@ -53,7 +53,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
             ->whereNotNull('games.playlist_id')
-            ->where('playlists.uuid', '!=', config('services.halo.playlists.bot-bootcamp'))
+            ->whereNotIn('playlists.uuid', $this->getPlaylistsToIgnore())
             ->orderByDesc($this->property())
             ->limit($limit)
             ->get();
