@@ -181,7 +181,7 @@ return [
             'maxJobs' => 0,
             'memory' => 2048,
             'tries' => 1,
-            'timeout' => 1024,
+            'timeout' => 3600,
             'nice' => 0,
         ],
         'xuid' => [
@@ -195,7 +195,7 @@ return [
             'maxJobs' => 0,
             'memory' => 256,
             'tries' => 1,
-            'timeout' => 15,
+            'timeout' => 60,
             'nice' => 0,
         ],
     ],
