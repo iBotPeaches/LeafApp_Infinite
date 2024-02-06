@@ -73,6 +73,8 @@ return [
     'halo' => [
         'playlists' => [
             'bot-bootcamp' => env('HALO_PLAYLISTS_BOT_BOOTCAMP', 'a446725e-b281-414c-a21e-31b8700e95a1'),
+            'firefight-koth' => env('HALO_PLAYLISTS_FF_KOTH', '96aedf55-1c7e-46d5-bdaf-19a1329fb95d'),
+            'firefight-heroic' => env('HALO_PLAYLISTS_FF_HEROIC', 'd8ac67e8-647c-4602-8af0-f42012ba8dd8'),
         ],
         'botfarmer_threshold' => env('HALO_BOTFARMER_THRESHOLD', .50),
     ],
