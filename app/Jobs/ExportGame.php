@@ -16,6 +16,8 @@ class ExportGame implements ShouldQueue
 
     public static array $header = [
         'Date',
+        'SeasonNumber',
+        'SeasonVersion',
         'Player',
         'MatchId',
         'Map',
@@ -72,6 +74,8 @@ class ExportGame implements ShouldQueue
 
             $this->data[] = [
                 $this->game->occurred_at->toIso8601ZuluString(),
+                $this->game->season_number,
+                $this->game->season_version,
                 $gamePlayer->player->gamertag,
                 $this->game->uuid,
                 $this->game->map->name,
