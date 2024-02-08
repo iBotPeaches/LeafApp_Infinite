@@ -22,6 +22,8 @@ class ExportGameHistory implements ShouldQueue
 
     public static array $header = [
         'Date',
+        'SeasonNumber',
+        'SeasonVersion',
         'Player',
         'MatchId',
         'Map',
@@ -128,6 +130,8 @@ class ExportGameHistory implements ShouldQueue
 
                     $this->data[] = [
                         $gamePlayer->game->occurred_at->toDateTimeString(),
+                        $gamePlayer->game->season_number,
+                        $gamePlayer->game->season_version,
                         $gamePlayer->player->gamertag,
                         $gamePlayer->game->uuid,
                         $gamePlayer->game->map->name,
