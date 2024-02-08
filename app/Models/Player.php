@@ -272,6 +272,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         $firefightUuids = [
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
+            config('services.halo.playlists.firefight-legendary'),
         ];
 
         // Check for "Bot Farmer" status - aka a ton of Bot Bootcamp
