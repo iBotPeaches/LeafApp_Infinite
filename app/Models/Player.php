@@ -267,11 +267,19 @@ class Player extends Model implements HasDotApi, Sitemapable
 
         $client->careerRank($this);
 
+        // We will ignore Firefight from this calculation as FF medals are ignored in the Service Record.
+        // Thus including FF matches would skew the data in detection of a "Bot Farmer".
+        $firefightUuids = [
+            config('services.halo.playlists.firefight-koth'),
+            config('services.halo.playlists.firefight-heroic'),
+        ];
+
         // Check for "Bot Farmer" status - aka a ton of Bot Bootcamp
         $playlistBreakdown = DB::query()
             ->from('game_players')
             ->select('playlists.name', new Expression('COUNT(*) as total'))
             ->where('player_id', $this->id)
+            ->whereNotIn('playlists.uuid', $firefightUuids)
             ->join('games', 'game_players.game_id', '=', 'games.id')
             ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->groupBy('playlists.name')
