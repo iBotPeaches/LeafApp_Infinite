@@ -80,16 +80,16 @@
         },
         {
             "name": "bensampo/laravel-enum",
-            "version": "v6.9.1",
+            "version": "v6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "140fcd13002a42b9e5b41083fee4544eaac8bc6f"
+                "reference": "00217d6ff1d70428193ca8e2fba51aad13b7efe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/140fcd13002a42b9e5b41083fee4544eaac8bc6f",
-                "reference": "140fcd13002a42b9e5b41083fee4544eaac8bc6f",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/00217d6ff1d70428193ca8e2fba51aad13b7efe9",
+                "reference": "00217d6ff1d70428193ca8e2fba51aad13b7efe9",
                 "shasum": ""
             },
             "require": {
@@ -97,7 +97,7 @@
                 "illuminate/contracts": "^9 || ^10",
                 "illuminate/support": "^9 || ^10",
                 "laminas/laminas-code": "^3.4 || ^4",
-                "nikic/php-parser": "^4.13",
+                "nikic/php-parser": "^4.13 || ^5",
                 "php": "^8"
             },
             "require-dev": {
@@ -111,7 +111,7 @@
                 "phpstan/phpstan": "^1.8.2",
                 "phpstan/phpstan-mockery": "^1.1",
                 "phpstan/phpstan-phpunit": "^1.1.1",
-                "phpunit/phpunit": "^9.5.21 || ^10",
+                "phpunit/phpunit": "^9.5.21 || ^10 || ^11",
                 "rector/rector": "^0.19",
                 "symplify/rule-doc-generator": "^11 || ^12"
             },
@@ -160,7 +160,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BenSampo/laravel-enum/issues",
-                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.9.1"
+                "source": "https://github.com/BenSampo/laravel-enum/tree/v6.10.0"
             },
             "funding": [
                 {
@@ -168,7 +168,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-13T11:29:38+00:00"
+            "time": "2024-02-14T14:12:51+00:00"
         },
         {
             "name": "brick/math",
@@ -3647,25 +3647,27 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.18.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999"
+                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bcbb2179f97633e98bbbc87044ee2611c7d7999",
-                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
+                "reference": "4a21235f7e56e713259a6f76bf4b5ea08502b9dc",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=7.0"
+                "php": ">=7.4"
             },
             "require-dev": {
                 "ircmaxell/php-yacc": "^0.0.7",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -3673,7 +3675,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.9-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "autoload": {
@@ -3697,9 +3699,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.18.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.0"
             },
-            "time": "2023-12-10T21:03:43+00:00"
+            "time": "2024-01-07T17:17:35+00:00"
         },
         {
             "name": "nunomaduro/termwind",
