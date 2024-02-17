@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Enums\FaceItStatus;
 use App\Models\Championship;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -21,6 +22,7 @@ class ChampionshipsTable extends Component
     public function render(): View
     {
         $championships = Championship::query()
+            ->whereNot('status', FaceItStatus::CANCELLED)
             ->orderByDesc('started_at')
             ->paginate();
 
