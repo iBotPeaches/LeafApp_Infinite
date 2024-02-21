@@ -44,11 +44,6 @@ class Map extends Model implements HasDotApi
         return $this->thumbnail_url;
     }
 
-    public function getNameAttribute(): string
-    {
-        return Str::remove(' - Ranked', $this->attributes['name'] ?? '');
-    }
-
     public static function fromDotApi(array $payload): ?self
     {
         $mapId = Arr::get($payload, 'id');
