@@ -8,6 +8,7 @@ use Database\Factories\LevelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -50,6 +51,11 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
     {
         $levelId = Arr::get($payload, 'id');
         $levelName = Arr::get($payload, 'name');
+
+        // HACK - The API started adding " - Ranked" to Ranked Maps.
+        // This has caused data accuracy issues due to older ranked maps not having this suffix.
+        // We will remove this suffix from the name to ensure we can match the level correctly.
+        $levelName = Str::remove(' - Ranked', $levelName);
 
         /** @var Level $level */
         $level = self::query()
