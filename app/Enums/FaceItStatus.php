@@ -16,6 +16,10 @@ use Illuminate\Support\Str;
  * @method static static MANUAL_RESULT()
  * @method static static SCHEDULING()
  * @method static static SCHEDULED()
+ * @method static static PAUSED()
+ * @method static static JOIN()
+ * @method static static CREATED()
+ * @method static static ADJUSTMENT()
  */
 final class FaceItStatus extends Enum implements LocalizedEnum
 {
@@ -39,6 +43,8 @@ final class FaceItStatus extends Enum implements LocalizedEnum
 
     const CREATED = 9;
 
+    const ADJUSTMENT = 10;
+
     public static function coerce(mixed $enumKeyOrValue): ?static
     {
         $enumKeyOrValue = match (Str::lower($enumKeyOrValue)) {
@@ -51,6 +57,7 @@ final class FaceItStatus extends Enum implements LocalizedEnum
             'paused' => self::PAUSED,
             'join' => self::JOIN,
             'created' => self::CREATED,
+            'adjustment' => self::ADJUSTMENT,
             default => $enumKeyOrValue
         };
 
