@@ -50,7 +50,7 @@ class ExportScrimPlayers implements ShouldQueue
                 'kd' => $mergedStat->kd,
                 'kda' => $mergedStat->kda,
                 'accuracy' => $mergedStat->accuracy,
-                'damageDone' => $mergedStat->damageDealt,
+                'damageDone' => $mergedStat->damage_dealt,
                 'damageTaken' => $mergedStat->damage_taken,
                 'avgScore' => $mergedStat->score,
                 'avgRank' => $mergedStat->rank,
