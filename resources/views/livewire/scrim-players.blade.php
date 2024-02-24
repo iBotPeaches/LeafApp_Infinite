@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>Gamertag</th>
+            <th><abbr title="Games Played">GP</abbr></th>
             <th><abbr title="Kills">K</abbr></th>
             <th><abbr title="Deaths">D</abbr></th>
             <th><abbr title="Assists">A</abbr></th>
@@ -34,6 +35,7 @@
                         </div>
                     </article>
                 </td>
+                <td>{{ $gamePlayer->gameCount }}</td>
                 <td>{{ $gamePlayer->kills }}</td>
                 <td>{{ $gamePlayer->deaths }}</td>
                 <td>{{ $gamePlayer->assists }}</td>
@@ -47,10 +49,10 @@
                     {{ number_format($gamePlayer->accuracy, 2) }}%
                 </td>
                 <td>
-                    {{ number_format($gamePlayer->damageDealt, 0) }}
+                    {{ number_format($gamePlayer->damage_dealt, 0) }}
                 </td>
                 <td>
-                    {{ number_format($gamePlayer->damageTaken, 0) }}
+                    {{ number_format($gamePlayer->damage_taken, 0) }}
                 </td>
                 <td>{{ $gamePlayer->formatted_score }}</td>
                 <td>

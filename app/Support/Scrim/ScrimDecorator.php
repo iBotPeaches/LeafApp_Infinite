@@ -36,8 +36,8 @@ class ScrimDecorator
                     $this->mergedStats[$playerId]['accuracy'] += $gamePlayer->accuracy;
                     $this->mergedStats[$playerId]['score'] += $gamePlayer->score;
                     $this->mergedStats[$playerId]['rank'] += $gamePlayer->rank;
-                    $this->mergedStats[$playerId]['damageDealt'] += $gamePlayer->damage_dealt;
-                    $this->mergedStats[$playerId]['damageTaken'] += $gamePlayer->damage_taken;
+                    $this->mergedStats[$playerId]['damage_dealt'] += $gamePlayer->damage_dealt;
+                    $this->mergedStats[$playerId]['damage_taken'] += $gamePlayer->damage_taken;
                 }
             });
         });
@@ -51,7 +51,9 @@ class ScrimDecorator
         }
 
         usort($this->mergedStats, function (GamePlayer $a, GamePlayer $b) {
-            return $a['rank'] <=> $b['rank'];
+            $gamesPlayed = $b['gameCount'] <=> $a['gameCount'];
+
+            return $gamesPlayed !== 0 ? $gamesPlayed : $a['rank'] <=> $b['rank'];
         });
     }
 }
