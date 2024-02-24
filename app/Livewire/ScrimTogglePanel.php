@@ -37,6 +37,8 @@ class ScrimTogglePanel extends Component
         }
 
         $this->dispatch('toggleScrimMode')->to(GameCustomHistoryTable::class);
+        $this->dispatch('toggleScrimMode')->to(GameLanHistoryTable::class);
+        $this->dispatch('toggleScrimMode')->to(GameHistoryTable::class);
     }
 
     public function render(): View
