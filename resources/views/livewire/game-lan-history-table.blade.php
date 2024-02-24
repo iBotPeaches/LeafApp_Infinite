@@ -27,6 +27,9 @@
                     <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                     <th>Rank</th>
                     <th>Date</th>
+                    @if ($isScrimEditor)
+                        <th>Add To</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -63,6 +66,11 @@
                         <td>
                             @include('partials.player.date-link', ['date' => $game->occurred_at])
                         </td>
+                        @if ($isScrimEditor)
+                            <td>
+                                <input type="checkbox" wire:model.live="scrimGameIds" value="{{ $game->id }}">
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
