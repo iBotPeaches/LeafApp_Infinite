@@ -1,10 +1,10 @@
 @import 'variables';
 @import 'progressbar';
 
-@import 'bulma/bulma';
-@import '@creativebulma/bulma-divider';
-@import '@creativebulma/bulma-tooltip';
-@import 'bulma-ribbon/src/sass/index';
+@import '../../../../Node/bulma-v1-private-beta/sass';
+// '@creativebulma/bulma-divider';
+// @import '@creativebulma/bulma-tooltip';
+// @import 'bulma-ribbon/src/sass/index';
 
 html {
     height: 100%;
