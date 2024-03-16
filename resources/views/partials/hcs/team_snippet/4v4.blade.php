@@ -23,7 +23,7 @@
     </div>
 @endif
 @foreach ($team->players as $player)
-    <div class="card has-background-{{ $color }}-light">
+    <div class="card has-background-{{ $color }}-soft">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
