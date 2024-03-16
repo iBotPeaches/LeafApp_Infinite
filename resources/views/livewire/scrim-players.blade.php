@@ -45,7 +45,7 @@
                 <td class="{{ $gamePlayer->getKdaColor() }}">
                     {{ $gamePlayer->kda }}
                 </td>
-                <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
+                <td class="has-background-{{ $gamePlayer->accuracy_color }}-soft">
                     {{ number_format($gamePlayer->accuracy, 2) }}%
                 </td>
                 <td>
