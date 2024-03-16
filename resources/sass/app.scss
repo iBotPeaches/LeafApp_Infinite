@@ -1,7 +1,23 @@
-@import 'variables';
+@charset "utf-8";
+
+$orange: #ff8606;
+$purple: #9400ff;
+
+$my-colors: (
+    "orange": $orange,
+    "purple": $purple
+);
+
+@use '../../../../Node/bulma-v1-private-beta/sass/utilities/derived-variables' with (
+    $custom-colors: $my-colors
+);
+
+@use '../../../../Node/bulma-v1-private-beta/sass' with (
+    $footer-padding: 3rem 1.5rem 2rem,
+);
+
 @import 'progressbar';
 
-@import '../../../../Node/bulma-v1-private-beta/sass';
 // '@creativebulma/bulma-divider';
 // @import '@creativebulma/bulma-tooltip';
 // @import 'bulma-ribbon/src/sass/index';
