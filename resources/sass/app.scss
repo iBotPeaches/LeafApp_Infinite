@@ -13,11 +13,24 @@ $my-colors: (
     $footer-padding: 3rem 1.5rem 2rem,
 );
 
+@use "sass:map";
+@use "bulma/sass" as bulma;
+
+$colors: ("white": (bulma.$white, bulma.$black), "black": (bulma.$black, bulma.$white), "light": (bulma.$light, bulma.$dark), "dark": (bulma.$dark, bulma.$light), "info": (bulma.$info, bulma.$light));
+$grey-darker: bulma.$grey-darker;
+$grey-lighter: bulma.$grey-lighter;
+$white: bulma.$white;
+
+$size-small: bulma.$size-small;
+$size-normal: bulma.$size-normal;
+$size-medium: bulma.$size-medium;
+$size-large: bulma.$size-large;
+
 @import 'progressbar';
 
-// '@creativebulma/bulma-divider';
-// @import '@creativebulma/bulma-tooltip';
-// @import 'bulma-ribbon/src/sass/index';
+//@import '@creativebulma/bulma-divider';
+//@import '@creativebulma/bulma-tooltip';
+@import 'bulma-ribbon/src/sass/index';
 
 html {
     height: 100%;
