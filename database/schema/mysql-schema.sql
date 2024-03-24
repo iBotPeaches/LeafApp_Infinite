@@ -14,18 +14,15 @@ CREATE TABLE `analytics` (
   `game_id` bigint(20) unsigned DEFAULT NULL,
   `player_id` bigint(20) unsigned DEFAULT NULL,
   `map_id` bigint(20) unsigned DEFAULT NULL,
-  `season_id` bigint(20) unsigned DEFAULT NULL,
   `value` double(14,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `analytics_game_id_foreign` (`game_id`),
-  KEY `analytics_player_id_foreign` (`player_id`),
   KEY `analytics_key_index` (`key`),
-  KEY `analytics_season_id_foreign` (`season_id`),
+  KEY `analytics_player_id_foreign` (`player_id`),
   CONSTRAINT `analytics_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `analytics_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`)
+  CONSTRAINT `analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cache`;
@@ -100,9 +97,7 @@ CREATE TABLE `csrs` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `csrs_player_id_playlist_id_queue_input_mode_season_key_unique` (`player_id`,`playlist_id`,`queue`,`input`,`mode`,`season_key`),
-  KEY `csrs_playlist_id_foreign` (`playlist_id`),
-  CONSTRAINT `csrs_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `csrs_playlist_id_foreign` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`)
+  KEY `csrs_playlist_id_foreign` (`playlist_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -171,10 +166,7 @@ CREATE TABLE `game_players` (
   PRIMARY KEY (`id`),
   KEY `game_players_game_id_foreign` (`game_id`),
   KEY `game_players_game_team_id_foreign` (`game_team_id`),
-  KEY `game_players_player_id_foreign` (`player_id`),
-  CONSTRAINT `game_players_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `game_players_game_team_id_foreign` FOREIGN KEY (`game_team_id`) REFERENCES `game_teams` (`id`),
-  CONSTRAINT `game_players_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
+  KEY `game_players_player_id_foreign` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `game_scrim`;
@@ -186,9 +178,7 @@ CREATE TABLE `game_scrim` (
   `game_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `game_scrim_scrim_id_foreign` (`scrim_id`),
-  KEY `game_scrim_game_id_foreign` (`game_id`),
-  CONSTRAINT `game_scrim_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `game_scrim_scrim_id_foreign` FOREIGN KEY (`scrim_id`) REFERENCES `scrims` (`id`) ON DELETE CASCADE
+  KEY `game_scrim_game_id_foreign` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `game_teams`;
@@ -207,9 +197,7 @@ CREATE TABLE `game_teams` (
   `final_score` mediumint(8) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `game_teams_game_id_internal_team_id_unique` (`game_id`,`internal_team_id`),
-  KEY `game_teams_team_id_foreign` (`team_id`),
-  CONSTRAINT `game_teams_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`),
-  CONSTRAINT `game_teams_team_id_foreign` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`)
+  KEY `game_teams_team_id_foreign` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `games`;
@@ -236,11 +224,7 @@ CREATE TABLE `games` (
   KEY `games_category_id_foreign` (`category_id`),
   KEY `games_map_id_foreign` (`map_id`),
   KEY `games_playlist_id_foreign` (`playlist_id`),
-  KEY `games_gamevariant_id_foreign` (`gamevariant_id`),
-  CONSTRAINT `games_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  CONSTRAINT `games_gamevariant_id_foreign` FOREIGN KEY (`gamevariant_id`) REFERENCES `gamevariants` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `games_map_id_foreign` FOREIGN KEY (`map_id`) REFERENCES `maps` (`id`),
-  CONSTRAINT `games_playlist_id_foreign` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`)
+  KEY `games_gamevariant_id_foreign` (`gamevariant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `gamevariants`;
@@ -252,8 +236,7 @@ CREATE TABLE `gamevariants` (
   `uuid` char(36) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `gamevariants_category_id_foreign` (`category_id`),
-  CONSTRAINT `gamevariants_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+  KEY `gamevariants_category_id_foreign` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `jobs`;
@@ -293,8 +276,7 @@ CREATE TABLE `maps` (
   `thumbnail_url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `maps_uuid_unique` (`uuid`),
-  KEY `maps_level_id_foreign` (`level_id`),
-  CONSTRAINT `maps_level_id_foreign` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`)
+  KEY `maps_level_id_foreign` (`level_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `matchup_game`;
@@ -306,9 +288,7 @@ CREATE TABLE `matchup_game` (
   `game_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `matchup_game_matchup_id_foreign` (`matchup_id`),
-  KEY `matchup_game_game_id_foreign` (`game_id`),
-  CONSTRAINT `matchup_game_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `matchup_game_matchup_id_foreign` FOREIGN KEY (`matchup_id`) REFERENCES `matchups` (`id`) ON DELETE CASCADE
+  KEY `matchup_game_game_id_foreign` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `matchup_player`;
@@ -322,9 +302,7 @@ CREATE TABLE `matchup_player` (
   `faceit_name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `matchup_player_matchup_team_id_foreign` (`matchup_team_id`),
-  KEY `matchup_player_player_id_foreign` (`player_id`),
-  CONSTRAINT `matchup_player_matchup_team_id_foreign` FOREIGN KEY (`matchup_team_id`) REFERENCES `matchup_teams` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `matchup_player_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE SET NULL
+  KEY `matchup_player_player_id_foreign` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `matchup_teams`;
@@ -338,8 +316,7 @@ CREATE TABLE `matchup_teams` (
   `points` tinyint(4) unsigned DEFAULT NULL,
   `outcome` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `matchup_teams_matchup_id_foreign` (`matchup_id`),
-  CONSTRAINT `matchup_teams_matchup_id_foreign` FOREIGN KEY (`matchup_id`) REFERENCES `matchups` (`id`) ON DELETE CASCADE
+  KEY `matchup_teams_matchup_id_foreign` (`matchup_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `matchups`;
@@ -356,8 +333,7 @@ CREATE TABLE `matchups` (
   `started_at` datetime DEFAULT NULL,
   `ended_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `matchups_championship_id_foreign` (`championship_id`),
-  CONSTRAINT `matchups_championship_id_foreign` FOREIGN KEY (`championship_id`) REFERENCES `championships` (`id`) ON DELETE CASCADE
+  KEY `matchups_championship_id_foreign` (`championship_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `medal_analytics`;
@@ -376,10 +352,7 @@ CREATE TABLE `medal_analytics` (
   KEY `medal_analytics_season_id_foreign` (`season_id`),
   KEY `medal_analytics_medal_id_foreign` (`medal_id`),
   KEY `medal_analytics_place_mode_season_id_index` (`place`,`mode`,`season_id`),
-  KEY `medal_analytics_player_id_foreign` (`player_id`),
-  CONSTRAINT `medal_analytics_medal_id_foreign` FOREIGN KEY (`medal_id`) REFERENCES `medals` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `medal_analytics_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `medal_analytics_season_id_foreign` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`)
+  KEY `medal_analytics_player_id_foreign` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `medals`;
@@ -417,8 +390,7 @@ CREATE TABLE `player_bans` (
   `scope` varchar(24) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `player_bans_key_unique` (`key`),
-  KEY `player_bans_player_id_foreign` (`player_id`),
-  CONSTRAINT `player_bans_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`)
+  KEY `player_bans_player_id_foreign` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `players`;
@@ -442,7 +414,6 @@ CREATE TABLE `players` (
   `last_csr_key` varchar(8) DEFAULT NULL,
   `emblem_url` varchar(512) DEFAULT NULL,
   `backdrop_url` varchar(512) DEFAULT NULL,
-  `nameplate_url` varchar(512) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -455,12 +426,7 @@ CREATE TABLE `players` (
   KEY `players_is_cheater_index` (`is_cheater`),
   KEY `players_rank_id_foreign` (`rank_id`),
   KEY `players_next_rank_id_foreign` (`next_rank_id`),
-  KEY `players_is_botfarmer_index` (`is_botfarmer`),
-  CONSTRAINT `players_last_custom_game_id_pulled_foreign` FOREIGN KEY (`last_custom_game_id_pulled`) REFERENCES `games` (`id`),
-  CONSTRAINT `players_last_game_id_pulled_foreign` FOREIGN KEY (`last_game_id_pulled`) REFERENCES `games` (`id`),
-  CONSTRAINT `players_last_lan_game_id_pulled_foreign` FOREIGN KEY (`last_lan_game_id_pulled`) REFERENCES `games` (`id`),
-  CONSTRAINT `players_next_rank_id_foreign` FOREIGN KEY (`next_rank_id`) REFERENCES `ranks` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `players_rank_id_foreign` FOREIGN KEY (`rank_id`) REFERENCES `ranks` (`id`) ON DELETE CASCADE
+  KEY `players_is_botfarmer_index` (`is_botfarmer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `playlists`;
@@ -469,7 +435,7 @@ DROP TABLE IF EXISTS `playlists`;
 CREATE TABLE `playlists` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` char(36) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(128) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `is_ranked` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 0,
@@ -477,7 +443,8 @@ CREATE TABLE `playlists` (
   `input` tinyint(3) unsigned DEFAULT NULL,
   `rotations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`rotations`)),
   `image_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `playlists_is_ranked_index` (`is_ranked`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ranks`;
@@ -506,8 +473,7 @@ CREATE TABLE `scrims` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `scrims_user_id_foreign` (`user_id`),
-  CONSTRAINT `scrims_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  KEY `scrims_user_id_foreign` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `seasons`;
@@ -571,8 +537,7 @@ CREATE TABLE `service_records` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `service_records_player_id_mode_season_key_unique` (`player_id`,`mode`,`season_key`),
   KEY `service_records_mode_index` (`mode`),
-  KEY `service_records_season_number_index` (`season_number`),
-  CONSTRAINT `service_records_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE
+  KEY `service_records_season_number_index` (`season_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `teams`;
@@ -597,8 +562,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `users_player_id_foreign` (`player_id`),
-  CONSTRAINT `users_player_id_foreign` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE SET NULL
+  KEY `users_player_id_foreign` (`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -710,16 +674,16 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (99,'2023_04_14_231
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (100,'2023_04_16_224132_add_player_ban_table',52);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (101,'2023_04_19_104829_make_final_score_signed',52);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (102,'2023_04_29_101818_add_medal_analytics',53);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (104,'2023_04_30_204534_add_mode_place',54);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (105,'2023_05_06_172314_add_rotation_json_to_playlists',55);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (106,'2023_05_06_172821_add_is_active_to_playlists',56);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (107,'2023_05_08_101909_cascade_player_on_analytics',57);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (108,'2023_05_10_103016_add_more_fields_to_playlists',58);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (109,'2023_05_16_110144_add_unknown_level',59);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (110,'2023_05_29_120051_add_season_id_to_analytics',60);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (112,'2023_06_22_005112_add_career_ranks',61);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (114,'2023_06_22_094554_add_career_rank_to_player',62);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (115,'2023_06_23_103646_add_nameplate_to_players',63);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (116,'2023_06_29_101044_add_place_to_analytics',64);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (117,'2023_08_11_095401_add_is_botfarmer_to_players',65);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (118,'2023_08_30_093058_swap_urls_to_text',66);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (103,'2023_04_30_204534_add_mode_place',54);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (104,'2023_05_08_101909_cascade_player_on_analytics',55);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (105,'2023_05_16_110144_add_unknown_level',56);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (106,'2023_05_06_172314_add_rotation_json_to_playlists',57);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (107,'2023_05_06_172821_add_is_active_to_playlists',57);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (108,'2023_05_10_103016_add_more_fields_to_playlists',57);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (109,'2023_06_22_005112_add_career_ranks',58);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (110,'2023_06_22_094554_add_career_rank_to_player',58);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (111,'2023_06_29_101044_add_place_to_analytics',59);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (112,'2023_08_11_095401_add_is_botfarmer_to_players',60);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (113,'2023_08_30_093058_swap_urls_to_text',61);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (114,'2023_10_15_101405_add_index_to_is_ranked',62);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (115,'2023_12_06_000905_adjust_name_column_on_playlist',63);

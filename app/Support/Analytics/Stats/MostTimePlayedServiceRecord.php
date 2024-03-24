@@ -40,7 +40,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
 
     public function displayProperty(Analytic $analytic): string
     {
-        return number_format(now()->addSeconds((int) $analytic->value)->diffInHours());
+        return number_format(now()->addSeconds((int) $analytic->value)->diffInHours(absolute: true));
     }
 
     public function results(int $limit = 10): ?Collection
