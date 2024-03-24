@@ -11,12 +11,14 @@ use App\Jobs\PullServiceRecord;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Pivots\MatchupPlayer;
 use App\Models\Pivots\PersonalResult;
+use App\Observers\PlayerObserver;
 use App\Services\DotApi\Enums\Mode;
 use App\Services\DotApi\InfiniteInterface;
 use App\Support\Image\ImageHelper;
 use App\Support\Session\SeasonSession;
 use Carbon\Carbon;
 use Database\Factories\PlayerFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -71,6 +73,7 @@ use Spatie\Sitemap\Tags\Url;
  *
  * @method static PlayerFactory factory(...$parameters)
  */
+#[ObservedBy(PlayerObserver::class)]
 class Player extends Model implements HasDotApi, Sitemapable
 {
     use HasFactory;

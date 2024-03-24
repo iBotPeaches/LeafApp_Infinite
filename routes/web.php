@@ -14,17 +14,6 @@ use App\Http\Controllers\Webhook\FaceItController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // Webhook
 Route::post('/webhooks/faceit', FaceItController::class)->name('webhooks.faceit');
 

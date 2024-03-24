@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Schedule;
 
-use App\Console\Kernel;
+use Illuminate\Foundation\Console\Kernel;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
