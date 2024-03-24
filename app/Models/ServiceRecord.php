@@ -99,9 +99,9 @@ class ServiceRecord extends Model implements HasDotApi
         return $this->total_score / $this->total_matches;
     }
 
-    public function getTimePlayedAttribute(): int
+    public function getTimePlayedAttribute(): float
     {
-        return now()->addSeconds($this->total_seconds_played)->diffInHours();
+        return now()->addSeconds($this->total_seconds_played)->diffInHours(absolute: true);
     }
 
     public function getWinPercentColorAttribute(): string

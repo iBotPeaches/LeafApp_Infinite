@@ -54,9 +54,9 @@ class MedalAnalytic extends Model
         $query->delete();
     }
 
-    public function getTimePlayedAttribute(): int
+    public function getTimePlayedAttribute(): float
     {
-        return now()->addSeconds($this->total_seconds_played)->diffInHours();
+        return now()->addSeconds($this->total_seconds_played)->diffInHours(absolute: true);
     }
 
     public function medal(): BelongsTo
