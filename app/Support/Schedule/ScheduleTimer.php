@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Support\Schedule;
 
-use Illuminate\Foundation\Console\Kernel;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 class ScheduleTimer implements ScheduleTimerInterface
@@ -22,7 +23,9 @@ class ScheduleTimer implements ScheduleTimerInterface
     {
         // We must load the Console Kernel, as it contains information about our Scheduled Jobs
         // Then we hydrate our Schedule class, which will parse out the cron information.
-        app()->make(Kernel::class);
+        App::make(Kernel::class);
+
+        /** @var Schedule $schedule */
         $schedule = app(Schedule::class);
 
         collect($schedule->events())->each(function (Event $event) {
