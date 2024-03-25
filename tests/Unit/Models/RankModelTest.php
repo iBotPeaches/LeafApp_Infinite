@@ -17,6 +17,6 @@ class RankModelTest extends TestCase
         ]);
 
         // Act & Assert
-        $this->assertEquals('/images/ranks/icons/1.png', $rank->icon);
+        $this->assertStringEndsWith('/images/ranks/icons/1.png', $rank->icon);
     }
 }

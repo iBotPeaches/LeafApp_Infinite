@@ -12,9 +12,13 @@ use App\Services\Tinify\ApiClient as ImageApiClient;
 use App\Services\Tinify\ImageInterface;
 use App\Support\Schedule\ScheduleTimer;
 use App\Support\Schedule\ScheduleTimerInterface;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpFoundation\Response;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('th', function ($expression) {
             return "<?php echo (new NumberFormatter('en_US', NumberFormatter::ORDINAL))->format({$expression}); ?>";
+        });
+
+        RateLimiter::for('uploads', function (Request $request) {
+            return Limit::perHour(10)->by($request->ip())->response(function () {
+                return response()->view('pages.errors.429', [], Response::HTTP_TOO_MANY_REQUESTS);
+            });
         });
         // @codeCoverageIgnoreEnd
     }

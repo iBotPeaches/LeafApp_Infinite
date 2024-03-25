@@ -1,19 +1,24 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Console\Commands\PullMetadata;
+use App\Console\Commands\RefreshAnalytics;
+use App\Console\Commands\RefreshMedals;
+use Illuminate\Support\Facades\Schedule;
+use Laravel\Horizon\Console\SnapshotCommand;
 
-/*
-|--------------------------------------------------------------------------
-| Console Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of your Closure based console
-| commands. Each Closure is bound to a command instance allowing a
-| simple approach to interacting with each command's IO methods.
-|
-*/
+Schedule::command(PullMetadata::class)
+    ->withoutOverlapping()
+    ->twiceDaily();
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Schedule::command(RefreshAnalytics::class)
+    ->withoutOverlapping()
+    ->dailyAt('12:01')
+    ->timezone('America/New_York');
+
+Schedule::command(RefreshMedals::class)
+    ->withoutOverlapping()
+    ->dailyAt('3:01')
+    ->timezone('America/New_York');
+
+Schedule::command(SnapshotCommand::class)
+    ->everyFiveMinutes();

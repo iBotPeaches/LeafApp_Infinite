@@ -117,7 +117,7 @@
         <div class="level-item has-text-centered">
             <div>
                 <p class="heading">Time Played (hours)</p>
-                <p class="title">{{ $serviceRecord->time_played }}</p>
+                <p class="title">{{ number_format($serviceRecord->time_played, 2) }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">

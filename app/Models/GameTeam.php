@@ -7,7 +7,9 @@ namespace App\Models;
 use App\Enums\Outcome;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasOutcome;
+use App\Observers\GameTeamObserver;
 use Database\Factories\GameTeamFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +38,7 @@ use Illuminate\Support\Arr;
  *
  * @method static GameTeamFactory factory(...$parameters)
  */
+#[ObservedBy(GameTeamObserver::class)]
 class GameTeam extends Model implements HasDotApi
 {
     use HasFactory, HasOutcome;
