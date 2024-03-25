@@ -8,11 +8,8 @@ $my-colors: (
     "purple": $purple
 );
 
-@use '../../../../Node/bulma-v1-private-beta/sass/utilities/derived-variables' with (
-    $custom-colors: $my-colors
-);
-
-@use '../../../../Node/bulma-v1-private-beta/sass' with (
+@use 'bulma/sass' with (
+    $custom-colors: $my-colors,
     $footer-padding: 3rem 1.5rem 2rem,
 );
 
