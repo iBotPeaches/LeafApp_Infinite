@@ -6,22 +6,19 @@ use App\Console\Commands\RefreshMedals;
 use Illuminate\Support\Facades\Schedule;
 use Laravel\Horizon\Console\SnapshotCommand;
 
-Schedule::call(PullMetadata::class)
-    ->name('pull-metadata')
+Schedule::command(PullMetadata::class)
     ->withoutOverlapping()
     ->twiceDaily();
 
-Schedule::call(RefreshAnalytics::class)
-    ->name('refresh-analytics')
+Schedule::command(RefreshAnalytics::class)
     ->withoutOverlapping()
     ->dailyAt('12:01')
     ->timezone('America/New_York');
 
-Schedule::call(RefreshMedals::class)
-    ->name('refresh-medals')
+Schedule::command(RefreshMedals::class)
     ->withoutOverlapping()
     ->dailyAt('3:01')
     ->timezone('America/New_York');
 
-Schedule::call(SnapshotCommand::class)
+Schedule::command(SnapshotCommand::class)
     ->everyFiveMinutes();

@@ -7,8 +7,7 @@ namespace App\Support\Schedule;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel;
-use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Str;
 
 class ScheduleTimer implements ScheduleTimerInterface
@@ -23,7 +22,10 @@ class ScheduleTimer implements ScheduleTimerInterface
     {
         // We must load the Console Kernel, as it contains information about our Scheduled Jobs
         // Then we hydrate our Schedule class, which will parse out the cron information.
-        App::make(Kernel::class);
+        // Laravel 11 optimized this, so we explicitly have to bootstrap the class.
+        // as we are not running this in the context of a console command.
+        $app = app()->make(Kernel::class);
+        $app->bootstrap();
 
         /** @var Schedule $schedule */
         $schedule = app(Schedule::class);
