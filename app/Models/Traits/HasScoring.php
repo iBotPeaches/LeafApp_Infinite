@@ -21,15 +21,15 @@ trait HasScoring
     public function getVictoryColor(): string
     {
         if ($this->outcome->is(Outcome::WIN())) {
-            return 'has-background-success-light';
+            return 'has-background-success-soft';
         }
 
         if ($this->outcome->is(Outcome::LOSS())) {
-            return 'has-background-warning-light';
+            return 'has-background-warning-soft';
         }
 
         if ($this->outcome->is(Outcome::LEFT())) {
-            return 'has-background-danger-light';
+            return 'has-background-danger-soft';
         }
 
         return '';

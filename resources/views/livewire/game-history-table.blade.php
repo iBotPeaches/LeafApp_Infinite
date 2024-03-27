@@ -61,7 +61,7 @@
                     <td class="{{ $game->personal->getKdaColor() }}">
                         {{ $game->personal->kda }}
                     </td>
-                    <td class="has-background-{{ $game->personal->accuracy_color }}-light">
+                    <td class="has-background-{{ $game->personal->accuracy_color }}-soft">
                         {{ $game->personal->accuracy }}%
                     </td>
                     <td>{{ $game->personal->rank }}</td>

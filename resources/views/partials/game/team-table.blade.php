@@ -135,7 +135,7 @@ use Illuminate\Support\Str;
                     <td class="{{ $gamePlayer->getKdaColor() }}">
                         {{ $gamePlayer->kda }}
                     </td>
-                    <td class="has-background-{{ $gamePlayer->accuracy_color }}-light">
+                    <td class="has-background-{{ $gamePlayer->accuracy_color }}-soft">
                         {{ $gamePlayer->accuracy }}%
                     </td>
                     <td>{{ $gamePlayer->formatted_score }}</td>

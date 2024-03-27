@@ -13,9 +13,9 @@ trait HasPerformance
         }
 
         return match (true) {
-            $this->kills > $this->expected_kills => 'has-background-success-light',
-            $this->kills < $this->expected_kills => 'has-background-danger-light',
-            $this->kills === $this->expected_kills => 'has-background-primary-light',
+            $this->kills > $this->expected_kills => 'has-background-success-soft',
+            $this->kills < $this->expected_kills => 'has-background-danger-soft',
+            $this->kills === $this->expected_kills => 'has-background-primary-soft',
             default => ''
         };
     }
@@ -27,9 +27,9 @@ trait HasPerformance
         }
 
         return match (true) {
-            $this->deaths > $this->expected_deaths => 'has-background-danger-light',
-            $this->deaths < $this->expected_deaths => 'has-background-success-light',
-            $this->deaths === $this->expected_deaths => 'has-background-primary-light',
+            $this->deaths > $this->expected_deaths => 'has-background-danger-soft',
+            $this->deaths < $this->expected_deaths => 'has-background-success-soft',
+            $this->deaths === $this->expected_deaths => 'has-background-primary-soft',
             default => ''
         };
     }

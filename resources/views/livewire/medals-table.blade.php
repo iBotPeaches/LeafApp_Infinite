@@ -14,8 +14,8 @@
             <tbody>
             @foreach ($medals as $medal)
                 <tr>
-                    <td>
-                        <article class="tile is-flex">
+                    <td class="grid">
+                        <article class="cell is-flex">
                             <figure class="media-left">
                                 <p class="image is-48x48">
                                     <img src="{{ $medal->image }}" alt="{{ $medal->name }}" />
