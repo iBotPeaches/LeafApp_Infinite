@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\Csr;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class CsrModelTest extends TestCase
 {
-    /** @dataProvider rankDataProvider */
+    #[DataProvider('rankDataProvider')]
     public function testRankAttribute(string $tier, int $subTier, int $nextCsr, string $expected): void
     {
         // Arrange
@@ -24,7 +25,7 @@ class CsrModelTest extends TestCase
         $this->assertEquals($expected, $csr->rank);
     }
 
-    /** @dataProvider nextRankDataProvider */
+    #[DataProvider('nextRankDataProvider')]
     public function testNextRankAttribute(
         string $tier,
         int $subTier,
@@ -65,34 +66,34 @@ class CsrModelTest extends TestCase
         return [
             'diamond' => [
                 'tier' => 'Diamond',
-                'sub_tier' => 0, // 0 index in the API
-                'next_csr' => 1250,
-                'next_tier' => 'Diamond',
-                'next_sub_tier' => 1,
+                'subTier' => 0, // 0 index in the API
+                'nextCsr' => 1250,
+                'nextTier' => 'Diamond',
+                'nextCsrTier' => 1,
                 'expected' => 'Diamond 2',
             ],
             'diamond 6' => [
                 'tier' => 'Diamond',
-                'sub_tier' => 5,
-                'next_csr' => 1500,
-                'next_tier' => 'Onyx',
-                'next_sub_tier' => 0,
+                'subTier' => 5,
+                'nextCsr' => 1500,
+                'nextTier' => 'Onyx',
+                'nextCsrTier' => 0,
                 'expected' => 'Onyx',
             ],
             'onyx' => [
                 'tier' => 'Onyx',
-                'sub_tier' => 0,
-                'next_csr' => 1500,
-                'next_tier' => 'Onyx',
-                'next_sub_tier' => 0,
+                'subTier' => 0,
+                'nextCsr' => 1500,
+                'nextTier' => 'Onyx',
+                'nextCsrTier' => 0,
                 'expected' => 'Onyx',
             ],
             'unranked' => [
                 'tier' => 'Unranked',
-                'sub_tier' => 0,
-                'next_csr' => 0,
-                'next_tier' => '',
-                'next_sub_tier' => 0,
+                'subTier' => 0,
+                'nextCsr' => 0,
+                'nextTier' => '',
+                'nextCsrTier' => 0,
                 'expected' => '',
             ],
         ];
@@ -103,20 +104,20 @@ class CsrModelTest extends TestCase
         return [
             'diamond' => [
                 'tier' => 'Diamond',
-                'sub_tier' => 0, // 0 index in the API
-                'next_csr' => 1250,
+                'subTier' => 0, // 0 index in the API
+                'nextCsr' => 1250,
                 'expected' => 'Diamond 1',
             ],
             'onyx' => [
                 'tier' => 'Onyx',
-                'sub_tier' => 0,
-                'next_csr' => 1500,
+                'subTier' => 0,
+                'nextCsr' => 1500,
                 'expected' => 'Onyx',
             ],
             'unranked' => [
                 'tier' => 'Unranked',
-                'sub_tier' => 0,
-                'next_csr' => 0,
+                'subTier' => 0,
+                'nextCsr' => 0,
                 'expected' => 'Unranked',
             ],
         ];

@@ -14,12 +14,13 @@ use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupGame;
 use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class HcsMatchupPageTest extends TestCase
 {
-    /** @dataProvider groupDataProvider */
+    #[DataProvider('groupDataProvider')]
     public function testLoadingMatchupPageWithTeamAndPlayers(int $group): void
     {
         // Arrange
@@ -155,13 +156,13 @@ class HcsMatchupPageTest extends TestCase
     {
         return [
             [
-                'round' => 1,
+                'group' => 1,
             ],
             [
-                'round' => 2,
+                'group' => 2,
             ],
             [
-                'round' => 3,
+                'group' => 3,
             ],
         ];
     }
