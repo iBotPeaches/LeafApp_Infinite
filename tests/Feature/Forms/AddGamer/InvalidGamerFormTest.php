@@ -8,13 +8,14 @@ use App\Livewire\AddGamerForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\TestCase;
 
 class InvalidGamerFormTest extends TestCase
 {
-    /** @dataProvider invalidTextDataProvider */
+    #[DataProvider('invalidTextDataProvider')]
     public function testInvalidTestSubmitted(?string $gamertag, string $validationError): void
     {
         // Arrange & Act & Assert
@@ -26,7 +27,7 @@ class InvalidGamerFormTest extends TestCase
             ]);
     }
 
-    /** @dataProvider invalidApiDataProvider */
+    #[DataProvider('invalidApiDataProvider')]
     public function testInvalidResponseFromDotApi(callable $mockResponse, int $statusCode): void
     {
         // Arrange
@@ -64,23 +65,23 @@ class InvalidGamerFormTest extends TestCase
     {
         return [
             401 => [
-                'response' => fn () => (new MockAppearanceService())->error401(),
+                'mockResponse' => fn () => (new MockAppearanceService())->error401(),
                 'statusCode' => Response::HTTP_UNAUTHORIZED,
             ],
             403 => [
-                'response' => fn () => (new MockAppearanceService())->error403(),
+                'mockResponse' => fn () => (new MockAppearanceService())->error403(),
                 'statusCode' => Response::HTTP_FORBIDDEN,
             ],
             404 => [
-                'response' => fn () => (new MockAppearanceService())->error404(),
+                'mockResponse' => fn () => (new MockAppearanceService())->error404(),
                 'statusCode' => Response::HTTP_NOT_FOUND,
             ],
             429 => [
-                'response' => fn () => (new MockAppearanceService())->error429(),
+                'mockResponse' => fn () => (new MockAppearanceService())->error429(),
                 'statusCode' => Response::HTTP_TOO_MANY_REQUESTS,
             ],
             500 => [
-                'response' => fn () => (new MockAppearanceService())->error500(),
+                'mockResponse' => fn () => (new MockAppearanceService())->error500(),
                 'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR,
             ],
         ];
@@ -91,15 +92,15 @@ class InvalidGamerFormTest extends TestCase
         return [
             'empty' => [
                 'gamertag' => null,
-                'validation' => 'required',
+                'validationError' => 'required',
             ],
             'empty string' => [
                 'gamertag' => '',
-                'validation' => 'required',
+                'validationError' => 'required',
             ],
             'too long' => [
                 'gamertag' => 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnoprstuvwxyz',
-                'validation' => 'max',
+                'validationError' => 'max',
             ],
         ];
     }

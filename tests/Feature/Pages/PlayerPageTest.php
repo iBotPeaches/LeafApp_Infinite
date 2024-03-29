@@ -14,13 +14,14 @@ use App\Models\Rank;
 use App\Models\ServiceRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\TestCase;
 
 class PlayerPageTest extends TestCase
 {
-    /** @dataProvider gamertagDataProvider */
+    #[DataProvider('gamertagDataProvider')]
     public function testLoadingPlayerMatchesPage(string $gamertag): void
     {
         // Arrange
@@ -108,7 +109,7 @@ class PlayerPageTest extends TestCase
         $response->assertRedirect();
     }
 
-    /** @dataProvider gamertagDataProvider */
+    #[DataProvider('gamertagDataProvider')]
     public function testLoadingPlayerOverviewPage(string $gamertag): void
     {
         // Arrange
@@ -167,7 +168,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    /** @dataProvider gamertagDataProvider */
+    #[DataProvider('gamertagDataProvider')]
     public function testLoadingPlayerOverviewPageAsPrivatePlayer(string $gamertag): void
     {
         // Arrange
@@ -188,7 +189,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    /** @dataProvider gamertagDataProvider */
+    #[DataProvider('gamertagDataProvider')]
     public function testLoadingPlayerModesPage(string $gamertag): void
     {
         // Arrange
@@ -208,7 +209,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    /** @dataProvider gamertagDataProvider */
+    #[DataProvider('gamertagDataProvider')]
     public function testLoadingPlayerCompetitivePage(string $gamertag): void
     {
         // Arrange

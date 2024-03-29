@@ -10,13 +10,14 @@ use App\Models\GamePlayer;
 use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Support\Analytics\Stats\MostQuitMap;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class MostQuitMapTest extends TestCase
 {
     private const LAST_SPARTAN_STANDING_GAMEVARIANT = 'Last Spartan Standing';
 
-    /** @dataProvider fixtureDataProvider */
+    #[DataProvider('fixtureDataProvider')]
     public function testCalculatesCorrectly(array $expected, array $fixture): void
     {
         // Arrange

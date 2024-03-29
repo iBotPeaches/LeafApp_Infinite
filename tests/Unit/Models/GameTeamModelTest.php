@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\GameTeam;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class GameTeamModelTest extends TestCase
 {
-    /** @dataProvider teamColorDataProvider */
-    public function testColorFromTeamName(int $internalId, string $expected): void
+    #[DataProvider('teamColorDataProvider')]
+    public function testColorFromTeamName(int $internalTeamId, string $expected): void
     {
         // Arrange
         /** @var GameTeam $gameTeam */
         $gameTeam = GameTeam::factory()
             ->make([
-                'internal_team_id' => $internalId,
+                'internal_team_id' => $internalTeamId,
             ]);
 
         // Act & Assert
@@ -28,15 +29,15 @@ class GameTeamModelTest extends TestCase
     {
         return [
             [
-                'internal_team_id' => 0,
+                'internalTeamId' => 0,
                 'expected' => 'info',
             ],
             [
-                'internal_team_id' => 1,
+                'internalTeamId' => 1,
                 'expected' => 'danger',
             ],
             [
-                'internal_team_id' => 99,
+                'internalTeamId' => 99,
                 'expected' => 'dark',
             ],
         ];

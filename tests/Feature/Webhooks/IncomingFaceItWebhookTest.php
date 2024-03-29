@@ -8,6 +8,7 @@ use App\Enums\FaceItStatus;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Championship\MockChampionshipBracketService;
 use Tests\Mocks\Championship\MockChampionshipService;
@@ -182,7 +183,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    /** @dataProvider emptyFaceItDataProvider */
+    #[DataProvider('emptyFaceItDataProvider')]
     public function testIncomingEmptyFaceItData(callable $payloadFunction): void
     {
         // Arrange & Act
@@ -201,19 +202,19 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         return [
             [
-                'payload' => fn () => (new MockMatchStatusFinished())->error(),
+                'payloadFunction' => fn () => (new MockMatchStatusFinished())->error(),
             ],
             [
-                'payload' => fn () => (new MockMatchObjectCreated())->error(),
+                'payloadFunction' => fn () => (new MockMatchObjectCreated())->error(),
             ],
             [
-                'payload' => fn () => (new MockChampionshipStarted())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipStarted())->error(),
             ],
             [
-                'payload' => fn () => (new MockChampionshipCancelled())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipCancelled())->error(),
             ],
             [
-                'payload' => fn () => (new MockChampionshipCreated())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipCreated())->error(),
             ],
         ];
     }

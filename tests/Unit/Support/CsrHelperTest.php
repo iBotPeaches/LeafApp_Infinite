@@ -6,11 +6,12 @@ namespace Tests\Unit\Support;
 
 use App\Support\Csr\CsrHelper;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class CsrHelperTest extends TestCase
 {
-    /** @dataProvider csrDataProvider */
+    #[DataProvider('csrDataProvider')]
     public function testCsrCalculationToRank(int $csr, string $expected)
     {
         $this->assertEquals(
@@ -20,7 +21,7 @@ class CsrHelperTest extends TestCase
         );
     }
 
-    /** @dataProvider csrDataProvider */
+    #[DataProvider('csrDataProvider')]
     public function testCsrCalculationToAsset(int $csr, string $expected)
     {
         $this->assertStringEndsWith(
@@ -30,7 +31,7 @@ class CsrHelperTest extends TestCase
         );
     }
 
-    /** @dataProvider unrankedCsrDataProvider */
+    #[DataProvider('unrankedCsrDataProvider')]
     public function testUnrankedCsrCalculationToRank(?int $matchesRemaining, string $expected)
     {
         $this->assertEquals(
@@ -40,7 +41,7 @@ class CsrHelperTest extends TestCase
         );
     }
 
-    /** @dataProvider unrankedCsrDataProvider */
+    #[DataProvider('unrankedCsrDataProvider')]
     public function testUnrankedCsrCalculationToAsset(?int $matchesRemaining, string $expected)
     {
         $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);

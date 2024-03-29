@@ -11,11 +11,12 @@ use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;
 use App\Support\Session\SeasonSession;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ValidOverviewPageTest extends TestCase
 {
-    /** @dataProvider validAttributesDataProvider */
+    #[DataProvider('validAttributesDataProvider')]
     public function testValidResponseFromDotApi(array $attributes, ?Mode $mode): void
     {
         // Arrange

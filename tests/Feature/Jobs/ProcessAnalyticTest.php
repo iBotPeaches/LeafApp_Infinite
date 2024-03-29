@@ -16,6 +16,7 @@ use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostXpPlayer;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 use Tests\Traits\HasAnalyticDataProvider;
 
@@ -24,7 +25,7 @@ class ProcessAnalyticTest extends TestCase
     use HasAnalyticDataProvider;
     use WithFaker;
 
-    /** @dataProvider analyticDataProvider */
+    #[DataProvider('analyticDataProvider')]
     public function testProcessingEachCategory(AnalyticInterface $analyticClass): void
     {
         // Arrange

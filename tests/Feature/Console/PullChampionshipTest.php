@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Championship\MockChampionshipBracketService;
@@ -20,7 +21,7 @@ class PullChampionshipTest extends TestCase
 {
     use WithFaker;
 
-    /** @dataProvider championshipTypeDataProvider */
+    #[DataProvider('championshipTypeDataProvider')]
     public function testValidDataPull(string $type): void
     {
         // Arrange
