@@ -21,14 +21,14 @@ trait HasKd
     public function getKdColor(): string
     {
         return $this->kd >= 1
-            ? 'has-background-success-light'
-            : 'has-background-danger-light';
+            ? 'has-background-success-soft'
+            : 'has-background-danger-soft';
     }
 
     public function getKdaColor(): string
     {
         return $this->kda >= 1
-            ? 'has-background-success-light'
-            : 'has-background-danger-light';
+            ? 'has-background-success-soft'
+            : 'has-background-danger-soft';
     }
 }

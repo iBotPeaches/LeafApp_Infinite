@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     @foreach ($matchups as $matchup)
-        <tr class="{{ $matchup->isCancelled() ? 'has-background-danger-light' : null }}">
+        <tr class="{{ $matchup->isCancelled() ? 'has-background-danger-soft' : null }}">
             <td style="opacity: {{ $matchup->team1?->id === $matchup->loser?->id ? '40%' : '100%' }}">
                 <article class="media">
                     <figure class="media-left">

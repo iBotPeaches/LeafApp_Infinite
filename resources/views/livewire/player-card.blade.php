@@ -3,7 +3,7 @@
 ?>
 <div>
     @if ($player->is_bot)
-        <div class="card has-background-grey-light mb-2">
+        <div class="card has-background-grey-soft mb-2">
             <div class="card-content">
                 <h1 class="title is-4">
                     <span class="tag is-dark">BOT</span>&nbsp;{{ $player->gamertag }}
@@ -12,7 +12,7 @@
             </div>
         </div>
     @else
-        <div class="card {{ $player->is_cheater ? 'has-background-danger-light' : 'has-background-success-light' }} mb-2"
+        <div class="card {{ $player->is_cheater ? 'has-background-danger-soft' : 'has-background-success-soft' }} mb-2"
              style="background-image: url({{ $player->backdrop_url }}); background-repeat: no-repeat; background-position: center top;"
         >
             @if ($player->rank?->largeIcon)
