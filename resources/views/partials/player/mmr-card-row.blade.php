@@ -13,7 +13,7 @@
         in a <a href="{{ route('game', [$latestMmr]) }}">{{ $latestMmr->name }}</a>.
 
         <span class="is-pulled-right">
-            <span class="tag is-dark">{{ $latestMmr->occurred_at->diffInDays() }} days old</span>
+            <span class="tag is-dark">{{ $latestMmr->occurred_at->diffInDays(absolute: true) }} days old</span>
         </span>
     </div>
 </article>

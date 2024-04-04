@@ -152,7 +152,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
             return null;
         }
 
-        return $this->ended_at->diffInMinutes($this->started_at).' minutes';
+        return $this->ended_at->diffInMinutes(date: $this->started_at, absolute: true).' minutes';
     }
 
     public function isCancelled(): bool
