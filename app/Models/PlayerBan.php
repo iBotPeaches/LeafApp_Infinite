@@ -40,11 +40,11 @@ class PlayerBan extends Model implements HasDotApi
     public function getMessageAttribute(string $value): string
     {
         $replacements = [
-            'You have' => $this->player->gamertag  . ' has',
-            'Your' => $this->player->gamertag . "'s",
+            'You have' => $this->player->gamertag.' has',
+            'Your' => $this->player->gamertag."'s",
         ];
 
-        return (string)str_replace(array_keys($replacements), $replacements, $value);
+        return (string) str_replace(array_keys($replacements), $replacements, $value);
     }
 
     public static function fromDotApi(array $payload): ?self
