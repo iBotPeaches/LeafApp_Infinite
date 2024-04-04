@@ -18,6 +18,7 @@ return [
         Experience::PVE_BOTS => 'PVE Bots',
         Experience::CUSTOM => 'Custom',
         Experience::FEATURED => 'Featured',
+        Experience::UNKNOWN => 'Unknown',
     ],
     Outcome::class => [
         Outcome::WIN => 'Win',
