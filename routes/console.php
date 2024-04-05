@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\CheckForUnban;
 use App\Console\Commands\PullMetadata;
 use App\Console\Commands\RefreshAnalytics;
 use App\Console\Commands\RefreshMedals;
@@ -22,3 +23,7 @@ Schedule::command(RefreshMedals::class)
 
 Schedule::command(SnapshotCommand::class)
     ->everyFiveMinutes();
+
+Schedule::command(CheckForUnban::class)
+    ->daily()
+    ->withoutOverlapping();
