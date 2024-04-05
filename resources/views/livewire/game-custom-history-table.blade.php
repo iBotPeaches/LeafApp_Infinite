@@ -76,6 +76,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $games->links() }}
+        {{ $games->links(data: ['scrollTo' => false]) }}
     @endif
 </div>

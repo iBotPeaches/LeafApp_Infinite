@@ -47,5 +47,5 @@
             </tbody>
         </table>
     </div>
-    {{ $medals->links() }}
+    {{ $medals->links(data: ['scrollTo' => false]) }}
 </div>

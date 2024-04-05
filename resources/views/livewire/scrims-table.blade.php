@@ -34,5 +34,5 @@
             </tbody>
         </table>
     </div>
-    {{ $scrims->links() }}
+    {{ $scrims->links(data: ['scrollTo' => false]) }}
 </div>

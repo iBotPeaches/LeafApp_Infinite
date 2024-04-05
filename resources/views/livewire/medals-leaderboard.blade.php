@@ -72,6 +72,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $results->links() }}
+        {{ $results->links(data: ['scrollTo' => false]) }}
     @endif
 </div>
