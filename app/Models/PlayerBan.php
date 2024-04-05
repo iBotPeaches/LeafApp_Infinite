@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
  * @property string $type
  * @property string $scope
  * @property-read Player $player
+ * @property-read bool $is_expired
  *
  * @method static PlayerBanFactory factory(...$parameters)
  */
@@ -39,12 +40,18 @@ class PlayerBan extends Model implements HasDotApi
 
     public function getMessageAttribute(string $value): string
     {
+        $word = $this->is_expired ? 'had' : 'has';
         $replacements = [
-            'You have' => $this->player->gamertag.' has',
+            'You have' => $this->player->gamertag.' '.$word,
             'Your' => $this->player->gamertag."'s",
         ];
 
         return (string) str_replace(array_keys($replacements), $replacements, $value);
+    }
+
+    public function getIsExpiredAttribute(): bool
+    {
+        return $this->ends_at->isPast();
     }
 
     public static function fromDotApi(array $payload): ?self
