@@ -24,5 +24,5 @@
             </tbody>
         </table>
     </div>
-    {{ $stats->links() }}
+    {{ $stats->links(data: ['scrollTo' => false]) }}
 </div>
