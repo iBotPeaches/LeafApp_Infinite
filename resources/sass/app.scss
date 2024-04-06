@@ -36,6 +36,10 @@ td {
     opacity: 1;
 }
 
+.is-cheater {
+    text-decoration: line-through;
+}
+
 .is-unranked {
     filter: drop-shadow(16px 16px 20px black) invert(100%);
 }

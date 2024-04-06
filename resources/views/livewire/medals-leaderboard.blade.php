@@ -51,9 +51,7 @@
                                 </figure>
                                 <div class="media-content">
                                     <div class="content" style="white-space: nowrap">
-                                        <a href="{{ route('player', [$result->player]) }}">
-                                            {{ $result->player->gamertag }}
-                                        </a>
+                                        @include('partials.links.player', ['player' => $result->player])
                                     </div>
                                 </div>
                             </article>

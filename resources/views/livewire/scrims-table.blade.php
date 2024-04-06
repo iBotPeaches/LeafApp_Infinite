@@ -21,9 +21,7 @@
                     </td>
                     <td>
                         @if ($scrim->user->player)
-                            <a href="{{ route('player', $scrim->user->player) }}">
-                                {{ $scrim->user->player->gamertag }}
-                            </a>
+                            @include('partials.links.player', ['player' => $scrim->user->player])
                         @else
                             <i>a gamer</i>
                         @endif

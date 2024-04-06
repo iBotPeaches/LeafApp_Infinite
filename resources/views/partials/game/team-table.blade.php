@@ -70,9 +70,7 @@ use Illuminate\Support\Str;
                             </figure>
                             <div class="media-content">
                                 <div class="content" style="white-space: nowrap">
-                                    <a href="{{ route('player', [$gamePlayer->player]) }}">
-                                        {{ $gamePlayer->player->gamertag }}
-                                    </a>
+                                    @include('partials.links.player', ['player' => $gamePlayer->player])
                                 </div>
                             </div>
                         </article>
