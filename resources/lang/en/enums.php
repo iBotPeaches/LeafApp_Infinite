@@ -19,6 +19,7 @@ return [
         Experience::CUSTOM => 'Custom',
         Experience::FEATURED => 'Featured',
         Experience::UNKNOWN => 'Unknown',
+        Experience::PVE => 'PVE',
     ],
     Outcome::class => [
         Outcome::WIN => 'Win',
