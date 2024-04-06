@@ -16,9 +16,7 @@
                 <div class="media-content">
                     <p class="title is-6">
                         @if ($player)
-                            <a href="{{ route('player', [$player]) }}">
-                                {{ $player?->gamertag ?? '' }}
-                            </a>
+                            @include('partials.links.player', ['player' => $player])
                         @else
                             <span>{{ $matchupTeam->name }}</span>
                         @endif

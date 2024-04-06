@@ -18,9 +18,7 @@
         </figure>
         <div class="media-content">
             <div class="content">
-                <a href="{{ route('player', [$record->player]) }}">
-                    <strong>{{ $record->player->gamertag }}</strong>
-                </a>
+                @include('partials.links.player', ['player' => $record->player])
                 <i>{{ $analyticClass->displayProperty($record) }}</i> {{ $analyticClass->unit() }}
             </div>
         </div>
