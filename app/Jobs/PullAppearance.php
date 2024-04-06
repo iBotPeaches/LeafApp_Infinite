@@ -25,6 +25,8 @@ class PullAppearance implements ShouldQueue
 
     public int $tries = 1;
 
+    public bool $failOnTimeout = true;
+
     public Player $player;
 
     public function __construct(Player $player)

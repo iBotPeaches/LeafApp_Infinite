@@ -22,6 +22,8 @@ class PullServiceRecord implements ShouldQueue
 
     public int $timeout = 720;
 
+    public bool $failOnTimeout = true;
+
     private Player $player;
 
     private ?string $seasonIdentifier;

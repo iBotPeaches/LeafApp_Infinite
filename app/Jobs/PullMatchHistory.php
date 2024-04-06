@@ -23,6 +23,8 @@ class PullMatchHistory implements ShouldQueue
 
     public int $timeout = 720;
 
+    public bool $failOnTimeout = true;
+
     private Player $player;
 
     public Mode $mode;
