@@ -40,6 +40,14 @@ td {
     text-decoration: line-through;
 }
 
+.is-cheater:hover {
+    text-decoration: none;
+}
+
+.is-donator {
+    font-weight: bold;
+}
+
 .is-unranked {
     filter: drop-shadow(16px 16px 20px black) invert(100%);
 }
