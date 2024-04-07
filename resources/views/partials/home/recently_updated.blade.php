@@ -23,6 +23,8 @@
                             <figure class="media-left">
                                 @if ($player->is_cheater)
                                     <span class="tag is-danger">Cheater</span>
+                                @elseif ($player->is_donator)
+                                    <span class="tag is-success">Donator</span>
                                 @else
                                     <p class="image is-32x32">
                                         <img src="{{ $player->emblem_url }}" alt="{{ $player->gamertag }} Emblem"/>

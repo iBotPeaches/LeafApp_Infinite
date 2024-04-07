@@ -52,6 +52,14 @@
                                 <div class="media-content">
                                     <div class="content" style="white-space: nowrap">
                                         @include('partials.links.player', ['player' => $result->player])
+                                        @if ($result->player?->is_donator)
+                                            <span class="tag is-success" data-tooltip="Donated via BuyMeACoffee." style="border-bottom: 0;">
+                                                <i class="fas fa-leaf"></i>
+                                            </span>
+                                        @endif
+                                        @if ($result->player?->is_cheater)
+                                            <span class="tag is-danger">Cheater</span>
+                                        @endif
                                     </div>
                                 </div>
                             </article>

@@ -43,6 +43,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property int|null $xp
  * @property string $service_tag
  * @property bool $is_private
+ * @property bool $is_donator
  * @property bool $is_bot
  * @property bool $is_cheater
  * @property bool $is_botfarmer
@@ -87,6 +88,7 @@ class Player extends Model implements HasDotApi, Sitemapable
     ];
 
     public $casts = [
+        'is_donator' => 'bool',
         'is_botfarmer' => 'bool',
     ];
 

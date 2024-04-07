@@ -22,6 +22,14 @@
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
+            @if ($player->is_donator)
+                <div class="notification is-success">
+                    <i class="fas fa-leaf"></i>
+                    <span class="has-tooltip-arrow" data-tooltip="Donated via BuyMeACoffee.">
+                        Donator
+                    </span>
+                </div>
+            @endif
             @if ($player->is_cheater)
                 <div class="notification is-danger">
                     <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
