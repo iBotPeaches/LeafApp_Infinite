@@ -50,10 +50,10 @@
             </article>
             <article class="message is-dark">
                 <div class="message-header">
-                    <p>What about old HCS tournaments?</p>
+                    <p>How do I get a "Donator" badge?</p>
                 </div>
                 <div class="message-body">
-                    In time we will retroactively pull that data in.
+                    The coffee icon in top right - any amount if you leave your gamertag will obtain it.
                 </div>
             </article>
             <article class="message is-dark">
