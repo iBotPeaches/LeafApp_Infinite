@@ -27,6 +27,9 @@ class BaseGameStat
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
             config('services.halo.playlists.firefight-legendary'),
+            config('services.halo.playlists.firefight-grunt-koth'),
+            config('services.halo.playlists.firefight-grunt-heroic'),
+            config('services.halo.playlists.firefight-grunt-legendary'),
         ];
     }
 }
