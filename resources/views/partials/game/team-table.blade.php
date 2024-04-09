@@ -46,7 +46,7 @@ use Illuminate\Support\Str;
                 <th><abbr title="Deaths">D</abbr></th>
                 <th><abbr title="Assists">A</abbr></th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
-                <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
+                <th><abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                 <th><abbr title="Ordered by Points">Score</abbr></th>
                 <th>Rank</th>
