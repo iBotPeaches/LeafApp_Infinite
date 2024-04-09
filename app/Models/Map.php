@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @property string $name
  * @property string $thumbnail_url
  * @property-read string $image
+ * @property-read string $shorthand
  * @property-read Level|null $level
  *
  * @method static MapFactory factory(...$parameters)
@@ -42,6 +43,11 @@ class Map extends Model implements HasDotApi
         }
 
         return $this->thumbnail_url;
+    }
+
+    public function getShorthandAttribute(): string
+    {
+        return Str::remove('- Ranked', $this->name);
     }
 
     public static function fromDotApi(array $payload): ?self

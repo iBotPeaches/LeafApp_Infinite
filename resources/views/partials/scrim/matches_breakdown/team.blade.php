@@ -4,7 +4,7 @@
 <article class="tile is-child notification {{ $game->winner?->color }}">
     <p class="title">
         <a href="{{ route('game', [$game]) }}">
-            {{ $game->map->name }}
+            {{ $game->map->shorthand }}
         </a>
         <span class="is-pulled-right">
             <span class="tag is-dark">{{ $game->score }}</span>

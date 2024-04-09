@@ -73,7 +73,7 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                             </td>
                         @endif
                         @if ($analyticClass->type()->isMap())
-                            <td>{{ $result->map->name }}</td>
+                            <td>{{ $result->map->shorthand }}</td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
                         @if ($analyticClass->type()->isGame())
