@@ -38,7 +38,7 @@
                         <td>
                             <a href="{{ route('game', [$game]) }}">
                                 <abbr title="{{ $game->map->name }}">
-                                    {{ \Illuminate\Support\Str::limit($game->map->name, 15) }}
+                                    {{ \Illuminate\Support\Str::limit($game->map->shorthand, 15) }}
                                 </abbr>
                             </a>
                         </td>

@@ -38,7 +38,7 @@
                     </td>
                     <td>
                         <abbr title="{{ $game->map->name }}">
-                            {{ \Illuminate\Support\Str::limit($game->map->name, 15) }}
+                            {{ \Illuminate\Support\Str::limit($game->map->shorthand, 15) }}
                         </abbr>
                     </td>
                     <td>
