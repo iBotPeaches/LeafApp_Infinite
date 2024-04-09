@@ -7,7 +7,7 @@
     <div class="level">
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">KD</p>
+                <p class="heading"><abbr title="Total Kills / Total Deaths">KD</abbr></p>
                 <p class="title {{ $serviceRecord->kd_color }}">
                     {{ number_format($serviceRecord->kd, 2) }}
                 </p>
@@ -15,7 +15,7 @@
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">KDA</p>
+                <p class="heading"><abbr title="(Kills + (Assists * .3) - Deaths) / Games">KDA</abbr></p>
                 <p class="title {{ $serviceRecord->kda_color }}">
                     {{ number_format($serviceRecord->kda, 2) }}
                 </p>
@@ -51,6 +51,14 @@
                 <p class="heading">Deaths</p>
                 <p class="title">
                     {{ number_format($serviceRecord->deaths) }}
+                </p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Assists</p>
+                <p class="title">
+                    {{ number_format($serviceRecord->assists) }}
                 </p>
             </div>
         </div>
