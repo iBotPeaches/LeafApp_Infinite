@@ -18,12 +18,12 @@
                 </div>
             @endif
             @if ($player->is_private)
-                <div class="notification is-warning">
+                <div class="notification is-warning mb-2">
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
             @if ($player->is_donator)
-                <div class="notification is-success">
+                <div class="notification is-success mb-2">
                     <i class="fas fa-leaf"></i>
                     <span class="has-tooltip-arrow" data-tooltip="Donated via BuyMeACoffee.">
                         Donator
@@ -31,12 +31,12 @@
                 </div>
             @endif
             @if ($player->is_cheater)
-                <div class="notification is-danger">
+                <div class="notification is-danger mb-2">
                     <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
                 </div>
             @endif
             @if ($player->is_botfarmer)
-                <div class="notification is-info">
+                <div class="notification is-info mb-2">
                     <i class="fas fa-robot"></i>
                     <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp and thus excluded from leaderboards.">
                         Flagged as Bot Farmer
