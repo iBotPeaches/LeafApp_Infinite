@@ -60,7 +60,7 @@
                             {{ csrf_field() }}
                         </form>
                     @endauth
-                    <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" rel="nofollow" class="button is-warning">
+                    <a target="_blank" href="https://www.buymeacoffee.com/iBotPeaches" rel="nofollow" class="button is-warning has-tooltip-bottom" data-tooltip="Donate">
                         <i class="fas fa-coffee"></i>
                     </a>
                 </div>

@@ -25,7 +25,7 @@
             @if ($player->is_donator)
                 <div class="notification is-success mb-2">
                     <i class="fas fa-leaf"></i>
-                    <span class="has-tooltip-arrow" data-tooltip="Donated via BuyMeACoffee.">
+                    <span class="has-tooltip-arrow" data-tooltip="Donated via BuyMeACoffee">
                         Donator
                     </span>
                 </div>
