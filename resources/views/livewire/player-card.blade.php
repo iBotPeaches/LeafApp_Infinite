@@ -47,7 +47,7 @@
                     @endif
                     <progress
                         class="progress {{ $player->percentage_next_rank_color }}"
-                        value="{{ $player->xp_towards_next_rank }}"
+                        value="{{ $player->nextRank ? $player->xp_towards_next_rank : 100 }}"
                         max="{{ $player->xp_required_for_next_rank }}">
                     </progress>
                 </div>
