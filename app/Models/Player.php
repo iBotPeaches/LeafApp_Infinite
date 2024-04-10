@@ -166,7 +166,7 @@ class Player extends Model implements HasDotApi, Sitemapable
             return $this->xp - $lastThreshold;
         }
 
-        return 0;
+        return 100;
     }
 
     public function getXpRequiredForNextRankAttribute(): int
