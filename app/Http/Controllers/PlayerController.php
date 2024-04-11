@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\PlayerTab;
+use App\Http\Requests\BanCheckRequest;
 use App\Http\Requests\LinkableRequest;
 use App\Jobs\ExportGameHistory;
 use App\Models\Player;
@@ -75,6 +76,13 @@ class PlayerController extends Controller
         $user = $request->user();
         $user->player_id = null;
         $user->saveOrFail();
+
+        return redirect()->route('player', $player);
+    }
+
+    public function banCheck(BanCheckRequest $request, Player $player): RedirectResponse
+    {
+        $player->checkForBanFromDotApi();
 
         return redirect()->route('player', $player);
     }
