@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
+use Tests\Mocks\BanSummary\MockBanSummaryService;
 use Tests\TestCase;
 
 class PlayerPageTest extends TestCase
@@ -107,6 +108,56 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertRedirect();
+    }
+
+    public function testCheckForBan(): void
+    {
+        // Arrange
+        /** @var Player $player */
+        $player = Player::factory()->createOne();
+
+        $mockBanCheckResponse = (new MockBanSummaryService())->banned($player->gamertag);
+        Http::fakeSequence()
+            ->push($mockBanCheckResponse, Response::HTTP_OK);
+
+        $user = User::factory()->createOne();
+
+        $this->actingAs($user);
+
+        // Act
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/ban-check');
+
+        // Assert
+        $response->assertRedirect();
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'is_cheater' => true,
+        ]);
+    }
+
+    public function testCheckForNoBan(): void
+    {
+        // Arrange
+        /** @var Player $player */
+        $player = Player::factory()->createOne();
+
+        $mockBanCheckResponse = (new MockBanSummaryService())->unbanned($player->gamertag);
+        Http::fakeSequence()
+            ->push($mockBanCheckResponse, Response::HTTP_OK);
+
+        $user = User::factory()->createOne();
+
+        $this->actingAs($user);
+
+        // Act
+        $response = $this->get('/player/'.urlencode($player->gamertag).'/ban-check');
+
+        // Assert
+        $response->assertRedirect();
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'is_cheater' => false,
+        ]);
     }
 
     #[DataProvider('gamertagDataProvider')]

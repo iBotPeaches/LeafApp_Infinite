@@ -228,6 +228,22 @@ class Player extends Model implements HasDotApi, Sitemapable
         $this->xuid = $client->xuid($this->url_safe_gamertag);
     }
 
+    public function checkForBanFromDotApi(): bool
+    {
+        /** @var InfiniteInterface $client */
+        $client = resolve(InfiniteInterface::class);
+
+        $bans = $client->banSummary($this);
+        if ($bans->isEmpty()) {
+            return false;
+        }
+
+        $this->is_cheater = true;
+        $this->saveOrFail();
+
+        return $this->is_cheater;
+    }
+
     public function updateFromDotApi(bool $forceUpdate = false, ?string $type = null): void
     {
         $seasonModel = SeasonSession::model();

@@ -33,6 +33,9 @@ Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->na
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
 // Player
+Route::middleware(['throttle:ban'])->group(function () {
+    Route::get('/player/{player}/ban-check', [PlayerController::class, 'banCheck'])->name('banCheck');
+});
 Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');
 Route::post('/player/{player}/unlink', [PlayerController::class, 'unlink'])->name('playerUnlink');
 Route::pattern('type', 'overview|medals|competitive|matches|custom|lan|modes');
