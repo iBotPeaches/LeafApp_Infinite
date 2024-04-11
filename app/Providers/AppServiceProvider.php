@@ -59,6 +59,12 @@ class AppServiceProvider extends ServiceProvider
                 return response()->view('pages.errors.429', [], Response::HTTP_TOO_MANY_REQUESTS);
             });
         });
+
+        RateLimiter::for('ban', function (Request $request) {
+            return Limit::perDay(5)->by($request->ip())->response(function () {
+                return response()->view('pages.errors.429-ban', [], Response::HTTP_TOO_MANY_REQUESTS);
+            });
+        });
         // @codeCoverageIgnoreEnd
     }
 }
