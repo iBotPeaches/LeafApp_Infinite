@@ -65,7 +65,7 @@ class PlayerController extends Controller
         /** @var User $user */
         $user = $request->user();
         $user->player()->associate($player);
-        $user->saveOrFail();
+        $user->save();
 
         return redirect()->route('player', $player);
     }
@@ -75,7 +75,7 @@ class PlayerController extends Controller
         /** @var User $user */
         $user = $request->user();
         $user->player_id = null;
-        $user->saveOrFail();
+        $user->save();
 
         return redirect()->route('player', $player);
     }

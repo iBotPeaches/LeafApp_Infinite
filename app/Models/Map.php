@@ -69,7 +69,7 @@ class Map extends Model implements HasDotApi
         $map->level()->associate($level);
 
         if ($map->isDirty()) {
-            $map->saveOrFail();
+            $map->save();
         }
 
         return $map;

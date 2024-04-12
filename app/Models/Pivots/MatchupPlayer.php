@@ -55,7 +55,7 @@ class MatchupPlayer extends Pivot implements HasFaceItApi
         $teamPlayer->faceit_name = Arr::get($payload, 'game_player_id');
 
         if ($teamPlayer->isDirty()) {
-            $teamPlayer->saveOrFail();
+            $teamPlayer->save();
         }
 
         return $teamPlayer;

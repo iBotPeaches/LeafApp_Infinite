@@ -164,7 +164,7 @@ class GamePlayer extends Model implements HasDotApi
         }
 
         if ($gamePlayer->isDirty()) {
-            $gamePlayer->saveOrFail();
+            $gamePlayer->save();
         }
 
         return $gamePlayer;

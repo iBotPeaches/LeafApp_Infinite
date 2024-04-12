@@ -30,7 +30,7 @@ class GoogleController extends Controller
                 'google_id' => $googleUser->getId(),
             ]);
 
-        $user->saveOrFail();
+        $user->save();
         Auth::login($user, true);
 
         if ($user->player) {

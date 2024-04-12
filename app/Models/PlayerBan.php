@@ -79,7 +79,7 @@ class PlayerBan extends Model implements HasDotApi
         $playerBan->scope = Arr::get($payload, 'properties.scope');
 
         if ($playerBan->isDirty()) {
-            $playerBan->saveOrFail();
+            $playerBan->save();
         }
 
         return $playerBan;

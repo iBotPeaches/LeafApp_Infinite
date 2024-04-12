@@ -49,7 +49,7 @@ class FindPlayersFromTeam implements ShouldQueue
 
             if ($player) {
                 $teamPlayer->player()->associate($player);
-                $teamPlayer->saveOrFail();
+                $teamPlayer->save();
             }
         }
     }

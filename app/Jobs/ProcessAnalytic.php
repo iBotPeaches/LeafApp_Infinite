@@ -81,7 +81,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->place = $index + 1;
             $analytic->value = (float) $game->{$this->analytic->property()};
             $analytic->game()->associate($game);
-            $analytic->saveOrFail();
+            $analytic->save();
         });
     }
 
@@ -104,7 +104,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->value = $value;
             $analytic->game()->associate($gamePlayer->game);
             $analytic->player()->associate($gamePlayer->player);
-            $analytic->saveOrFail();
+            $analytic->save();
 
             // Store our last values in case users share the value.
             $lastIndex = $analytic->place;
@@ -130,7 +130,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->place = $place;
             $analytic->value = $value;
             $analytic->player()->associate($serviceRecord->player);
-            $analytic->saveOrFail();
+            $analytic->save();
 
             // Store our last values in case users share the value.
             $lastIndex = $analytic->place;
@@ -147,7 +147,7 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->place = $index + 1;
             $analytic->value = (float) $map->{$this->analytic->property()};
             $analytic->map()->associate($map);
-            $analytic->saveOrFail();
+            $analytic->save();
         });
     }
 

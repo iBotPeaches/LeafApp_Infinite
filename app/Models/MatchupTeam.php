@@ -102,7 +102,7 @@ class MatchupTeam extends Model implements HasFaceItApi
         $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : Outcome::DRAW();
 
         if ($team->isDirty()) {
-            $team->saveOrFail();
+            $team->save();
         }
 
         PullLogoFromMatchupTeam::dispatchSync($team, Arr::get($payload, 'avatar'));

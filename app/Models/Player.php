@@ -215,7 +215,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         }
 
         if ($player->isDirty()) {
-            $player->saveOrFail();
+            $player->save();
         }
 
         return $player;
@@ -239,7 +239,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         }
 
         $this->is_cheater = true;
-        $this->saveOrFail();
+        $this->save();
 
         return $this->is_cheater;
     }

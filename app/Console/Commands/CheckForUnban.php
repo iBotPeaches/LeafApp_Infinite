@@ -22,7 +22,7 @@ class CheckForUnban extends Command
 
         foreach ($cursor as $player) {
             $player->is_cheater = false;
-            $player->saveOrFail();
+            $player->save();
 
             $this->info("Player {$player->gamertag} has been unbanned.");
         }

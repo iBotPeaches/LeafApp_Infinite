@@ -86,7 +86,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
                     $matchupGame->game()->associate($game);
                     $matchupGame->matchup()->associate($this->matchup);
-                    $matchupGame->saveOrFail();
+                    $matchupGame->save();
 
                     $this->processedGameIds[] = $game->id;
                 });

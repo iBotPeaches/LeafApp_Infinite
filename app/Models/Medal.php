@@ -123,7 +123,7 @@ class Medal extends Model implements HasDotApi, Sitemapable
         $medal->difficulty = Arr::get($payload, 'attributes.difficulty');
 
         if ($medal->isDirty()) {
-            $medal->saveOrFail();
+            $medal->save();
         }
 
         return $medal;

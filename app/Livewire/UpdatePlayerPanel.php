@@ -68,7 +68,7 @@ class UpdatePlayerPanel extends Component
                     $this->player->lockForUpdate();
                     $this->player->updateFromDotApi(false, $this->type);
                     if ($this->player->isDirty()) {
-                        $this->player->saveOrFail();
+                        $this->player->save();
                     }
                 }, 3);
             } catch (RequestException $exception) {

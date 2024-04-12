@@ -128,7 +128,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         $championship->description = Arr::get($payload, 'description');
 
         if ($championship->isDirty()) {
-            $championship->saveOrFail();
+            $championship->save();
         }
 
         return $championship;
