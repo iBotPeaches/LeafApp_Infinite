@@ -68,7 +68,7 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
         $level->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($level->isDirty()) {
-            $level->saveOrFail();
+            $level->save();
         }
 
         return $level;

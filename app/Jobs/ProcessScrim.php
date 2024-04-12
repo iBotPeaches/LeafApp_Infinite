@@ -33,6 +33,6 @@ class ProcessScrim implements ShouldQueue
         });
 
         $this->scrim->is_complete = true;
-        $this->scrim->saveOrFail();
+        $this->scrim->save();
     }
 }

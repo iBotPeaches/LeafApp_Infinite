@@ -41,7 +41,7 @@ class Team extends Model implements HasDotApi
         $team->emblem_url = Arr::get($payload, 'image_urls.icon');
 
         if ($team->isDirty()) {
-            $team->saveOrFail();
+            $team->save();
         }
 
         return $team;

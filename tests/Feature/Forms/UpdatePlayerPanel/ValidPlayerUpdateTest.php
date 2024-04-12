@@ -474,7 +474,7 @@ class ValidPlayerUpdateTest extends TestCase
             ]);
 
         $player->last_game_id_pulled = $gamePlayer->game_id;
-        $player->saveOrFail();
+        $player->save();
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [

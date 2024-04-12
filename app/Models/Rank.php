@@ -86,7 +86,7 @@ class Rank extends Model implements HasDotApi
         $rank->required = max(0, $rank->threshold - $lastThreshold);
 
         if ($rank->isDirty()) {
-            $rank->saveOrFail();
+            $rank->save();
         }
 
         return $rank;

@@ -36,7 +36,7 @@ class Scrim extends Model implements Sitemapable
     {
         $model = new self();
         $model->user()->associate($user);
-        $model->saveOrFail();
+        $model->save();
 
         $model->games()->sync($gameIds);
 

@@ -125,7 +125,7 @@ class ApiClient implements InfiniteInterface
 
         // Save the Player with the latest game pulled (Custom vs Matchmaking)
         $player->$lastGameIdVariable = $firstPulledGameId ?? $player->$lastGameIdVariable;
-        $player->saveOrFail();
+        $player->save();
 
         return GamePlayer::query()
             ->where('player_id', $player->id)

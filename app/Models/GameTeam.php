@@ -116,7 +116,7 @@ class GameTeam extends Model implements HasDotApi
         $gameTeam->final_score = Arr::get($payload, $key);
 
         if ($gameTeam->isDirty()) {
-            $gameTeam->saveOrFail();
+            $gameTeam->save();
         }
 
         return $gameTeam;

@@ -77,7 +77,7 @@ class Season extends Model implements HasDotApi
         $season->description = Arr::get($payload, 'description');
 
         if ($season->isDirty()) {
-            $season->saveOrFail();
+            $season->save();
         }
 
         return $season;

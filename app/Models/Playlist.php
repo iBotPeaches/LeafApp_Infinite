@@ -102,7 +102,7 @@ class Playlist extends Model implements HasDotApi
         $playlist->image_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($playlist->isDirty()) {
-            $playlist->saveOrFail();
+            $playlist->save();
         }
 
         return $playlist;

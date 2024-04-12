@@ -251,7 +251,7 @@ class Csr extends Model implements HasDotApi
                 $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
 
                 if ($csr->isDirty()) {
-                    $csr->saveOrFail();
+                    $csr->save();
                 }
             }
         }

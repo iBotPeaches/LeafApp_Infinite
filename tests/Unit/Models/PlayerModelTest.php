@@ -24,7 +24,7 @@ class PlayerModelTest extends TestCase
         ]);
 
         // Act
-        $player->saveOrFail();
+        $player->save();
 
         // Assert
         Bus::assertNotDispatched(PullXuid::class);
@@ -42,7 +42,7 @@ class PlayerModelTest extends TestCase
         ]);
 
         // Act
-        $player->saveOrFail();
+        $player->save();
 
         // Assert
         Bus::assertDispatched(PullXuid::class);

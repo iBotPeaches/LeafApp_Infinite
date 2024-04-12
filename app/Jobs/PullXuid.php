@@ -63,7 +63,7 @@ class PullXuid implements ShouldQueue
             if ($this->player->xuid) {
                 $this->checkForGamertagChange();
             }
-            $this->player->saveOrFail();
+            $this->player->save();
         }
     }
 }

@@ -192,7 +192,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         $matchup->ended_at = Arr::get($payload, 'finished_at');
 
         if ($matchup->isDirty()) {
-            $matchup->saveOrFail();
+            $matchup->save();
         }
 
         return $matchup;

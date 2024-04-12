@@ -224,7 +224,7 @@ class Game extends Model implements HasDotApi
         }
 
         if ($game->isDirty()) {
-            $game->saveOrFail();
+            $game->save();
         }
 
         if (Arr::has($payload, 'teams.0.id')) {
@@ -243,7 +243,7 @@ class Game extends Model implements HasDotApi
                 // re-process later.
                 if ($type === PlayerType::PLAYER && (bool) Arr::get($playerData, 'attributes.resolved') === false) {
                     $game->was_pulled = false;
-                    $game->saveOrFail();
+                    $game->save();
 
                     continue;
                 }
@@ -251,7 +251,7 @@ class Game extends Model implements HasDotApi
                 $player = Player::fromGamertag($gamertag);
                 if (! $player->exists) {
                     $player->is_bot = $type === PlayerType::BOT;
-                    $player->saveOrFail();
+                    $player->save();
                     PullAppearance::dispatch($player);
                 }
                 $playerData['_leaf']['player'] = $player;

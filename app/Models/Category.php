@@ -63,7 +63,7 @@ class Category extends Model implements HasDotApi, HasDotApiMetadata
         $category->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($category->isDirty()) {
-            $category->saveOrFail();
+            $category->save();
         }
 
         return $category;
