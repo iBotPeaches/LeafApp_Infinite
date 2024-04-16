@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\BaseGametype;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property BaseGametype $gametype
  * @property string $name
  * @property array $gamevariant_ids
+ * @property-read Overview $overview
  */
 class OverviewGametype extends Model
 {
@@ -29,4 +31,9 @@ class OverviewGametype extends Model
     ];
 
     public $timestamps = false;
+
+    public function overview(): BelongsTo
+    {
+        return $this->belongsTo(Overview::class);
+    }
 }
