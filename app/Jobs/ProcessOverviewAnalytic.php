@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Enums\BaseGametype;
 use App\Enums\QueueName;
 use App\Models\Game;
 use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Models\Overview;
+use App\Support\Gametype\GametypeHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -47,10 +49,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
         $overview->image = $map?->thumbnail_url ?? '';
         $overview->save();
 
-        // Find all the maps (versions) with the first time played.
         $this->parseOverviewMaps($overview);
-
-        // From those map versions, find all the gametypes played.
         $this->parseOverviewGametypes($overview);
     }
 
@@ -63,8 +62,9 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 ->orderByDesc('occurred_at')
                 ->value('occurred_at');
 
-            $overview->maps()->create([
+            $overview->maps()->updateOrCreate([
                 'map_id' => $mapId,
+            ], [
                 'released_at' => $releasedAt,
             ]);
         }
@@ -79,11 +79,21 @@ class ProcessOverviewAnalytic implements ShouldQueue
             ->distinct()
             ->pluck('gamevariant_id');
 
-        $gamevariants = Gamevariant::query()
+        $variantMapping = [];
+        Gamevariant::query()
             ->whereIn('id', $gametypeIds)
-            ->get();
+            ->each(function (Gamevariant $gamevariant) use (&$variantMapping) {
+                $baseMode = GametypeHelper::findBaseGametype($gamevariant->name);
+                $variantMapping[$baseMode->value][] = $gamevariant->id;
+            });
 
-        // TODO DEDUPE GAMETYPES, since like 16 different iterations of Slayer
-        $test = '';
+        foreach ($variantMapping as $baseMode => $variantIds) {
+            $overview->gametypes()->updateOrCreate([
+                'gametype' => $baseMode,
+            ], [
+                'name' => BaseGametype::fromValue($baseMode)->description,
+                'gamevariant_ids' => $variantIds,
+            ]);
+        }
     }
 }

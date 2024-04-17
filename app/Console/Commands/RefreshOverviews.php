@@ -35,7 +35,9 @@ class RefreshOverviews extends Command
         });
 
         foreach ($mapIdsByName as $name => $mapIds) {
+            $startTime = time();
             ProcessOverviewAnalytic::dispatchSync($name, $mapIds);
+            $this->output->writeln('Processed '.$name.' in '.(time() - $startTime).' seconds.');
         }
 
         return CommandAlias::SUCCESS;

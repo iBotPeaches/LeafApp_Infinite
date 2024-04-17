@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Enums\BaseGametype;
 use App\Enums\Bracket;
 use App\Enums\CompetitiveMode;
@@ -79,6 +78,7 @@ return [
         BaseGametype::CTF => 'CTF',
         BaseGametype::ELIMINATION => 'Elimination',
         BaseGametype::ESCALATION => 'Escalation',
+        BaseGametype::EXTRACTION => 'Extraction',
         BaseGametype::INFECTION => 'Infection',
         BaseGametype::KOTH => 'KoTH',
         BaseGametype::LAND_GRAB => 'Land Grab',
