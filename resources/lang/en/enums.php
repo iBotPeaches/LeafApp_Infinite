@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Enums\BaseGametype;
 use App\Enums\Bracket;
 use App\Enums\CompetitiveMode;
 use App\Enums\Experience;
@@ -71,5 +73,20 @@ return [
         FaceItStatus::JOIN => 'Join',
         FaceItStatus::CREATED => 'Created',
         FaceItStatus::ADJUSTMENT => 'Adjusted',
+    ],
+    BaseGametype::class => [
+        BaseGametype::ATTRITION => 'Attrition',
+        BaseGametype::CTF => 'CTF',
+        BaseGametype::ELIMINATION => 'Elimination',
+        BaseGametype::ESCALATION => 'Escalation',
+        BaseGametype::INFECTION => 'Infection',
+        BaseGametype::KOTH => 'KoTH',
+        BaseGametype::LAND_GRAB => 'Land Grab',
+        BaseGametype::LSS => 'LSS',
+        BaseGametype::ODDBALL => 'Oddball',
+        BaseGametype::SLAYER => 'Slayer',
+        BaseGametype::STOCKPILE => 'Stockpile',
+        BaseGametype::STRONGHOLDS => 'Strongholds',
+        BaseGametype::TOTAL_CONTROL => 'Total Control',
     ],
 ];
