@@ -12,6 +12,7 @@ use BenSampo\Enum\Enum;
  * @method static static CTF()
  * @method static static ELIMINATION()
  * @method static static ESCALATION()
+ * @method static static EXTRACTION()
  * @method static static INFECTION()
  * @method static static KOTH()
  * @method static static LAND_GRAB()
@@ -49,4 +50,6 @@ final class BaseGametype extends Enum implements LocalizedEnum
     const STRONGHOLDS = 12;
 
     const TOTAL_CONTROL = 13;
+
+    const EXTRACTION = 14;
 }
