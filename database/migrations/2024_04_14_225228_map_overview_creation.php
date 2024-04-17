@@ -24,6 +24,8 @@ return new class extends Migration
             $table->foreignId('overview_id')->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Map::class)->constrained();
             $table->timestamp('released_at');
+
+            $table->unique(['overview_id', 'map_id']);
         });
 
         Schema::create('overview_gametypes', function (Blueprint $table) {
@@ -32,6 +34,8 @@ return new class extends Migration
             $table->tinyInteger('gametype');
             $table->string('name', 32);
             $table->json('gamevariant_ids');
+
+            $table->unique(['overview_id', 'gametype']);
         });
 
         Schema::create('overview_stats', function (Blueprint $table) {
@@ -64,6 +68,8 @@ return new class extends Migration
             $table->double('average_kd');
             $table->double('average_kda');
             $table->double('average_accuracy');
+
+            $table->unique(['overview_id', 'overview_gametype_id', 'overview_map_id'], 'overview_stats_unique');
         });
     }
 
