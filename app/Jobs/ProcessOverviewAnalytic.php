@@ -49,7 +49,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
             ]);
 
         $overview->name = $this->mapName;
-        $overview->image = $map?->thumbnail_url ?? '';
+        $overview->thumbnail_url = $map?->thumbnail_url ?? '';
         $overview->save();
 
         $this->parseOverviewMaps($overview);
