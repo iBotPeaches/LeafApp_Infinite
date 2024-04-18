@@ -5,15 +5,18 @@ namespace App\Jobs;
 use App\Enums\BaseGametype;
 use App\Enums\QueueName;
 use App\Models\Game;
+use App\Models\GamePlayer;
 use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Models\Overview;
 use App\Support\Gametype\GametypeHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ProcessOverviewAnalytic implements ShouldQueue
@@ -51,6 +54,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
         $this->parseOverviewMaps($overview);
         $this->parseOverviewGametypes($overview);
+        $this->parseOverviewStats($overview);
     }
 
     private function parseOverviewMaps(Overview $overview): void
@@ -95,5 +99,121 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 'gamevariant_ids' => $variantIds,
             ]);
         }
+    }
+
+    private function parseOverviewStats(Overview $overview): void
+    {
+        $mapIds = $overview->maps->pluck('map_id');
+
+        $gameBuilder = Game::query()
+            ->select('id')
+            ->whereIn('map_id', $mapIds)
+            ->whereNotNull('playlist_id');
+
+        $playerBuilder = GamePlayer::query()
+            ->whereIn('game_id', $gameBuilder);
+
+        // Overall
+        $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder);
+
+        // Per Map
+        foreach ($overview->maps as $map) {
+            $gameBuilder = Game::query()
+                ->select('id')
+                ->where('map_id', $map->map_id)
+                ->whereNotNull('playlist_id');
+
+            $playerBuilder = GamePlayer::query()
+                ->whereIn('game_id', $gameBuilder);
+
+            $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder, $map->id);
+
+            // Per Gametype
+            foreach ($overview->gametypes as $gametype) {
+                $gameBuilder = Game::query()
+                    ->select('id')
+                    ->where('map_id', $map->map_id)
+                    ->whereIn('gamevariant_id', $gametype->gamevariant_ids)
+                    ->whereNotNull('playlist_id');
+
+                $playerBuilder = GamePlayer::query()
+                    ->whereIn('game_id', $gameBuilder);
+
+                $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder, $map->id, $gametype->id);
+            }
+        }
+    }
+
+    private function produceOverviewStats(Overview $overview,
+        Builder $gameBuilder,
+        Builder $playerBuilder,
+        ?int $overviewMapId = null,
+        ?int $overviewGametypeId = null): void
+    {
+        $totalMatches = $gameBuilder
+            ->clone()
+            ->count();
+
+        if ($totalMatches === 0) {
+            return;
+        }
+
+        $totalSecondsPlayed = $gameBuilder
+            ->clone()
+            ->sum('duration_seconds');
+
+        $totalDnf = $playerBuilder
+            ->clone()
+            ->where('was_at_end', false)
+            ->count();
+
+        $query = <<<'SQL'
+            COUNT(player_id) as total_players,
+            COUNT(distinct player_id) as total_distinct_players,
+            SUM(kills) as total_kills,
+            SUM(deaths) as total_deaths,
+            SUM(assists) as total_assists,
+            SUM(suicides) as total_suicides,
+            SUM(medal_count) as total_medals,
+            AVG(kd) as average_kd,
+            AVG(kda) as average_kda,
+            AVG(accuracy) as average_accuracy
+        SQL;
+
+        /** @var GamePlayer $stats */
+        $stats = $playerBuilder
+            ->clone()
+            ->selectRaw($query)
+            ->first();
+
+        $totalPlayers = Arr::get($stats, 'total_players', 0);
+        $totalDistinctPlayers = Arr::get($stats, 'total_distinct_players', 0);
+        $totalKills = Arr::get($stats, 'total_kills', 0);
+        $totalDeaths = Arr::get($stats, 'total_deaths', 0);
+        $totalAssists = Arr::get($stats, 'total_assists', 0);
+        $totalSuicides = Arr::get($stats, 'total_suicides', 0);
+        $totalMedals = Arr::get($stats, 'total_medals', 0);
+        $averageKd = Arr::get($stats, 'average_kd', 0);
+        $averageKda = Arr::get($stats, 'average_kda', 0);
+        $averageAccuracy = Arr::get($stats, 'average_accuracy', 0);
+
+        $overview->stats()->updateOrCreate([
+            'overview_gametype_id' => $overviewGametypeId,
+            'overview_map_id' => $overviewMapId,
+        ], [
+            'total_matches' => $totalMatches,
+            'total_seconds_played' => $totalSecondsPlayed,
+            'total_players' => $totalPlayers,
+            'total_unique_players' => $totalDistinctPlayers,
+            'total_dnf' => $totalDnf,
+            'total_kills' => $totalKills,
+            'total_deaths' => $totalDeaths,
+            'total_assists' => $totalAssists,
+            'total_suicides' => $totalSuicides,
+            'total_medals' => $totalMedals,
+            'average_kd' => $averageKd,
+            'average_kda' => $averageKda,
+            'average_accuracy' => $averageAccuracy,
+        ]);
     }
 }
