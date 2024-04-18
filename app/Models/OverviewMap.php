@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $overview_id
  * @property int $map_id
- * @property string $released_at
+ * @property Carbon $released_at
  * @property-read Overview $overview
  */
 class OverviewMap extends Model
@@ -21,6 +22,10 @@ class OverviewMap extends Model
 
     public $guarded = [
         'id',
+    ];
+
+    public $casts = [
+        'released_at' => 'datetime',
     ];
 
     public $timestamps = false;
