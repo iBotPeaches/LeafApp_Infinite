@@ -32,6 +32,11 @@ class Overview extends Model
         'id',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function getImageAttribute(): string
     {
         $filename = Str::slug($this->name).'.jpg';
