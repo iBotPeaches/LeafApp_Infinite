@@ -26,7 +26,7 @@ class PlayerOverviewPage extends Component
         $season = SeasonSession::model();
         $isAllSeasons = $season->key === SeasonSession::$allSeasonKey;
 
-        return view('livewire.overview-page', [
+        return view('livewire.player-overview-page', [
             'mode' => $mode,
             'isAllSeasons' => $isAllSeasons,
             'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first(),
