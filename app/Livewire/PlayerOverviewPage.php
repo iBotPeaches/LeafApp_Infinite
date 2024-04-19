@@ -10,7 +10,7 @@ use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class OverviewPage extends Component
+class PlayerOverviewPage extends Component
 {
     public Player $player;
 

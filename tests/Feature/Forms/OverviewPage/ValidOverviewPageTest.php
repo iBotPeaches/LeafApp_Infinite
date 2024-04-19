@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Forms\OverviewPage;
 
 use App\Enums\Mode;
-use App\Livewire\OverviewPage;
+use App\Livewire\PlayerOverviewPage;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Session\ModeSession;
@@ -32,7 +32,7 @@ class ValidOverviewPageTest extends TestCase
         // Act & Assert
         ModeSession::set($attributes['mode']);
         SeasonSession::set('1-1');
-        Livewire::test(OverviewPage::class, [
+        Livewire::test(PlayerOverviewPage::class, [
             'player' => $player,
         ])
             ->assertViewHas('serviceRecord')
@@ -54,7 +54,7 @@ class ValidOverviewPageTest extends TestCase
 
         // Act & Assert
         ModeSession::set(Mode::MATCHMADE_RANKED);
-        Livewire::test(OverviewPage::class, [
+        Livewire::test(PlayerOverviewPage::class, [
             'player' => $player,
         ])
             ->assertViewHas('serviceRecord')

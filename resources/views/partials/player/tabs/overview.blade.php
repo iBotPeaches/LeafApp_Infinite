@@ -1,1 +1,1 @@
-<livewire:overview-page :player="$player" />
+<livewire:player-overview-page :player="$player" />

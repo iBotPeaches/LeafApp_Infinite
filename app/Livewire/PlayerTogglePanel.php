@@ -49,7 +49,7 @@ class PlayerTogglePanel extends Component
 
     private function emitToComponents(): void
     {
-        $this->dispatch('$refresh')->to(OverviewPage::class);
+        $this->dispatch('$refresh')->to(PlayerOverviewPage::class);
         $this->dispatch('$refresh')->to(MedalsPage::class);
         $this->dispatch('$refresh')->to(MedalsLeaderboard::class);
         $this->dispatch('$refresh')->to(CompetitivePage::class);
