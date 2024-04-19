@@ -18,4 +18,5 @@
             </div>
         </div>
     </div>
+    @include('partials.overview.next-refresh')
 </div>

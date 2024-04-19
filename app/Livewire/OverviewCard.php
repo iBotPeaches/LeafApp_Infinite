@@ -13,7 +13,8 @@ class OverviewCard extends Component
     public function render(): View
     {
         return view('livewire.overview-card', [
-            'overview' => $this->overview
+            'overview' => $this->overview,
+            'nextDate' => $this->overview->updated_at->addWeek(),
         ]);
     }
 }
