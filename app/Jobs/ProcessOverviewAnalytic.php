@@ -116,6 +116,20 @@ class ProcessOverviewAnalytic implements ShouldQueue
         // Overall
         $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder);
 
+        // Per Gametype
+        foreach ($overview->gametypes as $gametype) {
+            $gameBuilder = Game::query()
+                ->select('id')
+                ->whereIn('map_id', $mapIds)
+                ->whereIn('gamevariant_id', $gametype->gamevariant_ids)
+                ->whereNotNull('playlist_id');
+
+            $playerBuilder = GamePlayer::query()
+                ->whereIn('game_id', $gameBuilder);
+
+            $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder, null, $gametype->id);
+        }
+
         // Per Map
         foreach ($overview->maps as $map) {
             $gameBuilder = Game::query()
@@ -128,7 +142,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
             $this->produceOverviewStats($overview, $gameBuilder, $playerBuilder, $map->id);
 
-            // Per Gametype
+            // Per Gametype & Map
             foreach ($overview->gametypes as $gametype) {
                 $gameBuilder = Game::query()
                     ->select('id')
