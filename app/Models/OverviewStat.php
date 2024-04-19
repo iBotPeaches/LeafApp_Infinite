@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $average_kd
  * @property float $average_kda
  * @property float $average_accuracy
+ * @property-read float $time_played
  * @property-read Overview $overview
  * @property-read OverviewGametype|null $gametype
  * @property-read OverviewMap|null $map
@@ -39,6 +40,11 @@ class OverviewStat extends Model
     ];
 
     public $timestamps = false;
+
+    public function getTimePlayedAttribute(): float
+    {
+        return now()->addSeconds($this->total_seconds_played)->diffInHours(absolute: true);
+    }
 
     public function overview(): BelongsTo
     {

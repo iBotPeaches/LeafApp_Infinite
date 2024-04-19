@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Overview;
+use App\Support\Session\OverviewGametypeSession;
+use App\Support\Session\OverviewMapSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -16,12 +18,14 @@ class OverviewTogglePanel extends Component
 
     public function onMapChange(): void
     {
-        //
+        OverviewGametypeSession::set($this->overview, $this->mapId);
+        $this->emitToComponents();
     }
 
     public function onGametypeChange(): void
     {
-        //
+        OverviewMapSession::set($this->overview, $this->gametypeId);
+        $this->emitToComponents();
     }
 
     public function render(): View
@@ -36,5 +40,10 @@ class OverviewTogglePanel extends Component
             'maps' => $maps,
             'gametypes' => $gametypes,
         ]);
+    }
+
+    private function emitToComponents(): void
+    {
+        $this->dispatch('$refresh')->to(OverviewOverview::class);
     }
 }
