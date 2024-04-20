@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Overview;
-use App\Models\OverviewMap;
 use App\Support\Session\OverviewGametypeSession;
 use App\Support\Session\OverviewMapSession;
 use Illuminate\View\View;
