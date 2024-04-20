@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Overview;
+use App\Models\OverviewMap;
 use App\Support\Session\OverviewGametypeSession;
 use App\Support\Session\OverviewMapSession;
 use Illuminate\View\View;
@@ -18,13 +19,13 @@ class OverviewTogglePanel extends Component
 
     public function onMapChange(): void
     {
-        OverviewGametypeSession::set($this->overview, $this->mapId);
+        OverviewMapSession::set($this->overview, $this->mapId);
         $this->emitToComponents();
     }
 
     public function onGametypeChange(): void
     {
-        OverviewMapSession::set($this->overview, $this->gametypeId);
+        OverviewGametypeSession::set($this->overview, $this->gametypeId);
         $this->emitToComponents();
     }
 
