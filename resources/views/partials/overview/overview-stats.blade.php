@@ -75,3 +75,34 @@
         </div>
     </div>
 </div>
+<div class="divider">Averages</div>
+<div class="level">
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Average <abbr title="Kills / Deaths">KD</abbr></p>
+            <p class="title">
+                {{ number_format($overviewStat->average_kd, 2) }}
+            </p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Average <abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></p>
+            <p class="title">
+                {{ number_format($overviewStat->average_kda, 2) }}
+            </p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Average Accuracy</p>
+            <p class="title">{{ number_format($overviewStat->average_accuracy, 2) }}%</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading"><abbr title="Did Not Finish (Quit/Crashed)">DNF</abbr> Rate</p>
+            <p class="title">{{ number_format($overviewStat->quit_rate, 2) }}%</p>
+        </div>
+    </div>
+</div>
