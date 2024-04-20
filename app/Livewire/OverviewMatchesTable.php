@@ -19,7 +19,7 @@ class OverviewMatchesTable extends Component
 
     public function paginationSimpleView(): string
     {
-        return 'pagination::bulma';
+        return 'pagination::bulma-simple';
     }
 
     public function render(): View
@@ -32,7 +32,7 @@ class OverviewMatchesTable extends Component
             ->when($mapId === -1, fn ($query) => $query->whereIn('map_id', $mapIds))
             ->when($mapId !== -1, fn ($query) => $query->where('map_id', $mapId))
             ->orderByDesc('occurred_at')
-            ->cursorPaginate(16);
+            ->simplePaginate(16);
 
         return view('livewire.overview-matches-table', [
             'overview' => $this->overview,
