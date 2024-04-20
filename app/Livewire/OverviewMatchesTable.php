@@ -28,11 +28,11 @@ class OverviewMatchesTable extends Component
         $mapIds = $this->overview->maps->pluck('map_id')->toArray();
 
         $games = Game::query()
-            ->with(['playlist', 'map', 'category'])
+            ->with(['playlist', 'map', 'category', 'teams'])
             ->when($mapId === -1, fn ($query) => $query->whereIn('map_id', $mapIds))
             ->when($mapId !== -1, fn ($query) => $query->where('map_id', $mapId))
             ->orderByDesc('occurred_at')
-            ->simplePaginate(16);
+            ->paginate(16);
 
         return view('livewire.overview-matches-table', [
             'overview' => $this->overview,

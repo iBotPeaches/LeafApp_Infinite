@@ -41,7 +41,7 @@
                         </abbr>
                     </td>
                     <td>
-
+                        {{ $game->score }}
                     </td>
                     <td>
                         {{ $game->duration }}
