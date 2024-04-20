@@ -31,7 +31,6 @@ class OverviewMatchesTable extends Component
             ->with(['playlist', 'map', 'category'])
             ->when($mapId === -1, fn ($query) => $query->whereIn('map_id', $mapIds))
             ->when($mapId !== -1, fn ($query) => $query->where('map_id', $mapId))
-            ->whereNotNull('playlist_id')
             ->orderByDesc('occurred_at')
             ->simplePaginate(16);
 

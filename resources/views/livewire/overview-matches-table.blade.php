@@ -10,6 +10,7 @@
                     <th>Map</th>
                     <th>Gametype</th>
                     <th>Result</th>
+                    <th>Duration</th>
                     <th>Date</th>
                     @if ($isScrimEditor)
                         <th>Add To</th>
@@ -41,6 +42,9 @@
                     </td>
                     <td>
 
+                    </td>
+                    <td>
+                        {{ $game->duration }}
                     </td>
                     <td>
                         @include('partials.player.date-link', ['date' => $game->occurred_at])
