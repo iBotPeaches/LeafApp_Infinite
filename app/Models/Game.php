@@ -178,7 +178,7 @@ class Game extends Model implements HasDotApi
             return '?';
         }
 
-        return $this->winner?->final_score.'-'.$this->loser?->final_score;
+        return $this->winner->final_score.'-'.$this->loser->final_score;
     }
 
     public static function fromDotApi(array $payload): ?self
