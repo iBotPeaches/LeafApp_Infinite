@@ -6,7 +6,7 @@
         @include('partials.overview.overview-stats')
     @else
         <div class="notification is-warning">
-            No data available.
+            Uh oh - whatever combination of filters you've applied has resulted in no data being found.
         </div>
     @endif
 </div>
