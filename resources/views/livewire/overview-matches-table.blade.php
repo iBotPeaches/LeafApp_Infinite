@@ -11,6 +11,7 @@
                     <th>Gametype</th>
                     <th>Result</th>
                     <th>Duration</th>
+                    <th>Season</th>
                     <th>Date</th>
                     @if ($isScrimEditor)
                         <th>Add To</th>
@@ -22,11 +23,11 @@
                 <tr>
                     <td>
                         <a href="{{ route('game', [$game]) }}">
-                            <abbr title="{{ $game->playlist->name }}">
-                                {{ \Illuminate\Support\Str::limit($game->playlist->name, 25) }}
+                            <abbr title="{{ $game->playlist?->name ?? 'Custom Game' }}">
+                                {{ \Illuminate\Support\Str::limit($game->playlist?->name, 25) }}
                             </abbr>
                         </a>
-                        @if ($game->playlist->is_ranked)
+                        @if ($game->playlist?->is_ranked)
                             @include('partials.game.playlist_type', ['playlist' => $game->playlist])
                         @endif
                     </td>
@@ -45,6 +46,9 @@
                     </td>
                     <td>
                         {{ $game->duration }}
+                    </td>
+                    <td>
+                        {{ $game->season_number . "-" . $game->season_version }}
                     </td>
                     <td>
                         @include('partials.player.date-link', ['date' => $game->occurred_at])
