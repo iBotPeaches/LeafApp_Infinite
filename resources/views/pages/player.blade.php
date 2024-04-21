@@ -9,7 +9,7 @@
             @endif
             <livewire:player-card :player="$player" />
             @if (in_array($type, ['matches', 'custom', 'lan']))
-                <div class="notification">
+                <div class="notification mb-2">
                     <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
 
                     @if (in_array($type, ['custom', 'matches', 'lan']))

@@ -2,7 +2,7 @@
 /** @var Carbon\Carbon $nextDate */
 ?>
 @if ($nextDate)
-    <div class="notification is-light mt-2">
+    <div class="notification is-light mt-2 mb-2">
         @if ($nextDate->isPast())
             <i>Refresh Pending</i>
         @else
