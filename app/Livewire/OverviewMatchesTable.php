@@ -17,11 +17,6 @@ class OverviewMatchesTable extends Component
 
     public Overview $overview;
 
-    public function paginationSimpleView(): string
-    {
-        return 'pagination::bulma-simple';
-    }
-
     public function render(): View
     {
         $mapId = OverviewMapSession::get($this->overview);
