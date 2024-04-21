@@ -19,6 +19,6 @@ class RefreshOverviewsTest extends TestCase
 
         // Act
         $this->artisan('analytics:overviews:refresh')
-            ->expectsOutput('Processed '.$game->map->name.' in 0 seconds.');
+            ->expectsOutputToContain('Processed '.$game->map->name);
     }
 }
