@@ -677,7 +677,7 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-overview-page', '$refresh')
             ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 1);
@@ -741,7 +741,7 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-overview-page', '$refresh')
             ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);

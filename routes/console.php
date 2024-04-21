@@ -4,6 +4,7 @@ use App\Console\Commands\CheckForUnban;
 use App\Console\Commands\PullMetadata;
 use App\Console\Commands\RefreshAnalytics;
 use App\Console\Commands\RefreshMedals;
+use App\Console\Commands\RefreshOverviews;
 use Illuminate\Support\Facades\Schedule;
 use Laravel\Horizon\Console\SnapshotCommand;
 
@@ -19,6 +20,11 @@ Schedule::command(RefreshAnalytics::class)
 Schedule::command(RefreshMedals::class)
     ->withoutOverlapping()
     ->dailyAt('3:01')
+    ->timezone('America/New_York');
+
+Schedule::command(RefreshOverviews::class)
+    ->withoutOverlapping()
+    ->weekly()
     ->timezone('America/New_York');
 
 Schedule::command(SnapshotCommand::class)

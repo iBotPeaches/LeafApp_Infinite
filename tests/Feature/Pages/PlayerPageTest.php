@@ -176,7 +176,7 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('player-overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
@@ -195,7 +195,7 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('player-overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
@@ -215,7 +215,7 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('player-overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
@@ -236,7 +236,7 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('overview-page');
+        $response->assertSeeLivewire('player-overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 

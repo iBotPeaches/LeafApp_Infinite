@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Forms\MedalsPage;
+namespace Tests\Feature\Forms\PlayerMedalsPage;
 
 use App\Livewire\MedalsPage;
 use App\Models\Player;

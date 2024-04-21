@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Forms\ModePage;
+namespace Tests\Feature\Forms\PlayerModePage;
 
 use App\Enums\Outcome;
 use App\Livewire\ModePage;

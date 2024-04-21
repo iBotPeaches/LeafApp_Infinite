@@ -174,7 +174,11 @@ class Game extends Model implements HasDotApi
 
     public function getScoreAttribute(): string
     {
-        return $this->winner?->final_score.'-'.$this->loser?->final_score;
+        if ($this->winner === null || $this->loser === null) {
+            return '?';
+        }
+
+        return $this->winner->final_score.'-'.$this->loser->final_score;
     }
 
     public static function fromDotApi(array $payload): ?self

@@ -22,7 +22,7 @@ class ValidPlayerToggleTest extends TestCase
             'playerType' => Mode::MATCHMADE_PVP,
         ])
             ->call('onChange')
-            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-overview-page', '$refresh')
             ->assertDispatchedTo('medals-page', '$refresh');
 
         $mode = ModeSession::get();
@@ -37,7 +37,7 @@ class ValidPlayerToggleTest extends TestCase
         Livewire::test(PlayerTogglePanel::class)
             ->set('seasonKey', '1-1')
             ->call('onSeasonChange')
-            ->assertDispatchedTo('overview-page', '$refresh')
+            ->assertDispatchedTo('player-overview-page', '$refresh')
             ->assertDispatchedTo('medals-page', '$refresh');
 
         $this->assertEquals('1-1', SeasonSession::get());

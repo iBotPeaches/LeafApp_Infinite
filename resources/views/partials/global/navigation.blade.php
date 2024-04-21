@@ -26,6 +26,9 @@
             <a href="{{ route('championships') }}" class="navbar-item">
                 HCS
             </a>
+            <a href="{{ route('overviews') }}" class="navbar-item">
+                Overviews
+            </a>
             <a href="{{ route('topTenLeaderboards') }}" class="navbar-item">
                 Top Ten
             </a>

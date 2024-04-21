@@ -6,6 +6,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\HcsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\RankController;
@@ -63,6 +64,11 @@ Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name
 
 // Ranks
 Route::get('/ranks', RankController::class)->name('ranks');
+
+// Overviews
+Route::get('/overviews', [OverviewController::class, 'list'])->name('overviews');
+Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])->name('overview');
+Route::pattern('tab', implode('|', \App\Enums\OverviewTab::getValues()));
 
 // Auth
 Route::redirect('/login', '/auth/google/redirect')->name('login');

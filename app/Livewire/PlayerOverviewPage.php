@@ -10,7 +10,7 @@ use App\Support\Session\SeasonSession;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class OverviewPage extends Component
+class PlayerOverviewPage extends Component
 {
     public Player $player;
 
@@ -26,7 +26,7 @@ class OverviewPage extends Component
         $season = SeasonSession::model();
         $isAllSeasons = $season->key === SeasonSession::$allSeasonKey;
 
-        return view('livewire.overview-page', [
+        return view('livewire.player-overview-page', [
             'mode' => $mode,
             'isAllSeasons' => $isAllSeasons,
             'serviceRecord' => $this->player->$serviceRecordType()->ofSeason($season)->first(),
