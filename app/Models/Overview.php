@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\OverviewFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,8 +24,9 @@ use Illuminate\Support\Str;
  * @property-read Collection<OverviewGametype> $gametypes
  * @property-read Collection<OverviewMap> $maps
  * @property-read Collection<OverviewStat> $stats
- */
-class Overview extends Model
+ *
+ * @method static OverviewFactory factory(...$parameters)
+ */ class Overview extends Model
 {
     use HasFactory;
 
