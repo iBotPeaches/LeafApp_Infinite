@@ -1,7 +1,6 @@
 import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import purge from '@erbelion/vite-plugin-laravel-purgecss';
-import manifestSRI from 'vite-plugin-manifest-sri';
 
 export default defineConfig({
     build: {
@@ -37,6 +36,5 @@ export default defineConfig({
                 ]
             },
         }),
-        manifestSRI(),
     ],
 });
