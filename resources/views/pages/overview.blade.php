@@ -7,6 +7,7 @@
         <div class="column">
             <livewire:overview-toggle-panel :overview="$overview" :tab="$tab" />
             <livewire:overview-card :overview="$overview" />
+            @include('partials.overview.disclaimer')
         </div>
         <div class="column is-three-quarters">
             @include('partials.overview.navigation')
