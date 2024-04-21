@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -41,7 +40,7 @@ use Illuminate\Support\Str;
 
     public function getImageAttribute(): string
     {
-        $filename = Str::slug($this->name).'.jpg';
+        $filename = $this->slug.'.jpg';
 
         if (File::exists(public_path('images/maps/'.$filename))) {
             return asset('images/maps/'.$filename);
