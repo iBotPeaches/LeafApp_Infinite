@@ -45,5 +45,6 @@ class OverviewTogglePanel extends Component
     private function emitToComponents(): void
     {
         $this->dispatch('$refresh')->to(OverviewOverview::class);
+        $this->dispatch('$refresh')->to(OverviewMatchesTable::class);
     }
 }
