@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Forms\OverviewPage;
+namespace Tests\Feature\Forms\PlayerOverviewPage;
 
 use App\Enums\Mode;
 use App\Livewire\PlayerOverviewPage;
