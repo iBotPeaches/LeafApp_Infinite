@@ -13,6 +13,9 @@ class OverviewController extends Controller
 {
     public function list(): View
     {
+        SEOTools::setTitle('Map Overviews');
+        SEOTools::setDescription('Halo Infinite - Leaf Map Overviews');
+
         return view('pages.overviews');
     }
 
