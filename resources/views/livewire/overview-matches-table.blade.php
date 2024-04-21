@@ -60,4 +60,5 @@
         </table>
     </div>
     {{ $games->links(view: 'pagination::bulma-simple', data: ['scrollTo' => false]) }}
+    @include('partials.global.under_construction')
 </div>
