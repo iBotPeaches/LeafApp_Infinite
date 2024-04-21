@@ -7,6 +7,7 @@ use App\Models\Overview;
 use App\Services\Tinify\ImageInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class PullOverviewMapImages extends Command
 {
@@ -27,7 +28,7 @@ class PullOverviewMapImages extends Command
             $filename = public_path('images/maps/'.$overview->slug.'.jpg');
 
             if (Http::head($url)->successful()) {
-                file_put_contents($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
+                Storage::put($filename, (string) resolve(FileUtilInterface::class)->getFileContents(
                     $client->optimize($url)
                 ));
             }
