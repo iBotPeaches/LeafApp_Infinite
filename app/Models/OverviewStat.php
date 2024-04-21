@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\OverviewStatFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Overview $overview
  * @property-read OverviewGametype|null $gametype
  * @property-read OverviewMap|null $map
+ *
+ * @method static OverviewStatFactory factory(...$parameters)
  */
 class OverviewStat extends Model
 {
@@ -63,11 +66,11 @@ class OverviewStat extends Model
 
     public function gametype(): BelongsTo
     {
-        return $this->belongsTo(OverviewGametype::class);
+        return $this->belongsTo(OverviewGametype::class, 'overview_gametype_id');
     }
 
     public function map(): BelongsTo
     {
-        return $this->belongsTo(OverviewMap::class);
+        return $this->belongsTo(OverviewMap::class, 'overview_map_id');
     }
 }

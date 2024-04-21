@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\BaseGametype;
+use Database\Factories\OverviewGametypeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property array $gamevariant_ids
  * @property-read Overview $overview
+ *
+ * @method static OverviewGametypeFactory factory(...$parameters)
  */
 class OverviewGametype extends Model
 {
