@@ -47,7 +47,12 @@ class Map extends Model implements HasDotApi
 
     public function getShorthandAttribute(): string
     {
-        return Str::trim(Str::remove('- Ranked', $this->name));
+        $suffixesToTrim = [
+            ' - Ranked',
+            ' - Husky Raid',
+        ];
+
+        return Str::trim(Str::remove($suffixesToTrim, $this->name));
     }
 
     public static function fromDotApi(array $payload): ?self
