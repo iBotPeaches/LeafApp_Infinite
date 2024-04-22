@@ -28,6 +28,7 @@ class GametypeHelper
 
         $slayerModes = [
             'Dodgeball',
+            'Heroic Fiesta',
             'Team Snipers',
         ];
 

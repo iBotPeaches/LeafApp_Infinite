@@ -48,8 +48,14 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 'name' => $this->mapName,
             ]);
 
+        // If the overview was updated within the past week, skip processing
+        if ($overview->exists && $overview->updated_at->diffInDays() > 7) {
+            return;
+        }
+
         $overview->name = $this->mapName;
         $overview->thumbnail_url = $map?->thumbnail_url ?? '';
+        $overview->touch();
         $overview->save();
 
         $this->parseOverviewMaps($overview);

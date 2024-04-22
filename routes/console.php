@@ -24,7 +24,7 @@ Schedule::command(RefreshMedals::class)
 
 Schedule::command(RefreshOverviews::class)
     ->withoutOverlapping()
-    ->weekly()
+    ->monthly()
     ->timezone('America/New_York');
 
 Schedule::command(SnapshotCommand::class)
