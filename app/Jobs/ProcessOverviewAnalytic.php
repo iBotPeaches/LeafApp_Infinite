@@ -49,7 +49,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
             ]);
 
         // If the overview was updated within the past week, skip processing
-        if ($overview->exists && $overview->updated_at->gt(now()->subWeek())) {
+        if ($overview->exists && $overview->updated_at->diffInDays() > 7) {
             return;
         }
 
