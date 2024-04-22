@@ -8,7 +8,9 @@ use App\Models\Game;
 use App\Models\Gamevariant;
 use App\Models\Level;
 use App\Models\Map;
+use App\Models\Overview;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RefreshOverviewsTest extends TestCase
@@ -96,5 +98,21 @@ class RefreshOverviewsTest extends TestCase
         // Act
         $this->artisan('analytics:overviews:refresh')
             ->assertFailed();
+    }
+
+    public function testOverviewAgedOver7Days(): void
+    {
+        $game = Game::factory()->createOne();
+        Overview::factory()->createOne([
+            'name' => $game->map->name,
+            'slug' => Str::slug($game->map->name),
+            'updated_at' => now()->subDays(8),
+        ]);
+
+        // Act
+        $this->artisan('analytics:overviews:refresh')
+            ->assertOk();
+
+        $this->assertDatabaseCount('overviews', 1);
     }
 }
