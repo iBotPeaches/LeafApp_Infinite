@@ -16,10 +16,27 @@ class RotationDecorator
 
     public function __construct(array $rotations)
     {
+        // 343 has 2 types of playlist rotations that come in forms of
+        //   Event:{Gametype} on {Map}
+        //   Arena:{Gametype} on {Map}
+        // This decorator will group the rotations by map and gametype
+        // regardless of the prefix.
         $this->rotations = collect($rotations)
             ->map(function ($result) {
                 return new RotationResult($result);
-            });
+            })
+            ->groupBy('mapName')
+            ->map(function ($groupedRotations) {
+                /** @var RotationResult $firstRotation */
+                $firstRotation = $groupedRotations->first();
+                $totalWeight = $groupedRotations->sum('weight');
+
+                return new RotationResult([
+                    'name' => $firstRotation->gametypeName.' on '.$firstRotation->mapName,
+                    'weight' => $totalWeight,
+                ]);
+            })
+            ->values();
 
         $totalWeight = $this->rotations->sum('weight');
 

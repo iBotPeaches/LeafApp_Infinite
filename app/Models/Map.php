@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Map\StandarizeMapName;
 use App\Models\Contracts\HasDotApi;
 use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,12 +48,7 @@ class Map extends Model implements HasDotApi
 
     public function getShorthandAttribute(): string
     {
-        $suffixesToTrim = [
-            ' - Ranked',
-            ' - Husky Raid',
-        ];
-
-        return Str::trim(Str::remove($suffixesToTrim, $this->name));
+        return StandarizeMapName::execute($this->name);
     }
 
     public static function fromDotApi(array $payload): ?self
