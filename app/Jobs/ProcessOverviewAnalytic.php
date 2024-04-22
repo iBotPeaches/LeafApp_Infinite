@@ -50,6 +50,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
         $overview->name = $this->mapName;
         $overview->thumbnail_url = $map?->thumbnail_url ?? '';
+        $overview->touch();
         $overview->save();
 
         $this->parseOverviewMaps($overview);
