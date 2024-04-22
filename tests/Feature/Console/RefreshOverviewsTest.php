@@ -100,13 +100,13 @@ class RefreshOverviewsTest extends TestCase
             ->assertFailed();
     }
 
-    public function testOverviewAgedOver7Days(): void
+    public function testOverviewRecentlyGeneratedSkipped(): void
     {
         $game = Game::factory()->createOne();
         Overview::factory()->createOne([
             'name' => $game->map->name,
             'slug' => Str::slug($game->map->name),
-            'updated_at' => now()->subDays(8),
+            'updated_at' => now()->subMinute(),
         ]);
 
         // Act
