@@ -17,7 +17,7 @@
             on the site - <a href="https://www.buymeacoffee.com/iBotPeaches" target="_blank">(donation link)</a>.
             <br />
             <br />
-            So I have to rate limit it heavily to five per day.
+            So I have to rate limit it heavily to five per day per logged-in user.
         </div>
     </article>
 @endsection

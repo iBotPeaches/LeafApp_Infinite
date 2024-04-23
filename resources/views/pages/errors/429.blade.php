@@ -18,7 +18,7 @@
             on the site - <a href="https://www.buymeacoffee.com/iBotPeaches" target="_blank">(donation link)</a>.
             <br />
             <br />
-            So in short - I have to rate limit it heavily to once per hour.
+            So in short - I have to rate limit it heavily to 10 exports per hour per user.
         </div>
     </article>
 @endsection
