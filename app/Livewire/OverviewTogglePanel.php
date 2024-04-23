@@ -28,6 +28,12 @@ class OverviewTogglePanel extends Component
         $this->emitToComponents();
     }
 
+    public function mount(): void
+    {
+        $this->mapId = OverviewMapSession::get($this->overview);
+        $this->gametypeId = OverviewGametypeSession::get($this->overview);
+    }
+
     public function render(): View
     {
         $maps = $this->overview->maps
