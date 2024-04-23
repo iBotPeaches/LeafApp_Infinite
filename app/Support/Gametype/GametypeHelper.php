@@ -30,6 +30,7 @@ class GametypeHelper
             'Dodgeball',
             'Legendary Fiesta',
             'Heroic Fiesta',
+            'Fiesta',
             'Team Snipers',
         ];
 
