@@ -20,6 +20,8 @@ class RotationResult
 
     public string $gametypeName;
 
+    public string $combinedName;
+
     public function __construct(array $data)
     {
         $this->name = Arr::get($data, 'name');
@@ -33,6 +35,7 @@ class RotationResult
             $this->gametypeName .= ' (Super)';
         }
         $this->mapName = StandarizeMapName::execute($mapName);
+        $this->combinedName = $this->mapName.' - '.$this->gametypeName;
     }
 
     public function setWeight(int $total): void

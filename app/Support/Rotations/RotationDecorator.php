@@ -25,7 +25,7 @@ class RotationDecorator
             ->map(function ($result) {
                 return new RotationResult($result);
             })
-            ->groupBy('mapName')
+            ->groupBy('combinedName')
             ->map(function ($groupedRotations) {
                 /** @var RotationResult $firstRotation */
                 $firstRotation = $groupedRotations->first();
