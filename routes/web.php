@@ -66,7 +66,8 @@ Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name
 Route::get('/ranks', RankController::class)->name('ranks');
 
 // Overviews
-Route::get('/overviews', [OverviewController::class, 'list'])->name('overviews');
+Route::get('/overviews/{filterType?}', [OverviewController::class, 'list'])->name('overviews');
+Route::pattern('filterType', implode('|', \App\Enums\OverviewType::getValues()));
 Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])->name('overview');
 Route::pattern('tab', implode('|', \App\Enums\OverviewTab::getValues()));
 
