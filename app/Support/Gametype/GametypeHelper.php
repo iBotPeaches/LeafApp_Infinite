@@ -22,6 +22,10 @@ class GametypeHelper
             return BaseGametype::KOTH();
         }
 
+        if (Str::contains($name, 'Firefight', true)) {
+            return BaseGametype::FIREFIGHT();
+        }
+
         if (Str::contains($name, 'Last Spartan Standing', true)) {
             return BaseGametype::LSS();
         }

@@ -13,6 +13,7 @@ use BenSampo\Enum\Enum;
  * @method static static ELIMINATION()
  * @method static static ESCALATION()
  * @method static static EXTRACTION()
+ * @method static static FIREFIGHT()
  * @method static static INFECTION()
  * @method static static KOTH()
  * @method static static LAND_GRAB()
@@ -32,6 +33,8 @@ final class BaseGametype extends Enum implements LocalizedEnum
     const ELIMINATION = 3;
 
     const ESCALATION = 4;
+
+    const FIREFIGHT = 15;
 
     const INFECTION = 5;
 
