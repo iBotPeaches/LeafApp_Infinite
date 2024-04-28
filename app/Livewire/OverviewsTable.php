@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\OverviewType;
 use App\Models\Overview;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -11,6 +12,8 @@ class OverviewsTable extends Component
 {
     use WithPagination;
 
+    public string $type = OverviewType::MATCHMAKING;
+
     public function paginationView(): string
     {
         return 'pagination::bulma';
@@ -19,6 +22,7 @@ class OverviewsTable extends Component
     public function render(): View
     {
         $overviews = Overview::query()
+            ->where('is_manual', $this->type === OverviewType::CUSTOMS)
             ->orderBy('name')
             ->paginate(12);
 

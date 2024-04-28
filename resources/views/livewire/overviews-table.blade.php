@@ -3,7 +3,11 @@
 ?>
 <div>
     <h1 class="title">Map Overviews</h1>
-    <h2 class="subtitle">An overview of a Map (versions, gametypes, players) in matchmaking.</h2>
+    <h2 class="subtitle">
+        An overview of a Map (versions, gametypes, players) in
+        <a href="{{ route('overviews', ['filterType' => 'matchmaking']) }}">matchmaking</a> or
+        <a href="{{ route('overviews', ['filterType' => 'customs']) }}">customs</a>.
+    </h2>
     @foreach ($overviews->chunk(4) as $chunk)
         <div class="columns">
             @foreach ($chunk as $overview)

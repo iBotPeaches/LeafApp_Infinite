@@ -25,7 +25,8 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
     public function __construct(
         public string $mapName,
-        public array $mapIds
+        public array $mapIds,
+        public bool $isManual = false,
     ) {
         $this->onQueue(QueueName::RECORDS);
     }
@@ -46,10 +47,11 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 'slug' => $mapSlug,
             ], [
                 'name' => $this->mapName,
+                'is_manual' => $this->isManual,
             ]);
 
-        // If the overview was updated within the past week, skip processing
-        if ($overview->exists && $overview->updated_at->diffInDays(absolute: true) < 7) {
+        // If the overview was updated within the past month, skip processing
+        if ($overview->exists && $overview->updated_at->diffInDays(absolute: true) < 31) {
             return;
         }
 
@@ -82,19 +84,26 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
     private function parseOverviewGametypes(Overview $overview): void
     {
+        $playlistMethod = $overview->is_manual ? 'whereNull' : 'whereNotNull';
         $gametypeIds = Game::query()
             ->select('gamevariant_id')
             ->whereIn('map_id', $this->mapIds)
-            ->whereNotNull('playlist_id')
+            ->$playlistMethod('playlist_id')
             ->distinct()
             ->pluck('gamevariant_id');
 
         $variantMapping = [];
         Gamevariant::query()
             ->whereIn('id', $gametypeIds)
-            ->each(function (Gamevariant $gamevariant) use (&$variantMapping) {
-                $baseMode = GametypeHelper::findBaseGametype($gamevariant->name);
-                $variantMapping[$baseMode->value][] = $gamevariant->id;
+            ->each(function (Gamevariant $gamevariant) use ($overview, &$variantMapping) {
+                try {
+                    $baseMode = GametypeHelper::findBaseGametype($gamevariant->name);
+                    $variantMapping[$baseMode->value][] = $gamevariant->id;
+                } catch (\InvalidArgumentException $e) {
+                    if (! $overview->is_manual) {
+                        throw $e;
+                    }
+                }
             });
 
         foreach ($variantMapping as $baseMode => $variantIds) {
@@ -109,12 +118,13 @@ class ProcessOverviewAnalytic implements ShouldQueue
 
     private function parseOverviewStats(Overview $overview): void
     {
+        $playlistMethod = $overview->is_manual ? 'whereNull' : 'whereNotNull';
         $mapIds = $overview->maps->pluck('map_id');
 
         $gameBuilder = Game::query()
             ->select('id')
             ->whereIn('map_id', $mapIds)
-            ->whereNotNull('playlist_id');
+            ->$playlistMethod('playlist_id');
 
         $playerBuilder = GamePlayer::query()
             ->whereIn('game_id', $gameBuilder);
@@ -128,7 +138,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 ->select('id')
                 ->whereIn('map_id', $mapIds)
                 ->whereIn('gamevariant_id', $gametype->gamevariant_ids)
-                ->whereNotNull('playlist_id');
+                ->$playlistMethod('playlist_id');
 
             $playerBuilder = GamePlayer::query()
                 ->whereIn('game_id', $gameBuilder);
@@ -141,7 +151,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
             $gameBuilder = Game::query()
                 ->select('id')
                 ->where('map_id', $map->map_id)
-                ->whereNotNull('playlist_id');
+                ->$playlistMethod('playlist_id');
 
             $playerBuilder = GamePlayer::query()
                 ->whereIn('game_id', $gameBuilder);
@@ -154,7 +164,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
                     ->select('id')
                     ->where('map_id', $map->map_id)
                     ->whereIn('gamevariant_id', $gametype->gamevariant_ids)
-                    ->whereNotNull('playlist_id');
+                    ->$playlistMethod('playlist_id');
 
                 $playerBuilder = GamePlayer::query()
                     ->whereIn('game_id', $gameBuilder);

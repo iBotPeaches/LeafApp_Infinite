@@ -79,6 +79,7 @@ return [
         BaseGametype::ELIMINATION => 'Elimination',
         BaseGametype::ESCALATION => 'Escalation',
         BaseGametype::EXTRACTION => 'Extraction',
+        BaseGametype::FIREFIGHT => 'Firefight',
         BaseGametype::INFECTION => 'Infection',
         BaseGametype::KOTH => 'KoTH',
         BaseGametype::LAND_GRAB => 'Land Grab',

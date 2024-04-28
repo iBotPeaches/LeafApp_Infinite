@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\File;
  * @property string $name
  * @property string $slug
  * @property string $thumbnail_url
+ * @property bool $is_manual
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read string $image

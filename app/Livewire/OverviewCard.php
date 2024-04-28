@@ -14,7 +14,7 @@ class OverviewCard extends Component
     {
         return view('livewire.overview-card', [
             'overview' => $this->overview,
-            'nextDate' => $this->overview->updated_at->addWeek(),
+            'nextDate' => $this->overview->updated_at->addMonth(),
         ]);
     }
 }
