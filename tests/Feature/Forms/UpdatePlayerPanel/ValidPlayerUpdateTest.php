@@ -226,8 +226,12 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         $playlist = Playlist::factory()->createOne([
-            'uuid' => 1,
+            'uuid' => config('services.halo.playlists.bot-bootcamp'),
             'name' => 'Bot Bootcamp',
+        ]);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1,
         ]);
 
         Level::factory()->createOne([
