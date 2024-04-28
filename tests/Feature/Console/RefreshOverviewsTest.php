@@ -36,7 +36,7 @@ class RefreshOverviewsTest extends TestCase
             'name' => 'Slayholds',
         ]);
         $gametypeFirefight = Gamevariant::factory()->createOne([
-            'name' => 'Firefight',
+            'name' => 'Firefight | Hard',
         ]);
 
         $map1 = Map::factory()->createOne([
