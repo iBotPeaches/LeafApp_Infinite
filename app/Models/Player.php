@@ -299,20 +299,35 @@ class Player extends Model implements HasDotApi, Sitemapable
             config('services.halo.playlists.firefight-grunt-legendary'),
         ];
 
+        $firefightIds = Playlist::query()
+            ->select('id')
+            ->whereIn('uuid', $firefightUuids)
+            ->get()
+            ->pluck('id');
+
+        $botBootcampId = (int) Playlist::query()
+            ->select('id')
+            ->where('uuid', config('services.halo.playlists.bot-bootcamp'))
+            ->value('id');
+
         // Check for "Bot Farmer" status - aka a ton of Bot Bootcamp
         $playlistBreakdown = DB::query()
             ->from('game_players')
-            ->select('playlists.name', new Expression('COUNT(*) as total'))
+            ->select('games.playlist_id', new Expression('COUNT(game_players.id) as total'))
             ->where('player_id', $this->id)
-            ->whereNotIn('playlists.uuid', $firefightUuids)
+            ->whereNotNull('games.playlist_id')
             ->join('games', 'game_players.game_id', '=', 'games.id')
-            ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->groupBy('playlists.name')
+            ->groupBy('games.playlist_id')
             ->get();
+
+        // We now filter out Firefight playlists from the breakdown.
+        $playlistBreakdown = $playlistBreakdown->filter(function (\stdClass $row) use ($firefightIds) {
+            return ! $firefightIds->contains($row->playlist_id);
+        });
 
         $totalGames = $playlistBreakdown->sum('total');
         if ($totalGames >= 100) {
-            $botBootcampPercent = $playlistBreakdown->firstWhere('name', 'Bot Bootcamp')?->total / $totalGames;
+            $botBootcampPercent = $playlistBreakdown->firstWhere('playlist_id', $botBootcampId)?->total / $totalGames;
             $playsTooMuchBotBootcamp = $botBootcampPercent >= config('services.halo.botfarmer_threshold');
             $this->is_botfarmer = $playsTooMuchBotBootcamp;
         }
