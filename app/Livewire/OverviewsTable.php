@@ -12,7 +12,7 @@ class OverviewsTable extends Component
 {
     use WithPagination;
 
-    public string $type;
+    public string $type = OverviewType::MATCHMAKING;
 
     public function paginationView(): string
     {
