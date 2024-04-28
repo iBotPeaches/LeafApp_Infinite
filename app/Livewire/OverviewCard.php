@@ -12,9 +12,11 @@ class OverviewCard extends Component
 
     public function render(): View
     {
+        $dateMethod = $this->overview->is_manual ? 'addDay' : 'addMonth';
+
         return view('livewire.overview-card', [
             'overview' => $this->overview,
-            'nextDate' => $this->overview->updated_at->addMonth(),
+            'nextDate' => $this->overview->updated_at->$dateMethod(),
         ]);
     }
 }
