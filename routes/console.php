@@ -3,6 +3,7 @@
 use App\Console\Commands\CheckForUnban;
 use App\Console\Commands\PullMetadata;
 use App\Console\Commands\RefreshAnalytics;
+use App\Console\Commands\RefreshManualOverviews;
 use App\Console\Commands\RefreshMedals;
 use App\Console\Commands\RefreshOverviews;
 use Illuminate\Support\Facades\Schedule;
@@ -31,5 +32,9 @@ Schedule::command(SnapshotCommand::class)
     ->everyFiveMinutes();
 
 Schedule::command(CheckForUnban::class)
+    ->daily()
+    ->withoutOverlapping();
+
+Schedule::command(RefreshManualOverviews::class)
     ->daily()
     ->withoutOverlapping();
