@@ -70,7 +70,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
         foreach ($this->mapIds as $mapId) {
             $releasedAt = Game::query()
                 ->select('occurred_at')
-                ->where('id', $mapId)
+                ->where('map_id', $mapId)
                 ->orderByDesc('occurred_at')
                 ->value('occurred_at');
 
