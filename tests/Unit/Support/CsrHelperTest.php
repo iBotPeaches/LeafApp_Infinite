@@ -44,7 +44,7 @@ class CsrHelperTest extends TestCase
     #[DataProvider('unrankedCsrDataProvider')]
     public function testUnrankedCsrCalculationToAsset(?int $matchesRemaining, string $expected)
     {
-        $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);
+        $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
 
         $this->assertStringEndsWith(
             Str::slug($expected.'-'.$matchesCompleted).'.png',
@@ -57,7 +57,7 @@ class CsrHelperTest extends TestCase
     {
         return [
             'unranked 0' => [
-                'matchesRemaining' => 10,
+                'matchesRemaining' => 5,
                 'expected' => 'Unranked',
             ],
             'unranked null' => [
@@ -65,10 +65,10 @@ class CsrHelperTest extends TestCase
                 'expected' => 'Unranked',
             ],
             'unranked-1' => [
-                'matchesRemaining' => 9,
+                'matchesRemaining' => 4,
                 'expected' => 'Unranked',
             ],
-            'unranked-9' => [
+            'unranked-4' => [
                 'matchesRemaining' => 1,
                 'expected' => 'Unranked',
             ],

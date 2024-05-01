@@ -19,7 +19,7 @@ class Csr
     public function __construct(?int $value, ?int $tier, string $rank)
     {
         $this->value = $value;
-        $this->tier = ($rank === 'Unranked' && $tier === 10) ? null : $tier;
+        $this->tier = ($rank === 'Unranked' && $tier === 5) ? null : $tier;
         $this->rank = $rank;
         $this->title = trim($rank.' '.($rank !== 'Unranked' ? $tier : ''));
     }

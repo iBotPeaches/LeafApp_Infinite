@@ -7,4 +7,5 @@ return [
     4 => 'Infection',
     5 => 'Reckoning',
     6 => 'Spirit of Fire',
+    7 => 'Banished Honor',
 ];

@@ -11,7 +11,7 @@ class CsrHelper
         // Since there is 50 CSR per level and 6 levels per class
         $rankClass = $value / 50;
         $subTier = (int) ceil($rankClass + 0.001);
-        $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);
+        $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
 
         return match (true) {
             $rankClass > 0 && $rankClass < 6 => new Csr($value, $subTier, 'Bronze'),
