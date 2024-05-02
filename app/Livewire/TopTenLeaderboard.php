@@ -26,7 +26,7 @@ class TopTenLeaderboard extends Component
     public function render(): View
     {
         $topTen = Analytic::query()
-            ->with(['player', 'game', 'map'])
+            ->with(['player', 'game'])
             ->where('key', $this->analyticKey)
             ->orderBy('place')
             ->orderByDesc('id')

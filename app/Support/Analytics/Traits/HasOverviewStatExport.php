@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Support\Analytics\Traits;
 
-use App\Models\Map;
+use App\Models\OverviewStat;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
-trait HasMapExport
+trait HasOverviewStatExport
 {
     public function csvHeader(): array
     {
@@ -21,10 +21,10 @@ trait HasMapExport
     public function csvData(?Collection $collection): array
     {
         // @phpstan-ignore-next-line
-        return $collection?->map(function (Map $map) {
+        return $collection?->map(function (OverviewStat $overviewStat) {
             return [
-                'map' => $map->name,
-                $map->{$this->property()},
+                'map' => $overviewStat->getAttribute('label'),
+                $overviewStat->{$this->property()},
             ];
         })->toArray() ?? [];
     }

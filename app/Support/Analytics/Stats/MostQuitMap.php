@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Support\Analytics\Stats;
 
 use App\Enums\AnalyticKey;
-use App\Enums\Outcome;
 use App\Models\Analytic;
-use App\Models\Game;
-use App\Models\Gamevariant;
 use App\Support\Analytics\AnalyticInterface;
-use App\Support\Analytics\BaseMapStat;
+use App\Support\Analytics\BaseOverviewStatStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
-use App\Support\Analytics\Traits\HasMapExport;
+use App\Support\Analytics\Traits\HasOverviewStatExport;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
-class MostQuitMap extends BaseMapStat implements AnalyticInterface
+class MostQuitMap extends BaseOverviewStatStat implements AnalyticInterface
 {
     use HasExportUrlGeneration;
-    use HasMapExport;
+    use HasOverviewStatExport;
 
     public function title(): string
     {
@@ -48,28 +44,14 @@ class MostQuitMap extends BaseMapStat implements AnalyticInterface
 
     public function results(int $limit = 10): ?Collection
     {
-        $mapOutcomesQuery = Game::query()
-            ->selectRaw('map_id, outcome, count(*) as total')
-            ->join('game_players', 'games.id', '=', 'game_players.game_id', 'right')
-            ->whereNotNull('games.playlist_id')
-            ->groupBy(['map_id', 'outcome']);
-
-        $lssVariants = Gamevariant::query()
-            ->where('name', '=', 'Last Spartan Standing')
-            ->pluck('id');
-
-        $mapOutcomesQuery->whereNotIn('games.gamevariant_id', $lssVariants);
-
-        $outcomePercentQuery = DB::query()
-            ->selectRaw('map_id, outcome, total, (total / (sum(total) over (partition by map_id))) * 100 as '.$this->property())
-            ->from($mapOutcomesQuery);
-
         return $this->builder()
-            ->selectRaw('maps.*, '.$this->property())
-            ->joinSub($outcomePercentQuery, 'outcome_percent', 'map_id', '=', 'id', 'right')
-            ->where('outcome', '=', Outcome::LEFT)
-            ->orderByDesc($this->property())
-            ->orderBy('name')
+            ->selectRaw('name as label, overview_id, total_dnf, total_players, (total_dnf / total_players * 100) as percent_quit')
+            ->join('overviews', 'overview_stats.overview_id', '=', 'overviews.id')
+            ->whereNull('overview_gametype_id')
+            ->whereNull('overview_map_id')
+            ->where('total_players', '>', 0)
+            ->orderByDesc('percent_quit')
+            ->having('percent_quit', '>', 0)
             ->limit($limit)
             ->get();
     }

@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\Support\Analytics;
 
 use App\Enums\AnalyticType;
-use App\Models\Map;
+use App\Models\OverviewStat;
 use Illuminate\Database\Eloquent\Builder;
 
-class BaseMapStat
+class BaseOverviewStatStat
 {
     public function type(): AnalyticType
     {
-        return AnalyticType::MAP();
+        return AnalyticType::OVERVIEW_STAT();
     }
 
     public function builder(): Builder
     {
-        return Map::query();
+        return OverviewStat::query();
     }
 }

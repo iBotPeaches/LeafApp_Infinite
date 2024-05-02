@@ -9,6 +9,7 @@ use App\Enums\Outcome;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\OverviewStat;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
@@ -57,6 +58,14 @@ class ProcessAnalyticTest extends TestCase
             ->sequence(
                 ['deaths' => 0, 'outcome' => Outcome::LEFT],
                 ['deaths' => 0, 'outcome' => Outcome::WIN],
+            )
+            ->count(2)
+            ->create();
+
+        OverviewStat::factory()
+            ->sequence(
+                ['total_dnf' => 1, 'total_players' => 2],
+                ['total_dnf' => 1, 'total_players' => 2],
             )
             ->count(2)
             ->create();

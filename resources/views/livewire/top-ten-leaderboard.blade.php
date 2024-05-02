@@ -17,13 +17,13 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                 <thead>
                     <tr>
                         <th>Place</th>
-                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
                             <th>Gamertag</th>
                         @endif
                         @if ($analyticClass->type()->isGame())
                             <th>Game</th>
                         @endif
-                        @if ($analyticClass->type()->isMap())
+                        @if ($analyticClass->type()->isOverviewStat())
                             <th>Map</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
@@ -41,7 +41,7 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                         <td>
                             @th($result->place)
                         </td>
-                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
                             <td>
                                 <article class="media">
                                     <figure class="media-left">
@@ -72,8 +72,8 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                                 </a>
                             </td>
                         @endif
-                        @if ($analyticClass->type()->isMap())
-                            <td>{{ $result->map->shorthand }}</td>
+                        @if ($analyticClass->type()->isOverviewStat())
+                            <td>{{ $result->label }}</td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
                         @if ($analyticClass->type()->isGame())
