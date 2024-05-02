@@ -40,11 +40,11 @@ use UnexpectedValueException;
  * @property ?int $game_id
  * @property ?int $player_id
  * @property float $value
+ * @property string|null $label
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read ?Game $game
  * @property-read ?Player $player
- * @property-read ?Map $map
  * @property-read AnalyticInterface $stat
  *
  * @method static AnalyticFactory factory(...$parameters)
@@ -104,10 +104,5 @@ class Analytic extends Model
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
-    }
-
-    public function map(): BelongsTo
-    {
-        return $this->belongsTo(Map::class);
     }
 }

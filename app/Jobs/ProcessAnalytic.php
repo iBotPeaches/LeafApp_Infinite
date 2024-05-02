@@ -7,7 +7,7 @@ use App\Enums\QueueName;
 use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
-use App\Models\Map;
+use App\Models\OverviewStat;
 use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
@@ -52,8 +52,8 @@ class ProcessAnalytic implements ShouldQueue
                 case AnalyticType::ONLY_GAME():
                     $this->handleGameResults($topHundred);
                     break;
-                case AnalyticType::MAP():
-                    $this->handleMapResults($topHundred);
+                case AnalyticType::OVERVIEW_STAT():
+                    $this->handleOverviewStatResults($topHundred);
                     break;
                 case AnalyticType::ONLY_PLAYER():
                     $this->handleOnlyPlayerResults($topHundred);
@@ -138,15 +138,15 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
-    /** @param  Collection<int, Map>|null  $maps */
-    private function handleMapResults(?Collection $maps): void
+    /** @param  Collection<int, OverviewStat>|null  $maps */
+    private function handleOverviewStatResults(?Collection $maps): void
     {
-        $maps?->each(function (Map $map, int $index) {
+        $maps?->each(function (OverviewStat $overviewStat, int $index) {
             $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->place = $index + 1;
-            $analytic->value = (float) $map->{$this->analytic->property()};
-            $analytic->map()->associate($map);
+            $analytic->value = (float) $overviewStat->{$this->analytic->property()};
+            $analytic->label = $overviewStat->getAttribute('label');
             $analytic->save();
         });
     }
