@@ -61,7 +61,7 @@ use Illuminate\Support\Collection;
  * @property int|null $assists_callout
  * @property int|null $expected_kills
  * @property int|null $expected_deaths
- * @property array $medals
+ * @property array|null $medals
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam|null $team

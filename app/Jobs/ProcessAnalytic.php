@@ -92,7 +92,11 @@ class ProcessAnalytic implements ShouldQueue
         $lastValue = null;
 
         $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) use (&$lastIndex, &$lastValue) {
-            $value = (float) $gamePlayer->{$this->analytic->property()};
+            if (method_exists($this->analytic, 'propertyFn')) {
+                $value = $this->analytic->propertyFn($gamePlayer);
+            } else {
+                $value = (float) $gamePlayer->{$this->analytic->property()};
+            }
             $place = $index + 1;
             if ($value === $lastValue) {
                 $place = $lastIndex;
