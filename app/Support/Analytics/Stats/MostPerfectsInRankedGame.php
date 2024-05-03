@@ -62,6 +62,7 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
             ->orderByDesc('value')
+            ->orderByDesc('id')
             ->limit($limit)
             ->get();
     }
