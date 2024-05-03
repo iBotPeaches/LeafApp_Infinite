@@ -58,6 +58,7 @@ class GamePlayerFactory extends Factory
             'assists_emp' => $this->faker->numberBetween(0, 10),
             'assists_driver' => $this->faker->numberBetween(0, 10),
             'assists_callout' => $this->faker->numberBetween(0, 10),
+            'medals' => [],
         ];
     }
 

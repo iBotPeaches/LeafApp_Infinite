@@ -24,6 +24,9 @@ enum AnalyticKey: string
     case MOST_DEATHS_GAME = 'most_deaths_game';
     case MOST_ASSISTS_GAME = 'most_assists_game';
     case MOST_MEDALS_GAME = 'most_medals_game';
+
+    case MOST_PERFECTS_RANKED_GAME = 'most_perfects_ranked_game';
+
     case HIGHEST_SCORE_RANKED_GAME = 'highest_score_ranked_game';
     case HIGHEST_SCORE_UNRANKED_GAME = 'highest_score_unranked_game';
     case LONGEST_MATCHMAKING_GAME = 'longest_matchmaking_game';

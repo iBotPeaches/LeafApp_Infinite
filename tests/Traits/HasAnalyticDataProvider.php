@@ -20,6 +20,7 @@ use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
+use App\Support\Analytics\Stats\MostPerfectsInRankedGame;
 use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostScoreServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
@@ -89,6 +90,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostGamesPlayedServiceRecord(),
+            ],
+            [
+                new MostPerfectsInRankedGame(),
             ],
         ];
     }

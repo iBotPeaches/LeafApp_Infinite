@@ -50,6 +50,7 @@ class ProcessAnalyticTest extends TestCase
             ->create();
 
         GamePlayer::factory()
+            ->withMedals()
             ->for(
                 Game::factory()
                     ->forPlaylist(['is_ranked' => false])
