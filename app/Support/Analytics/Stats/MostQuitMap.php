@@ -49,6 +49,7 @@ class MostQuitMap extends BaseOverviewStatStat implements AnalyticInterface
             ->join('overviews', 'overview_stats.overview_id', '=', 'overviews.id')
             ->whereNull('overview_gametype_id')
             ->whereNull('overview_map_id')
+            ->where('overviews.is_manual', false)
             ->where('total_players', '>', 0)
             ->orderByDesc('percent_quit')
             ->having('percent_quit', '>', 0)
