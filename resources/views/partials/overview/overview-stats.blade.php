@@ -95,6 +95,14 @@
     </div>
     <div class="level-item has-text-centered">
         <div>
+            <p class="heading">Average Length (mins)</p>
+            <p class="title">
+                {{ number_format($overviewStat->average_game_length, 2) }}
+            </p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
             <p class="heading">Average Accuracy</p>
             <p class="title">{{ number_format($overviewStat->average_accuracy, 2) }}%</p>
         </div>
