@@ -60,12 +60,12 @@ class ProcessAnalytic implements ShouldQueue
                     break;
             }
 
-            foreach ([$topTen, $topHundred, $topThousand] as $resultSet) {
+            foreach ([10 => $topTen, 100 => $topHundred, 1_000 => $topThousand] as $amount => $resultSet) {
                 $writer = Writer::createFromString();
                 $writer->insertOne($this->analytic->csvHeader());
                 $writer->insertAll($this->analytic->csvData($resultSet));
 
-                $slug = $this->analytic->slug(count($resultSet ?? []));
+                $slug = $this->analytic->slug($amount);
 
                 Storage::disk('public')->put('top-ten/'.$slug.'.csv', $writer->toString());
             }
