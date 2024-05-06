@@ -30,6 +30,7 @@ class OverviewPageTest extends TestCase
         // Arrange
         $overviewStat = OverviewStat::factory()->createOne([
             'total_players' => 0,
+            'total_matches' => 0,
         ]);
 
         // Act & Assert

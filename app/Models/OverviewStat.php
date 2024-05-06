@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $average_accuracy
  * @property-read float $time_played
  * @property-read float $quit_rate
+ * @property-read float $average_game_length
  * @property-read Overview $overview
  * @property-read OverviewGametype|null $gametype
  * @property-read OverviewMap|null $map
@@ -57,6 +58,17 @@ class OverviewStat extends Model
         }
 
         return ($this->total_dnf / $this->total_players) * 100;
+    }
+
+    public function getAverageGameLengthAttribute(): float
+    {
+        if ($this->total_matches === 0) {
+            return 0;
+        }
+
+        $averageGameLength = $this->total_seconds_played / $this->total_matches;
+
+        return now()->addSeconds($averageGameLength)->diffInMinutes(absolute: true);
     }
 
     public function overview(): BelongsTo
