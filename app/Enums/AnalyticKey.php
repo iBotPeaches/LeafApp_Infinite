@@ -10,6 +10,7 @@ enum AnalyticKey: string
     case BEST_KDA_SR = 'best_kda_sr';
     case BEST_KD_SR = 'best_ka_sr';
     case MOST_BETRAYALS_SR = 'most_betrayals_sr';
+    case MOST_CALLOUT_ASSISTS_SR = 'most_callout_assists_sr';
     case MOST_KILLS_SR = 'most_kills_sr';
     case MOST_MEDALS_SR = 'most_medals_sr';
     case MOST_TIME_PLAYED_SR = 'most_time_played_sr';
