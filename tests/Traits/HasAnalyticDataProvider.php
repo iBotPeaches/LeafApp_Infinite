@@ -12,6 +12,7 @@ use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
+use App\Support\Analytics\Stats\MostCalloutAssistsServiceRecord;
 use App\Support\Analytics\Stats\MostDeathsInGame;
 use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInGame;
@@ -93,6 +94,9 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostPerfectsInRankedGame(),
+            ],
+            [
+                new MostCalloutAssistsServiceRecord(),
             ],
         ];
     }

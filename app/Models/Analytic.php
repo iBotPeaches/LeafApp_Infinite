@@ -14,6 +14,7 @@ use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
+use App\Support\Analytics\Stats\MostCalloutAssistsServiceRecord;
 use App\Support\Analytics\Stats\MostDeathsInGame;
 use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInGame;
@@ -70,6 +71,7 @@ class Analytic extends Model
             AnalyticKey::MOST_KILLS_SR => new MostKillsServiceRecord(),
             AnalyticKey::MOST_KILLS_RANKED_GAME => new MostKillsInRankedGame(),
             AnalyticKey::MOST_KILLS_ZERO_DEATHS_GAME => new MostKillsWithZeroDeathsGame(),
+            AnalyticKey::MOST_CALLOUT_ASSISTS_SR => new MostCalloutAssistsServiceRecord(),
             AnalyticKey::MOST_ASSISTS_GAME => new MostAssistsInGame(),
             AnalyticKey::MOST_DEATHS_GAME => new MostDeathsInGame(),
             AnalyticKey::MOST_KILLS_GAME => new MostKillsInGame(),
