@@ -50,8 +50,8 @@ class ProcessOverviewAnalytic implements ShouldQueue
                 'is_manual' => $this->isManual,
             ]);
 
-        // If the overview was updated within the past month, skip processing
-        if ($overview->exists && $overview->updated_at->diffInDays(absolute: true) < 31) {
+        // If the overview was updated within the past month (and non-manual), skip processing
+        if (! $this->isManual && $overview->exists && $overview->updated_at->diffInDays(absolute: true) < 31) {
             return;
         }
 
