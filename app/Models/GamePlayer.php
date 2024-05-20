@@ -128,7 +128,7 @@ class GamePlayer extends Model implements HasDotApi
         $gamePlayer->mmr ??= Arr::get($payload, $prefix.'stats.mmr');
         $gamePlayer->kills = Arr::get($payload, $prefix.'stats.core.summary.kills');
         $gamePlayer->deaths = Arr::get($payload, $prefix.'stats.core.summary.deaths');
-        $gamePlayer->assists = Arr::get($payload, $prefix.'stats.core.summary.assists');
+        $gamePlayer->assists = max((int) Arr::get($payload, $prefix.'stats.core.summary.assists'), 0);
         $gamePlayer->betrayals = Arr::get($payload, $prefix.'stats.core.summary.betrayals');
         $gamePlayer->suicides = Arr::get($payload, $prefix.'stats.core.summary.suicides');
         $gamePlayer->max_spree = Arr::get($payload, $prefix.'stats.core.summary.max_killing_spree');
