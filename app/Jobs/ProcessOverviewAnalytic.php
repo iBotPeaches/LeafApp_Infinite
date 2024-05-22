@@ -10,6 +10,7 @@ use App\Models\Gamevariant;
 use App\Models\Map;
 use App\Models\Overview;
 use App\Support\Gametype\GametypeHelper;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -77,7 +78,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
             $overview->maps()->updateOrCreate([
                 'map_id' => $mapId,
             ], [
-                'released_at' => $releasedAt,
+                'released_at' => Carbon::parse($releasedAt)->setTime(0, 0),
             ]);
         }
     }

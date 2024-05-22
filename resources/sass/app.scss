@@ -51,3 +51,7 @@ td {
 .is-unranked {
     filter: drop-shadow(16px 16px 20px black) invert(100%);
 }
+
+.columns.is-equal-height > .column > * {
+    height: 100% !important;
+}

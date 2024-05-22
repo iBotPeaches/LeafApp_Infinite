@@ -1,7 +1,7 @@
 <?php
 /** @var App\Models\Overview[]|\Illuminate\Support\Collection $overviews */
 ?>
-<div>
+<div class="mb-2">
     <h1 class="title">Map Overviews</h1>
     <h2 class="subtitle">
         An overview of a Map (versions, gametypes, players) in
@@ -9,9 +9,9 @@
         <a href="{{ route('overviews', ['filterType' => 'customs']) }}">customs</a>.
     </h2>
     @foreach ($overviews->chunk(4) as $chunk)
-        <div class="columns">
+        <div class="columns is-equal-height">
             @foreach ($chunk as $overview)
-                <div class="column is-one-quarter">
+                <div class="column">
                     <div class="card">
                         <a class="card-image" href="{{ route('overview', [$overview]) }}">
                             <figure class="image is-4by3">
