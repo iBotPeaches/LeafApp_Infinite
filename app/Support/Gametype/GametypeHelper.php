@@ -46,6 +46,14 @@ class GametypeHelper
             return BaseGametype::STRONGHOLDS();
         }
 
+        $miniGameModes = [
+            'Survive The Undead',
+        ];
+
+        if (Str::contains($name, $miniGameModes, true)) {
+            return BaseGametype::MINI_GAME();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }

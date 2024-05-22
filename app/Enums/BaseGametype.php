@@ -18,6 +18,7 @@ use BenSampo\Enum\Enum;
  * @method static static KOTH()
  * @method static static LAND_GRAB()
  * @method static static LSS()
+ * @method static static MINI_GAME()
  * @method static static ODDBALL()
  * @method static static SLAYER()
  * @method static static STOCKPILE()
@@ -43,6 +44,8 @@ final class BaseGametype extends Enum implements LocalizedEnum
     const LAND_GRAB = 7;
 
     const LSS = 8;
+
+    const MINI_GAME = 16;
 
     const ODDBALL = 9;
 
