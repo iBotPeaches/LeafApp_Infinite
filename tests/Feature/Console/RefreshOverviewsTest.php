@@ -38,6 +38,9 @@ class RefreshOverviewsTest extends TestCase
         $gametypeFirefight = Gamevariant::factory()->createOne([
             'name' => 'Firefight | Hard',
         ]);
+        $miniGame = Gamevariant::factory()->createOne([
+            'name' => 'Survive The Undead',
+        ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
@@ -81,6 +84,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $gametypeFirefight->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $miniGame->id,
         ]);
 
         // Act

@@ -84,6 +84,7 @@ return [
         BaseGametype::KOTH => 'KoTH',
         BaseGametype::LAND_GRAB => 'Land Grab',
         BaseGametype::LSS => 'LSS',
+        BaseGametype::MINI_GAME => 'Minigame',
         BaseGametype::ODDBALL => 'Oddball',
         BaseGametype::SLAYER => 'Slayer',
         BaseGametype::STOCKPILE => 'Stockpile',
