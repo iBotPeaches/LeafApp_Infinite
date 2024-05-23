@@ -46,6 +46,7 @@ class ProcessOverviewAnalytic implements ShouldQueue
         $overview = Overview::query()
             ->firstOrNew([
                 'slug' => $mapSlug,
+                'is_manual' => $this->isManual,
             ], [
                 'name' => $this->mapName,
                 'is_manual' => $this->isManual,
