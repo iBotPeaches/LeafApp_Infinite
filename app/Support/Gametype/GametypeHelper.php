@@ -54,6 +54,14 @@ class GametypeHelper
             return BaseGametype::ODDBALL();
         }
 
+        $juggernautModes = [
+            'Ninjanaut',
+        ];
+
+        if (Str::contains($name, $juggernautModes, true)) {
+            return BaseGametype::JUGGERNAUT();
+        }
+
         $miniGameModes = [
             'Survive The Undead',
         ];
