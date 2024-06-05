@@ -44,6 +44,9 @@ class RefreshOverviewsTest extends TestCase
         $ninjaBall = Gamevariant::factory()->createOne([
             'name' => 'Ninja Ball',
         ]);
+        $ninjaNaut = Gamevariant::factory()->createOne([
+            'name' => 'Ninjanaut',
+        ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
@@ -97,6 +100,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $ninjaBall->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $ninjaNaut->id,
         ]);
 
         // Act
