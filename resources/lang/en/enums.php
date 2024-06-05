@@ -74,13 +74,16 @@ return [
         FaceItStatus::ADJUSTMENT => 'Adjusted',
     ],
     BaseGametype::class => [
+        BaseGametype::ASSAULT => 'Assault',
         BaseGametype::ATTRITION => 'Attrition',
         BaseGametype::CTF => 'CTF',
         BaseGametype::ELIMINATION => 'Elimination',
         BaseGametype::ESCALATION => 'Escalation',
         BaseGametype::EXTRACTION => 'Extraction',
         BaseGametype::FIREFIGHT => 'Firefight',
+        BaseGametype::GRIFBALL => 'Grifball',
         BaseGametype::INFECTION => 'Infection',
+        BaseGametype::JUGGERNAUT => 'Juggernaut',
         BaseGametype::KOTH => 'KoTH',
         BaseGametype::LAND_GRAB => 'Land Grab',
         BaseGametype::LSS => 'LSS',
@@ -90,5 +93,6 @@ return [
         BaseGametype::STOCKPILE => 'Stockpile',
         BaseGametype::STRONGHOLDS => 'Strongholds',
         BaseGametype::TOTAL_CONTROL => 'Total Control',
+        BaseGametype::VIP => 'VIP',
     ],
 ];
