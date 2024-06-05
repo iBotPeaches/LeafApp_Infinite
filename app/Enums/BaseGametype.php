@@ -8,13 +8,16 @@ use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
+ * @method static static ASSAULT()
  * @method static static ATTRITION()
  * @method static static CTF()
  * @method static static ELIMINATION()
  * @method static static ESCALATION()
  * @method static static EXTRACTION()
  * @method static static FIREFIGHT()
+ * @method static static GRIFBALL()
  * @method static static INFECTION()
+ * @method static static JUGGERNAUT()
  * @method static static KOTH()
  * @method static static LAND_GRAB()
  * @method static static LSS()
@@ -24,9 +27,12 @@ use BenSampo\Enum\Enum;
  * @method static static STOCKPILE()
  * @method static static STRONGHOLDS()
  * @method static static TOTAL_CONTROL()
+ * @method static static VIP()
  */
 final class BaseGametype extends Enum implements LocalizedEnum
 {
+    const ASSAULT = 19;
+
     const ATTRITION = 1;
 
     const CTF = 2;
@@ -35,9 +41,15 @@ final class BaseGametype extends Enum implements LocalizedEnum
 
     const ESCALATION = 4;
 
+    const EXTRACTION = 14;
+
     const FIREFIGHT = 15;
 
+    const GRIFBALL = 20;
+
     const INFECTION = 5;
+
+    const JUGGERNAUT = 17;
 
     const KOTH = 6;
 
@@ -57,5 +69,5 @@ final class BaseGametype extends Enum implements LocalizedEnum
 
     const TOTAL_CONTROL = 13;
 
-    const EXTRACTION = 14;
+    const VIP = 18;
 }

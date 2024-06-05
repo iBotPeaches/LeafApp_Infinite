@@ -46,6 +46,14 @@ class GametypeHelper
             return BaseGametype::STRONGHOLDS();
         }
 
+        $oddballModes = [
+            'Ninja Ball',
+        ];
+
+        if (Str::contains($name, $oddballModes, true)) {
+            return BaseGametype::ODDBALL();
+        }
+
         $miniGameModes = [
             'Survive The Undead',
         ];
