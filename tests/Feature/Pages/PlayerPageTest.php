@@ -181,24 +181,23 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function testLoadingPlayerOverviewPageWithPlaylistFilter(string $gamertag): void
+    public function testLoadingPlayerMatchesPageWithPlaylistFilter(): void
     {
         // Arrange
         Http::fake();
 
-        Player::factory()
-            ->createOne([
-                'gamertag' => $gamertag,
-            ]);
+        $player = Player::factory()->createOne([
+            'gamertag' => 'gamertag',
+        ]);
 
         $playlist = Playlist::factory()->createOne();
 
         // Act
-        $response = $this->get('/player/'.urlencode($gamertag).'/overview?=playlist='.$playlist->uuid);
+        $response = $this->get('/player/'.$player->url_safe_gamertag.'/matches?playlist='.$playlist->uuid);
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('game-history-table');
         $response->assertSeeLivewire('update-player-panel');
     }
 
