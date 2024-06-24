@@ -10,6 +10,7 @@ use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\PlayerBan;
+use App\Models\Playlist;
 use App\Models\Rank;
 use App\Models\ServiceRecord;
 use App\Models\User;
@@ -177,6 +178,26 @@ class PlayerPageTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('update-player-panel');
+    }
+
+    public function testLoadingPlayerMatchesPageWithPlaylistFilter(): void
+    {
+        // Arrange
+        Http::fake();
+
+        $player = Player::factory()->createOne([
+            'gamertag' => 'gamertag',
+        ]);
+
+        $playlist = Playlist::factory()->createOne();
+
+        // Act
+        $response = $this->get('/player/'.$player->url_safe_gamertag.'/matches?playlist='.$playlist->uuid);
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSeeLivewire('game-history-table');
         $response->assertSeeLivewire('update-player-panel');
     }
 
