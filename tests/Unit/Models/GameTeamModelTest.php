@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\GameTeam;
+use App\Services\DotApi\Enums\Team;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -29,12 +30,12 @@ class GameTeamModelTest extends TestCase
     {
         return [
             [
-                'internalTeamId' => 0,
-                'expected' => 'info',
+                'internalTeamId' => Team::EAGLE,
+                'expected' => 'eagle',
             ],
             [
-                'internalTeamId' => 1,
-                'expected' => 'danger',
+                'internalTeamId' => Team::COBRA,
+                'expected' => 'cobra',
             ],
             [
                 'internalTeamId' => 99,
