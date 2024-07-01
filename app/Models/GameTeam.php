@@ -8,6 +8,7 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasOutcome;
 use App\Observers\GameTeamObserver;
+use App\Services\DotApi\Enums\Team as DotApiTeam;
 use Database\Factories\GameTeamFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
-use App\Services\DotApi\Enums\Team as DotApiTeam;
 
 /**
  * @property int $id
