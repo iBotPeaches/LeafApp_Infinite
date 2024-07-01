@@ -9,4 +9,39 @@ $orange-invert: findColorInvert($orange);
 $purple: #9400ff;
 $purple-invert: findColorInvert($purple);
 
-$custom-colors: ("orange": ($orange, $orange-invert), "purple": ($purple, $purple-invert));
+$eagle: #da3a04;
+$eagle-invert: findColorInvert($eagle);
+
+$cobra: #49b8fe;
+$cobra-invert: findColorInvert($cobra);
+
+$hades: #8fed23;
+$hades-invert: findColorInvert($hades);
+
+$valkyrie: #ffea00;
+$valkyrie-invert: findColorInvert($valkyrie);
+
+$rampart: #8d3ac4;
+$rampart-invert: findColorInvert($rampart);
+
+$cutlass: #ed9628;
+$cutlass-invert: findColorInvert($cutlass);
+
+$valor: #ba7435;
+$valor-invert: findColorInvert($valor);
+
+$hazard: #868686;
+$hazard-invert: findColorInvert($hazard);
+
+$custom-colors: (
+    "orange": ($orange, $orange-invert),
+    "purple": ($purple, $purple-invert),
+    "eagle": ($eagle, $eagle-invert),
+    "cobra": ($cobra, $cobra-invert),
+    "hades": ($hades, $hades-invert),
+    "valkyrie": ($valkyrie, $valkyrie-invert),
+    "rampart": ($rampart, $rampart-invert),
+    "cutlass": ($cutlass, $cutlass-invert),
+    "valor": ($valor, $valor-invert),
+    "hazard": ($hazard, $hazard-invert)
+);

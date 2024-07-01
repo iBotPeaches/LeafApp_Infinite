@@ -8,6 +8,7 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasOutcome;
 use App\Observers\GameTeamObserver;
+use App\Services\DotApi\Enums\Team as DotApiTeam;
 use Database\Factories\GameTeamFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
@@ -56,8 +57,14 @@ class GameTeam extends Model implements HasDotApi
     public function getColorAttribute(): string
     {
         return match ($this->internal_team_id) {
-            0 => 'is-info',
-            1 => 'is-danger',
+            DotApiTeam::EAGLE => 'is-eagle',
+            DotApiTeam::COBRA => 'is-cobra',
+            DotApiTeam::HADES => 'is-hades',
+            DotApiTeam::VALKYRIE => 'is-valkyrie',
+            DotApiTeam::RAMPART => 'is-rampart',
+            DotApiTeam::CUTLASS => 'is-cutlass',
+            DotApiTeam::VALOR => 'is-valor',
+            DotApiTeam::HAZARD => 'is-hazard',
             default => 'is-dark',
         };
     }
@@ -80,8 +87,14 @@ class GameTeam extends Model implements HasDotApi
     public function getTooltipColorAttribute(): string
     {
         return match ($this->internal_team_id) {
-            0 => 'has-tooltip-info',
-            1 => 'has-tooltip-danger',
+            DotApiTeam::EAGLE => 'has-tooltip-eagle',
+            DotApiTeam::COBRA => 'has-tooltip-cobra',
+            DotApiTeam::HADES => 'has-tooltip-hades',
+            DotApiTeam::VALKYRIE => 'has-tooltip-valkyrie',
+            DotApiTeam::RAMPART => 'has-tooltip-rampart',
+            DotApiTeam::CUTLASS => 'has-tooltip-cutlass',
+            DotApiTeam::VALOR => 'has-tooltip-valor',
+            DotApiTeam::HAZARD => 'has-tooltip-hazard',
             default => 'has-tooltip-dark',
         };
     }
