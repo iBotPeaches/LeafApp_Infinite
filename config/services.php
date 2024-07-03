@@ -73,12 +73,16 @@ return [
     'halo' => [
         'playlists' => [
             'bot-bootcamp' => env('HALO_PLAYLISTS_BOT_BOOTCAMP', 'a446725e-b281-414c-a21e-31b8700e95a1'),
+            'survive-the-dead' => env('HALO_PLAYLISTS_SURVIVE_THE_DEAD', '3089c3e1-dafa-42a0-98ed-f29948f344a7'),
             'firefight-koth' => env('HALO_PLAYLISTS_FF_KOTH', '96aedf55-1c7e-46d5-bdaf-19a1329fb95d'),
             'firefight-heroic' => env('HALO_PLAYLISTS_FF_HEROIC', 'd8ac67e8-647c-4602-8af0-f42012ba8dd8'),
             'firefight-legendary' => env('HALO_PLAYLISTS_FF_LEGENDARY', '759021fe-1d82-470f-a2e6-e431300b384b'),
             'firefight-grunt-koth' => env('HALO_PLAYLISTS_FF_GRUNT_KOTH', 'e3a9b265-5883-4248-afde-37abafc122ab'),
             'firefight-grunt-heroic' => env('HALO_PLAYLISTS_FF_GRUNT_HEROIC', '78b10320-8bc4-491b-a3d5-80fa1ca847f8'),
             'firefight-grunt-legendary' => env('HALO_PLAYLISTS_FF_GRUNT_LEGENDARY', '014f22c9-1ed1-4cfd-9e3a-c1b744d78d8c'),
+            'firefight-composer-normal' => env('HALO_PLAYLISTS_FF_COMPOSER_NORMAL', '1f58f2e2-324d-4770-bca7-e36c63662626'),
+            'firefight-composer-heroic' => env('HALO_PLAYLISTS_FF_COMPOSER_HEROIC', '4ec3a07b-edec-4fdd-aa7e-668dc6398ac2'),
+            'firefight-composer-legendary' => env('HALO_PLAYLISTS_FF_COMPOSER_LEGENDARY', 'd3c44874-7f46-4f8b-b9a8-92db24cf807e'),
         ],
         'botfarmer_threshold' => env('HALO_BOTFARMER_THRESHOLD', .50),
     ],

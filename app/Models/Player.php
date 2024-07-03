@@ -288,20 +288,24 @@ class Player extends Model implements HasDotApi, Sitemapable
 
         $client->careerRank($this);
 
-        // We will ignore Firefight from this calculation as FF medals are ignored in the Service Record.
-        // Thus including FF matches would skew the data in detection of a "Bot Farmer".
-        $firefightUuids = [
+        // We will ignore Firefight (+ others) from this calculation as those medals are ignored in the Service Record.
+        // Thus including these matches would skew the data in detection of a "Bot Farmer".
+        $skippedPlaylistUuids = [
+            config('services.halo.playlists.survive-the-dead'),
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
             config('services.halo.playlists.firefight-legendary'),
             config('services.halo.playlists.firefight-grunt-koth'),
             config('services.halo.playlists.firefight-grunt-heroic'),
             config('services.halo.playlists.firefight-grunt-legendary'),
+            config('services.halo.playlists.firefight-composer-normal'),
+            config('services.halo.playlists.firefight-composer-heroic'),
+            config('services.halo.playlists.firefight-composer-legendary'),
         ];
 
         $firefightIds = Playlist::query()
             ->select('id')
-            ->whereIn('uuid', $firefightUuids)
+            ->whereIn('uuid', $skippedPlaylistUuids)
             ->get()
             ->pluck('id');
 
@@ -320,7 +324,7 @@ class Player extends Model implements HasDotApi, Sitemapable
             ->groupBy('games.playlist_id')
             ->get();
 
-        // We now filter out Firefight playlists from the breakdown.
+        // We now filter out skipped playlists from the breakdown.
         $playlistBreakdown = $playlistBreakdown->filter(function (\stdClass $row) use ($firefightIds) {
             return ! $firefightIds->contains($row->playlist_id);
         });
