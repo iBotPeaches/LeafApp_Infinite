@@ -24,6 +24,7 @@ class BaseGameStat
     {
         return [
             config('services.halo.playlists.bot-bootcamp'),
+            config('services.halo.playlists.survive-the-dead'),
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
             config('services.halo.playlists.firefight-legendary'),
