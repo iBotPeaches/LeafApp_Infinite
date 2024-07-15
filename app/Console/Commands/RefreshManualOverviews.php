@@ -24,7 +24,7 @@ class RefreshManualOverviews extends Command
             ->cursor();
 
         foreach ($overviews as $overview) {
-            $mapIds = $overview->maps->pluck('id')->toArray();
+            $mapIds = $overview->maps->pluck('map_id')->toArray();
 
             $startTime = time();
             ProcessOverviewAnalytic::dispatchSync($overview->name, $mapIds, true);
