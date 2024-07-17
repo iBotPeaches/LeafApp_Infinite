@@ -68,6 +68,7 @@ class GametypeHelper
 
         $miniGameModes = [
             'Survive The Undead',
+            'Sentry Defense',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
