@@ -17,8 +17,12 @@ class GametypeHelper
             }
         }
 
-        // Special check for KOTH / King of the Hill
-        if (Str::contains($name, 'king of the hill', true)) {
+        $kingOfTheHillModes = [
+            'Crazy King',
+            'King of the Hill',
+        ];
+
+        if (Str::contains($name, $kingOfTheHillModes, true)) {
             return BaseGametype::KOTH();
         }
 
