@@ -42,7 +42,7 @@ class SitemapGenerate extends Command
         $playerIndex = 0;
         Player::query()
             ->withoutEagerLoads()
-            ->chunkById(30000, function (Collection $players) use ($sitemapFolder, &$playerIndex) {
+            ->chunkById(30000, function ($players) use ($sitemapFolder, &$playerIndex) {
                 Sitemap::create()
                     ->add($players)
                     ->writeToFile(sprintf($sitemapFolder.'/sitemap_players_%d.xml', $playerIndex++));
@@ -51,7 +51,7 @@ class SitemapGenerate extends Command
         $matchupIndex = 0;
         Matchup::query()
             ->with('championship')
-            ->chunkById(25000, function (Collection $matchups) use ($sitemapFolder, &$matchupIndex) {
+            ->chunkById(25000, function ($matchups) use ($sitemapFolder, &$matchupIndex) {
                 Sitemap::create()
                     ->add($matchups)
                     ->writeToFile(sprintf($sitemapFolder.'/sitemap_matchups_%d.xml', $matchupIndex++));
