@@ -176,6 +176,12 @@ class PullChampionshipTest extends TestCase
             [
                 'type' => 'stage',
             ],
+            [
+                'type' => 'bracket',
+            ],
+            [
+                'type' => 'swiss',
+            ],
         ];
     }
 }

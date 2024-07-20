@@ -61,6 +61,36 @@ class PlayerModelTest extends TestCase
         $this->assertEquals(100.0, $player->percentage_next_rank);
     }
 
+    public function testNextRankPercentageIsBetween60and80(): void
+    {
+        // Arrange
+        $player = Player::factory()->makeOne([
+            'xp' => 650,
+            'rank_id' => Rank::factory(['id' => 2, 'threshold' => 40]),
+            'next_rank_id' => Rank::factory(['id' => 3, 'threshold' => 1000, 'required' => 1000]),
+            'is_bot' => false,
+        ]);
+
+        // Act && Assert
+        $this->assertEquals(61.0, $player->percentage_next_rank);
+        $this->assertEquals('is-primary', $player->percentage_next_rank_color);
+    }
+
+    public function testNextRankPercentageIsBetween40and60(): void
+    {
+        // Arrange
+        $player = Player::factory()->makeOne([
+            'xp' => 450,
+            'rank_id' => Rank::factory(['id' => 2, 'threshold' => 40]),
+            'next_rank_id' => Rank::factory(['id' => 3, 'threshold' => 1000, 'required' => 1000]),
+            'is_bot' => false,
+        ]);
+
+        // Act && Assert
+        $this->assertEquals(41.0, $player->percentage_next_rank);
+        $this->assertEquals('is-warning', $player->percentage_next_rank_color);
+    }
+
     public function testRankValuesWithNextRank(): void
     {
         // Arrange

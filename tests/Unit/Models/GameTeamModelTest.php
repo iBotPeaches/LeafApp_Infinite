@@ -38,6 +38,30 @@ class GameTeamModelTest extends TestCase
                 'expected' => 'cobra',
             ],
             [
+                'internalTeamId' => Team::HADES,
+                'expected' => 'hades',
+            ],
+            [
+                'internalTeamId' => Team::VALKYRIE,
+                'expected' => 'valkyrie',
+            ],
+            [
+                'internalTeamId' => Team::RAMPART,
+                'expected' => 'rampart',
+            ],
+            [
+                'internalTeamId' => Team::CUTLASS,
+                'expected' => 'cutlass',
+            ],
+            [
+                'internalTeamId' => Team::VALOR,
+                'expected' => 'valor',
+            ],
+            [
+                'internalTeamId' => Team::HAZARD,
+                'expected' => 'hazard',
+            ],
+            [
                 'internalTeamId' => 99,
                 'expected' => 'dark',
             ],
