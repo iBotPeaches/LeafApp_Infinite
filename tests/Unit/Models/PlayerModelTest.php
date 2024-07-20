@@ -73,6 +73,7 @@ class PlayerModelTest extends TestCase
 
         // Act && Assert
         $this->assertEquals(61.0, $player->percentage_next_rank);
+        $this->assertEquals('is-primary', $player->percentage_next_rank_color);
     }
 
     public function testNextRankPercentageIsBetween40and60(): void
@@ -87,6 +88,7 @@ class PlayerModelTest extends TestCase
 
         // Act && Assert
         $this->assertEquals(41.0, $player->percentage_next_rank);
+        $this->assertEquals('is-warning', $player->percentage_next_rank_color);
     }
 
     public function testRankValuesWithNextRank(): void
