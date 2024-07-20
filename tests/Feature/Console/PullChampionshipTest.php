@@ -180,8 +180,8 @@ class PullChampionshipTest extends TestCase
                 'type' => 'bracket',
             ],
             [
-                'type' => 'swiss'
-            ]
+                'type' => 'swiss',
+            ],
         ];
     }
 }

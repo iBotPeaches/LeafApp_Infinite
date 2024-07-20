@@ -10,7 +10,6 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\Scrim;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;

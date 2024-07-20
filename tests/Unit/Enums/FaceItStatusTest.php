@@ -1,10 +1,10 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Tests\Unit\Enums;
 
 use App\Enums\FaceItStatus;
-use App\Enums\MedalType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -46,7 +46,7 @@ class FaceItStatusTest extends TestCase
             [
                 'status' => FaceItStatus::ADJUSTMENT,
                 'word' => 'adjustment',
-            ]
+            ],
         ];
     }
 }
