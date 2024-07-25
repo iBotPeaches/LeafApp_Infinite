@@ -48,8 +48,8 @@ class PullAppearanceTest extends TestCase
             PullXuid::class,
         ]);
         Storage::fake();
-        $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');
-        $mockOptimizedResponse = (new MockImageService())->success();
+        $mockAppearanceResponse = (new MockAppearanceService)->success('gamertag');
+        $mockOptimizedResponse = (new MockImageService)->success();
 
         $this->instance(
             FileUtilInterface::class,
@@ -87,7 +87,7 @@ class PullAppearanceTest extends TestCase
             PullXuid::class,
         ]);
         Storage::fake();
-        $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');
+        $mockAppearanceResponse = (new MockAppearanceService)->success('gamertag');
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

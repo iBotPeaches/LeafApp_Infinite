@@ -54,8 +54,8 @@ class ValidPlayerUpdateTest extends TestCase
             PullMatchHistory::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         // Set values into responses that "fake" a private account.
         Arr::set($mockServiceResponse, 'data.time_played.seconds', 0);
@@ -102,9 +102,9 @@ class ValidPlayerUpdateTest extends TestCase
             PullMatchHistory::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockServiceResponse = (new MockServiceRecordService())->error403();
-        $mockSuccessfulServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->error403();
+        $mockSuccessfulServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_FORBIDDEN)
@@ -140,13 +140,13 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockXuidResponse = (new MockXuidService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockXuidResponse = (new MockXuidService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -207,13 +207,13 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockXuidResponse = (new MockXuidService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockXuidResponse = (new MockXuidService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -292,13 +292,13 @@ class ValidPlayerUpdateTest extends TestCase
 
         $xuid = $this->faker->numerify('################');
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockXuidResponse = (new MockXuidService)->success($gamertag, $xuid);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -364,12 +364,12 @@ class ValidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -441,8 +441,8 @@ class ValidPlayerUpdateTest extends TestCase
             PullServiceRecord::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
         ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
         Http::fakeSequence()
@@ -562,15 +562,15 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -626,14 +626,14 @@ class ValidPlayerUpdateTest extends TestCase
         SeasonSession::set(config('services.dotapi.competitive.key'));
 
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -693,14 +693,14 @@ class ValidPlayerUpdateTest extends TestCase
         SeasonSession::set(SeasonSession::$allSeasonKey);
 
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -755,14 +755,14 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -817,14 +817,14 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -879,14 +879,14 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -941,14 +941,14 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -1003,14 +1003,14 @@ class ValidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

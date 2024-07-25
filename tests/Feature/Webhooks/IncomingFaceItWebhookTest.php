@@ -27,13 +27,13 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockMatchStatusFinished())->success();
+        $payload = (new MockMatchStatusFinished)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockMatchupResponse = (new MockMatchupService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockMatchupResponse = (new MockMatchupService)->success();
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -49,13 +49,13 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockMatchObjectCreated())->success();
+        $payload = (new MockMatchObjectCreated)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockMatchupResponse = (new MockMatchupService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockMatchupResponse = (new MockMatchupService)->success();
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -71,13 +71,13 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockChampionshipStarted())->success();
+        $payload = (new MockChampionshipStarted)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockMatchupResponse = (new MockMatchupService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockMatchupResponse = (new MockMatchupService)->success();
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -93,14 +93,14 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockChampionshipFinished())->success();
+        $payload = (new MockChampionshipFinished)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -117,15 +117,15 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockChampionshipCancelled())->success();
+        $payload = (new MockChampionshipCancelled)->success();
         $championshipId = Arr::get($payload, 'payload.id');
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success($championshipId);
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success($championshipId);
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Arr::set($mockChampionshipResponse, 'status', 'cancelled');
 
@@ -148,14 +148,14 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         // Arrange & Act
         Queue::fake();
-        $payload = (new MockChampionshipCreated())->success();
+        $payload = (new MockChampionshipCreated)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
 
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Http::fakeSequence()
             ->push($mockChampionshipResponse, Response::HTTP_OK)
@@ -171,7 +171,7 @@ class IncomingFaceItWebhookTest extends TestCase
     public function testIncomingFaceItMatchCompletedAsNotChampionship(): void
     {
         // Arrange & Act
-        $payload = (new MockMatchStatusFinished())->success();
+        $payload = (new MockMatchStatusFinished)->success();
         $headers = [
             'X-Cat-Dog' => config('services.faceit.webhook.secret'),
         ];
@@ -202,19 +202,19 @@ class IncomingFaceItWebhookTest extends TestCase
     {
         return [
             [
-                'payloadFunction' => fn () => (new MockMatchStatusFinished())->error(),
+                'payloadFunction' => fn () => (new MockMatchStatusFinished)->error(),
             ],
             [
-                'payloadFunction' => fn () => (new MockMatchObjectCreated())->error(),
+                'payloadFunction' => fn () => (new MockMatchObjectCreated)->error(),
             ],
             [
-                'payloadFunction' => fn () => (new MockChampionshipStarted())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipStarted)->error(),
             ],
             [
-                'payloadFunction' => fn () => (new MockChampionshipCancelled())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipCancelled)->error(),
             ],
             [
-                'payloadFunction' => fn () => (new MockChampionshipCreated())->error(),
+                'payloadFunction' => fn () => (new MockChampionshipCreated)->error(),
             ],
         ];
     }

@@ -49,7 +49,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = 'test';
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.players.1.attributes.resolved', false);
 
@@ -95,7 +95,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.players.1.details.type', PlayerType::BOT);
 
@@ -132,7 +132,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.queue', null);
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.input', null);
@@ -172,7 +172,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -207,7 +207,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Slayer');
 
@@ -244,7 +244,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'CTF');
 
@@ -281,7 +281,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Oddball');
 
@@ -318,7 +318,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Strongholds');
 
@@ -356,9 +356,9 @@ class ValidGameUpdateTest extends TestCase
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
 
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockAppearance2Response = (new MockAppearanceService())->invalidSuccess($gamertag2);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockAppearance2Response = (new MockAppearanceService)->invalidSuccess($gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK)

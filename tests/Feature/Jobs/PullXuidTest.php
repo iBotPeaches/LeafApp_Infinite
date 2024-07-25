@@ -19,7 +19,7 @@ class PullXuidTest extends TestCase
     public function testDeletingFailedXuidJob(): void
     {
         // Arrange
-        $mockXuidResponse = (new MockXuidService())->success('gamertag');
+        $mockXuidResponse = (new MockXuidService)->success('gamertag');
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_INTERNAL_SERVER_ERROR);

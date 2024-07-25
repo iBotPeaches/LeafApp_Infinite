@@ -60,7 +60,7 @@ class PlayerPageTest extends TestCase
         // Arrange
         $gamertag = 'TESTGAMERTAG';
 
-        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService)->success($gamertag);
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
@@ -117,7 +117,7 @@ class PlayerPageTest extends TestCase
         /** @var Player $player */
         $player = Player::factory()->createOne();
 
-        $mockBanCheckResponse = (new MockBanSummaryService())->banned($player->gamertag);
+        $mockBanCheckResponse = (new MockBanSummaryService)->banned($player->gamertag);
         Http::fakeSequence()
             ->push($mockBanCheckResponse, Response::HTTP_OK);
 
@@ -142,7 +142,7 @@ class PlayerPageTest extends TestCase
         /** @var Player $player */
         $player = Player::factory()->createOne();
 
-        $mockBanCheckResponse = (new MockBanSummaryService())->unbanned($player->gamertag);
+        $mockBanCheckResponse = (new MockBanSummaryService)->unbanned($player->gamertag);
         Http::fakeSequence()
             ->push($mockBanCheckResponse, Response::HTTP_OK);
 

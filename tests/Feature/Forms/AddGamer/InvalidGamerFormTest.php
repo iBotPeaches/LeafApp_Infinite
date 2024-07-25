@@ -47,7 +47,7 @@ class InvalidGamerFormTest extends TestCase
     public function testGracefulFallbackIfXuidNotFoundAndApiCallFails(): void
     {
         // Arrange
-        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $mockAppearanceResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
         Http::fakeSequence()
@@ -65,23 +65,23 @@ class InvalidGamerFormTest extends TestCase
     {
         return [
             401 => [
-                'mockResponse' => fn () => (new MockAppearanceService())->error401(),
+                'mockResponse' => fn () => (new MockAppearanceService)->error401(),
                 'statusCode' => Response::HTTP_UNAUTHORIZED,
             ],
             403 => [
-                'mockResponse' => fn () => (new MockAppearanceService())->error403(),
+                'mockResponse' => fn () => (new MockAppearanceService)->error403(),
                 'statusCode' => Response::HTTP_FORBIDDEN,
             ],
             404 => [
-                'mockResponse' => fn () => (new MockAppearanceService())->error404(),
+                'mockResponse' => fn () => (new MockAppearanceService)->error404(),
                 'statusCode' => Response::HTTP_NOT_FOUND,
             ],
             429 => [
-                'mockResponse' => fn () => (new MockAppearanceService())->error429(),
+                'mockResponse' => fn () => (new MockAppearanceService)->error429(),
                 'statusCode' => Response::HTTP_TOO_MANY_REQUESTS,
             ],
             500 => [
-                'mockResponse' => fn () => (new MockAppearanceService())->error500(),
+                'mockResponse' => fn () => (new MockAppearanceService)->error500(),
                 'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR,
             ],
         ];

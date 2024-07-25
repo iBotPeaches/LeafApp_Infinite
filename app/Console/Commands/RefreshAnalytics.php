@@ -25,7 +25,7 @@ class RefreshAnalytics extends Command
         if ($analyticOption) {
             $analytic = 'App\Support\Analytics\Stats\\'.$analyticOption;
             /** @var AnalyticInterface $analyticClass */
-            $analyticClass = new $analytic();
+            $analyticClass = new $analytic;
 
             $startTime = time();
             $this->output->writeln('Processing: '.$analyticClass->title());
@@ -41,7 +41,7 @@ class RefreshAnalytics extends Command
             $analytic = 'App\Support\Analytics\Stats\\'.Str::before($availableAnalytic, '.php');
 
             /** @var AnalyticInterface $analyticClass */
-            $analyticClass = new $analytic();
+            $analyticClass = new $analytic;
 
             $startTime = time();
             $this->output->writeln('Processing: '.$analyticClass->title());

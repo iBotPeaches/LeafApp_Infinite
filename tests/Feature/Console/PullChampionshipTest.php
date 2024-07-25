@@ -27,9 +27,9 @@ class PullChampionshipTest extends TestCase
         // Arrange
         Queue::fake();
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Arr::set($mockChampionshipResponse, 'type', $type);
 
@@ -51,9 +51,9 @@ class PullChampionshipTest extends TestCase
         // Arrange
         Queue::fake();
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Arr::set($mockChampionshipResponse, 'type', 'stage');
         // TODO - Make setting players per team easier, this changes 4 to 1.
@@ -81,9 +81,9 @@ class PullChampionshipTest extends TestCase
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Arr::set($mockChampionshipResponse, 'type', 'INVALID-TYPE');
 
@@ -104,9 +104,9 @@ class PullChampionshipTest extends TestCase
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
 
         Arr::set($mockChampionshipResponse, 'region', 'INVALID-ENUM');
 
@@ -127,7 +127,7 @@ class PullChampionshipTest extends TestCase
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
 
         Arr::set($mockChampionshipResponse, 'status', 'INVALID-ENUM');
 
@@ -148,8 +148,8 @@ class PullChampionshipTest extends TestCase
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService())->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
 
         Arr::set($mockChampionshipBracketResponse, 'items.0.status', 'INVALID-ENUM');
 

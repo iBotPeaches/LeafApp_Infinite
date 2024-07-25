@@ -34,7 +34,7 @@ class Scrim extends Model implements Sitemapable
 
     public static function createScrimWithGames(User $user, array $gameIds): self
     {
-        $model = new self();
+        $model = new self;
         $model->user()->associate($user);
         $model->save();
 

@@ -22,7 +22,7 @@ class InvalidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $mockMatchResponse = (new MockMatchService())->error429();
+        $mockMatchResponse = (new MockMatchService)->error429();
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_TOO_MANY_REQUESTS);
@@ -42,7 +42,7 @@ class InvalidGameUpdateTest extends TestCase
     {
         // Arrange
         Queue::fake();
-        $mockMatchResponse = (new MockMatchService())->error404();
+        $mockMatchResponse = (new MockMatchService)->error404();
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_NOT_FOUND);

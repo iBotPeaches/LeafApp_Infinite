@@ -76,7 +76,7 @@ class ProcessAnalytic implements ShouldQueue
     private function handleGameResults(?Collection $games): void
     {
         $games?->each(function (Game $game, int $index) {
-            $analytic = new Analytic();
+            $analytic = new Analytic;
             $analytic->key = $this->analytic->key();
             $analytic->place = $index + 1;
             $analytic->value = (float) $game->{$this->analytic->property()};
@@ -102,7 +102,7 @@ class ProcessAnalytic implements ShouldQueue
                 $place = $lastIndex;
             }
 
-            $analytic = new Analytic();
+            $analytic = new Analytic;
             $analytic->key = $this->analytic->key();
             $analytic->place = $place;
             $analytic->value = $value;
@@ -129,7 +129,7 @@ class ProcessAnalytic implements ShouldQueue
                 $place = $lastIndex;
             }
 
-            $analytic = new Analytic();
+            $analytic = new Analytic;
             $analytic->key = $this->analytic->key();
             $analytic->place = $place;
             $analytic->value = $value;
@@ -146,7 +146,7 @@ class ProcessAnalytic implements ShouldQueue
     private function handleOverviewStatResults(?Collection $maps): void
     {
         $maps?->each(function (OverviewStat $overviewStat, int $index) {
-            $analytic = new Analytic();
+            $analytic = new Analytic;
             $analytic->key = $this->analytic->key();
             $analytic->place = $index + 1;
             $analytic->value = (float) $overviewStat->{$this->analytic->property()};
@@ -168,7 +168,7 @@ class ProcessAnalytic implements ShouldQueue
                 $place = $lastIndex;
             }
 
-            $analytic = new Analytic();
+            $analytic = new Analytic;
             $analytic->key = $this->analytic->key();
             $analytic->place = $place;
             $analytic->value = $value;

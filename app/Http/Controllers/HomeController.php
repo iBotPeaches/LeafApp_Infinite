@@ -37,7 +37,7 @@ class HomeController extends Controller
             Str::before($availableAnalytics[array_rand($availableAnalytics)], '.php');
 
         /** @var AnalyticInterface $randomAnalyticClass */
-        $randomAnalyticClass = new $randomAnalytic();
+        $randomAnalyticClass = new $randomAnalytic;
 
         $randomAnalytic = Analytic::query()
             ->limit(1)

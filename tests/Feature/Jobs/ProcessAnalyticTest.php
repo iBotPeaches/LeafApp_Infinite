@@ -93,7 +93,7 @@ class ProcessAnalyticTest extends TestCase
             ->create();
 
         // Act
-        $analyticClass = new MostXpPlayer();
+        $analyticClass = new MostXpPlayer;
         ProcessAnalytic::dispatchSync($analyticClass);
 
         // Assert
@@ -115,7 +115,7 @@ class ProcessAnalyticTest extends TestCase
             ]);
 
         // Act
-        $analyticClass = new MostGamesPlayedServiceRecord();
+        $analyticClass = new MostGamesPlayedServiceRecord;
         ProcessAnalytic::dispatchSync($analyticClass);
 
         // Assert
