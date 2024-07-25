@@ -20,7 +20,7 @@ class ValidGamerFormTest extends TestCase
     public function testValidResponseFromDotApi(): void
     {
         // Arrange
-        $mockResponse = (new MockAppearanceService())->success();
+        $mockResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockResponse, 'additional.params.gamertag');
 
         Http::fake([
@@ -44,9 +44,9 @@ class ValidGamerFormTest extends TestCase
     public function testValidResponseFromXuidServiceIfNoXuidFound(): void
     {
         // Arrange
-        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $mockAppearanceResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
-        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -68,7 +68,7 @@ class ValidGamerFormTest extends TestCase
     {
         // Arrange
         Config::set('services.dotapi.xuid_disabled', true);
-        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $mockAppearanceResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
         Http::fakeSequence()
@@ -84,9 +84,9 @@ class ValidGamerFormTest extends TestCase
     public function testGracefulFallbackIfXuidNotFound(): void
     {
         // Arrange
-        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $mockAppearanceResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
-        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -102,7 +102,7 @@ class ValidGamerFormTest extends TestCase
     public function testValidResponseFromDotApiIfAccountAlreadyExists(): void
     {
         // Arrange
-        $mockResponse = (new MockAppearanceService())->success();
+        $mockResponse = (new MockAppearanceService)->success();
         $gamertag = Arr::get($mockResponse, 'additional.params.gamertag');
         Player::factory()->createOne([
             'gamertag' => $gamertag,

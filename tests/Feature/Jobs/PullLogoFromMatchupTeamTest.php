@@ -34,7 +34,7 @@ class PullLogoFromMatchupTeamTest extends TestCase
             })
         );
 
-        $mockOptimizedResponse = (new MockImageService())->success();
+        $mockOptimizedResponse = (new MockImageService)->success();
         $headers = ['Location' => 'domain.com'];
         Http::fakeSequence()
             ->push($mockOptimizedResponse, Response::HTTP_OK, $headers);

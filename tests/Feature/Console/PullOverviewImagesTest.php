@@ -33,7 +33,7 @@ class PullOverviewImagesTest extends TestCase
             })
         );
 
-        $mockOptimizedResponse = (new MockImageService())->success();
+        $mockOptimizedResponse = (new MockImageService)->success();
         $headers = ['Location' => 'domain.com'];
         Http::fakeSequence()
             ->push(null, Response::HTTP_OK)

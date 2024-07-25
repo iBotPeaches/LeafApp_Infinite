@@ -27,13 +27,13 @@ class PullMetadataTest extends TestCase
     public function testValidDataPull(): void
     {
         // Arrange
-        $mockMedalsResponse = (new MockMedalsService())->success();
-        $mockMapsResponse = (new MockMapsService())->success();
-        $mockTeamsResponse = (new MockTeamsService())->success();
-        $mockPlaylistResponse = (new MockPlaylistsService())->success();
-        $mockCategoriesResponse = (new MockCategoriesService())->success();
-        $mockSeasonsResponse = (new MockSeasonService())->success();
-        $mockCareerRankResponse = (new MockCareerRankService())->success();
+        $mockMedalsResponse = (new MockMedalsService)->success();
+        $mockMapsResponse = (new MockMapsService)->success();
+        $mockTeamsResponse = (new MockTeamsService)->success();
+        $mockPlaylistResponse = (new MockPlaylistsService)->success();
+        $mockCategoriesResponse = (new MockCategoriesService)->success();
+        $mockSeasonsResponse = (new MockSeasonService)->success();
+        $mockCareerRankResponse = (new MockCareerRankService)->success();
 
         Arr::set($mockMedalsResponse, 'data.2.category', MedalType::MODE);
         Arr::set($mockMedalsResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
@@ -59,7 +59,7 @@ class PullMetadataTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         // Arrange
-        $mockMedalsResponse = (new MockMedalsService())->success();
+        $mockMedalsResponse = (new MockMedalsService)->success();
 
         Arr::set($mockMedalsResponse, 'data.0.properties.type', 'invalid-category');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);
@@ -76,10 +76,10 @@ class PullMetadataTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         // Arrange
-        $mockMedalsResponse = (new MockMedalsService())->success();
-        $mockMapsResponse = (new MockMapsService())->success();
-        $mockTeamsResponse = (new MockTeamsService())->success();
-        $mockPlaylistResponse = (new MockPlaylistsService())->success();
+        $mockMedalsResponse = (new MockMedalsService)->success();
+        $mockMapsResponse = (new MockMapsService)->success();
+        $mockTeamsResponse = (new MockTeamsService)->success();
+        $mockPlaylistResponse = (new MockPlaylistsService)->success();
 
         Arr::set($mockPlaylistResponse, 'data.0.properties.input', 'unknown-input');
 
@@ -101,10 +101,10 @@ class PullMetadataTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         // Arrange
-        $mockMedalsResponse = (new MockMedalsService())->success();
-        $mockMapsResponse = (new MockMapsService())->success();
-        $mockTeamsResponse = (new MockTeamsService())->success();
-        $mockPlaylistResponse = (new MockPlaylistsService())->success();
+        $mockMedalsResponse = (new MockMedalsService)->success();
+        $mockMapsResponse = (new MockMapsService)->success();
+        $mockTeamsResponse = (new MockTeamsService)->success();
+        $mockPlaylistResponse = (new MockPlaylistsService)->success();
 
         Arr::set($mockPlaylistResponse, 'data.0.properties.queue', 'unknown-queue');
 
@@ -126,7 +126,7 @@ class PullMetadataTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         // Arrange
-        $mockMedalsResponse = (new MockMedalsService())->success();
+        $mockMedalsResponse = (new MockMedalsService)->success();
 
         Arr::set($mockMedalsResponse, 'data.0.attributes.difficulty', 'invalid-type');
         Http::fakeSequence()->push($mockMedalsResponse, Response::HTTP_OK);

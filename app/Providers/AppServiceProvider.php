@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(ScheduleTimerInterface::class, function ($app) {
-            return new ScheduleTimer();
+            return new ScheduleTimer;
         });
 
         // @codeCoverageIgnoreStart

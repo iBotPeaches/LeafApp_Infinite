@@ -33,70 +33,70 @@ trait HasAnalyticDataProvider
     {
         return [
             [
-                new BestAccuracyServiceRecord(),
+                new BestAccuracyServiceRecord,
             ],
             [
-                new BestKDAServiceRecord(),
+                new BestKDAServiceRecord,
             ],
             [
-                new BestKDServiceRecord(),
+                new BestKDServiceRecord,
             ],
             [
-                new MostBetrayalsServiceRecord(),
+                new MostBetrayalsServiceRecord,
             ],
             [
-                new MostKillsInRankedGame(),
+                new MostKillsInRankedGame,
             ],
             [
-                new MostKillsWithZeroDeathsGame(),
+                new MostKillsWithZeroDeathsGame,
             ],
             [
-                new MostKillsServiceRecord(),
+                new MostKillsServiceRecord,
             ],
             [
-                new MostMedalsServiceRecord(),
+                new MostMedalsServiceRecord,
             ],
             [
-                new MostTimePlayedServiceRecord(),
+                new MostTimePlayedServiceRecord,
             ],
             [
-                new LongestMatchmakingGame(),
+                new LongestMatchmakingGame,
             ],
             [
-                new HighestScoreInRankedGame(),
+                new HighestScoreInRankedGame,
             ],
             [
-                new HighestScoreInUnrankedGame(),
+                new HighestScoreInUnrankedGame,
             ],
             [
-                new MostKillsInGame(),
+                new MostKillsInGame,
             ],
             [
-                new MostDeathsInGame(),
+                new MostDeathsInGame,
             ],
             [
-                new MostAssistsInGame(),
+                new MostAssistsInGame,
             ],
             [
-                new MostMedalsInGame(),
+                new MostMedalsInGame,
             ],
             [
-                new MostQuitMap(),
+                new MostQuitMap,
             ],
             [
-                new MostXpPlayer(),
+                new MostXpPlayer,
             ],
             [
-                new MostScoreServiceRecord(),
+                new MostScoreServiceRecord,
             ],
             [
-                new MostGamesPlayedServiceRecord(),
+                new MostGamesPlayedServiceRecord,
             ],
             [
-                new MostPerfectsInRankedGame(),
+                new MostPerfectsInRankedGame,
             ],
             [
-                new MostCalloutAssistsServiceRecord(),
+                new MostCalloutAssistsServiceRecord,
             ],
         ];
     }

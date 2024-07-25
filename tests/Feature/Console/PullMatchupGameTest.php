@@ -27,8 +27,8 @@ class PullMatchupGameTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockHistoryResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyHistoryResponse = (new MockMatchesService())->empty($gamertag);
+        $mockHistoryResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyHistoryResponse = (new MockMatchesService)->empty($gamertag);
 
         Arr::set($mockHistoryResponse, 'data.0.details.playlist', null);
 

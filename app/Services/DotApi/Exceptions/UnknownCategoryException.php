@@ -11,7 +11,7 @@ class UnknownCategoryException extends Exception
 {
     public static function fromPayload(array $payload): self
     {
-        $exception = new self();
+        $exception = new self;
         $exception->message = 'Unknown Category encountered: '.Arr::get($payload, 'properties.category_id');
 
         return $exception;

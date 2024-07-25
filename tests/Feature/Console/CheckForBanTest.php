@@ -27,7 +27,7 @@ class CheckForBanTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockBannedUser = (new MockBanSummaryService())->banned($gamertag);
+        $mockBannedUser = (new MockBanSummaryService)->banned($gamertag);
 
         Http::fakeSequence()
             ->push($mockBannedUser, Response::HTTP_OK);
@@ -55,7 +55,7 @@ class CheckForBanTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockBannedUser = (new MockBanSummaryService())->unbanned($gamertag);
+        $mockBannedUser = (new MockBanSummaryService)->unbanned($gamertag);
 
         Http::fakeSequence()
             ->push($mockBannedUser, Response::HTTP_OK);

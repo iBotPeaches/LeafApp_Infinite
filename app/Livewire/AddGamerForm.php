@@ -34,7 +34,7 @@ class AddGamerForm extends Component
 
         $this->validate([
             'gamertag' => [
-                new ValidInfiniteAccount(),
+                new ValidInfiniteAccount,
             ],
         ]);
 

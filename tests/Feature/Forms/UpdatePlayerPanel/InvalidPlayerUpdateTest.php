@@ -32,9 +32,9 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->error401();
-        $mockMatchesResponse = (new MockMatchesService())->error404();
-        $mockServiceResponse = (new MockServiceRecordService())->error404();
+        $mockCsrResponse = (new MockCsrAllService)->error401();
+        $mockMatchesResponse = (new MockMatchesService)->error404();
+        $mockServiceResponse = (new MockServiceRecordService)->error404();
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_UNAUTHORIZED)
@@ -59,11 +59,11 @@ class InvalidPlayerUpdateTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->error429();
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->error429();
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -106,12 +106,12 @@ class InvalidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService)->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -150,12 +150,12 @@ class InvalidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService)->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.properties.experience', 'unknown-gametype');
 
@@ -202,12 +202,12 @@ class InvalidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->malformed();
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->malformed();
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService)->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -252,12 +252,12 @@ class InvalidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService)->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Arr::set($mockMatchesResponse, 'data.0.player.outcome', 'crashed');
 
@@ -304,12 +304,12 @@ class InvalidPlayerUpdateTest extends TestCase
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockEmptyCustomMatchResponse = (new MockMatchesService())->empty($gamertag);
-        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockEmptyCustomMatchResponse = (new MockMatchesService)->empty($gamertag);
+        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Arr::set($mockCsrResponse, 'data.0.properties.queue', 'closed');
 

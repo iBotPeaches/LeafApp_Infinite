@@ -34,14 +34,14 @@ class PullHaloDataTest extends TestCase
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockCustomMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
 
         Arr::set($mockCustomMatchesResponse, 'data.0.details.playlist', null);
         Arr::set($mockCustomMatchesResponse, 'data.1.details.playlist', null);

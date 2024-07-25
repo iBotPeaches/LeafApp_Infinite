@@ -40,7 +40,7 @@ class ValidScrimTogglePanelTest extends TestCase
             PullXuid::class,
         ]);
 
-        $mockMatchResponse = (new MockMatchService())->success('a', 'b');
+        $mockMatchResponse = (new MockMatchService)->success('a', 'b');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);

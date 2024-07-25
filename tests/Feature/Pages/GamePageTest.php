@@ -48,7 +48,7 @@ class GamePageTest extends TestCase
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -84,7 +84,7 @@ class GamePageTest extends TestCase
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -116,7 +116,7 @@ class GamePageTest extends TestCase
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
