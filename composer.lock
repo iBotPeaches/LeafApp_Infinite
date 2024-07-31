@@ -1665,16 +1665,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.18.1",
+            "version": "v11.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b19ba518c56852567e99fbae9321bc436c2cc5a8"
+                "reference": "5e103d499e9ee5bcfc184412d034c4e516b87085"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b19ba518c56852567e99fbae9321bc436c2cc5a8",
-                "reference": "b19ba518c56852567e99fbae9321bc436c2cc5a8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/5e103d499e9ee5bcfc184412d034c4e516b87085",
+                "reference": "5e103d499e9ee5bcfc184412d034c4e516b87085",
                 "shasum": ""
             },
             "require": {
@@ -1867,20 +1867,20 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-07-26T10:39:29+00:00"
+            "time": "2024-07-30T15:22:41+00:00"
         },
         {
             "name": "laravel/horizon",
-            "version": "v5.26.0",
+            "version": "v5.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/horizon.git",
-                "reference": "ee804ece8e0376e8ddf44348de947945751c06f2"
+                "reference": "8830039251591d1af353f571b40fe0c774dfda20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/horizon/zipball/ee804ece8e0376e8ddf44348de947945751c06f2",
-                "reference": "ee804ece8e0376e8ddf44348de947945751c06f2",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/8830039251591d1af353f571b40fe0c774dfda20",
+                "reference": "8830039251591d1af353f571b40fe0c774dfda20",
                 "shasum": ""
             },
             "require": {
@@ -1944,9 +1944,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/horizon/issues",
-                "source": "https://github.com/laravel/horizon/tree/v5.26.0"
+                "source": "https://github.com/laravel/horizon/tree/v5.27.0"
             },
-            "time": "2024-07-22T14:37:58+00:00"
+            "time": "2024-07-26T05:41:51+00:00"
         },
         {
             "name": "laravel/prompts",
