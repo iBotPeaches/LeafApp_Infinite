@@ -22,11 +22,11 @@ class PlayerController extends Controller
 {
     public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): View
     {
-        SEOTools::setTitle($player->gamertag.' '.Str::title($type));
+        SEOTools::setTitle(e($player->gamertag.' '.Str::title($type)));
         SEOTools::addImages([
             $player->emblem_url,
         ]);
-        SEOTools::setDescription($player->gamertag.' Halo Infinite '.Str::title($type));
+        SEOTools::setDescription(e($player->gamertag.' Halo Infinite '.Str::title($type)));
 
         return view('pages.player', [
             'player' => $player,

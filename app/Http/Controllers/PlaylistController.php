@@ -24,8 +24,8 @@ class PlaylistController extends Controller
             abort(Response::HTTP_NOT_FOUND);
         }
 
-        SEOTools::setTitle($playlist->name);
-        SEOTools::setDescription($playlist->title);
+        SEOTools::setTitle(e($playlist->name));
+        SEOTools::setDescription(e($playlist->title));
 
         $playlists = Playlist::query()
             ->where('is_active', true)

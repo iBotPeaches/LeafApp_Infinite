@@ -19,8 +19,8 @@ class HcsController extends Controller
 
     public function championship(Championship $championship, string $bracket = Bracket::WINNERS, int $round = 1): View
     {
-        SEOTools::setTitle($championship->name);
-        SEOTools::setDescription($championship->name.' ('.$championship->region.')');
+        SEOTools::setTitle(e($championship->name));
+        SEOTools::setDescription(e($championship->name.' ('.$championship->region.')'));
 
         return view('pages.championship', [
             'championship' => $championship,

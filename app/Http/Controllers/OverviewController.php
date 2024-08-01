@@ -14,8 +14,8 @@ class OverviewController extends Controller
 {
     public function list(string $filterType = OverviewType::MATCHMAKING): View
     {
-        SEOTools::setTitle('Map Overviews');
-        SEOTools::setDescription('Halo Infinite - Leaf Map Overviews');
+        SEOTools::setTitle(e('Map Overviews'));
+        SEOTools::setDescription(e('Halo Infinite - Leaf Map Overviews'));
 
         return view('pages.overviews', [
             'type' => $filterType,
@@ -24,11 +24,11 @@ class OverviewController extends Controller
 
     public function show(Overview $overview, string $tab = OverviewTab::OVERVIEW): View
     {
-        SEOTools::setTitle('Map Overview: '.$overview->name);
+        SEOTools::setTitle(e('Map Overview: '.$overview->name));
         SEOTools::addImages([
             $overview->image,
         ]);
-        SEOTools::setDescription('Halo Infinite - Leaf Map Overview: '.$overview->name);
+        SEOTools::setDescription(e('Halo Infinite - Leaf Map Overview: '.$overview->name));
 
         return view('pages.overview', [
             'overview' => $overview,
