@@ -34,6 +34,7 @@ class BaseGameStat
             config('services.halo.playlists.firefight-composer-normal'),
             config('services.halo.playlists.firefight-composer-heroic'),
             config('services.halo.playlists.firefight-composer-legendary'),
+            config('services.halo.playlists.firefight-battle-for-reach'),
         ];
     }
 }
