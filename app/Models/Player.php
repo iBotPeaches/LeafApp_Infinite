@@ -301,6 +301,7 @@ class Player extends Model implements HasDotApi, Sitemapable
             config('services.halo.playlists.firefight-composer-normal'),
             config('services.halo.playlists.firefight-composer-heroic'),
             config('services.halo.playlists.firefight-composer-legendary'),
+            config('services.halo.playlists.firefight-battle-for-reach'),
         ];
 
         $firefightIds = Playlist::query()
