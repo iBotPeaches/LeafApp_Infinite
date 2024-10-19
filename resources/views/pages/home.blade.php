@@ -23,6 +23,7 @@
         </div>
         <div class="column">
             @include('partials.home.recently_updated')
+            @include('partials.home.h2_lvl55')
         </div>
     </div>
 @endsection
