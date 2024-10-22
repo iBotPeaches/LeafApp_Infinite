@@ -43,7 +43,7 @@ $color = config('services.dotapi.disabled') ? 'is-danger' : 'is-warning';
                     target="_blank"
                     href="https://dotapi.gg"
                     rel="noreferrer"
-                >grunt.api ({{ config('services.dotapi.version') }})</a>.
+                >dotapi.gg ({{ config('services.dotapi.version') }})</a>.
             </span>
         </p>
     </div>
