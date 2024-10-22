@@ -8,7 +8,6 @@ use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\OverviewStat;
-use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Bus\Queueable;
@@ -54,9 +53,6 @@ class ProcessAnalytic implements ShouldQueue
                     break;
                 case AnalyticType::OVERVIEW_STAT():
                     $this->handleOverviewStatResults($topHundred);
-                    break;
-                case AnalyticType::ONLY_PLAYER():
-                    $this->handleOnlyPlayerResults($topHundred);
                     break;
             }
 
@@ -152,32 +148,6 @@ class ProcessAnalytic implements ShouldQueue
             $analytic->value = (float) $overviewStat->{$this->analytic->property()};
             $analytic->label = $overviewStat->getAttribute('label');
             $analytic->save();
-        });
-    }
-
-    /** @param  Collection<int, Player>|null  $players */
-    private function handleOnlyPlayerResults(?Collection $players): void
-    {
-        $lastIndex = null;
-        $lastValue = null;
-
-        $players?->each(function (Player $player, int $index) use (&$lastIndex, &$lastValue) {
-            $value = (float) $player->{$this->analytic->property()};
-            $place = $index + 1;
-            if ($value === $lastValue) {
-                $place = $lastIndex;
-            }
-
-            $analytic = new Analytic;
-            $analytic->key = $this->analytic->key();
-            $analytic->place = $place;
-            $analytic->value = $value;
-            $analytic->player()->associate($player);
-            $analytic->saveOrFail();
-
-            // Store our last values in case users share the value.
-            $lastIndex = $analytic->place;
-            $lastValue = $analytic->value;
         });
     }
 }
