@@ -122,7 +122,7 @@
             <p>Legal</p>
         </div>
         <div class="message-body">
-            This application is offered by, which is solely responsible for its content. It is not sponsored or endorsed by Microsoft. This application uses grunt.api, an unofficial, not sponsored or endorsed Halo API. All rights reserved. Microsoft, Halo, and the Halo Logo are trademarks of the Microsoft group of companies.
+            This application is offered by, which is solely responsible for its content. It is not sponsored or endorsed by Microsoft. This application uses dotapi.gg, an unofficial, not sponsored or endorsed Halo API. All rights reserved. Microsoft, Halo, and the Halo Logo are trademarks of the Microsoft group of companies.
         </div>
     </article>
 @endsection
