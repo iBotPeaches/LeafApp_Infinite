@@ -10,11 +10,9 @@ use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\OverviewStat;
-use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
-use App\Support\Analytics\Stats\MostXpPlayer;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -72,28 +70,6 @@ class ProcessAnalyticTest extends TestCase
             ->create();
 
         // Act
-        ProcessAnalytic::dispatchSync($analyticClass);
-
-        // Assert
-        $this->assertDatabaseHas('analytics', [
-            'key' => $analyticClass->key(),
-        ]);
-    }
-
-    public function testProcessingXpPlayerWithDuplicateXpValues(): void
-    {
-        // Arrange
-        Http::fake()->preventStrayRequests();
-        Player::factory()
-            ->sequence(
-                ['xp' => 1111],
-                ['xp' => 1111],
-            )
-            ->count(2)
-            ->create();
-
-        // Act
-        $analyticClass = new MostXpPlayer;
         ProcessAnalytic::dispatchSync($analyticClass);
 
         // Assert

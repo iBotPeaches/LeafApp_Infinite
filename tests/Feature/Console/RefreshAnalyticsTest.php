@@ -35,7 +35,7 @@ class RefreshAnalyticsTest extends TestCase
 
         // Act
         $this
-            ->artisan('analytics:refresh', ['analytic' => 'MostXpPlayer'])
+            ->artisan('analytics:refresh', ['analytic' => 'MostScoreServiceRecord'])
             ->assertExitCode(CommandAlias::SUCCESS);
 
         // Assert

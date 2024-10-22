@@ -25,7 +25,6 @@ use App\Support\Analytics\Stats\MostPerfectsInRankedGame;
 use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostScoreServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
-use App\Support\Analytics\Stats\MostXpPlayer;
 
 trait HasAnalyticDataProvider
 {
@@ -82,9 +81,6 @@ trait HasAnalyticDataProvider
             ],
             [
                 new MostQuitMap,
-            ],
-            [
-                new MostXpPlayer,
             ],
             [
                 new MostScoreServiceRecord,
