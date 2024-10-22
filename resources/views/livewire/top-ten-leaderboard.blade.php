@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Support\Str;
 use App\Enums\AnalyticType;
-use App\Support\Analytics\Stats\MostXpPlayer;
 
 /** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[]|App\Models\Map[] $results */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
@@ -29,9 +28,6 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
                         @if ($analyticClass->type()->isGame())
                             <th>Date</th>
-                        @endif
-                        @if ($analyticClass->type()->isPlayer() && $analyticClass instanceof MostXpPlayer)
-                            <th>Rank</th>
                         @endif
                     </tr>
                 </thead>
@@ -80,9 +76,6 @@ use App\Support\Analytics\Stats\MostXpPlayer;
                             <td>
                                 @include('partials.player.date-link', ['date' => $result->game->occurred_at])
                             </td>
-                        @endif
-                        @if ($analyticClass->type()->isPlayer() && $analyticClass instanceof MostXpPlayer)
-                            <td>{{ $result->player->rank?->title }}</td>
                         @endif
                     </tr>
                 @endforeach
