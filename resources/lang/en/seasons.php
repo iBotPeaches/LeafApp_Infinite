@@ -8,4 +8,6 @@ return [
     5 => 'Reckoning',
     6 => 'Spirit of Fire',
     7 => 'Banished Honor',
+    8 => 'Fleetcom',
+    9 => 'Great Journey',
 ];
