@@ -58,7 +58,6 @@ class FindMatchesFromMatchup implements ShouldQueue
                 ->games()
                 ->with('players')
                 ->whereDoesntHave('playlist')
-                // @phpstan-ignore-next-line
                 ->where(function (Builder $query): void {
                     $startedAt = $this->matchup->started_at;
                     if ($startedAt) {
