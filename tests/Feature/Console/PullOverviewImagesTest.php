@@ -18,7 +18,7 @@ class PullOverviewImagesTest extends TestCase
 {
     use WithFaker;
 
-    public function testDownloadOfMapImages(): void
+    public function test_download_of_map_images(): void
     {
         // Arrange
         Http::preventStrayRequests();

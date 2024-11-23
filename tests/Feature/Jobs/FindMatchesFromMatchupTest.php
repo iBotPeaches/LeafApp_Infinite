@@ -15,7 +15,7 @@ class FindMatchesFromMatchupTest extends TestCase
 {
     use WithFaker;
 
-    public function testDotApiMarkedAsDisabled(): void
+    public function test_dot_api_marked_as_disabled(): void
     {
         // Arrange
         Config::set('services.dotapi.disabled', true);

@@ -24,7 +24,7 @@ class PullMetadataTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidDataPull(): void
+    public function test_valid_data_pull(): void
     {
         // Arrange
         $mockMedalsResponse = (new MockMedalsService)->success();
@@ -53,7 +53,7 @@ class PullMetadataTest extends TestCase
             ->assertExitCode(CommandAlias::SUCCESS);
     }
 
-    public function testInvalidPullNewType(): void
+    public function test_invalid_pull_new_type(): void
     {
         // Expectations
         $this->expectException(\InvalidArgumentException::class);
@@ -70,7 +70,7 @@ class PullMetadataTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testInvalidInputForPlaylist(): void
+    public function test_invalid_input_for_playlist(): void
     {
         // Expectations
         $this->expectException(\InvalidArgumentException::class);
@@ -95,7 +95,7 @@ class PullMetadataTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testInvalidQueueForPlaylist(): void
+    public function test_invalid_queue_for_playlist(): void
     {
         // Expectations
         $this->expectException(\InvalidArgumentException::class);
@@ -120,7 +120,7 @@ class PullMetadataTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testInvalidPullNewDifficulty(): void
+    public function test_invalid_pull_new_difficulty(): void
     {
         // Expectations
         $this->expectException(\InvalidArgumentException::class);

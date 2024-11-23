@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class OverviewPageTest extends TestCase
 {
-    public function testLoadingOverviewOnPageOverview(): void
+    public function test_loading_overview_on_page_overview(): void
     {
         // Arrange
         $overviewStat = OverviewStat::factory()->createOne();
@@ -25,7 +25,7 @@ class OverviewPageTest extends TestCase
         $response->assertSeeLivewire('overview-overview');
     }
 
-    public function testLoadingOverviewOnPageOverviewWithMalformedStats(): void
+    public function test_loading_overview_on_page_overview_with_malformed_stats(): void
     {
         // Arrange
         $overviewStat = OverviewStat::factory()->createOne([
@@ -38,7 +38,7 @@ class OverviewPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testLoadingOverviewOnPageMatches(): void
+    public function test_loading_overview_on_page_matches(): void
     {
         // Arrange
         $overview = Overview::factory()->createOne();

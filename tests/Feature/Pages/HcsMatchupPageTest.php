@@ -21,7 +21,7 @@ use Tests\TestCase;
 class HcsMatchupPageTest extends TestCase
 {
     #[DataProvider('groupDataProvider')]
-    public function testLoadingMatchupPageWithTeamAndPlayers(int $group): void
+    public function test_loading_matchup_page_with_team_and_players(int $group): void
     {
         // Arrange
         Http::fake();
@@ -52,7 +52,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function testLoadingMatchupPageForFfa(): void
+    public function test_loading_matchup_page_for_ffa(): void
     {
         // Arrange
         Http::fake();
@@ -90,7 +90,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function testLoadingMatchupPageForSwiss(): void
+    public function test_loading_matchup_page_for_swiss(): void
     {
         // Arrange
         Http::fake();
@@ -128,7 +128,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function testLoadingMatchupPageWithNoData(): void
+    public function test_loading_matchup_page_with_no_data(): void
     {
         // Arrange
         Http::fake();

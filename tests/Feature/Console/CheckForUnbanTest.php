@@ -14,7 +14,7 @@ class CheckForUnbanTest extends TestCase
 {
     use WithFaker;
 
-    public function testUnbanning(): void
+    public function test_unbanning(): void
     {
         // Arrange
         $playerBan = PlayerBan::factory()
@@ -30,7 +30,7 @@ class CheckForUnbanTest extends TestCase
             ->expectsOutput("Player {$playerBan->player->gamertag} has been unbanned.");
     }
 
-    public function testUnbanFailsOnActiveCheater(): void
+    public function test_unban_fails_on_active_cheater(): void
     {
         // Arrange
         $playerBan = PlayerBan::factory()

@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class ValidCustomGameHistoryTableTest extends TestCase
 {
-    public function testToggleScrimMode(): void
+    public function test_toggle_scrim_mode(): void
     {
         // Arrange
         $player = Player::factory()->createOne();
@@ -29,7 +29,7 @@ class ValidCustomGameHistoryTableTest extends TestCase
             ->assertSet('isScrimEditor', true);
     }
 
-    public function testValidResponseFromDotApi(): void
+    public function test_valid_response_from_dot_api(): void
     {
         // Arrange
         Carbon::setTestNow(now());

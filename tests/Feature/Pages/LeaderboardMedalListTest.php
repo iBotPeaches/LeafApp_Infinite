@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class LeaderboardMedalListTest extends TestCase
 {
-    public function testLoadingAllMedals(): void
+    public function test_loading_all_medals(): void
     {
         // Arrange
         ServiceRecord::factory()

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class OverviewListTest extends TestCase
 {
-    public function testLoadingOverviews(): void
+    public function test_loading_overviews(): void
     {
         // Arrange
         Overview::factory()->createOne();

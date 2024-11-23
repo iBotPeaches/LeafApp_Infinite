@@ -23,7 +23,7 @@ class PullMatchupGameTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidDataPull(): void
+    public function test_valid_data_pull(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

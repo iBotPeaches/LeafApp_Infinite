@@ -12,7 +12,7 @@ use Tests\TestCase;
 class CsrHelperTest extends TestCase
 {
     #[DataProvider('csrDataProvider')]
-    public function testCsrCalculationToRank(int $csr, string $expected)
+    public function test_csr_calculation_to_rank(int $csr, string $expected)
     {
         $this->assertEquals(
             $expected,
@@ -22,7 +22,7 @@ class CsrHelperTest extends TestCase
     }
 
     #[DataProvider('csrDataProvider')]
-    public function testCsrCalculationToAsset(int $csr, string $expected)
+    public function test_csr_calculation_to_asset(int $csr, string $expected)
     {
         $this->assertStringEndsWith(
             Str::slug($expected).'.png',
@@ -32,7 +32,7 @@ class CsrHelperTest extends TestCase
     }
 
     #[DataProvider('unrankedCsrDataProvider')]
-    public function testUnrankedCsrCalculationToRank(?int $matchesRemaining, string $expected)
+    public function test_unranked_csr_calculation_to_rank(?int $matchesRemaining, string $expected)
     {
         $this->assertEquals(
             $expected,
@@ -42,7 +42,7 @@ class CsrHelperTest extends TestCase
     }
 
     #[DataProvider('unrankedCsrDataProvider')]
-    public function testUnrankedCsrCalculationToAsset(?int $matchesRemaining, string $expected)
+    public function test_unranked_csr_calculation_to_asset(?int $matchesRemaining, string $expected)
     {
         $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
 

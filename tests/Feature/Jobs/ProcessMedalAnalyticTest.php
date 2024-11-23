@@ -17,7 +17,7 @@ class ProcessMedalAnalyticTest extends TestCase
 {
     use WithFaker;
 
-    public function testProcessingMergedSeason(): void
+    public function test_processing_merged_season(): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();
@@ -44,7 +44,7 @@ class ProcessMedalAnalyticTest extends TestCase
         ]);
     }
 
-    public function testProcessingAsSeason(): void
+    public function test_processing_as_season(): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class ScrimsPageTest extends TestCase
 {
-    public function testLoadingScrimsPageWithData(): void
+    public function test_loading_scrims_page_with_data(): void
     {
         // Arrange
         Http::fake();
@@ -26,7 +26,7 @@ class ScrimsPageTest extends TestCase
         $response->assertSeeLivewire('scrims-table');
     }
 
-    public function testLoadingScrimsPageWithNoData(): void
+    public function test_loading_scrims_page_with_no_data(): void
     {
         // Arrange
         Http::fake();

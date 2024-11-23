@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class OverviewStatTest extends TestCase
 {
-    public function testRelationProperties(): void
+    public function test_relation_properties(): void
     {
         $overviewStat = OverviewStat::factory()->createOne([
             'overview_gametype_id' => OverviewGametype::factory(),

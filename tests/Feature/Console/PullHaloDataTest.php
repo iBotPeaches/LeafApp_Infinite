@@ -23,14 +23,14 @@ class PullHaloDataTest extends TestCase
 {
     use WithFaker;
 
-    public function testInvalidGamertag(): void
+    public function test_invalid_gamertag(): void
     {
         $this
             ->artisan('app:pull-halo-data', ['player' => '999999999'])
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testValidDataPull(): void
+    public function test_valid_data_pull(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

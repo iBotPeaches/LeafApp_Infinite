@@ -24,7 +24,7 @@ use Tests\TestCase;
 class PlayerPageTest extends TestCase
 {
     #[DataProvider('gamertagDataProvider')]
-    public function testLoadingPlayerMatchesPage(string $gamertag): void
+    public function test_loading_player_matches_page(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -55,7 +55,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function testProfileLoadingIfNoAppearance(): void
+    public function test_profile_loading_if_no_appearance(): void
     {
         // Arrange
         $gamertag = 'TESTGAMERTAG';
@@ -71,7 +71,7 @@ class PlayerPageTest extends TestCase
         $response->assertOk();
     }
 
-    public function testLinkingProfile(): void
+    public function test_linking_profile(): void
     {
         // Arrange
         Http::fake();
@@ -91,7 +91,7 @@ class PlayerPageTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function testUnlinkingProfile(): void
+    public function test_unlinking_profile(): void
     {
         // Arrange
         Http::fake();
@@ -111,7 +111,7 @@ class PlayerPageTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function testCheckForBan(): void
+    public function test_check_for_ban(): void
     {
         // Arrange
         /** @var Player $player */
@@ -136,7 +136,7 @@ class PlayerPageTest extends TestCase
         ]);
     }
 
-    public function testCheckForNoBan(): void
+    public function test_check_for_no_ban(): void
     {
         // Arrange
         /** @var Player $player */
@@ -162,7 +162,7 @@ class PlayerPageTest extends TestCase
     }
 
     #[DataProvider('gamertagDataProvider')]
-    public function testLoadingPlayerOverviewPage(string $gamertag): void
+    public function test_loading_player_overview_page(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -181,7 +181,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function testLoadingPlayerMatchesPageWithPlaylistFilter(): void
+    public function test_loading_player_matches_page_with_playlist_filter(): void
     {
         // Arrange
         Http::fake();
@@ -201,7 +201,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function testLoadingPlayerOverviewPageWithMedalData(): void
+    public function test_loading_player_overview_page_with_medal_data(): void
     {
         // Arrange
         Http::fake();
@@ -220,7 +220,7 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function testLoadingPlayerOverviewPageAsBannedUser(): void
+    public function test_loading_player_overview_page_as_banned_user(): void
     {
         // Arrange
         Http::fake();
@@ -241,7 +241,7 @@ class PlayerPageTest extends TestCase
     }
 
     #[DataProvider('gamertagDataProvider')]
-    public function testLoadingPlayerOverviewPageAsPrivatePlayer(string $gamertag): void
+    public function test_loading_player_overview_page_as_private_player(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -262,7 +262,7 @@ class PlayerPageTest extends TestCase
     }
 
     #[DataProvider('gamertagDataProvider')]
-    public function testLoadingPlayerModesPage(string $gamertag): void
+    public function test_loading_player_modes_page(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -282,7 +282,7 @@ class PlayerPageTest extends TestCase
     }
 
     #[DataProvider('gamertagDataProvider')]
-    public function testLoadingPlayerCompetitivePage(string $gamertag): void
+    public function test_loading_player_competitive_page(string $gamertag): void
     {
         // Arrange
         Http::fake();

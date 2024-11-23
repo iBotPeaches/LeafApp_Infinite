@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class ValidGamerFormTest extends TestCase
 {
-    public function testValidResponseFromDotApi(): void
+    public function test_valid_response_from_dot_api(): void
     {
         // Arrange
         $mockResponse = (new MockAppearanceService)->success();
@@ -41,7 +41,7 @@ class ValidGamerFormTest extends TestCase
         ]);
     }
 
-    public function testValidResponseFromXuidServiceIfNoXuidFound(): void
+    public function test_valid_response_from_xuid_service_if_no_xuid_found(): void
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService)->success();
@@ -64,7 +64,7 @@ class ValidGamerFormTest extends TestCase
         ]);
     }
 
-    public function testValidResponseIfXuidServiceDisabled(): void
+    public function test_valid_response_if_xuid_service_disabled(): void
     {
         // Arrange
         Config::set('services.dotapi.xuid_disabled', true);
@@ -81,7 +81,7 @@ class ValidGamerFormTest extends TestCase
             ->assertRedirect('/player/'.$gamertag);
     }
 
-    public function testGracefulFallbackIfXuidNotFound(): void
+    public function test_graceful_fallback_if_xuid_not_found(): void
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService)->success();
@@ -99,7 +99,7 @@ class ValidGamerFormTest extends TestCase
             ->assertRedirect('/player/'.$gamertag);
     }
 
-    public function testValidResponseFromDotApiIfAccountAlreadyExists(): void
+    public function test_valid_response_from_dot_api_if_account_already_exists(): void
     {
         // Arrange
         $mockResponse = (new MockAppearanceService)->success();

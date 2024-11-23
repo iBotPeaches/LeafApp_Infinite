@@ -11,7 +11,7 @@ use Tests\TestCase;
 class FaceItStatusTest extends TestCase
 {
     #[DataProvider('faceItStatusDataProvider')]
-    public function testCoerce(int $status, string $word): void
+    public function test_coerce(int $status, string $word): void
     {
         $this->assertEquals($status, FaceItStatus::coerce($word)?->value);
     }

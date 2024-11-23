@@ -16,7 +16,7 @@ class LeaderboardTopTenTest extends TestCase
     use HasAnalyticDataProvider;
 
     #[DataProvider('analyticDataProvider')]
-    public function testLoadingTopTen(AnalyticInterface $analyticClass): void
+    public function test_loading_top_ten(AnalyticInterface $analyticClass): void
     {
         // Arrange
         Analytic::factory()

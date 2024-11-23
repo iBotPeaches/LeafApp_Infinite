@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class ValidOverviewsListingTest extends TestCase
 {
-    public function testValidListOfOverviews(): void
+    public function test_valid_list_of_overviews(): void
     {
         // Arrange
         $overview = Overview::factory()->createOne();

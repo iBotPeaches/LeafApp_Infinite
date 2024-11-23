@@ -14,7 +14,7 @@ class RefreshAnalyticsTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidDispatchOfJobs(): void
+    public function test_valid_dispatch_of_jobs(): void
     {
         // Arrange
         Queue::fake();
@@ -28,7 +28,7 @@ class RefreshAnalyticsTest extends TestCase
         Queue::assertPushed(ProcessAnalytic::class);
     }
 
-    public function testValidDispatchOfSpecificJob(): void
+    public function test_valid_dispatch_of_specific_job(): void
     {
         // Arrange
         Queue::fake();

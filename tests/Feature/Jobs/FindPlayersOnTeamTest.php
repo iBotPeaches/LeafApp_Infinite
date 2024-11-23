@@ -19,7 +19,7 @@ class FindPlayersOnTeamTest extends TestCase
 {
     use WithFaker;
 
-    public function testFindingPlayerFromTeam(): void
+    public function test_finding_player_from_team(): void
     {
         // Arrange
         $gamertag = $this->faker->word;

@@ -23,7 +23,7 @@ use Tests\TestCase;
 
 class IncomingFaceItWebhookTest extends TestCase
 {
-    public function testIncomingFaceItMatchCompleted(): void
+    public function test_incoming_face_it_match_completed(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -45,7 +45,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingFaceItMatchObjectCreated(): void
+    public function test_incoming_face_it_match_object_created(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -67,7 +67,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingFaceItChampionshipStarted(): void
+    public function test_incoming_face_it_championship_started(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -89,7 +89,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingFaceItChampionshipCompleted(): void
+    public function test_incoming_face_it_championship_completed(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -113,7 +113,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingFaceItChampionshipCancelled(): void
+    public function test_incoming_face_it_championship_cancelled(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -144,7 +144,7 @@ class IncomingFaceItWebhookTest extends TestCase
         ]);
     }
 
-    public function testIncomingFaceItChampionshipCreated(): void
+    public function test_incoming_face_it_championship_created(): void
     {
         // Arrange & Act
         Queue::fake();
@@ -168,7 +168,7 @@ class IncomingFaceItWebhookTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testIncomingFaceItMatchCompletedAsNotChampionship(): void
+    public function test_incoming_face_it_match_completed_as_not_championship(): void
     {
         // Arrange & Act
         $payload = (new MockMatchStatusFinished)->success();
@@ -184,7 +184,7 @@ class IncomingFaceItWebhookTest extends TestCase
     }
 
     #[DataProvider('emptyFaceItDataProvider')]
-    public function testIncomingEmptyFaceItData(callable $payloadFunction): void
+    public function test_incoming_empty_face_it_data(callable $payloadFunction): void
     {
         // Arrange & Act
         $payload = $payloadFunction();

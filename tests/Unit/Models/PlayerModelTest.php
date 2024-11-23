@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class PlayerModelTest extends TestCase
 {
-    public function testBotDoesNotDispatchObserverXuid(): void
+    public function test_bot_does_not_dispatch_observer_xuid(): void
     {
         // Arrange
         Bus::fake([
@@ -30,7 +30,7 @@ class PlayerModelTest extends TestCase
         Bus::assertNotDispatched(PullXuid::class);
     }
 
-    public function testPlayerDispatchesObserverXuid(): void
+    public function test_player_dispatches_observer_xuid(): void
     {
         // Arrange
         Bus::fake([
@@ -48,7 +48,7 @@ class PlayerModelTest extends TestCase
         Bus::assertDispatched(PullXuid::class);
     }
 
-    public function testNextRankPercentageWithNoRank(): void
+    public function test_next_rank_percentage_with_no_rank(): void
     {
         // Arrange
         $player = Player::factory()->makeOne([
@@ -61,7 +61,7 @@ class PlayerModelTest extends TestCase
         $this->assertEquals(100.0, $player->percentage_next_rank);
     }
 
-    public function testNextRankPercentageIsBetween60and80(): void
+    public function test_next_rank_percentage_is_between60and80(): void
     {
         // Arrange
         $player = Player::factory()->makeOne([
@@ -76,7 +76,7 @@ class PlayerModelTest extends TestCase
         $this->assertEquals('is-primary', $player->percentage_next_rank_color);
     }
 
-    public function testNextRankPercentageIsBetween40and60(): void
+    public function test_next_rank_percentage_is_between40and60(): void
     {
         // Arrange
         $player = Player::factory()->makeOne([
@@ -91,7 +91,7 @@ class PlayerModelTest extends TestCase
         $this->assertEquals('is-warning', $player->percentage_next_rank_color);
     }
 
-    public function testRankValuesWithNextRank(): void
+    public function test_rank_values_with_next_rank(): void
     {
         // Arrange
         /** @var Rank $rank */

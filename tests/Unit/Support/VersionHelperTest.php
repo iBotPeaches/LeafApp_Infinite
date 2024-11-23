@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class VersionHelperTest extends TestCase
 {
-    public function testMissingVersionFile(): void
+    public function test_missing_version_file(): void
     {
         // Arrange
         File::shouldReceive('exists')
@@ -22,7 +22,7 @@ class VersionHelperTest extends TestCase
         $this->assertNull(VersionHelper::getVersionString());
     }
 
-    public function testValidVersionFile(): void
+    public function test_valid_version_file(): void
     {
         // Arrange
         File::shouldReceive('exists')

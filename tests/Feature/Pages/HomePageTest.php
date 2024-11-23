@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class HomePageTest extends TestCase
 {
-    public function testExampleFeature(): void
+    public function test_example_feature(): void
     {
         // Arrange & Act
         $response = $this->get('/');

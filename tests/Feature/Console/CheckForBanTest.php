@@ -16,14 +16,14 @@ class CheckForBanTest extends TestCase
 {
     use WithFaker;
 
-    public function testInvalidGamertag(): void
+    public function test_invalid_gamertag(): void
     {
         $this
             ->artisan('app:check-for-ban', ['gamertag' => '999999999'])
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testValidDataPullAsBannedUser(): void
+    public function test_valid_data_pull_as_banned_user(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -51,7 +51,7 @@ class CheckForBanTest extends TestCase
         ]);
     }
 
-    public function testValidDataPullAsUnbannedUser(): void
+    public function test_valid_data_pull_as_unbanned_user(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

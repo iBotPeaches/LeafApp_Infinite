@@ -23,7 +23,7 @@ use Tests\TestCase;
 
 class GamePageTest extends TestCase
 {
-    public function testLoadingGamePageWithUnpulledGame(): void
+    public function test_loading_game_page_with_unpulled_game(): void
     {
         // Arrange
         Http::fake();
@@ -41,7 +41,7 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function testLoadingGamePageWithRawValidUuid(): void
+    public function test_loading_game_page_with_raw_valid_uuid(): void
     {
         // Arrange
         Queue::fake([
@@ -77,7 +77,7 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function testLoadingGamePageWithRawValidUuidAndUnknownLevel(): void
+    public function test_loading_game_page_with_raw_valid_uuid_and_unknown_level(): void
     {
         // Arrange
         Queue::fake([
@@ -109,7 +109,7 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function testLoadingGamePageWithUnknownCategory(): void
+    public function test_loading_game_page_with_unknown_category(): void
     {
         // Arrange
         Queue::fake([
@@ -141,7 +141,7 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function testLoadingGamePageWithOldGame(): void
+    public function test_loading_game_page_with_old_game(): void
     {
         // Arrange
         Http::fake();
@@ -160,7 +160,7 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function testLoadingGamePageWithSocialGame(): void
+    public function test_loading_game_page_with_social_game(): void
     {
         // Arrange
         Http::fake();
@@ -184,7 +184,7 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function testLoadingGamePageWithUpToDateGame(): void
+    public function test_loading_game_page_with_up_to_date_game(): void
     {
         // Arrange
         Http::fake();
@@ -222,7 +222,7 @@ class GamePageTest extends TestCase
         $response->assertDontSeeLivewire('update-game-panel');
     }
 
-    public function testLoadingGamePageWithUpToDateGameAlongsidePerformances(): void
+    public function test_loading_game_page_with_up_to_date_game_alongside_performances(): void
     {
         // Arrange
         Http::fake();

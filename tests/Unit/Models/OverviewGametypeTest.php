@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class OverviewGametypeTest extends TestCase
 {
-    public function testRelationProperties(): void
+    public function test_relation_properties(): void
     {
         $overviewGametype = OverviewGametype::factory()->createOne();
 

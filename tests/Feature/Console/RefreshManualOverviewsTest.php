@@ -12,7 +12,7 @@ class RefreshManualOverviewsTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidGenerationOfOverviews(): void
+    public function test_valid_generation_of_overviews(): void
     {
         // Arrange
         $overview = Overview::factory()->createOne([

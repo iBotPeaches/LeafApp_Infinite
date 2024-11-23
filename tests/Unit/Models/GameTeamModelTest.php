@@ -12,7 +12,7 @@ use Tests\TestCase;
 class GameTeamModelTest extends TestCase
 {
     #[DataProvider('teamColorDataProvider')]
-    public function testColorFromTeamName(int $internalTeamId, string $expected): void
+    public function test_color_from_team_name(int $internalTeamId, string $expected): void
     {
         // Arrange
         /** @var GameTeam $gameTeam */

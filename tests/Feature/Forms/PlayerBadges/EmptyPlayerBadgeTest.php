@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class EmptyPlayerBadgeTest extends TestCase
 {
-    public function testLoadPlayerBadgesWithNothing(): void
+    public function test_load_player_badges_with_nothing(): void
     {
         // Arrange
         $player = Player::factory()->createOne();

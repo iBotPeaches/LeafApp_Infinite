@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class ExportScrimPlayersTest extends TestCase
 {
-    public function testExportScrimPlayers(): void
+    public function test_export_scrim_players(): void
     {
         // Arrange
         Http::fake();

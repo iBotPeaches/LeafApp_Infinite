@@ -16,7 +16,7 @@ class PullXuidTest extends TestCase
 {
     use WithFaker;
 
-    public function testDeletingFailedXuidJob(): void
+    public function test_deleting_failed_xuid_job(): void
     {
         // Arrange
         $mockXuidResponse = (new MockXuidService)->success('gamertag');

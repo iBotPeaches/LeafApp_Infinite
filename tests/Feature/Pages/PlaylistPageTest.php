@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class PlaylistPageTest extends TestCase
 {
-    public function testExamplePlaylistLoadingIfNone(): void
+    public function test_example_playlist_loading_if_none(): void
     {
         // Arrange & Act
         $response = $this->get('/playlists');
@@ -19,7 +19,7 @@ class PlaylistPageTest extends TestCase
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function testExamplePlaylistLoading(): void
+    public function test_example_playlist_loading(): void
     {
         // Arrange
         Playlist::factory()->createOne();
@@ -31,7 +31,7 @@ class PlaylistPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testExamplePlaylistLoadingSpecificName(): void
+    public function test_example_playlist_loading_specific_name(): void
     {
         // Arrange
         /** @var Playlist $playlist */

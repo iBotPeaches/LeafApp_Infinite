@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class GameTest extends TestCase
 {
-    public function testScoreProperty(): void
+    public function test_score_property(): void
     {
         $game = Game::factory()->createOne();
         GameTeam::factory()->createOne([

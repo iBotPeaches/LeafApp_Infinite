@@ -19,7 +19,7 @@ class PullLogoFromMatchupTeamTest extends TestCase
 {
     use WithFaker;
 
-    public function testPullingLogoFromTeam(): void
+    public function test_pulling_logo_from_team(): void
     {
         // Arrange
         Http::preventStrayRequests();

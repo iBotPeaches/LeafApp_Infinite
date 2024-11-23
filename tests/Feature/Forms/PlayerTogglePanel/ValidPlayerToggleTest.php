@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class ValidPlayerToggleTest extends TestCase
 {
-    public function testValidResponseFromModeChange(): void
+    public function test_valid_response_from_mode_change(): void
     {
         // Arrange
 
@@ -29,7 +29,7 @@ class ValidPlayerToggleTest extends TestCase
         $this->assertEquals(Mode::MATCHMADE_PVP(), $mode);
     }
 
-    public function testValidResponseFromSeasonChange(): void
+    public function test_valid_response_from_season_change(): void
     {
         // Arrange
 

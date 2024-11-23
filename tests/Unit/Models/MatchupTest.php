@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class MatchupTest extends TestCase
 {
-    public function testNullableLengthProperty(): void
+    public function test_nullable_length_property(): void
     {
         // Arrange
         $matchup = Matchup::factory()

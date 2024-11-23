@@ -20,7 +20,7 @@ use Tests\TestCase;
 
 class ValidScrimTogglePanelTest extends TestCase
 {
-    public function testToggleScrimMode(): void
+    public function test_toggle_scrim_mode(): void
     {
         // Arrange
 
@@ -32,7 +32,7 @@ class ValidScrimTogglePanelTest extends TestCase
             ->assertSet('gameIds', [1, 2, 3]);
     }
 
-    public function testCreateScrim(): void
+    public function test_create_scrim(): void
     {
         // Arrange
         Bus::fake([
@@ -66,7 +66,7 @@ class ValidScrimTogglePanelTest extends TestCase
         Bus::assertDispatchedTimes(PullXuid::class, 2);
     }
 
-    public function testCreateScrimWithNoGames(): void
+    public function test_create_scrim_with_no_games(): void
     {
         // Arrange
         $user = User::factory()->createOne();

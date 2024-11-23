@@ -16,7 +16,7 @@ class RefreshMedalsTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidDispatchOfJobs(): void
+    public function test_valid_dispatch_of_jobs(): void
     {
         // Arrange
         Queue::fake();
