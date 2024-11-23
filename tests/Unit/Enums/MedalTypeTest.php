@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class MedalTypeTest extends TestCase
 {
-    public function testCoerceWithSpree(): void
+    public function test_coerce_with_spree(): void
     {
         $this->assertEquals(MedalType::KILLING_SPREE(), MedalType::coerce('spree'));
     }

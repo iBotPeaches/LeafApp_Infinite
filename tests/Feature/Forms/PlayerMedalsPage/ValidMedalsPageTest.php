@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class ValidMedalsPageTest extends TestCase
 {
-    public function testValidResponseFromDotApi(): void
+    public function test_valid_response_from_dot_api(): void
     {
         // Arrange
         $player = Player::factory()
@@ -30,7 +30,7 @@ class ValidMedalsPageTest extends TestCase
             ->assertViewHas('medals');
     }
 
-    public function testValidResponseFromDotApiAsMergedSeason(): void
+    public function test_valid_response_from_dot_api_as_merged_season(): void
     {
         // Arrange
         $player = Player::factory()

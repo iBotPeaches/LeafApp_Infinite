@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class ValidModePageTest extends TestCase
 {
-    public function testValidResponseFromDotApi(): void
+    public function test_valid_response_from_dot_api(): void
     {
         // Arrange
         $player = Player::factory()->createOne();
@@ -46,7 +46,7 @@ class ValidModePageTest extends TestCase
             ->assertViewHas('worse');
     }
 
-    public function testValidResponseFromDotApiAsMergedSeason(): void
+    public function test_valid_response_from_dot_api_as_merged_season(): void
     {
         // Arrange
         $player = Player::factory()->createOne();

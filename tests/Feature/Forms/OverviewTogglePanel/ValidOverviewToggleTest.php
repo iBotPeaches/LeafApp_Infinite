@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class ValidOverviewToggleTest extends TestCase
 {
-    public function testValidResponseFromMapChange(): void
+    public function test_valid_response_from_map_change(): void
     {
         // Arrange
         $overview = Overview::factory()->createOne();
@@ -33,7 +33,7 @@ class ValidOverviewToggleTest extends TestCase
         $this->assertEquals(41, $mapId);
     }
 
-    public function testValidResponseFromGametypeChange(): void
+    public function test_valid_response_from_gametype_change(): void
     {
         // Arrange
         $overview = Overview::factory()->createOne();

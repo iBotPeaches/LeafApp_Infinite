@@ -25,7 +25,7 @@ class ProcessAnalyticTest extends TestCase
     use WithFaker;
 
     #[DataProvider('analyticDataProvider')]
-    public function testProcessingEachCategory(AnalyticInterface $analyticClass): void
+    public function test_processing_each_category(AnalyticInterface $analyticClass): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();
@@ -78,7 +78,7 @@ class ProcessAnalyticTest extends TestCase
         ]);
     }
 
-    public function testProcessingMostGamesPlayedWithDuplicateValues(): void
+    public function test_processing_most_games_played_with_duplicate_values(): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();

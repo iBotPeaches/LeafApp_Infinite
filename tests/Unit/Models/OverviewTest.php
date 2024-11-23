@@ -12,7 +12,7 @@ class OverviewTest extends TestCase
 {
     use HasProxiedImageUrls;
 
-    public function testImageProperty(): void
+    public function test_image_property(): void
     {
         $overview = Overview::factory()->createOne([
             'slug' => 'absolution',

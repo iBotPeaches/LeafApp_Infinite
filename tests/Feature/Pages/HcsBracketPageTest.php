@@ -19,7 +19,7 @@ use Tests\TestCase;
 class HcsBracketPageTest extends TestCase
 {
     #[DataProvider('bracketDataProvider')]
-    public function testLoadingBracketPageWithMatchups(?int $round, ?string $bracket, array $attributes): void
+    public function test_loading_bracket_page_with_matchups(?int $round, ?string $bracket, array $attributes): void
     {
         // Arrange
         Http::fake();
@@ -52,7 +52,7 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
-    public function testLoadingBracketPageWithScheduledMatchups(): void
+    public function test_loading_bracket_page_with_scheduled_matchups(): void
     {
         // Arrange
         Http::fake();
@@ -81,7 +81,7 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
-    public function testLoadingBracketPageWithNoMatchups(): void
+    public function test_loading_bracket_page_with_no_matchups(): void
     {
         // Arrange
         Http::fake();

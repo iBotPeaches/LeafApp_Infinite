@@ -44,7 +44,7 @@ class ValidPlayerUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function testAutomaticallyMarkedPrivateIfInvalidRecord(): void
+    public function test_automatically_marked_private_if_invalid_record(): void
     {
         // Arrange
         SeasonSession::set(SeasonSession::$allSeasonKey);
@@ -93,7 +93,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
     }
 
-    public function testAutomaticallySkippingServiceRecordIfUnplayedSeason(): void
+    public function test_automatically_skipping_service_record_if_unplayed_season(): void
     {
         // Arrange
         Bus::fake([
@@ -133,7 +133,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
     }
 
-    public function testAutomaticallyPullingXuidIfMissing(): void
+    public function test_automatically_pulling_xuid_if_missing(): void
     {
         // Arrange
         Bus::fake([
@@ -200,7 +200,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testAutomaticallyMarkingAsBotFarmer(): void
+    public function test_automatically_marking_as_bot_farmer(): void
     {
         // Arrange
         Bus::fake([
@@ -283,7 +283,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testAutomaticallyRemovingOldAgentIfXuidMoved(): void
+    public function test_automatically_removing_old_agent_if_xuid_moved(): void
     {
         // Arrange
         Bus::fake([
@@ -357,7 +357,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testAutomaticallyUnmarkedPrivateIfValidRecord(): void
+    public function test_automatically_unmarked_private_if_valid_record(): void
     {
         // Arrange
         Bus::fake([
@@ -431,7 +431,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
+    public function test_automatically_defer_next_pages_if_games_already_loaded(): void
     {
         // Arrange
         Bus::fake([
@@ -497,7 +497,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullServiceRecord::class);
     }
 
-    public function testInitialPageLoadDeferredFromApiCalls(): void
+    public function test_initial_page_load_deferred_from_api_calls(): void
     {
         // Arrange
         Http::fake();
@@ -515,7 +515,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testPageLoadDeferredFromApiCalls(): void
+    public function test_page_load_deferred_from_api_calls(): void
     {
         // Arrange
         Http::fake();
@@ -536,7 +536,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testPageLoadDeferredFromApiCallsAsOlderSeason(): void
+    public function test_page_load_deferred_from_api_calls_as_older_season(): void
     {
         // Arrange
         Http::fake();
@@ -558,7 +558,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testValidResponseFromAllDotApiServicesAsFaceItPlayer(): void
+    public function test_valid_response_from_all_dot_api_services_as_face_it_player(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -620,7 +620,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToSeason(): void
+    public function test_valid_response_from_all_dot_api_services_as_overview_scoped_to_season(): void
     {
         // Arrange
         SeasonSession::set(config('services.dotapi.competitive.key'));
@@ -687,7 +687,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 1);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToAll(): void
+    public function test_valid_response_from_all_dot_api_services_as_overview_scoped_to_all(): void
     {
         // Arrange
         SeasonSession::set(SeasonSession::$allSeasonKey);
@@ -751,7 +751,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsCompetitive(): void
+    public function test_valid_response_from_all_dot_api_services_as_competitive(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -813,7 +813,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsMatches(): void
+    public function test_valid_response_from_all_dot_api_services_as_matches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -875,7 +875,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsCustomMatches(): void
+    public function test_valid_response_from_all_dot_api_services_as_custom_matches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -937,7 +937,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsLanMatches(): void
+    public function test_valid_response_from_all_dot_api_services_as_lan_matches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -999,7 +999,7 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function testValidResponseFromAllDotApiServicesExceptForCareerRank(): void
+    public function test_valid_response_from_all_dot_api_services_except_for_career_rank(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;

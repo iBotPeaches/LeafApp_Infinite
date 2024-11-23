@@ -11,7 +11,7 @@ use Tests\TestCase;
 class CsrModelTest extends TestCase
 {
     #[DataProvider('rankDataProvider')]
-    public function testRankAttribute(string $tier, int $subTier, int $nextCsr, string $expected): void
+    public function test_rank_attribute(string $tier, int $subTier, int $nextCsr, string $expected): void
     {
         // Arrange
         $csr = Csr::factory()
@@ -26,7 +26,7 @@ class CsrModelTest extends TestCase
     }
 
     #[DataProvider('nextRankDataProvider')]
-    public function testNextRankAttribute(
+    public function test_next_rank_attribute(
         string $tier,
         int $subTier,
         int $nextCsr,
@@ -48,7 +48,7 @@ class CsrModelTest extends TestCase
         $this->assertEquals($expected, $csr->next_rank);
     }
 
-    public function testNoPercentWith0Xp(): void
+    public function test_no_percent_with0_xp(): void
     {
         // Arrange
         $csr = Csr::factory()

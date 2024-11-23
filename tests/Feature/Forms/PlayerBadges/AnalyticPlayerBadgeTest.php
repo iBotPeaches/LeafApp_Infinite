@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class AnalyticPlayerBadgeTest extends TestCase
 {
-    public function testLoadingAnalyticsOnBadges(): void
+    public function test_loading_analytics_on_badges(): void
     {
         // Arrange
         $player = Player::factory()->createOne();

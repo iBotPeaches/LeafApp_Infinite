@@ -17,7 +17,7 @@ use Tests\TestCase;
 class ValidOverviewPageTest extends TestCase
 {
     #[DataProvider('validAttributesDataProvider')]
-    public function testValidResponseFromDotApi(array $attributes, ?Mode $mode): void
+    public function test_valid_response_from_dot_api(array $attributes, ?Mode $mode): void
     {
         // Arrange
         $attributes['mode'] = $mode->value ?? Mode::MATCHMADE_RANKED;
@@ -43,7 +43,7 @@ class ValidOverviewPageTest extends TestCase
             ->assertSee($serviceRecord->kd);
     }
 
-    public function testValidPrivateResponseFromDotApi(): void
+    public function test_valid_private_response_from_dot_api(): void
     {
         // Arrange
         $player = Player::factory()

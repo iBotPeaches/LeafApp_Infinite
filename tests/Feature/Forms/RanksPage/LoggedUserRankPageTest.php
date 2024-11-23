@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class LoggedUserRankPageTest extends TestCase
 {
-    public function testValidComponentAsUser(): void
+    public function test_valid_component_as_user(): void
     {
         // Arrange
         $user = User::factory()->createOne();
@@ -23,7 +23,7 @@ class LoggedUserRankPageTest extends TestCase
             ->assertSeeText('Hero');
     }
 
-    public function testValidComponentAsGuest(): void
+    public function test_valid_component_as_guest(): void
     {
         // Arrange
 

@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class ValidCompetitivePageTest extends TestCase
 {
-    public function testValidResponseFromDotApi(): void
+    public function test_valid_response_from_dot_api(): void
     {
         // Arrange
         Carbon::setTestNow(now());
@@ -77,7 +77,7 @@ class ValidCompetitivePageTest extends TestCase
         }
     }
 
-    public function testValidUnrankedResponseFromDotApi(): void
+    public function test_valid_unranked_response_from_dot_api(): void
     {
         // Arrange
         Carbon::setTestNow(now());
@@ -126,7 +126,7 @@ class ValidCompetitivePageTest extends TestCase
         }
     }
 
-    public function testValidUnrankedResponseFromDotApiInOldSeason(): void
+    public function test_valid_unranked_response_from_dot_api_in_old_season(): void
     {
         // Arrange
         Carbon::setTestNow(now());

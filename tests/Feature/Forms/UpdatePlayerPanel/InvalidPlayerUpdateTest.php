@@ -28,7 +28,7 @@ class InvalidPlayerUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function testInvalidResponseFromAllDotApiServices(): void
+    public function test_invalid_response_from_all_dot_api_services(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -55,7 +55,7 @@ class InvalidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
-    public function testInvalidResponseDueToRateLimit(): void
+    public function test_invalid_response_due_to_rate_limit(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
@@ -99,7 +99,7 @@ class InvalidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Rate Limit Hit :( - Try later.');
     }
 
-    public function testCrashingOutIfUnknownPlaylist(): void
+    public function test_crashing_out_if_unknown_playlist(): void
     {
         // Arrange
         Bus::fake([
@@ -143,7 +143,7 @@ class InvalidPlayerUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
-    public function testCrashingOutIfNewExperienceMode(): void
+    public function test_crashing_out_if_new_experience_mode(): void
     {
         // Arrange
         Bus::fake([
@@ -195,7 +195,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testCrashingOutIfNewCompetitiveModeInCsr(): void
+    public function test_crashing_out_if_new_competitive_mode_in_csr(): void
     {
         // Arrange
         Bus::fake([
@@ -245,7 +245,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testCrashingOutIfNewOutcomeMode(): void
+    public function test_crashing_out_if_new_outcome_mode(): void
     {
         // Arrange
         Bus::fake([
@@ -297,7 +297,7 @@ class InvalidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function testCrashingOutIfNewQueueModeInCsr(): void
+    public function test_crashing_out_if_new_queue_mode_in_csr(): void
     {
         // Arrange
         Bus::fake([

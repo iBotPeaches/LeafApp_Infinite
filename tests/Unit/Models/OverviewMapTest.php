@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class OverviewMapTest extends TestCase
 {
-    public function testRelationProperties(): void
+    public function test_relation_properties(): void
     {
         $overviewMap = OverviewMap::factory()->createOne();
 

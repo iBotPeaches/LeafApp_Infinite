@@ -22,7 +22,7 @@ class PullChampionshipTest extends TestCase
     use WithFaker;
 
     #[DataProvider('championshipTypeDataProvider')]
-    public function testValidDataPull(string $type): void
+    public function test_valid_data_pull(string $type): void
     {
         // Arrange
         Queue::fake();
@@ -46,7 +46,7 @@ class PullChampionshipTest extends TestCase
         Queue::assertPushed(FindPlayersFromTeam::class);
     }
 
-    public function testValidDataPullAsFfa(): void
+    public function test_valid_data_pull_as_ffa(): void
     {
         // Arrange
         Queue::fake();
@@ -74,7 +74,7 @@ class PullChampionshipTest extends TestCase
         Queue::assertPushed(FindPlayersFromTeam::class);
     }
 
-    public function testValidDataPullWithInvalidType(): void
+    public function test_valid_data_pull_with_invalid_type(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
@@ -97,7 +97,7 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testValidDataPullWithInvalidRegion(): void
+    public function test_valid_data_pull_with_invalid_region(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
@@ -120,7 +120,7 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function testInvalidStatusEnumPullOnChampionship(): void
+    public function test_invalid_status_enum_pull_on_championship(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
@@ -141,7 +141,7 @@ class PullChampionshipTest extends TestCase
         Http::assertSequencesAreEmpty();
     }
 
-    public function testInvalidStatusEnumPullOnMatchup(): void
+    public function test_invalid_status_enum_pull_on_matchup(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);

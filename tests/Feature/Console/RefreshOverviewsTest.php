@@ -17,7 +17,7 @@ class RefreshOverviewsTest extends TestCase
 {
     use WithFaker;
 
-    public function testValidGenerationOfOverviews(): void
+    public function test_valid_generation_of_overviews(): void
     {
         // Arrange
         $level = Level::factory()->createOne();
@@ -113,7 +113,7 @@ class RefreshOverviewsTest extends TestCase
             ->assertOk();
     }
 
-    public function testUnknownGametype(): void
+    public function test_unknown_gametype(): void
     {
         // Expectations
         $this->expectExceptionMessage('Unable to find base gametype for: not a real gametype');
@@ -132,7 +132,7 @@ class RefreshOverviewsTest extends TestCase
             ->assertFailed();
     }
 
-    public function testOverviewRecentlyGeneratedSkipped(): void
+    public function test_overview_recently_generated_skipped(): void
     {
         $game = Game::factory()->createOne();
         Overview::factory()->createOne([

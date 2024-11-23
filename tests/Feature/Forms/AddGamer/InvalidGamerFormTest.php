@@ -16,7 +16,7 @@ use Tests\TestCase;
 class InvalidGamerFormTest extends TestCase
 {
     #[DataProvider('invalidTextDataProvider')]
-    public function testInvalidTestSubmitted(?string $gamertag, string $validationError): void
+    public function test_invalid_test_submitted(?string $gamertag, string $validationError): void
     {
         // Arrange & Act & Assert
         Livewire::test(AddGamerForm::class)
@@ -28,7 +28,7 @@ class InvalidGamerFormTest extends TestCase
     }
 
     #[DataProvider('invalidApiDataProvider')]
-    public function testInvalidResponseFromDotApi(callable $mockResponse, int $statusCode): void
+    public function test_invalid_response_from_dot_api(callable $mockResponse, int $statusCode): void
     {
         // Arrange
         $mockResponse = call_user_func($mockResponse);
@@ -44,7 +44,7 @@ class InvalidGamerFormTest extends TestCase
             ->assertHasErrors(['gamertag']);
     }
 
-    public function testGracefulFallbackIfXuidNotFoundAndApiCallFails(): void
+    public function test_graceful_fallback_if_xuid_not_found_and_api_call_fails(): void
     {
         // Arrange
         $mockAppearanceResponse = (new MockAppearanceService)->success();

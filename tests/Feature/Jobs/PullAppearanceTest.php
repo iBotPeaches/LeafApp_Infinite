@@ -22,7 +22,7 @@ class PullAppearanceTest extends TestCase
 {
     use WithFaker;
 
-    public function testPullAppearanceAsBot(): void
+    public function test_pull_appearance_as_bot(): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();
@@ -41,7 +41,7 @@ class PullAppearanceTest extends TestCase
         ]);
     }
 
-    public function testPullingAssetsDownFromWeb(): void
+    public function test_pulling_assets_down_from_web(): void
     {
         // Arrange
         Bus::fake([
@@ -80,7 +80,7 @@ class PullAppearanceTest extends TestCase
         Bus::assertDispatched(PullXuid::class);
     }
 
-    public function testInvalidPullingAssetsDownFromWebIfMissingImage(): void
+    public function test_invalid_pulling_assets_down_from_web_if_missing_image(): void
     {
         // Arrange
         Bus::fake([

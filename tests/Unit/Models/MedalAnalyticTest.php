@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class MedalAnalyticTest extends TestCase
 {
-    public function testRelationProperties(): void
+    public function test_relation_properties(): void
     {
         // Arrange
         /** @var MedalAnalytic $medalAnalytic */

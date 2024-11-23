@@ -18,7 +18,7 @@ class InvalidGameUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function testInvalidResponseDueToGameRateLimit(): void
+    public function test_invalid_response_due_to_game_rate_limit(): void
     {
         // Arrange
         Queue::fake();
@@ -38,7 +38,7 @@ class InvalidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Rate Limit Hit :( - Try later.');
     }
 
-    public function testInvalidResponseDueToUnknownRequestIssue(): void
+    public function test_invalid_response_due_to_unknown_request_issue(): void
     {
         // Arrange
         Queue::fake();
@@ -58,7 +58,7 @@ class InvalidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
-    public function testInvalidResponseDueToCrash(): void
+    public function test_invalid_response_due_to_crash(): void
     {
         // Arrange
         Queue::fake();

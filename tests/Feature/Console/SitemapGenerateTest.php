@@ -16,7 +16,7 @@ class SitemapGenerateTest extends TestCase
 {
     use WithFaker;
 
-    public function testSitemapGeneration(): void
+    public function test_sitemap_generation(): void
     {
         // Arrange
         Matchup::factory()->createOne();

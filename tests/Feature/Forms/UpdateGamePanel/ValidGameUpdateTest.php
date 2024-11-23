@@ -26,7 +26,7 @@ class ValidGameUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function testInitialPageLoadDeferredFromApiCalls(): void
+    public function test_initial_page_load_deferred_from_api_calls(): void
     {
         // Arrange
         Http::fake();
@@ -43,7 +43,7 @@ class ValidGameUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function testValidResponseFromAllDotApiServicesForUnresolvedGamer(): void
+    public function test_valid_response_from_all_dot_api_services_for_unresolved_gamer(): void
     {
         // Arrange
         Queue::fake();
@@ -89,7 +89,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesForABot(): void
+    public function test_valid_response_from_all_dot_api_services_for_a_bot(): void
     {
         // Arrange
         Queue::fake();
@@ -126,7 +126,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesForUnranked(): void
+    public function test_valid_response_from_all_dot_api_services_for_unranked(): void
     {
         // Arrange
         Queue::fake();
@@ -166,7 +166,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServices(): void
+    public function test_valid_response_from_all_dot_api_services(): void
     {
         // Arrange
         Queue::fake();
@@ -201,7 +201,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsSlayer(): void
+    public function test_valid_response_from_all_dot_api_services_as_slayer(): void
     {
         // Arrange
         Queue::fake();
@@ -238,7 +238,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsCtf(): void
+    public function test_valid_response_from_all_dot_api_services_as_ctf(): void
     {
         // Arrange
         Queue::fake();
@@ -275,7 +275,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsOddball(): void
+    public function test_valid_response_from_all_dot_api_services_as_oddball(): void
     {
         // Arrange
         Queue::fake();
@@ -312,7 +312,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesAsStrongholds(): void
+    public function test_valid_response_from_all_dot_api_services_as_strongholds(): void
     {
         // Arrange
         Queue::fake();
@@ -349,7 +349,7 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function testValidResponseFromAllDotApiServicesIncludingAppearance(): void
+    public function test_valid_response_from_all_dot_api_services_including_appearance(): void
     {
         // Arrange
         Bus::fake(PullXuid::class);
