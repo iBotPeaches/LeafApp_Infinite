@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "artesaos/seotools": "^1.1",
         "bensampo/laravel-enum": "^6.3",
         "guzzlehttp/guzzle": "^7.4",
@@ -16,14 +16,14 @@
         "livewire/livewire": "^3.0",
         "sentry/sentry-laravel": "^4.0",
         "spatie/laravel-markdown": "^2.2",
-        "spatie/laravel-sitemap": "^7.0"
+        "spatie/laravel-sitemap": "^7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.5",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "larastan/larastan": "2.9.11",
+        "larastan/larastan": "^v3.0",
         "phpunit/phpunit": "^11.0",
         "spatie/laravel-ignition": "^2.0"
     },

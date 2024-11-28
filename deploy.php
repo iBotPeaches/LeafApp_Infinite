@@ -5,17 +5,17 @@ namespace Deployer;
 require 'recipe/laravel.php';
 require 'contrib/php-fpm.php';
 
-set('application', 'Leafapp');
+set('application', 'Leaf');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
-set('php_fpm_service', 'ea-php82-php-fpm');
+set('php_fpm_service', 'php8.4-fpm');
 set('git_ssh_command', 'ssh -o StrictHostKeyChecking=no');
 set('default_timeout', 1800);
 
 host('prod')
-    ->set('remote_user', 'leafapp')
+    ->set('remote_user', 'leaf')
     ->set('port', 22774)
-    ->set('hostname', 'leafapp.co')
-    ->set('deploy_path', '/home/leafapp/deploy');
+    ->set('hostname', 'deltatap.connortumbleson.com')
+    ->set('deploy_path', '/var/www/leaf');
 
 task('deploy', [
     'deploy:prepare',

@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'npm'
 
       - name: Set env
@@ -37,9 +37,9 @@ jobs:
       - name: Deploy
         uses: deployphp/action@v1
         with:
-          private-key: ${{ secrets.DEPLOY_SECRET_KEY }}
+          private-key: ${{ secrets.DEPLOY_V2_SECRET_KEY }}
           dep: deploy -vvv
-          deployer-version: "7.1.4"
+          deployer-version: "7.5.8"
 
       - uses: getsentry/action-release@v1
         env:
