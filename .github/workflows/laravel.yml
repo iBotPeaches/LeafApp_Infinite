@@ -43,7 +43,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Composer Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist --ignore-platform-reqs
 
       - name: Install NPM Dependencies
         run: npm ci
