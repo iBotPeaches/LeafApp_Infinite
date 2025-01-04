@@ -60,6 +60,9 @@
                                         @if ($result->player?->is_cheater)
                                             <span class="tag is-danger">Cheater</span>
                                         @endif
+                                        @if ($result->player?->is_botfarmer)
+                                            <span class="tag is-primary">Farmer</span>
+                                        @endif
                                     </div>
                                 </div>
                             </article>
