@@ -47,6 +47,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property bool $is_bot
  * @property bool $is_cheater
  * @property bool $is_botfarmer
+ * @property bool $is_forced_farmer
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
@@ -90,6 +91,7 @@ class Player extends Model implements HasDotApi, Sitemapable
     public $casts = [
         'is_donator' => 'bool',
         'is_botfarmer' => 'bool',
+        'is_forced_farmer' => 'bool',
     ];
 
     public function getRouteKeyName(): string
@@ -331,7 +333,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         });
 
         $totalGames = $playlistBreakdown->sum('total');
-        if ($totalGames >= 100) {
+        if ($totalGames >= 100 && ! $this->is_forced_farmer) {
             $botBootcampPercent = $playlistBreakdown->firstWhere('playlist_id', $botBootcampId)?->total / $totalGames;
             $playsTooMuchBotBootcamp = $botBootcampPercent >= config('services.halo.botfarmer_threshold');
             $this->is_botfarmer = $playsTooMuchBotBootcamp;
