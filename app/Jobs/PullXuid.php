@@ -6,6 +6,7 @@ namespace App\Jobs;
 
 use App\Enums\QueueName;
 use App\Models\Player;
+use App\Models\PlayerBan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -46,6 +47,15 @@ class PullXuid implements ShouldQueue
             ->first();
 
         if ($player) {
+            $this->player->is_botfarmer = $player->is_botfarmer;
+            $this->player->is_forced_farmer = $player->is_forced_farmer;
+            $this->player->is_cheater = $player->is_cheater;
+            $this->player->is_donator = $player->is_donator;
+
+            PlayerBan::query()
+                ->where('player_id', $player->id)
+                ->update(['player_id' => $this->player->id]);
+
             $player->deleteOrFail();
         }
     }
