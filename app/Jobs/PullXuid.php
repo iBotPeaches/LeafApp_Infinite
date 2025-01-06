@@ -56,9 +56,9 @@ class PullXuid implements ShouldQueue
                 ->where('player_id', $player->id)
                 ->update(['player_id' => $this->player->id]);
 
-            $this->player->save();
-
             $player->deleteOrFail();
+
+            $this->player->save();
         }
     }
 
