@@ -151,8 +151,8 @@ class GamePlayer extends Model implements HasDotApi
         $gamePlayer->assists_emp ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.emp');
         $gamePlayer->assists_driver ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.driver');
         $gamePlayer->assists_callout ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.callouts');
-        $gamePlayer->expected_kills ??= Arr::get($payload, $prefix.'performances.kills.expected');
-        $gamePlayer->expected_deaths ??= Arr::get($payload, $prefix.'performances.deaths.expected');
+        $gamePlayer->expected_kills ??= max(Arr::get($payload, $prefix.'performances.kills.expected'), 0);
+        $gamePlayer->expected_deaths ??= max(Arr::get($payload, $prefix.'performances.deaths.expected'), 0);
 
         if (Arr::has($payload, 'stats.core.breakdown.medals')) {
             $gamePlayer->medals = collect((array) Arr::get($payload, $prefix.'stats.core.breakdown.medals'))
