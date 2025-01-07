@@ -52,6 +52,7 @@
             @auth
                 @include('partials.player.linkable-card')
             @endauth
+            <livewire:player-ban-card :player="$player" />
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')

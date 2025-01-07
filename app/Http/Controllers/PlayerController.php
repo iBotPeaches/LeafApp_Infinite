@@ -79,11 +79,4 @@ class PlayerController extends Controller
 
         return redirect()->route('player', $player);
     }
-
-    public function banCheck(BanCheckRequest $request, Player $player): RedirectResponse
-    {
-        $player->checkForBanFromDotApi();
-
-        return redirect()->route('player', $player);
-    }
 }
