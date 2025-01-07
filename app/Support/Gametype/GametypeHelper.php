@@ -76,6 +76,14 @@ class GametypeHelper
             return BaseGametype::MINI_GAME();
         }
 
+        $infectionGameModes = [
+            'Zombies',
+        ];
+
+        if (Str::contains($name, $infectionGameModes, true)) {
+            return BaseGametype::INFECTION();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }
