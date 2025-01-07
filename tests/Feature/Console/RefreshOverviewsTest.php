@@ -48,6 +48,10 @@ class RefreshOverviewsTest extends TestCase
             'name' => 'Ninjanaut',
         ]);
 
+        $alphaZombies = Gamevariant::factory()->createOne([
+            'name' => 'Alpha Zombies',
+        ]);
+
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
             'level_id' => $level->id,
@@ -105,6 +109,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $ninjaNaut->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $alphaZombies->id,
         ]);
 
         // Act
