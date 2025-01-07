@@ -51,8 +51,8 @@
             <livewire:player-badges :player="$player" />
             @auth
                 @include('partials.player.linkable-card')
+                <livewire:player-ban-card :player="$player" />
             @endauth
-            <livewire:player-ban-card :player="$player" />
         </div>
         <div class="column is-three-quarters">
             @include('partials.player.navigation')
