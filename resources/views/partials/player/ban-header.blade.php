@@ -8,7 +8,7 @@
             @if (! $ban->is_expired)
                 <br /><br />
                 <p class="is-size-7">
-                    Days remaining: {{ number_format($ban->ends_at->diffInDays(absolute: true)) }}, for '{{ $ban->type }}', on scope: '{{ $ban->scope }}'
+                    Days remaining: {{ $ban->days_remaining }}, for '{{ $ban->type }}', on scope: '{{ $ban->scope }}'
                 </p>
             @endif
         </div>

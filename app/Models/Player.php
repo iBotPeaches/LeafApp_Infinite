@@ -69,6 +69,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Collection<int, PlayerBan> $bans
  * @property-read Collection<int, MedalAnalytic> $medals
  * @property-read Collection<int, Analytic> $analytics
+ * @property-read PlayerBan|null $latestBan
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @property-read string $url_safe_gamertag
@@ -417,6 +418,11 @@ class Player extends Model implements HasDotApi, Sitemapable
     public function bans(): HasMany
     {
         return $this->hasMany(PlayerBan::class);
+    }
+
+    public function latestBan(): HasOne
+    {
+        return $this->hasOne(PlayerBan::class)->latestOfMany();
     }
 
     public function medals(): HasMany
