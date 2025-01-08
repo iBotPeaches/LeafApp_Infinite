@@ -6,6 +6,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\HcsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\ListController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlaylistController;
@@ -76,6 +77,9 @@ Route::redirect('/login', '/auth/google/redirect')->name('login');
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('googleRedirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('googleCallback');
 Route::post('/auth/logout', [BaseAuthController::class, 'logout'])->name('logout');
+
+// Lists
+Route::get('/lists/banned', [ListController::class, 'banned'])->name('bannedList');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');

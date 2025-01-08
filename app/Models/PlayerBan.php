@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
  * @property string $scope
  * @property-read Player $player
  * @property-read bool $is_expired
+ * @property-read string $days_remaining
+ * @property-read string $short_message
  *
  * @method static PlayerBanFactory factory(...$parameters)
  */
@@ -47,6 +49,16 @@ class PlayerBan extends Model implements HasDotApi
         ];
 
         return (string) str_replace(array_keys($replacements), $replacements, $value);
+    }
+
+    public function getShortMessageAttribute(): string
+    {
+        return Str::beforeLast($this->message, $this->player->gamertag);
+    }
+
+    public function getDaysRemainingAttribute(): string
+    {
+        return number_format($this->ends_at->diffInDays(absolute: true));
     }
 
     public function getIsExpiredAttribute(): bool

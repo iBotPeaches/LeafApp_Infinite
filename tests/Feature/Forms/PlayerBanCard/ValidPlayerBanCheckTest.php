@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Feature\Forms\PlayerBanCard;
+namespace Tests\Feature\Forms\PlayerBanCard;
 
 use App\Livewire\PlayerBanCard;
 use App\Models\Player;

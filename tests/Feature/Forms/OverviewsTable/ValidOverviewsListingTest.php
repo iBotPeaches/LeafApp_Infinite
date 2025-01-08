@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Feature\Forms\OverviewsTable;
+namespace Tests\Feature\Forms\OverviewsTable;
 
 use App\Livewire\OverviewsTable;
 use App\Models\Overview;
