@@ -16,7 +16,7 @@ class ValidBannedPlayersTest extends TestCase
     {
         // Arrange
         $player = Player::factory()
-            ->hasAttached(PlayerBan::factory())
+            ->has(PlayerBan::factory(), 'latestBan')
             ->createOne([
                 'is_cheater' => true,
             ]);
