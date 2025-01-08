@@ -63,6 +63,9 @@ jobs:
       - name: PHPCS
         run: vendor/bin/pint --test
 
+      - name: Check PSR Violations
+        run: composer dump-autoload --strict-psr
+
       - name: Execute tests (With Coverage) via PHPUnit
         env:
           DB_PORT: ${{ job.services.maria.ports[3306] }}
