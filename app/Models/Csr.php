@@ -34,6 +34,7 @@ use InvalidArgumentException;
  * @property string $next_tier
  * @property int $next_sub_tier
  * @property int $next_csr
+ * @property int|null $champion_rank
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
@@ -86,6 +87,10 @@ class Csr extends Model implements HasDotApi
     {
         if ($this->hasNextRank()) {
             return $this->tier.' '.($this->sub_tier + 1);
+        }
+
+        if ($this->champion_rank > 0) {
+            return 'Champion';
         }
 
         return $this->tier;
@@ -172,7 +177,7 @@ class Csr extends Model implements HasDotApi
 
     public function toCsrObject(): \App\Support\Csr\Csr
     {
-        return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining);
+        return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining, $this->champion_rank);
     }
 
     public static function fromDotApi(array $payload): ?self
@@ -202,6 +207,10 @@ class Csr extends Model implements HasDotApi
             }
 
             foreach (Arr::get($playlist, 'response') as $key => $playlistMode) {
+                // @phpstan-ignore-next-line
+                $extras = collect(Arr::get($playlistMode, 'extra', []))
+                    ->keyBy('key');
+
                 $mode = CompetitiveMode::coerce($key);
                 if (empty($mode)) {
                     throw new InvalidArgumentException('Mode ('.$key.') is unknown.');
@@ -249,6 +258,9 @@ class Csr extends Model implements HasDotApi
                 $csr->next_tier = Arr::get($playlistMode, 'next_tier');
                 $csr->next_sub_tier = ((int) Arr::get($playlistMode, 'next_sub_tier')) - 1;
                 $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
+
+                $championExtra = $extras->get('champion');
+                $csr->champion_rank = $championExtra ? (int) Arr::get($championExtra, 'value.rank') : null;
 
                 if ($csr->isDirty()) {
                     $csr->save();

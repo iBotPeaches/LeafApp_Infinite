@@ -71,6 +71,10 @@
                                                     </progress>
                                                 </div>
                                             </div>
+                                        @else
+                                            @if ($playlist->champion_rank > 0)
+                                                Champion Rank: {{ $playlist->champion_rank }}
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

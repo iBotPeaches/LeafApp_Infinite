@@ -6,7 +6,7 @@ namespace App\Support\Csr;
 
 class CsrHelper
 {
-    public static function getCsrFromValue(?int $value, ?int $matchesRemaining): Csr
+    public static function getCsrFromValue(?int $value, ?int $matchesRemaining, ?int $championRank): Csr
     {
         // Since there is 50 CSR per level and 6 levels per class
         $rankClass = $value / 50;
@@ -14,6 +14,7 @@ class CsrHelper
         $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
 
         return match (true) {
+            $championRank !== null => new Csr(-1, null, 'Champion'),
             $rankClass > 0 && $rankClass < 6 => new Csr($value, $subTier, 'Bronze'),
             $rankClass >= 6 && $rankClass < 12 => new Csr($value, ($subTier - 6), 'Silver'),
             $rankClass >= 12 && $rankClass < 18 => new Csr($value, ($subTier - 12), 'Gold'),
