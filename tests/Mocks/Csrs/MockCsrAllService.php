@@ -119,8 +119,8 @@ class MockCsrAllService extends BaseMock
                     'value' => [
                         'rank' => $this->faker->numberBetween(1, 5),
                         'tier_image_url' => $this->faker->imageUrl,
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
     }
