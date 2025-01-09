@@ -73,7 +73,7 @@
                                             </div>
                                         @else
                                             @if ($playlist->champion_rank > 0)
-                                                Champion Rank: {{ $playlist->champion_rank }}
+                                                Champion Rank: @th($playlist->champion_rank)
                                             @endif
                                         @endif
                                     </td>

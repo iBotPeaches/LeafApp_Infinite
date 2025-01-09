@@ -207,10 +207,6 @@ class Csr extends Model implements HasDotApi
             }
 
             foreach (Arr::get($playlist, 'response') as $key => $playlistMode) {
-                // @phpstan-ignore-next-line
-                $extras = collect(Arr::get($playlistMode, 'extra', []))
-                    ->keyBy('key');
-
                 $mode = CompetitiveMode::coerce($key);
                 if (empty($mode)) {
                     throw new InvalidArgumentException('Mode ('.$key.') is unknown.');
@@ -259,8 +255,9 @@ class Csr extends Model implements HasDotApi
                 $csr->next_sub_tier = ((int) Arr::get($playlistMode, 'next_sub_tier')) - 1;
                 $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
 
-                $championExtra = $extras->get('champion');
-                $csr->champion_rank = $championExtra ? (int) Arr::get($championExtra, 'value.rank') : null;
+                /** @var array $extras */
+                $extras = Arr::get($playlistMode, 'extra', []);
+                $csr->champion_rank = CsrHelper::parseExtrasForChampionRank($extras);
 
                 if ($csr->isDirty()) {
                     $csr->save();

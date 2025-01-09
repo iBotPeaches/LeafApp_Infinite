@@ -6,7 +6,7 @@ namespace App\Actions\Map;
 
 use Illuminate\Support\Str;
 
-class StandarizeMapName
+class StandardizeMapName
 {
     public static function execute(string $mapName): string
     {
