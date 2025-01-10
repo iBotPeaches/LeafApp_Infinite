@@ -27,9 +27,9 @@ class CsrHelper
         };
     }
 
-    public static function parseExtrasForChampionRank(?array $extras): ?int
+    public static function parseExtrasForChampionRank(?array $extras = []): ?int
     {
-        $keyedExtras = collect($extras)->keyBy('key');
+        $keyedExtras = collect($extras ?? [])->keyBy('key');
         $championExtra = $keyedExtras->get('champion');
 
         return $championExtra ? (int) Arr::get($championExtra, 'value.rank') : null;
