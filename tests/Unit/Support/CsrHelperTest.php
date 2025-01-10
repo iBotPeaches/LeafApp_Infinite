@@ -53,6 +53,50 @@ class CsrHelperTest extends TestCase
         );
     }
 
+    #[DataProvider('championDataProvider')]
+    public function test_champion_calculation_to_rank(int $csr, ?int $matchesRemaining, ?int $championRank, string $expected): void
+    {
+        $this->assertEquals(
+            $expected,
+            CsrHelper::getCsrFromValue($csr, $matchesRemaining, $championRank)->title,
+            $championRank.' champion rank is not: '.$expected
+        );
+    }
+
+    #[DataProvider('championDataProvider')]
+    public function test_champion_calculation_to_asset(int $csr, ?int $matchesRemaining, ?int $championRank, string $expected): void
+    {
+        $this->assertStringEndsWith(
+            Str::slug($expected).'.png',
+            CsrHelper::getCsrFromValue($csr, $matchesRemaining, $championRank)->url(),
+            $championRank.' url() is not ending with proper string: '.$expected
+        );
+    }
+
+    public static function championDataProvider(): array
+    {
+        return [
+            'champion 200' => [
+                'csr' => 1500,
+                'matchesRemaining' => 0,
+                'championRank' => 200,
+                'expected' => 'Champion',
+            ],
+            'champion 1' => [
+                'csr' => 1500,
+                'matchesRemaining' => 0,
+                'championRank' => 1,
+                'expected' => 'Champion',
+            ],
+            'champion null' => [
+                'csr' => 1500,
+                'matchesRemaining' => 0,
+                'championRank' => null,
+                'expected' => 'Onyx',
+            ],
+        ];
+    }
+
     public static function unrankedCsrDataProvider(): array
     {
         return [
