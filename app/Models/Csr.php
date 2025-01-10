@@ -85,12 +85,12 @@ class Csr extends Model implements HasDotApi
 
     public function getRankAttribute(): string
     {
-        if ($this->hasNextRank()) {
-            return $this->tier.' '.($this->sub_tier + 1);
-        }
-
         if ($this->champion_rank > 0) {
             return 'Champion';
+        }
+
+        if ($this->hasNextRank()) {
+            return $this->tier.' '.($this->sub_tier + 1);
         }
 
         return $this->tier;

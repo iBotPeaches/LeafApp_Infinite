@@ -61,6 +61,18 @@ class CsrModelTest extends TestCase
         $this->assertEquals(0.0, $csr->next_rank_percent);
     }
 
+    public function test_with_champion_rank(): void
+    {
+        // Arrange
+        $csr = Csr::factory()
+            ->create([
+                'champion_rank' => 1,
+            ]);
+
+        // Act & Assert
+        $this->assertEquals('Champion', $csr->rank);
+    }
+
     public static function nextRankDataProvider(): array
     {
         return [
