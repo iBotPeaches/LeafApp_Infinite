@@ -25,6 +25,8 @@
                                     <span class="tag is-danger">Cheater</span>
                                 @elseif ($player->is_donator)
                                     <span class="tag is-success">Donator</span>
+                                @elseif ($player->is_botfarmer)
+                                    <span class="tag is-info">Farmer</span>
                                 @else
                                     <p class="image is-32x32">
                                         <img src="{{ $player->emblem_url }}" alt="{{ $player->gamertag }} Emblem"/>
