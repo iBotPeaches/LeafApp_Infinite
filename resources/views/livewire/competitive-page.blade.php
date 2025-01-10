@@ -71,6 +71,10 @@
                                                     </progress>
                                                 </div>
                                             </div>
+                                        @else
+                                            @if ($playlist->champion_rank > 0)
+                                                Champion Rank: @th($playlist->champion_rank)
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
