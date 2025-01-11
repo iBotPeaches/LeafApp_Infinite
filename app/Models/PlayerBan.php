@@ -74,7 +74,7 @@ class PlayerBan extends Model implements HasDotApi
         // There is nothing unique about a ban message. So lets make a key of a slugged message with datetime of expiration.
         $message = Arr::get($payload, 'message');
         $endDate = Arr::get($payload, 'end_date');
-        $key = md5(Str::slug($message).$endDate);
+        $key = md5(Str::slug($message).$player->id);
 
         /** @var PlayerBan $playerBan */
         $playerBan = self::query()
