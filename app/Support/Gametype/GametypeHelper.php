@@ -5,12 +5,20 @@ declare(strict_types=1);
 namespace App\Support\Gametype;
 
 use App\Enums\BaseGametype;
+use App\Models\Gamevariant;
 use Illuminate\Support\Str;
 
 class GametypeHelper
 {
-    public static function findBaseGametype(string $name): BaseGametype
+    public static function findBaseGametype(Gamevariant $gamevariant): BaseGametype
     {
+        $name = $gamevariant->name;
+
+        // Some modes are just "Arena", but we can look back at the category to determine the base gametype
+        if ($name === 'Arena' && $gamevariant->category) {
+            $name = $gamevariant->category->name ?? $name;
+        }
+
         foreach (BaseGametype::getKeys() as $baseGametype) {
             if (Str::contains($name, Str::replace('_', ' ', $baseGametype), true)) {
                 return BaseGametype::fromKey($baseGametype);
