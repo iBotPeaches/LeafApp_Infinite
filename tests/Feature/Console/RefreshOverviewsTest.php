@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Console;
 
+use App\Models\Category;
 use App\Models\Game;
 use App\Models\Gamevariant;
 use App\Models\Level;
@@ -47,10 +48,14 @@ class RefreshOverviewsTest extends TestCase
         $ninjaNaut = Gamevariant::factory()->createOne([
             'name' => 'Ninjanaut',
         ]);
-
         $alphaZombies = Gamevariant::factory()->createOne([
             'name' => 'Alpha Zombies',
         ]);
+        $arena = Gamevariant::factory()
+            ->for(Category::factory()->set('name', 'Slayer'))
+            ->createOne([
+                'name' => 'Arena',
+            ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
@@ -114,6 +119,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $alphaZombies->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $arena->id,
         ]);
 
         // Act
