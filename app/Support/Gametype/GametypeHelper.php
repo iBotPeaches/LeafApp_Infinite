@@ -98,7 +98,7 @@ class GametypeHelper
         }
 
         $ctfModes = [
-            'Castle Wars'
+            'Castle Wars',
         ];
 
         if (Str::contains($name, $ctfModes, true)) {
