@@ -97,6 +97,14 @@ class GametypeHelper
             return BaseGametype::INFECTION();
         }
 
+        $ctfModes = [
+            'Castle Wars'
+        ];
+
+        if (Str::contains($name, $ctfModes, true)) {
+            return BaseGametype::CTF();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }
