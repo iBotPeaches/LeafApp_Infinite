@@ -81,7 +81,7 @@ class GametypeHelper
             'Headhunter',
             'Duck Hunt',
             'Goose Hunt',
-            'Hex-A-Gone',
+            'Hex A Gone',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
