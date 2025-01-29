@@ -60,6 +60,7 @@ class GametypeHelper
 
         $oddballModes = [
             'Ninja Ball',
+            'Speedball',
         ];
 
         if (Str::contains($name, $oddballModes, true)) {
@@ -78,6 +79,9 @@ class GametypeHelper
             'Survive The Undead',
             'Sentry Defense',
             'Headhunter',
+            'Duck Hunt',
+            'Goose Hunt',
+            'Hex-A-Gone',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
@@ -86,6 +90,7 @@ class GametypeHelper
 
         $infectionGameModes = [
             'Zombies',
+            'Maze Craze',
         ];
 
         if (Str::contains($name, $infectionGameModes, true)) {
