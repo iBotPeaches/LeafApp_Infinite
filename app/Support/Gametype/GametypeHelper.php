@@ -83,6 +83,7 @@ class GametypeHelper
             'Goose Hunt',
             'Hex A Gone',
             '1v1 Showdown',
+            'Snowball Fight',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
