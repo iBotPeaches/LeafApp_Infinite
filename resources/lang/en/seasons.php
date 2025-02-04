@@ -10,4 +10,5 @@ return [
     7 => 'Banished Honor',
     8 => 'Fleetcom',
     9 => 'Great Journey',
+    10 => 'Frontlines',
 ];
