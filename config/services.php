@@ -85,6 +85,7 @@ return [
             'firefight-composer-legendary' => env('HALO_PLAYLISTS_FF_COMPOSER_LEGENDARY', 'd3c44874-7f46-4f8b-b9a8-92db24cf807e'),
             'firefight-battle-for-reach' => env('HALO_PLAYLISTS_FF_BATTLE_FOR_REACH', '05a31b26-514b-49ca-856c-3f2cb965a636'),
             'firefight-3person' => env('HALO_PLAYLISTS_FF_3P', 'a92aa2ae-26f1-441e-a0ba-3dedcc6269ce'),
+            'firefight-fiesta' => env('HALO_PLAYLISTS_FF_FIESTA', '57f4f0c0-bce9-4a34-b1b0-6188ed0f0198'),
         ],
         'botfarmer_threshold' => env('HALO_BOTFARMER_THRESHOLD', .50),
     ],
