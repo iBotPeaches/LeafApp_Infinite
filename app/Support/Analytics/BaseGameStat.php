@@ -36,6 +36,7 @@ class BaseGameStat
             config('services.halo.playlists.firefight-composer-legendary'),
             config('services.halo.playlists.firefight-battle-for-reach'),
             config('services.halo.playlists.firefight-3person'),
+            config('services.halo.playlists.firefight-fiesta'),
         ];
     }
 }
