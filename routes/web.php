@@ -61,7 +61,8 @@ Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'ch
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Playlists
-Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name('playlist');
+Route::get('/playlists/{playlist?}/{tab?}', [PlaylistController::class, 'index'])->name('playlist');
+Route::pattern('tab', 'overview|stats');
 
 // Ranks
 Route::get('/ranks', RankController::class)->name('ranks');
