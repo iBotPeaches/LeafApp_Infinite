@@ -12,6 +12,7 @@
             @include('partials.playlist.sidebar-list')
         </div>
         <div class="column is-three-quarters">
+            @include('partials.playlist.navigation')
             <livewire:playlist-page :playlist="$playlist"></livewire:playlist-page>
         </div>
     </div>

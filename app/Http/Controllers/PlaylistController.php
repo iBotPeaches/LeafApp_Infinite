@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\PlaylistTab;
 use App\Models\Playlist;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PlaylistController extends Controller
 {
-    public function index(Request $request, ?Playlist $playlist = null): View
+    public function index(Request $request, ?Playlist $playlist = null, ?string $type = PlaylistTab::OVERVIEW): View
     {
         /** @var Playlist|null $playlist */
         $playlist ??= Playlist::query()
@@ -34,6 +35,7 @@ class PlaylistController extends Controller
 
         return view('pages.playlist', [
             'user' => $request->user(),
+            'type' => $type,
             'playlist' => $playlist,
             'playlists' => $playlists,
         ]);
