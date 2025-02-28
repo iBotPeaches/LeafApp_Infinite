@@ -47,7 +47,13 @@
         </div>
 
         <div class="navbar-end">
-            <div class="navbar-item">
+            <div class="navbar-item m-0 py-0">
+                @if (!request()->routeIs('home'))
+                    <div class="navbar-item px-2">
+                        <livewire:add-gamer-form :isNav="true" />
+                    </div>
+                @endif
+
                 <div class="buttons">
                     @guest
                         <a href="{{ route('googleRedirect') }}" class="button is-danger">
