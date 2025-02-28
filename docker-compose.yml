@@ -4,6 +4,8 @@ services:
             context: ./docker/php
             args:
                 HOST_UID: ${HOST_UID}
+        env_file:
+            - .env
         image: leaf-php
         container_name: leaf-php
         volumes:
