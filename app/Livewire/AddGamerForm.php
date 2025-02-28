@@ -30,7 +30,7 @@ class AddGamerForm extends Component
         $this->isNav = $isNav;
     }
 
-    public function updatedGamertag(string $value): void
+    public function updatedGamertag(?string $value): void
     {
         $this->resetValidation('gamertag');
     }
