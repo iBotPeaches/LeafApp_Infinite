@@ -23,6 +23,11 @@ class AddGamerForm extends Component
         ],
     ];
 
+    public function updatedGamertag(string $value): void
+    {
+        $this->resetValidation('gamertag');
+    }
+
     public function submit(): ?Redirector
     {
         $this->validate();
