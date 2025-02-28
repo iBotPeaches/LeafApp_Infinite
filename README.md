@@ -16,7 +16,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. `docker exec -it leaf-php npm ci`
 1. `docker exec -it leaf-php php artisan key:generate`
 1. `docker exec -it leaf-php php artisan migrate`
-1. `docker exec -it leaf-php npm run dev`
+1. `docker exec -it leaf-php npm run build`
 
 * Nginx listens at your local IP address, port 8822, e.g. http://localhost:8822
 * MariaDB container's port 3306 is mapped to the host.
