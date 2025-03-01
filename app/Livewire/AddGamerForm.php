@@ -15,6 +15,8 @@ class AddGamerForm extends Component
     // @phpstan-ignore-next-line
     public $gamertag;
 
+    public bool $isNav;
+
     protected array $rules = [
         'gamertag' => [
             'required',
@@ -22,6 +24,16 @@ class AddGamerForm extends Component
             'max:32',
         ],
     ];
+
+    public function mount(bool $isNav = false): void
+    {
+        $this->isNav = $isNav;
+    }
+
+    public function updatedGamertag(?string $value): void
+    {
+        $this->resetValidation('gamertag');
+    }
 
     public function submit(): ?Redirector
     {
