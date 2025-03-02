@@ -79,7 +79,7 @@ class ExportGame implements ShouldQueue
                 $gamePlayer->player->gamertag,
                 $this->game->uuid,
                 $this->game->map->name,
-                $this->game->gamevariant?->name ?? $this->game->category?->name,
+                $this->game->gamevariant->name ?? $this->game->category?->name,
                 $this->game->playlist?->name,
                 $this->game->playlist?->input?->description,
                 $this->game->playlist?->queue?->description,

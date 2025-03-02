@@ -34,14 +34,12 @@ class Category extends Model implements HasDotApi, HasDotApiMetadata
     public static function fromMetadata(array $payload): ?self
     {
         try {
-            /** @noinspection PhpIncompatibleReturnTypeInspection */
             return self::query()
                 ->where('uuid', (string) Arr::get($payload, 'properties.category_id'))
                 ->firstOrFail();
         } catch (Throwable $e) {
             captureException(UnknownCategoryException::fromPayload($payload));
 
-            /** @noinspection PhpIncompatibleReturnTypeInspection */
             return self::query()
                 ->where('name', 'Unknown')
                 ->first();

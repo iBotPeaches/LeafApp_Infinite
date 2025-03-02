@@ -75,7 +75,6 @@ class Playlist extends Model implements HasDotApi
 
     public static function fromPlaylistId(string $playlistId): ?self
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('uuid', $playlistId)
             ->first();

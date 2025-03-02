@@ -97,6 +97,9 @@ class PlayerBan extends Model implements HasDotApi
         return $playerBan;
     }
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

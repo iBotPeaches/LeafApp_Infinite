@@ -76,6 +76,9 @@ class Map extends Model implements HasDotApi
         return $map;
     }
 
+    /**
+     * @return BelongsTo<Level, $this>
+     */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);

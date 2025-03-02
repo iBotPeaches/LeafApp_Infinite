@@ -149,7 +149,7 @@ class ExportGameHistory implements ShouldQueue
                         $gamePlayer->player->gamertag,
                         $gamePlayer->game->uuid,
                         $gamePlayer->game->map->name,
-                        $gamePlayer->game->gamevariant?->name ?? $gamePlayer->game->category?->name,
+                        $gamePlayer->game->gamevariant->name ?? $gamePlayer->game->category?->name,
                         $gamePlayer->game->playlist?->name,
                         $gamePlayer->game->playlist?->input?->description,
                         $gamePlayer->game->playlist?->queue?->description,
