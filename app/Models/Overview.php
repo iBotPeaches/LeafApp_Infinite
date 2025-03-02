@@ -50,16 +50,25 @@ use Illuminate\Support\Facades\File;
         return $this->thumbnail_url;
     }
 
+    /**
+     * @return HasMany<OverviewGametype, $this>
+     */
     public function gametypes(): HasMany
     {
         return $this->hasMany(OverviewGametype::class);
     }
 
+    /**
+     * @return HasMany<OverviewMap, $this>
+     */
     public function maps(): HasMany
     {
         return $this->hasMany(OverviewMap::class);
     }
 
+    /**
+     * @return HasMany<OverviewStat, $this>
+     */
     public function stats(): HasMany
     {
         return $this->hasMany(OverviewStat::class);

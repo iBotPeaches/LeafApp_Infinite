@@ -23,7 +23,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     private Matchup $matchup;
 
-    private ?InfiniteInterface $client;
+    private InfiniteInterface $client;
 
     private array $processedGameIds = [];
 
@@ -49,7 +49,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
         // 2 - Load their custom history to have latest
         $players->each(function (Player $player) {
-            $this->client?->matches($player, Mode::CUSTOM());
+            $this->client->matches($player, Mode::CUSTOM());
         });
 
         // 3 - Pick a player with visible customs to iterate

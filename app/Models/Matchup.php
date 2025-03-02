@@ -32,8 +32,8 @@ use Spatie\Sitemap\Tags\Url;
  * @property Carbon|null $started_at
  * @property Carbon|null $ended_at
  * @property-read Championship $championship
- * @property-read MatchupTeam[]|Collection $matchupTeams
- * @property-read Game[]|Collection $games
+ * @property-read Collection<int, MatchupTeam> $matchupTeams
+ * @property-read Collection<int, Game> $games
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read MatchupTeam|null $team1
@@ -207,17 +207,26 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         return $url;
     }
 
+    /**
+     * @return BelongsTo<Championship, $this>
+     */
     public function championship(): BelongsTo
     {
         return $this->belongsTo(Championship::class);
     }
 
+    /**
+     * @return HasMany<MatchupTeam, $this>
+     */
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class)
             ->orderByDesc('id');
     }
 
+    /**
+     * @return BelongsToMany<Game, $this>
+     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'matchup_game');

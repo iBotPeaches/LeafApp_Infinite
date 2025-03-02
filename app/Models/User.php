@@ -28,6 +28,9 @@ class User extends Authenticatable
         'google_id',
     ];
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

@@ -53,7 +53,7 @@ class ProcessMedalAnalytic implements ShouldQueue
 
                 MedalAnalytic::query()->insert($dataToInsert);
 
-                $seasonName = $this->season?->name ?? 'Combined';
+                $seasonName = $this->season->name ?? 'Combined';
 
                 $topHeader = [
                     $this->medal->name,

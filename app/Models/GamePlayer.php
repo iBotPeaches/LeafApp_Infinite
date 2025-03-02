@@ -170,16 +170,25 @@ class GamePlayer extends Model implements HasDotApi
         return $gamePlayer;
     }
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
     }
 
+    /**
+     * @return BelongsTo<Game, $this>
+     */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
+    /**
+     * @return BelongsTo<GameTeam, $this>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(GameTeam::class, 'game_team_id');

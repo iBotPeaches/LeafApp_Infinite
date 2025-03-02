@@ -154,7 +154,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         if ($threshold && $lastThreshold) {
             $xpTowardsNext = $this->xp_towards_next_rank;
 
-            return (float) number_format(($xpTowardsNext / ($this->nextRank?->required ?? 1)) * 100, 2);
+            return (float) number_format(($xpTowardsNext / ($this->nextRank->required ?? 1)) * 100, 2);
         }
 
         return 100.0;
@@ -174,7 +174,7 @@ class Player extends Model implements HasDotApi, Sitemapable
 
     public function getXpRequiredForNextRankAttribute(): int
     {
-        return $this->nextRank?->required ?? 100;
+        return $this->nextRank->required ?? 100;
     }
 
     public function getPercentProgressToHeroAttribute(): string
@@ -194,7 +194,6 @@ class Player extends Model implements HasDotApi, Sitemapable
 
     public static function fromGamertag(string $gamertag): self
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([
@@ -384,58 +383,91 @@ class Player extends Model implements HasDotApi, Sitemapable
         return $url;
     }
 
+    /**
+     * @return BelongsTo<Rank, $this>
+     */
     public function rank(): BelongsTo
     {
         return $this->belongsTo(Rank::class, 'rank_id');
     }
 
+    /**
+     * @return BelongsTo<Rank, $this>
+     */
     public function nextRank(): BelongsTo
     {
         return $this->belongsTo(Rank::class, 'next_rank_id');
     }
 
+    /**
+     * @return HasOne<ServiceRecord, $this>
+     */
     public function serviceRecord(): HasOne
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_RANKED);
     }
 
+    /**
+     * @return HasOne<ServiceRecord, $this>
+     */
     public function serviceRecordPvp(): HasOne
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
     }
 
+    /**
+     * @return HasMany<Csr, $this>
+     */
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
     }
 
+    /**
+     * @return HasMany<MatchupPlayer, $this>
+     */
     public function faceitPlayers(): HasMany
     {
         return $this->hasMany(MatchupPlayer::class);
     }
 
+    /**
+     * @return HasMany<PlayerBan, $this>
+     */
     public function bans(): HasMany
     {
         return $this->hasMany(PlayerBan::class);
     }
 
+    /**
+     * @return HasOne<PlayerBan, $this>
+     */
     public function latestBan(): HasOne
     {
         return $this->hasOne(PlayerBan::class)->latestOfMany();
     }
 
+    /**
+     * @return HasMany<MedalAnalytic, $this>
+     */
     public function medals(): HasMany
     {
         return $this->hasMany(MedalAnalytic::class);
     }
 
+    /**
+     * @return HasMany<Analytic, $this>
+     */
     public function analytics(): HasMany
     {
         return $this->hasMany(Analytic::class);
     }
 
+    /**
+     * @return BelongsToMany<Game, $this>
+     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'game_players')

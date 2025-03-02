@@ -26,13 +26,10 @@ class PullChampionship extends Command
     public function handle(): int
     {
         $championshipId = $this->argument('championshipId');
+        $championship = $this->client->championship($championshipId);
 
-        if (is_string($championshipId)) {
-            $championship = $this->client->championship($championshipId);
-
-            if ($championship instanceof Championship) {
-                $this->client->bracket($championship);
-            }
+        if ($championship instanceof Championship) {
+            $this->client->bracket($championship);
         }
 
         return CommandAlias::SUCCESS;

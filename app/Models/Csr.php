@@ -268,11 +268,17 @@ class Csr extends Model implements HasDotApi
         return $csr ?? null;
     }
 
+    /**
+     * @return BelongsTo<Playlist, $this>
+     */
     public function playlist(): BelongsTo
     {
         return $this->belongsTo(Playlist::class);
     }
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

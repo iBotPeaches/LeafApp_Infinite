@@ -71,16 +71,25 @@ class OverviewStat extends Model
         return now()->addSeconds($averageGameLength)->diffInMinutes(absolute: true);
     }
 
+    /**
+     * @return BelongsTo<Overview, $this>
+     */
     public function overview(): BelongsTo
     {
         return $this->belongsTo(Overview::class);
     }
 
+    /**
+     * @return BelongsTo<OverviewGametype, $this>
+     */
     public function gametype(): BelongsTo
     {
         return $this->belongsTo(OverviewGametype::class, 'overview_gametype_id');
     }
 
+    /**
+     * @return BelongsTo<OverviewMap, $this>
+     */
     public function map(): BelongsTo
     {
         return $this->belongsTo(OverviewMap::class, 'overview_map_id');

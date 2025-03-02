@@ -39,7 +39,6 @@ class Season extends Model implements HasDotApi
             return null;
         }
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('identifier', $key)
             ->orWhere('csr_key', $key)
@@ -48,7 +47,6 @@ class Season extends Model implements HasDotApi
 
     public static function latestOfSeason(int $seasonNumber): ?self
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('season_id', $seasonNumber)
             ->orderByDesc('season_version')

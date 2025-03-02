@@ -35,6 +35,9 @@ class OverviewGametype extends Model
 
     public $timestamps = false;
 
+    /**
+     * @return BelongsTo<Overview, $this>
+     */
     public function overview(): BelongsTo
     {
         return $this->belongsTo(Overview::class);

@@ -59,16 +59,25 @@ class MedalAnalytic extends Model
         return now()->addSeconds($this->total_seconds_played)->diffInHours(absolute: true);
     }
 
+    /**
+     * @return BelongsTo<Medal, $this>
+     */
     public function medal(): BelongsTo
     {
         return $this->belongsTo(Medal::class);
     }
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
     }
 
+    /**
+     * @return BelongsTo<Season, $this>
+     */
     public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);

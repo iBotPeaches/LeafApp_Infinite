@@ -225,6 +225,9 @@ class ServiceRecord extends Model implements HasDotApi
         return $serviceRecord;
     }
 
+    /**
+     * @return BelongsTo<Player, $this>
+     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

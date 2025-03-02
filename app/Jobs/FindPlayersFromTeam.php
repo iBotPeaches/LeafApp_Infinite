@@ -22,8 +22,6 @@ class FindPlayersFromTeam implements ShouldQueue
 
     private MatchupTeam $team;
 
-    private ?InfiniteInterface $client;
-
     public function __construct(MatchupTeam $team)
     {
         $this->team = $team;
@@ -33,18 +31,18 @@ class FindPlayersFromTeam implements ShouldQueue
     public function middleware(): array
     {
         return [
-            (new WithoutOverlapping($this->team->faceit_id))->dontRelease(),
+            new WithoutOverlapping($this->team->faceit_id)->dontRelease(),
         ];
     }
 
     public function handle(): void
     {
-        $this->client = App::make(InfiniteInterface::class);
+        $client = App::make(InfiniteInterface::class);
 
         foreach ($this->team->faceitPlayers->whereNull('player_id') as $teamPlayer) {
             $player = Player::query()->firstWhere('gamertag', $teamPlayer->faceit_name);
             if (empty($player) && ! config('services.dotapi.disabled')) {
-                $player = $this->client->appearance($teamPlayer->faceit_name);
+                $player = $client->appearance($teamPlayer->faceit_name);
             }
 
             if ($player) {

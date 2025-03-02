@@ -31,7 +31,7 @@ use Illuminate\Support\Arr;
  * @property int $final_score
  * @property-read Game $game
  * @property-read Team $team
- * @property-read GamePlayer[]|Collection<int, GamePlayer> $players
+ * @property-read Collection<int, GamePlayer> $players
  * @property-read string $name
  * @property-read string $color
  * @property-read string $tooltip_color
@@ -135,16 +135,25 @@ class GameTeam extends Model implements HasDotApi
         return $gameTeam;
     }
 
+    /**
+     * @return BelongsTo<Game, $this>
+     */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
+    /**
+     * @return BelongsTo<Team, $this>
+     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * @return HasMany<GamePlayer, $this>
+     */
     public function players(): HasMany
     {
         return $this->hasMany(GamePlayer::class);
