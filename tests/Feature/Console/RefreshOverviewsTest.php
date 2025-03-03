@@ -60,6 +60,10 @@ class RefreshOverviewsTest extends TestCase
             ->createOne([
                 'name' => 'Castle Wars',
             ]);
+        $neutralBomb = Gamevariant::factory()
+            ->createOne([
+                'name' => 'Neutral Bomb',
+            ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
@@ -133,6 +137,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $castleWars->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $neutralBomb->id,
         ]);
 
         // Act
