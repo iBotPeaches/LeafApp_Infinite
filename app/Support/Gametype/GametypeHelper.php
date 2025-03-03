@@ -107,6 +107,10 @@ class GametypeHelper
             return BaseGametype::CTF();
         }
 
+        if (Str::contains($name, 'Bomb', true)) {
+            return BaseGametype::ASSAULT();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }
