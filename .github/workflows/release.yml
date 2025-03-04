@@ -41,7 +41,7 @@ jobs:
           dep: deploy -vvv
           deployer-version: "7.5.8"
 
-      - uses: getsentry/action-release@v2
+      - uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
