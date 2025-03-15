@@ -25,7 +25,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 ### Setup
 1. PHP8.4
 1. Node + NPM installed
-1. MariaDB 10.11
+1. MariaDB 11.4
 1. [Composer](https://getcomposer.org/) installed.
 1. `cp .env.example .env`
 1. `composer install`
