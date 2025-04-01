@@ -14,8 +14,12 @@ class GametypeHelper
     {
         $name = $gamevariant->name;
 
-        // Some modes are just "Arena", but we can look back at the category to determine the base gametype
-        if ($name === 'Arena' && $gamevariant->category) {
+        $genericModes = [
+            'Arena',
+            'Classic',
+        ];
+
+        if (in_array($name, $genericModes, true) && $gamevariant->category) {
             $name = $gamevariant->category->name ?? $name;
         }
 
