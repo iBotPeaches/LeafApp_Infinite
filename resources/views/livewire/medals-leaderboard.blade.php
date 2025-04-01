@@ -58,7 +58,7 @@
                                             </span>
                                         @endif
                                         @if ($result->player?->is_cheater)
-                                            <span class="tag is-danger">Cheater</span>
+                                            <span class="tag is-danger">Banned</span>
                                         @endif
                                         @if ($result->player?->is_botfarmer)
                                             <span class="tag is-info">Farmer</span>
