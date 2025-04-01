@@ -22,7 +22,7 @@
                         <article class="media">
                             <figure class="media-left">
                                 @if ($player->is_cheater)
-                                    <span class="tag is-danger">Cheater</span>
+                                    <span class="tag is-danger">Banned</span>
                                 @elseif ($player->is_donator)
                                     <span class="tag is-success">Donator</span>
                                 @elseif ($player->is_botfarmer)

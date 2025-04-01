@@ -32,7 +32,7 @@
             @endif
             @if ($player->is_cheater)
                 <div class="notification is-danger mb-2">
-                    <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
+                    <i class="fas fa-exclamation-triangle"></i> Account is banned
                 </div>
             @endif
             @if ($player->is_botfarmer)

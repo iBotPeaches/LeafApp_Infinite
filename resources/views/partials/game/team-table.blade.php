@@ -61,7 +61,7 @@ use Illuminate\Support\Str;
                                 @if ($gamePlayer->player->is_bot)
                                     <span class="tag is-dark">BOT</span>
                                 @elseif ($gamePlayer->player->is_cheater)
-                                    <span class="tag is-danger">Cheater</span>
+                                    <span class="tag is-danger">Banned</span>
                                 @else
                                     <p class="image is-32x32">
                                         @include('partials.game.team_emblem_url')
