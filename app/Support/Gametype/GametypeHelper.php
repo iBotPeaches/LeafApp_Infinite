@@ -48,6 +48,7 @@ class GametypeHelper
             'Heroic Fiesta',
             'Fiesta',
             'Team Snipers',
+            'Hotswap',
         ];
 
         if (Str::contains($name, $slayerModes, true)) {
