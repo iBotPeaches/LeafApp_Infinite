@@ -467,7 +467,7 @@ class Player extends Model implements HasDotApi, Sitemapable
     }
 
     /**
-     * @return BelongsToMany<Game, $this>
+     * @return BelongsToMany<Game, $this, PersonalResult, 'personal'>
      */
     public function games(): BelongsToMany
     {

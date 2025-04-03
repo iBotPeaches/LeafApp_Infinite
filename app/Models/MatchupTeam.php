@@ -132,7 +132,7 @@ class MatchupTeam extends Model implements HasFaceItApi
     }
 
     /**
-     * @return BelongsToMany<Player, $this>
+     * @return BelongsToMany<Player, $this, MatchupPlayer, 'faceit'>
      */
     public function players(): BelongsToMany
     {
