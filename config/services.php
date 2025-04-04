@@ -36,10 +36,10 @@ return [
         'key' => env('DOTAPI_KEY'),
         'domain' => env('DOTAPI_DOMAIN', 'https://grunt.api.dotapi.gg'),
         'version' => env('DOTAPI_VERSION', '2023-06-24'),
-        'cooldown' => env('DOTAPI_COOLDOWN', 120),
+        'cooldown' => (int) env('DOTAPI_COOLDOWN', 120),
         'competitive' => [
             'key' => env('DOTAPI_CURRENT_SEASON_KEY', '10-1'),
-            'season' => env('DOTAPI_CURRENT_SEASON', 10),
+            'season' => (int) env('DOTAPI_CURRENT_SEASON', 10),
         ],
         'warning_message' => env('DOTAPI_WARNING_MESSAGE'),
     ],

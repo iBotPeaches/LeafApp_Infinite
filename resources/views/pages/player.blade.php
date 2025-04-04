@@ -43,6 +43,14 @@
                     </span>
                 </div>
             @endif
+            @if ($player->is_throttled)
+                <div class="notification is-info mb-2">
+                    <i class="fas fa-skull-crossbones"></i>
+                    <span class="has-tooltip-arrow" data-tooltip="Automation was detected refreshing this player - delayed to 24 hour refreshes.">
+                        Updates Throttled
+                    </span>
+                </div>
+            @endif
             @if (!config('services.dotapi.disabled'))
                 @if (!$player->is_bot)
                     <livewire:update-player-panel :player="$player" :type="$type" />

@@ -170,6 +170,7 @@ class PlayerPageTest extends TestCase
         Player::factory()
             ->createOne([
                 'gamertag' => $gamertag,
+                'is_throttled' => true,
             ]);
 
         // Act
@@ -177,6 +178,7 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
+        $response->assertSee('Updates Throttled');
         $response->assertSeeLivewire('player-overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
