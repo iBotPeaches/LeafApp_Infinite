@@ -558,6 +558,30 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_page_load_deferred_from_api_calls_as_throttled_user(): void
+    {
+        // Arrange
+        Http::fake();
+        SeasonSession::set('1-1');
+        $player = Player::factory()->createOne([
+            'is_throttled' => true,
+        ]);
+
+        $cacheKey = 'player-profile-'.$player->id.SeasonSession::get().md5($player->gamertag);
+        Cache::put($cacheKey, true);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => false,
+        ])
+            ->assertViewHas('color', 'is-dark')
+            ->assertViewHas('message', 'Player is throttled. Updates are delayed.');
+
+        Http::assertNothingSent();
+    }
+
     public function test_valid_response_from_all_dot_api_services_as_face_it_player(): void
     {
         // Arrange
@@ -685,6 +709,71 @@ class ValidPlayerUpdateTest extends TestCase
             ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 1);
+    }
+
+    public function test_valid_response_from_all_dot_api_services_as_overview_as_throttled_user(): void
+    {
+        // Arrange
+        SeasonSession::set(SeasonSession::$allSeasonKey);
+
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockAppearanceResponse, Response::HTTP_OK)
+            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCsrResponse, Response::HTTP_OK)
+            ->push($mockMatchesResponse, Response::HTTP_OK)
+            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockServiceResponse, Response::HTTP_OK)
+            ->push($mockCareerRankResponse, Response::HTTP_OK);
+
+        Playlist::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Level::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        Category::factory()->createOne([
+            'uuid' => 1,
+        ]);
+
+        $player = Player::factory()->createOne([
+            'gamertag' => $gamertag,
+            'is_throttled' => true,
+        ]);
+
+        MatchupPlayer::factory()->createOne([
+            'player_id' => $player->id,
+        ]);
+
+        Rank::factory()->createOne([
+            'id' => 12,
+        ]);
+
+        // Act & Assert
+        Livewire::test(UpdatePlayerPanel::class, [
+            'player' => $player,
+            'type' => PlayerTab::OVERVIEW,
+            'runUpdate' => true,
+        ])
+            ->assertViewHas('color', 'is-success')
+            ->assertViewHas('message', 'Profile updated!')
+            ->assertDispatchedTo('player-overview-page', '$refresh')
+            ->assertDispatchedTo('player-card', '$refresh');
+
+        $this->assertDatabaseCount('service_records', 2);
     }
 
     public function test_valid_response_from_all_dot_api_services_as_overview_scoped_to_all(): void
