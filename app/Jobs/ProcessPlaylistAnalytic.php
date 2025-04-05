@@ -135,6 +135,7 @@ class ProcessPlaylistAnalytic implements ShouldQueue
             $playlistAnalytic->key = $analytic->key();
             $playlistAnalytic->place = $index + 1;
             $playlistAnalytic->value = (float) $game->{$analytic->property()};
+            $playlistAnalytic->playlist()->associate($this->playlist);
             $playlistAnalytic->game()->associate($game);
             $playlistAnalytic->save();
         });
