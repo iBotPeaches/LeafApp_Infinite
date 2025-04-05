@@ -86,10 +86,12 @@ class ProcessPlaylistAnalytic implements ShouldQueue
 
             switch ($analytic->type()) {
                 case AnalyticType::GAME():
+                    /** @var Collection<int, GamePlayer> $gamePlayers */
                     $this->handleGamePlayerResults($analytic, $gamePlayers);
                     break;
                 case AnalyticType::ONLY_GAME():
-                    $this->handleGameResults($analytic, $gamePlayers);
+                    /** @var Collection<int, Game> $gamePlayers */
+                $this->handleGameResults($analytic, $gamePlayers);
                     break;
             }
         }
@@ -124,19 +126,19 @@ class ProcessPlaylistAnalytic implements ShouldQueue
             ]);
     }
 
-    /** @param  Collection<int, Game>|null  $games */
-    private function handleGameResults(AnalyticInterface $analytic, ?Collection $games): void
+    /** @param  Collection<int, Game>  $games */
+    private function handleGameResults(AnalyticInterface $analytic, Collection $games): void
     {
         //
     }
 
-    /** @param  Collection<int, GamePlayer>|null  $gamePlayers */
-    private function handleGamePlayerResults(AnalyticInterface $analytic, ?Collection $gamePlayers): void
+    /** @param  Collection<int, GamePlayer>  $gamePlayers */
+    private function handleGamePlayerResults(AnalyticInterface $analytic, Collection $gamePlayers): void
     {
         $lastIndex = null;
         $lastValue = null;
 
-        $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) use ($analytic, &$lastIndex, &$lastValue) {
+        $gamePlayers->each(function (GamePlayer $gamePlayer, int $index) use ($analytic, &$lastIndex, &$lastValue) {
             if (method_exists($analytic, 'propertyFn')) {
                 $value = $analytic->propertyFn($gamePlayer);
             } else {
