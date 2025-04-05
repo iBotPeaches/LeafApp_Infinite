@@ -11,6 +11,7 @@ use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
 use App\Support\Analytics\Traits\HasServiceRecordExport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInterface
@@ -43,9 +44,9 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
         return number_format(now()->addSeconds((int) $analytic->value)->diffInHours(absolute: true));
     }
 
-    public function results(int $limit = 10): ?Collection
+    public function resultBuilder(): Builder
     {
-        return $this->builder()
+        return $this->baseBuilder()
             ->select('service_records.*')
             ->with(['player'])
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
@@ -53,7 +54,12 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
             ->where('is_bot', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_key')
-            ->orderByDesc($this->property())
+            ->orderByDesc($this->property());
+    }
+
+    public function results(int $limit = 10): ?Collection
+    {
+        return $this->baseBuilder()
             ->limit($limit)
             ->get();
     }
