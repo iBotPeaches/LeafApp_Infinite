@@ -59,7 +59,6 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->where('playlists.is_ranked', true)
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
             ->orderByDesc('value')
@@ -69,6 +68,7 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
     public function results(int $limit = 10): ?Collection
     {
         return $this->resultBuilder()
+            ->where('playlists.is_ranked', true)
             ->limit($limit)
             ->get();
     }

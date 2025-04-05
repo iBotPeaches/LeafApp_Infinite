@@ -55,13 +55,13 @@ class MostKillsWithZeroDeathsGame extends BaseGameStat implements AnalyticInterf
             ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->whereNotIn('playlists.uuid', $this->getPlaylistsToIgnore())
             ->orderByDesc($this->property());
     }
 
     public function results(int $limit = 10): ?Collection
     {
         return $this->resultBuilder()
+            ->whereNotIn('playlists.uuid', $this->getPlaylistsToIgnore())
             ->limit($limit)
             ->get();
     }

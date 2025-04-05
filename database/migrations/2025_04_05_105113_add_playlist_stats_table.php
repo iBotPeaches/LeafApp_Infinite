@@ -30,9 +30,8 @@ return new class extends Migration
             $table->string('key', 32);
             $table->tinyInteger('place')->unsigned();
             $table->double('value');
-            $table->string('label', 64);
             $table->timestamps();
-            $table->unique(['playlist_id', 'game_id', 'player_id', 'key'], 'playlist_analytics_unique');
+            $table->unique(['playlist_id', 'game_id', 'player_id', 'key', 'place'], 'playlist_analytics_unique');
         });
     }
 
