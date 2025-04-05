@@ -31,67 +31,67 @@ trait HasAnalyticDataProvider
     public static function analyticDataProvider(): array
     {
         return [
-            [
+            'best accuracy - sr' => [
                 new BestAccuracyServiceRecord,
             ],
-            [
+            'best kda - sr' => [
                 new BestKDAServiceRecord,
             ],
-            [
+            'best kd - sr' => [
                 new BestKDServiceRecord,
             ],
-            [
+            'most betrayals - sr' => [
                 new MostBetrayalsServiceRecord,
             ],
-            [
+            'most kills in ranked game' => [
                 new MostKillsInRankedGame,
             ],
-            [
+            'most kills w/ 0 deaths game' => [
                 new MostKillsWithZeroDeathsGame,
             ],
-            [
+            'most kills - sr' => [
                 new MostKillsServiceRecord,
             ],
-            [
+            'most medals - sr' => [
                 new MostMedalsServiceRecord,
             ],
-            [
+            'most time played - sr' => [
                 new MostTimePlayedServiceRecord,
             ],
-            [
+            'longest matchmaking game' => [
                 new LongestMatchmakingGame,
             ],
-            [
+            'highest score in ranked game' => [
                 new HighestScoreInRankedGame,
             ],
-            [
+            'highest score in unranked game' => [
                 new HighestScoreInUnrankedGame,
             ],
-            [
+            'most kills in game' => [
                 new MostKillsInGame,
             ],
-            [
+            'most deaths in game' => [
                 new MostDeathsInGame,
             ],
-            [
+            'most assists in game' => [
                 new MostAssistsInGame,
             ],
-            [
+            'most medals in game' => [
                 new MostMedalsInGame,
             ],
-            [
+            'most quit map' => [
                 new MostQuitMap,
             ],
-            [
+            'most score - sr' => [
                 new MostScoreServiceRecord,
             ],
-            [
+            'most games played - sr' => [
                 new MostGamesPlayedServiceRecord,
             ],
-            [
+            'most perfects in ranked game' => [
                 new MostPerfectsInRankedGame,
             ],
-            [
+            'most callouts - sr' => [
                 new MostCalloutAssistsServiceRecord,
             ],
         ];

@@ -62,7 +62,7 @@ class MostMedalsInGame extends BaseGameStat implements AnalyticInterface
 
     public function results(int $limit = 10): ?Collection
     {
-        return $this->baseBuilder()
+        return $this->resultBuilder()
             ->limit($limit)
             ->get();
     }

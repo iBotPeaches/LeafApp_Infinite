@@ -62,7 +62,6 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
-            ->having('value > 0')
             ->orderByDesc('value')
             ->orderByDesc('id');
     }

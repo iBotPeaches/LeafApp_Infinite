@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\AnalyticType;
 use App\Enums\QueueName;
+use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Playlist;
@@ -129,7 +130,14 @@ class ProcessPlaylistAnalytic implements ShouldQueue
     /** @param  Collection<int, Game>  $games */
     private function handleGameResults(AnalyticInterface $analytic, Collection $games): void
     {
-        //
+        $games->each(function (Game $game, int $index) use ($analytic) {
+            $playlistAnalytic = new PlaylistAnalytic();
+            $playlistAnalytic->key = $analytic->key();
+            $playlistAnalytic->place = $index + 1;
+            $playlistAnalytic->value = (float) $game->{$analytic->property()};
+            $playlistAnalytic->game()->associate($game);
+            $playlistAnalytic->save();
+        });
     }
 
     /** @param  Collection<int, GamePlayer>  $gamePlayers */
