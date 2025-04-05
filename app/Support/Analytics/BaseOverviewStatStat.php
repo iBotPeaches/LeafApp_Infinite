@@ -15,7 +15,7 @@ class BaseOverviewStatStat
         return AnalyticType::OVERVIEW_STAT();
     }
 
-    public function builder(): Builder
+    public function baseBuilder(): Builder
     {
         return OverviewStat::query();
     }

@@ -11,6 +11,7 @@ use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseOnlyGameStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
 use App\Support\Analytics\Traits\HasGameExport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterface
@@ -47,11 +48,16 @@ class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterfa
         return $game->duration;
     }
 
+    public function resultBuilder(): Builder
+    {
+        return $this->baseBuilder()
+            ->whereNotNull('playlist_id')
+            ->orderByDesc($this->property());
+    }
+
     public function results(int $limit = 10): ?Collection
     {
-        return $this->builder()
-            ->whereNotNull('playlist_id')
-            ->orderByDesc($this->property())
+        return $this->resultBuilder()
             ->limit($limit)
             ->get();
     }

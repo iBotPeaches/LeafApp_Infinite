@@ -6,6 +6,7 @@ use App\Console\Commands\RefreshAnalytics;
 use App\Console\Commands\RefreshManualOverviews;
 use App\Console\Commands\RefreshMedals;
 use App\Console\Commands\RefreshOverviews;
+use App\Console\Commands\RefreshPlaylistAnalytics;
 use Illuminate\Support\Facades\Schedule;
 use Laravel\Horizon\Console\SnapshotCommand;
 
@@ -16,6 +17,13 @@ Schedule::command(PullMetadata::class)
 Schedule::command(RefreshAnalytics::class)
     ->withoutOverlapping()
     ->dailyAt('12:01')
+    ->skip(fn () => now()->day % 2 !== 0)
+    ->timezone('America/New_York');
+
+Schedule::command(RefreshPlaylistAnalytics::class)
+    ->withoutOverlapping()
+    ->dailyAt('12:01')
+    ->skip(fn () => now()->day % 2 === 1)
     ->timezone('America/New_York');
 
 Schedule::command(RefreshMedals::class)

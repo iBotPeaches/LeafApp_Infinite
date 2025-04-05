@@ -10,6 +10,7 @@ use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
 use App\Support\Analytics\Traits\HasGamePlayerExport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
@@ -42,18 +43,23 @@ class HighestScoreInRankedGame extends BaseGameStat implements AnalyticInterface
         return number_format($analytic->value);
     }
 
-    public function results(int $limit = 10): ?Collection
+    public function resultBuilder(): Builder
     {
-        return $this->builder()
+        return $this->baseBuilder()
             ->select('game_players.*')
             ->with(['game', 'player'])
             ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
-            ->where('playlists.is_ranked', true)
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
-            ->orderByDesc($this->property())
+            ->orderByDesc($this->property());
+    }
+
+    public function results(int $limit = 10): ?Collection
+    {
+        return $this->resultBuilder()
+            ->where('playlists.is_ranked', true)
             ->limit($limit)
             ->get();
     }

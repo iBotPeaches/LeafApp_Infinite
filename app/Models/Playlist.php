@@ -11,6 +11,7 @@ use App\Models\Traits\HasPlaylist;
 use Database\Factories\PlaylistFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -27,6 +28,7 @@ use Illuminate\Support\Str;
  * @property array|null $rotations
  * @property string $image_url
  * @property-read string $image
+ * @property-read ?PlaylistStat $stat
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
@@ -105,5 +107,10 @@ class Playlist extends Model implements HasDotApi
         }
 
         return $playlist;
+    }
+
+    public function stat(): HasOne
+    {
+        return $this->hasOne(PlaylistStat::class);
     }
 }

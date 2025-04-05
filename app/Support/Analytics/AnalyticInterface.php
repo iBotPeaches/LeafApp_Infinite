@@ -27,7 +27,9 @@ interface AnalyticInterface
 
     public function displayExportUrl(int $count): string;
 
-    public function builder(): Builder;
+    public function baseBuilder(): Builder;
+
+    public function resultBuilder(): Builder;
 
     public function results(int $limit = 10): ?Collection;
 

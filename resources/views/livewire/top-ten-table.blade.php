@@ -3,7 +3,7 @@
 ?>
 <div>
     <h1 class="title">Top Ten Leaderboards</h1>
-    <h2 class="subtitle">A collection of random stats that update once a day.</h2>
+    <h2 class="subtitle">A collection of random stats that updates once every other day.</h2>
     <div class="table-container">
         <table class="table is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
