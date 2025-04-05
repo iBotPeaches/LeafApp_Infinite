@@ -6,6 +6,7 @@ namespace App\Support\Analytics;
 
 use App\Enums\AnalyticType;
 use App\Models\Analytic;
+use App\Models\PlaylistAnalytic;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,7 +24,7 @@ interface AnalyticInterface
 
     public function slug(int $count): string;
 
-    public function displayProperty(Analytic $analytic): string;
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string;
 
     public function displayExportUrl(int $count): string;
 

@@ -6,6 +6,7 @@ namespace App\Support\Analytics\Stats;
 
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseOverviewStatStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
@@ -38,7 +39,7 @@ class MostQuitMap extends BaseOverviewStatStat implements AnalyticInterface
         return 'percent_quit';
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         return number_format($analytic->value, 2).'%';
     }

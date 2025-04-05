@@ -1,1 +1,1 @@
-<livewire:playlist-stat :playlist="$playlist" />
+<livewire:playlist-stats :playlist="$playlist" />

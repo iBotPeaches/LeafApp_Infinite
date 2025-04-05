@@ -7,6 +7,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Models\Game;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseOnlyGameStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
@@ -39,7 +40,7 @@ class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterfa
         return 'duration_seconds';
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         $game = new Game([
             'duration_seconds' => $analytic->value,

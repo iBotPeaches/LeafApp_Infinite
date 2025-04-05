@@ -6,6 +6,7 @@ namespace App\Support\Analytics\Stats;
 
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
@@ -38,7 +39,7 @@ class MostKillsInGame extends BaseGameStat implements AnalyticInterface
         return 'kills';
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         return number_format($analytic->value);
     }

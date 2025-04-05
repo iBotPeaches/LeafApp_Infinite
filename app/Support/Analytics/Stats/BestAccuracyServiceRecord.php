@@ -7,6 +7,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Mode;
 use App\Models\Analytic;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
@@ -39,7 +40,7 @@ class BestAccuracyServiceRecord extends BasePlayerStat implements AnalyticInterf
         return 'accuracy';
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         return number_format($analytic->value, 2).'%';
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\AnalyticKey;
+use App\Support\Analytics\AnalyticInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $label
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read AnalyticInterface $stat
  * @property-read Game $game
  * @property-read Player $player
  * @property-read Playlist $playlist
@@ -31,6 +34,11 @@ class PlaylistAnalytic extends Model
     public $guarded = [
         'id',
     ];
+
+    public function getStatAttribute(): AnalyticInterface
+    {
+        return Analytic::getStatFromEnum(AnalyticKey::tryFrom($this->key));
+    }
 
     public function game(): BelongsTo
     {

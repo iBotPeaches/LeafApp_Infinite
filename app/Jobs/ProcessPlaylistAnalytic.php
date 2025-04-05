@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Enums\AnalyticType;
 use App\Enums\QueueName;
-use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Playlist;
@@ -49,6 +48,7 @@ class ProcessPlaylistAnalytic implements ShouldQueue
     private function findPlaylistAnalytics(): void
     {
         $validAnalytics = [
+            LongestMatchmakingGame::class,
             HighestScoreInRankedGame::class,
             MostAssistsInGame::class,
             MostDeathsInGame::class,
@@ -66,6 +66,12 @@ class ProcessPlaylistAnalytic implements ShouldQueue
             // Borrow the generic result builder from the analytic class and apply specific Playlist
             $analytic = new $analyticClass;
             $builder = $analytic->resultBuilder();
+
+            // Delete existing analytics prior to execution
+            PlaylistAnalytic::query()
+                ->where('playlist_id', $this->playlist->id)
+                ->where('key', $analytic->key())
+                ->delete();
 
             match ($analyticClass) {
                 LongestMatchmakingGame::class => $builder

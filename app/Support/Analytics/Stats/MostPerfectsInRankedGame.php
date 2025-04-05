@@ -7,6 +7,7 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Models\Analytic;
 use App\Models\GamePlayer;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BaseGameStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
@@ -46,7 +47,7 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
         return (float) Arr::get($gamePlayer, 'medals.1512363953', 0);
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         return number_format($analytic->value);
     }
@@ -61,6 +62,7 @@ class MostPerfectsInRankedGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
+            ->having('value > 0')
             ->orderByDesc('value')
             ->orderByDesc('id');
     }
