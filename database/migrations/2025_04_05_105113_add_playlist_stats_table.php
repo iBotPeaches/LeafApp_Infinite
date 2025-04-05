@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('total_matches')->unsigned();
             $table->integer('total_players')->unsigned();
             $table->integer('total_unique_players')->unsigned();
+            $table->unique(['playlist_id']);
         });
 
         Schema::create('playlist_analytics', function (Blueprint $table) {
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->double('value');
             $table->string('label', 64);
             $table->timestamps();
+            $table->unique(['playlist_id', 'game_id', 'player_id', 'key'], 'playlist_analytics_unique');
         });
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Traits\HasPlaylist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,11 +18,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PlaylistStat extends Model
 {
-    use HasFactory, HasPlaylist;
+    use HasFactory;
 
     public $guarded = [
         'id',
     ];
+
+    public $timestamps = false;
 
     public function playlist(): BelongsTo
     {

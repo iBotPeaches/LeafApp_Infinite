@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Traits\HasPlaylist;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PlaylistAnalytic extends Model
 {
-    use HasFactory, HasPlaylist;
+    use HasFactory;
 
     public $guarded = [
         'id',
