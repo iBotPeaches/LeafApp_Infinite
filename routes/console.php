@@ -29,6 +29,12 @@ Schedule::command(RefreshPlaylistAnalytics::class)
 Schedule::command(RefreshMedals::class)
     ->withoutOverlapping()
     ->dailyAt('3:01')
+    ->skip(fn () => now()->dayOfWeekIso == 3)
+    ->timezone('America/New_York');
+
+Schedule::command(RefreshMedals::class, ['--all'])
+    ->withoutOverlapping()
+    ->weeklyOn(3, '3:01')
     ->timezone('America/New_York');
 
 Schedule::command(RefreshOverviews::class)
