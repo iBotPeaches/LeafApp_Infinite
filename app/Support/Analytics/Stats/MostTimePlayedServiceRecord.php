@@ -60,7 +60,7 @@ class MostTimePlayedServiceRecord extends BasePlayerStat implements AnalyticInte
 
     public function results(int $limit = 10): ?Collection
     {
-        return $this->baseBuilder()
+        return $this->resultBuilder()
             ->limit($limit)
             ->get();
     }
