@@ -92,7 +92,7 @@ class ProcessPlaylistAnalytic implements ShouldQueue
                     break;
                 case AnalyticType::ONLY_GAME():
                     /** @var Collection<int, Game> $gamePlayers */
-                $this->handleGameResults($analytic, $gamePlayers);
+                    $this->handleGameResults($analytic, $gamePlayers);
                     break;
             }
         }
@@ -131,7 +131,7 @@ class ProcessPlaylistAnalytic implements ShouldQueue
     private function handleGameResults(AnalyticInterface $analytic, Collection $games): void
     {
         $games->each(function (Game $game, int $index) use ($analytic) {
-            $playlistAnalytic = new PlaylistAnalytic();
+            $playlistAnalytic = new PlaylistAnalytic;
             $playlistAnalytic->key = $analytic->key();
             $playlistAnalytic->place = $index + 1;
             $playlistAnalytic->value = (float) $game->{$analytic->property()};
