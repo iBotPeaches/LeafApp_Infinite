@@ -10,12 +10,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
  * @property int $playlist_id
  * @property int $game_id
- * @property int $player_id
+ * @property int|null $player_id
  * @property string $key
  * @property int $place
  * @property float $value
@@ -24,7 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon $updated_at
  * @property-read AnalyticInterface $stat
  * @property-read Game $game
- * @property-read Player $player
+ * @property-read Player|null $player
  * @property-read Playlist $playlist
  */
 class PlaylistAnalytic extends Model
@@ -38,6 +39,11 @@ class PlaylistAnalytic extends Model
     public function getStatAttribute(): AnalyticInterface
     {
         return Analytic::getStatFromEnum(AnalyticKey::tryFrom($this->key));
+    }
+
+    public function label(): string
+    {
+        return Str::replace('Ranked', '', $this->stat->title());
     }
 
     public function game(): BelongsTo

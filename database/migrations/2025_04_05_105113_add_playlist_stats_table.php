@@ -26,7 +26,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Playlist::class);
             $table->foreignIdFor(Game::class);
-            $table->foreignIdFor(Player::class);
+            $table->foreignIdFor(Player::class)->nullable();
             $table->string('key', 32);
             $table->tinyInteger('place')->unsigned();
             $table->double('value');

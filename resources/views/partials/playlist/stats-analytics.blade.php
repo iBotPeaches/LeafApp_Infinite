@@ -12,21 +12,18 @@ use App\Enums\AnalyticType;
             @php($analyticClass = $analyticGroup->first()->stat)
             <article class="panel is-info">
                 <p class="panel-heading">
-                    {{ $analyticGroup->first()->stat->title() }}
+                    {{ $analyticGroup->first()->label() }}
                 </p>
                 <div class="table-container">
                     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
                         <thead>
                         <tr>
                             <th>Place</th>
-                            @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
+                            @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME()]))
                                 <th>Gamertag</th>
                             @endif
                             @if ($analyticClass->type()->isGame())
                                 <th>Game</th>
-                            @endif
-                            @if ($analyticClass->type()->isOverviewStat())
-                                <th>Map</th>
                             @endif
                             <th>{{ Str::title($analyticClass->unit()) }}</th>
                             @if ($analyticClass->type()->isGame())
@@ -40,7 +37,7 @@ use App\Enums\AnalyticType;
                                 <td>
                                     @th($result->place)
                                 </td>
-                                @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
+                                @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME()]))
                                     <td>
                                         <article class="media">
                                             <figure class="media-left">
