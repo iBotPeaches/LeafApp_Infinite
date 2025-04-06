@@ -13,7 +13,7 @@ use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class RefreshMedals extends Command
 {
-    protected $signature = 'analytics:medals:refresh';
+    protected $signature = 'analytics:medals:refresh {--all}';
 
     protected $description = 'Refreshes cache table of medal stats.';
 
@@ -31,11 +31,13 @@ class RefreshMedals extends Command
         });
 
         // Seasons
-        $seasons->each(function (Season $season) use ($medals) {
-            $medals->each(function (Medal $medal) use ($season) {
-                ProcessMedalAnalytic::dispatchSync($medal, $season);
+        if ($this->option('all')) {
+            $seasons->each(function (Season $season) use ($medals) {
+                $medals->each(function (Medal $medal) use ($season) {
+                    ProcessMedalAnalytic::dispatchSync($medal, $season);
+                });
             });
-        });
+        }
 
         return CommandAlias::SUCCESS;
     }
