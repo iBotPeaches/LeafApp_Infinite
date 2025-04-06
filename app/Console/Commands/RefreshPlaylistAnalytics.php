@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class RefreshPlaylistAnalytics extends Command
 {
-    protected $signature = 'app:refresh-playlist-analytics';
+    protected $signature = 'analytics:playlists:refresh';
 
     protected $description = 'Refreshes cache table of playlist stats.';
 

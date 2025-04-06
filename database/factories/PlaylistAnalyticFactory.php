@@ -25,7 +25,6 @@ class PlaylistAnalyticFactory extends Factory
             'key' => AnalyticKey::MOST_DEATHS_GAME->value,
             'place' => 1,
             'value' => $this->faker->randomFloat(2, 0, 20),
-            'label' => $this->faker->word,
         ];
     }
 }
