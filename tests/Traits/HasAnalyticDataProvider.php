@@ -96,4 +96,34 @@ trait HasAnalyticDataProvider
             ],
         ];
     }
+
+    public static function playlistDataProvider(): array
+    {
+        return [
+            'most kills w/ 0 deaths game' => [
+                new MostKillsWithZeroDeathsGame,
+            ],
+            'longest matchmaking game' => [
+                new LongestMatchmakingGame,
+            ],
+            'highest score in ranked game' => [
+                new HighestScoreInRankedGame,
+            ],
+            'most kills in game' => [
+                new MostKillsInGame,
+            ],
+            'most deaths in game' => [
+                new MostDeathsInGame,
+            ],
+            'most assists in game' => [
+                new MostAssistsInGame,
+            ],
+            'most medals in game' => [
+                new MostMedalsInGame,
+            ],
+            'most perfects in ranked game' => [
+                new MostPerfectsInRankedGame,
+            ],
+        ];
+    }
 }
