@@ -15,7 +15,7 @@ class BaseOnlyGameStat
         return AnalyticType::ONLY_GAME();
     }
 
-    public function builder(): Builder
+    public function baseBuilder(): Builder
     {
         return Game::query();
     }

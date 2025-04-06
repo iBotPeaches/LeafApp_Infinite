@@ -29,9 +29,10 @@ Route::get('/leaderboards/medal', [LeaderboardController::class, 'medalList'])->
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Scrim
-Route::pattern('scrimType', 'overview|matches|players');
 Route::get('/scrims/{scrim}/players/csv', [ScrimController::class, 'csvPlayers'])->name('scrimPlayersCsv');
-Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->name('scrim');
+Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])
+    ->where('scrimType', implode('|', \App\Enums\ScrimTab::getValues()))
+    ->name('scrim');
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
 // Player
@@ -40,13 +41,14 @@ Route::middleware(['throttle:ban'])->group(function () {
 });
 Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');
 Route::post('/player/{player}/unlink', [PlayerController::class, 'unlink'])->name('playerUnlink');
-Route::pattern('type', 'overview|medals|competitive|matches|custom|lan|modes');
 
 Route::middleware(['throttle:uploads'])->group(function () {
     Route::get('/player/{player}/matches/csv/{type}', [PlayerController::class, 'csv'])->name('historyCsv');
 });
 
-Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
+Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])
+    ->where('type', implode('|', \App\Enums\PlayerTab::getValues()))
+    ->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
 
 // Game
@@ -61,16 +63,20 @@ Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'ch
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Playlists
-Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name('playlist');
+Route::get('/playlists/{playlist?}/{tab?}', [PlaylistController::class, 'index'])
+    ->where('tab', implode('|', \App\Enums\PlaylistTab::getValues()))
+    ->name('playlist');
 
 // Ranks
 Route::get('/ranks', RankController::class)->name('ranks');
 
 // Overviews
-Route::get('/overviews/{filterType?}', [OverviewController::class, 'list'])->name('overviews');
-Route::pattern('filterType', implode('|', \App\Enums\OverviewType::getValues()));
-Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])->name('overview');
-Route::pattern('tab', implode('|', \App\Enums\OverviewTab::getValues()));
+Route::get('/overviews/{filterType?}', [OverviewController::class, 'list'])
+    ->where('filterType', implode('|', \App\Enums\OverviewType::getValues()))
+    ->name('overviews');
+Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])
+    ->where('tab', implode('|', \App\Enums\OverviewTab::getValues()))
+    ->name('overview');
 
 // Auth
 Route::redirect('/login', '/auth/google/redirect')->name('login');

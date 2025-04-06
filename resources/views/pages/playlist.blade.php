@@ -12,7 +12,8 @@
             @include('partials.playlist.sidebar-list')
         </div>
         <div class="column is-three-quarters">
-            <livewire:playlist-page :playlist="$playlist"></livewire:playlist-page>
+            @include('partials.playlist.navigation')
+            @include('partials.playlist.tabs.' . $type, ['playlist' => $playlist])
         </div>
     </div>
 @endsection

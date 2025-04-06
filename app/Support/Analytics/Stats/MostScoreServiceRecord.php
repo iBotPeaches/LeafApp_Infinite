@@ -7,10 +7,12 @@ namespace App\Support\Analytics\Stats;
 use App\Enums\AnalyticKey;
 use App\Enums\Mode;
 use App\Models\Analytic;
+use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\BasePlayerStat;
 use App\Support\Analytics\Traits\HasExportUrlGeneration;
 use App\Support\Analytics\Traits\HasServiceRecordExport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class MostScoreServiceRecord extends BasePlayerStat implements AnalyticInterface
@@ -38,14 +40,14 @@ class MostScoreServiceRecord extends BasePlayerStat implements AnalyticInterface
         return 'total_score';
     }
 
-    public function displayProperty(Analytic $analytic): string
+    public function displayProperty(Analytic|PlaylistAnalytic $analytic): string
     {
         return number_format($analytic->value);
     }
 
-    public function results(int $limit = 10): ?Collection
+    public function resultBuilder(): Builder
     {
-        return $this->builder()
+        return $this->baseBuilder()
             ->select('service_records.*')
             ->with(['player'])
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
@@ -54,7 +56,12 @@ class MostScoreServiceRecord extends BasePlayerStat implements AnalyticInterface
             ->where('is_botfarmer', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_key')
-            ->orderByDesc($this->property())
+            ->orderByDesc($this->property());
+    }
+
+    public function results(int $limit = 10): ?Collection
+    {
+        return $this->resultBuilder()
             ->limit($limit)
             ->get();
     }
