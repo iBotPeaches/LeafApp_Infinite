@@ -18,13 +18,13 @@ jobs:
 
     services:
       maria:
-        image: mariadb:10.11
+        image: mariadb:11.4
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: leafapp_test
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+          MARIADB_DATABASE: leafapp_test
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mariadb-admin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v4
@@ -69,6 +69,7 @@ jobs:
       - name: Execute tests (With Coverage) via PHPUnit
         env:
           DB_PORT: ${{ job.services.maria.ports[3306] }}
+          DB_CONNECTION: mysql
         run: php artisan test --without-tty --coverage --min=100 --coverage-html=output
 
       - name: PHPStan
