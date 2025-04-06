@@ -60,10 +60,6 @@ class ProcessPlaylistAnalytic implements ShouldQueue
         ];
 
         foreach ($validAnalytics as $analyticClass) {
-            if (! is_a($analyticClass, AnalyticInterface::class, true)) {
-                continue;
-            }
-
             // Borrow the generic result builder from the analytic class and apply specific Playlist
             $analytic = new $analyticClass;
             $builder = $analytic->resultBuilder();
