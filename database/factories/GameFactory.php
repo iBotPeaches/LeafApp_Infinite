@@ -32,4 +32,11 @@ class GameFactory extends Factory
             'duration_seconds' => $this->faker->numerify('####'),
         ];
     }
+
+    public function playlist(Playlist $playlist): static
+    {
+        return $this->state([
+            'playlist_id' => $playlist->id,
+        ]);
+    }
 }

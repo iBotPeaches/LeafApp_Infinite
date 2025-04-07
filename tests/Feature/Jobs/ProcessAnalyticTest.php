@@ -9,6 +9,7 @@ use App\Enums\Outcome;
 use App\Jobs\ProcessAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Medal;
 use App\Models\OverviewStat;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
@@ -28,6 +29,12 @@ class ProcessAnalyticTest extends TestCase
     public function test_processing_each_category(AnalyticInterface $analyticClass): void
     {
         // Arrange
+        Medal::factory()
+            ->create([
+                'id' => 1512363953,
+                'name' => 'Most Perfects',
+            ]);
+
         Http::fake()->preventStrayRequests();
         ServiceRecord::factory()->createOne([
             'mode' => Mode::MATCHMADE_PVP,
@@ -35,6 +42,7 @@ class ProcessAnalyticTest extends TestCase
             'total_matches' => 1102,
         ]);
         GamePlayer::factory()
+            ->withMedals()
             ->for(
                 Game::factory()
                     ->forPlaylist(['is_ranked' => true])
