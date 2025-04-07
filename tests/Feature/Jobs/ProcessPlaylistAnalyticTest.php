@@ -9,6 +9,7 @@ use App\Enums\Outcome;
 use App\Jobs\ProcessPlaylistAnalytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
+use App\Models\Medal;
 use App\Models\Playlist;
 use App\Models\PlaylistAnalytic;
 use App\Support\Analytics\AnalyticInterface;
@@ -68,6 +69,12 @@ class ProcessPlaylistAnalyticTest extends TestCase
     public function test_processing_each_category(AnalyticInterface $analyticClass): void
     {
         // Arrange
+        Medal::factory()
+            ->create([
+                'id' => 1512363953,
+                'name' => 'Most Perfects',
+            ]);
+
         /** @var Game $game */
         $game = Game::factory()
             ->forPlaylist(['is_ranked' => false])
