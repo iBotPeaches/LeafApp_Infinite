@@ -15,6 +15,7 @@ class RefreshPlaylistAnalytics extends Command
     public function handle(): int
     {
         Playlist::query()
+            ->orderByDesc('id')
             ->where('is_active', true)
             ->each(function (Playlist $playlist) {
                 $startTime = time();
