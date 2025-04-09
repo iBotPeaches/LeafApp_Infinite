@@ -38,8 +38,8 @@
             @if ($player->is_botfarmer)
                 <div class="notification is-info mb-2">
                     <i class="fas fa-robot"></i>
-                    <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp (or manually flagged) and thus excluded from leaderboards.">
-                        Flagged as Bot Farmer
+                    <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp (or manually flagged as farmer/booster) and thus excluded from leaderboards.">
+                        Flagged as Farmer
                     </span>
                 </div>
             @endif
