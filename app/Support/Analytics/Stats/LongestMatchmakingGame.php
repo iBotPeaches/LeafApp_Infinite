@@ -52,7 +52,7 @@ class LongestMatchmakingGame extends BaseOnlyGameStat implements AnalyticInterfa
     public function resultBuilder(): Builder
     {
         return $this->baseBuilder()
-            ->whereNotNull('playlist_id')
+            ->whereNotNull('games.playlist_id')
             ->orderByDesc($this->property());
     }
 
