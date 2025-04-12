@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Actions\Playlist\HashRotations;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasDotApi;
@@ -107,6 +108,21 @@ class Playlist extends Model implements HasDotApi
 
         if ($playlist->isDirty()) {
             $playlist->save();
+        }
+
+        // If Active, we need to check if the rotation (Hopper) has changed
+        if ($playlist->is_active) {
+            $rotationHash = HashRotations::execute($playlist->rotations);
+
+            PlaylistChange::query()
+                ->where('playlist_id', $playlist->id)
+                ->where('rotation_hash', $rotationHash)
+                ->firstOrCreate([
+                    'playlist_id' => $playlist->id,
+                    'rotation_hash' => $rotationHash,
+                ], [
+                    'rotations' => $playlist->rotations,
+                ]);
         }
 
         return $playlist;

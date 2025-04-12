@@ -6,6 +6,7 @@ namespace Tests\Feature\Console;
 
 use App\Enums\MedalDifficulty;
 use App\Enums\MedalType;
+use App\Models\PlaylistChange;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -34,6 +35,8 @@ class PullMetadataTest extends TestCase
         $mockCategoriesResponse = (new MockCategoriesService)->success();
         $mockSeasonsResponse = (new MockSeasonService)->success();
         $mockCareerRankResponse = (new MockCareerRankService)->success();
+
+        PlaylistChange::factory()->create();
 
         Arr::set($mockMedalsResponse, 'data.2.category', MedalType::MODE);
         Arr::set($mockMedalsResponse, 'data.3.type', MedalDifficulty::LEGENDARY);
