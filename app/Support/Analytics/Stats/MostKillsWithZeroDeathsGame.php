@@ -52,6 +52,7 @@ class MostKillsWithZeroDeathsGame extends BaseGameStat implements AnalyticInterf
             ->leftJoin('players', 'players.id', '=', 'game_players.player_id')
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
+            ->where('players.is_botfarmer', false)
             ->where('game_players.deaths', 0)
             ->whereNotNull('games.playlist_id')
             ->leftJoin('games', 'game_players.game_id', '=', 'games.id')

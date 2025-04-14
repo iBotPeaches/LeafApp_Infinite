@@ -55,6 +55,7 @@ class HighestScoreInUnrankedGame extends BaseGameStat implements AnalyticInterfa
             ->where('playlists.is_ranked', false)
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
+            ->where('players.is_botfarmer', false)
             ->orderByDesc($this->property());
     }
 
