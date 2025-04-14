@@ -53,6 +53,7 @@ class MostCalloutAssistsServiceRecord extends BasePlayerStat implements Analytic
             ->leftJoin('players', 'players.id', '=', 'service_records.player_id')
             ->where('is_cheater', false)
             ->where('is_bot', false)
+            ->where('is_botfarmer', false)
             ->where('mode', Mode::MATCHMADE_PVP)
             ->whereNull('season_key')
             ->orderByDesc($this->property());

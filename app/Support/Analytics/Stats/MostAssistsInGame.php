@@ -55,6 +55,7 @@ class MostAssistsInGame extends BaseGameStat implements AnalyticInterface
             ->whereNotIn('playlists.uuid', $this->getPlaylistsToIgnore())
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
+            ->where('players.is_botfarmer', false)
             ->whereNotNull('games.playlist_id')
             ->orderByDesc($this->property());
     }

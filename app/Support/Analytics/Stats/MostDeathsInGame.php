@@ -54,6 +54,7 @@ class MostDeathsInGame extends BaseGameStat implements AnalyticInterface
             ->leftJoin('playlists', 'games.playlist_id', '=', 'playlists.id')
             ->where('players.is_cheater', false)
             ->where('players.is_bot', false)
+            ->where('players.is_botfarmer', false)
             ->whereNotNull('games.playlist_id')
             ->whereNotIn('playlists.uuid', $this->getPlaylistsToIgnore())
             ->orderByDesc($this->property());
