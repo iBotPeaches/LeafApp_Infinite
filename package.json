@@ -14,7 +14,7 @@
         "laravel-vite-plugin": "^1.2",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.86.3",
-        "vite": "^6.2"
+        "vite": "^6.3"
     },
     "type": "module"
 }
