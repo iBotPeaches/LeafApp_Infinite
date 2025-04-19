@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Console;
 
 use App\Models\Player;
+use App\Models\PlayerBan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\Console\Command\Command as CommandAlias;
@@ -72,6 +73,41 @@ class CheckForBanTest extends TestCase
             ->assertExitCode(CommandAlias::SUCCESS);
 
         $this->assertCount(0, $player->bans);
+
+        $this->assertDatabaseHas('players', [
+            'id' => $player->id,
+            'is_cheater' => false,
+        ]);
+    }
+
+    public function test_valid_data_pull_as_unbanned_user_with_historic_ban(): void
+    {
+        // Arrange
+        $gamertag = $this->faker->word.$this->faker->numerify;
+        $mockUnbannedUser = (new MockBanSummaryService)->unbanned($gamertag);
+
+        Http::fakeSequence()
+            ->push($mockUnbannedUser, Response::HTTP_OK);
+
+        /** @var Player $player */
+        $player = Player::factory()
+            ->createOne([
+                'gamertag' => $gamertag,
+            ]);
+
+        PlayerBan::factory()
+            ->expired()
+            ->create([
+                'player_id' => $player->id,
+            ]);
+
+        // Act & Assert
+        $this
+            ->artisan('app:check-for-ban', ['gamertag' => $player->gamertag])
+            ->expectsOutputToContain('No bans detected!')
+            ->assertExitCode(CommandAlias::SUCCESS);
+
+        $this->assertCount(1, $player->bans);
 
         $this->assertDatabaseHas('players', [
             'id' => $player->id,

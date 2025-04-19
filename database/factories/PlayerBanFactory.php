@@ -24,4 +24,11 @@ class PlayerBanFactory extends Factory
             'scope' => $this->faker->word,
         ];
     }
+
+    public function expired(): self
+    {
+        return $this->state(fn () => [
+            'ends_at' => now()->subDay()->toIso8601ZuluString(),
+        ]);
+    }
 }

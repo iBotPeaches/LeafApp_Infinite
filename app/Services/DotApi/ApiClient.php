@@ -274,7 +274,7 @@ class ApiClient implements InfiniteInterface
             PlayerBan::fromDotApi($ban);
         }
 
-        return $player->bans;
+        return $player->bans->where('ends_at', '>', now());
     }
 
     public function xuid(string $gamertag): ?string
