@@ -50,7 +50,7 @@ class CheckForBan extends Command
             'Expires At',
             'Type',
             'Scope',
-        ], $player->bans->map(function (PlayerBan $ban) {
+        ], $player->bans->where('ends_at', '>', now())->map(function (PlayerBan $ban) {
             return [
                 'messsage' => $ban->message,
                 'expires_at' => $ban->ends_at->toIso8601ZuluString(),
