@@ -9,7 +9,7 @@
         "@creativebulma/bulma-tooltip": "^1.2.0",
         "@erbelion/vite-plugin-laravel-purgecss": "^0.3.4",
         "@fortawesome/fontawesome-free": "^6.7.2",
-        "bulma": "^0.9.4",
+        "bulma": "^1.0.4",
         "bulma-ribbon": "^0.1.1",
         "laravel-vite-plugin": "^1.2",
         "resolve-url-loader": "^5.0.0",
