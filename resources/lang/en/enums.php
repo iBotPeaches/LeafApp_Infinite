@@ -21,6 +21,7 @@ return [
         Experience::FEATURED => 'Featured',
         Experience::UNKNOWN => 'Unknown',
         Experience::PVE => 'PVE',
+        Experience::UNTRACKED => 'Untracked',
     ],
     Outcome::class => [
         Outcome::WIN => 'Win',
