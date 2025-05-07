@@ -11,4 +11,5 @@ return [
     8 => 'Fleetcom',
     9 => 'Great Journey',
     10 => 'Frontlines',
+    11 => 'Last Stand',
 ];
