@@ -74,6 +74,7 @@ class GametypeHelper
 
         $juggernautModes = [
             'Ninjanaut',
+            'Mutilator',
         ];
 
         if (Str::contains($name, $juggernautModes, true)) {
