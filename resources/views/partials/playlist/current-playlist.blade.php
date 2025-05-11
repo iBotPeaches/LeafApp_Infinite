@@ -3,7 +3,7 @@
 ?>
 <div class="card mb-2">
     <div class="card-image">
-        <figure class="image">
+        <figure @class(['image', 'is-greyscale' => !$playlist->is_active])>
             <img src="{{ $playlist->image }}" alt="{{ $playlist->name }}">
         </figure>
     </div>
@@ -17,5 +17,10 @@
         <span class="tag">
             {{ $playlist->is_ranked ? 'Ranked' : 'Social' }}
         </span>
+        @if (!$playlist->is_active)
+            <span class="tag is-danger">
+                Inactive
+            </span>
+        @endif
     </div>
 </div>
