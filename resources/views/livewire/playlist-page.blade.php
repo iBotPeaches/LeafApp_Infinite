@@ -3,9 +3,7 @@
     /** @var App\Support\Rotations\RotationResult[] $rotations */
 ?>
 <div>
-    <div class="notification is-light mb-2">
-        {{ $playlist->description }}
-    </div>
+    @include('partials.playlist.inactive-disclaimer')
     <div class="columns">
         <div class="column">
             <table class="table is-striped is-narrow is-hoverable is-fullwidth">
