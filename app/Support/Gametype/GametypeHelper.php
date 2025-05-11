@@ -90,6 +90,7 @@ class GametypeHelper
             'Hex A Gone',
             '1v1 Showdown',
             'Snowball Fight',
+            'Cole Protocol',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
