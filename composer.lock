@@ -4717,16 +4717,16 @@
         },
         {
             "name": "sentry/sentry",
-            "version": "4.11.1",
+            "version": "4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-php.git",
-                "reference": "53dc0bcb6a667cac5b760b46f98d5380e63e02ca"
+                "reference": "0173702ffcbe36ce7638f07f090271294866a7a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/53dc0bcb6a667cac5b760b46f98d5380e63e02ca",
-                "reference": "53dc0bcb6a667cac5b760b46f98d5380e63e02ca",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/0173702ffcbe36ce7638f07f090271294866a7a0",
+                "reference": "0173702ffcbe36ce7638f07f090271294866a7a0",
                 "shasum": ""
             },
             "require": {
@@ -4790,7 +4790,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-php/issues",
-                "source": "https://github.com/getsentry/sentry-php/tree/4.11.1"
+                "source": "https://github.com/getsentry/sentry-php/tree/4.12.0"
             },
             "funding": [
                 {
@@ -4802,20 +4802,20 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-05-12T11:30:33+00:00"
+            "time": "2025-06-07T08:37:56+00:00"
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "4.14.0",
+            "version": "4.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "d0b285c118910a81d845831a2290fd50a482d59f"
+                "reference": "8b71a9209e8a01cb5728e743e99299d87d688010"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/d0b285c118910a81d845831a2290fd50a482d59f",
-                "reference": "d0b285c118910a81d845831a2290fd50a482d59f",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/8b71a9209e8a01cb5728e743e99299d87d688010",
+                "reference": "8b71a9209e8a01cb5728e743e99299d87d688010",
                 "shasum": ""
             },
             "require": {
@@ -4879,7 +4879,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/4.14.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/4.14.1"
             },
             "funding": [
                 {
@@ -4891,7 +4891,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-06-02T08:31:09+00:00"
+            "time": "2025-06-07T07:52:41+00:00"
         },
         {
             "name": "spatie/browsershot",
@@ -10377,12 +10377,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.4"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
