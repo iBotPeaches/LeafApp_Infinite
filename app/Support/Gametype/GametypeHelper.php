@@ -91,6 +91,8 @@ class GametypeHelper
             '1v1 Showdown',
             'Snowball Fight',
             'Cole Protocol',
+            'Out With A Bang',
+            'Minigame',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
