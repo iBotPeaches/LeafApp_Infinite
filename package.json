@@ -8,7 +8,7 @@
         "@creativebulma/bulma-divider": "^1.1.0",
         "@creativebulma/bulma-tooltip": "^1.2.0",
         "@erbelion/vite-plugin-laravel-purgecss": "^0.4.2",
-        "@fortawesome/fontawesome-free": "^6.7.2",
+        "@fortawesome/fontawesome-free": "^7.0.0",
         "bulma": "^0.9.4",
         "bulma-ribbon": "^0.1.1",
         "laravel-vite-plugin": "^1.3",
