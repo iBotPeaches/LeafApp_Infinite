@@ -98,7 +98,7 @@ jobs:
         env:
           DB_PORT: ${{ job.services.maria.ports[3306] }}
           DB_CONNECTION: mysql
-        run: ./vendor/bin/pest --coverage --min=100 --coverage-html=output ${{ matrix.shard }}/3
+        run: ./vendor/bin/pest --coverage --min=100 --coverage-html=output --shard=${{ matrix.shard }}/3
 
       - uses: actions/upload-artifact@v4
         if: failure()
