@@ -24,7 +24,7 @@
         "laravel/pint": "^1.5",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "pestphp/pest": "^3.8"
+        "pestphp/pest": "4.x-dev"
     },
     "autoload": {
         "psr-4": {
@@ -72,6 +72,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
