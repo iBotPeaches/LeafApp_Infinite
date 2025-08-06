@@ -67,6 +67,10 @@ class CompetitivePage extends Component
             // Hack Part 7 - 11-2 and 11-3 were pre-published, but not yet out.
             // As of now they have the same CSR Key as 11-1, so we'll just use that.
             $seasonKey = ($seasonKey === '11-2' || $seasonKey === '11-3') ? '11-1' : $seasonKey;
+
+            // Hack Part 8 - 12-2 and 12-3 were pre-published, but not yet out.
+            // As of now they have the same CSR Key as 12-1, so we'll just use that.
+            $seasonKey = ($seasonKey === '12-2' || $seasonKey === '12-3') ? '12-1' : $seasonKey;
         }
 
         return view('livewire.competitive-page', [
