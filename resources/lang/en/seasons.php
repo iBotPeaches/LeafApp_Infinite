@@ -12,4 +12,5 @@ return [
     9 => 'Great Journey',
     10 => 'Frontlines',
     11 => 'Last Stand',
+    12 => 'Shadows',
 ];
