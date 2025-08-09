@@ -121,6 +121,10 @@ class GametypeHelper
             return BaseGametype::ASSAULT();
         }
 
+        if (Str::contains($name, 'Octane', true)) {
+            return BaseGametype::GRIFBALL();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }
