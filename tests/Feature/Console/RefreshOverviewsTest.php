@@ -72,6 +72,10 @@ class RefreshOverviewsTest extends TestCase
             ->createOne([
                 'name' => 'Classic',
             ]);
+        $octane = Gamevariant::factory()
+            ->createOne([
+                'name' => 'Octane',
+            ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
@@ -160,6 +164,11 @@ class RefreshOverviewsTest extends TestCase
         Game::factory()->createOne([
             'map_id' => $map1->id,
             'gamevariant_id' => $hotswap->id,
+        ]);
+
+        Game::factory()->createOne([
+            'map_id' => $map1->id,
+            'gamevariant_id' => $octane->id,
         ]);
 
         // Act
