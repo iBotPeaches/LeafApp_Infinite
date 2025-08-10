@@ -137,4 +137,9 @@ class Playlist extends Model implements HasDotApi
     {
         return $this->hasMany(PlaylistAnalytic::class);
     }
+
+    public function changes(): HasMany
+    {
+        return $this->hasMany(PlaylistChange::class);
+    }
 }
