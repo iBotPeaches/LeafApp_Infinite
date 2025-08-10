@@ -125,6 +125,10 @@ class GametypeHelper
             return BaseGametype::GRIFBALL();
         }
 
+        if (Str::contains($name, '3P | Classic', true)) {
+            return BaseGametype::FIREFIGHT();
+        }
+
         throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
     }
 }
