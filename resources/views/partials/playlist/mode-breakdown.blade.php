@@ -18,7 +18,7 @@
                         @if(isset($changes[$name]))
                             @php $change = $changes[$name]; @endphp
                             @if($change['type'] === 'added')
-                                <span class="tag is-success is-small">+NEW</span>
+                                <span class="tag is-success is-small">NEW</span>
                             @elseif($change['type'] === 'removed')
                                 <span class="tag is-danger is-small">REMOVED</span>
                             @elseif($change['type'] === 'changed')

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Playlist;
 
 use App\Support\Rotations\RotationDecorator;
+use Illuminate\Support\Collection;
 
 class CompareRotations
 {
@@ -19,7 +20,7 @@ class CompareRotations
         ];
     }
 
-    private static function compareItems($current, $previous): array
+    private static function compareItems(Collection $current, Collection $previous): array
     {
         $changes = [];
 
