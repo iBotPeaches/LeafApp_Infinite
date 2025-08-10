@@ -38,7 +38,7 @@
                 @if($change['type'] === 'removed')
                     <tr>
                         <td>{{ $name }}</td>
-                        <td>-</td>
+                        <td>{{ number_format($change['previous'], 1) }}% (was)</td>
                         <td><span class="tag is-danger is-small">REMOVED</span></td>
                     </tr>
                 @endif
