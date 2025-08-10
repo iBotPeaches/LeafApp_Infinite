@@ -31,7 +31,11 @@
                     Map Breakdown
                 </p>
                 <p class="panel-block">
-                    @include('partials.playlist.mode-breakdown', ['items' => $maps, 'title' => 'Maps'])
+                    @include('partials.playlist.mode-breakdown', [
+                        'items' => $maps, 
+                        'title' => 'Maps',
+                        'changes' => $rotationChanges['maps'] ?? null
+                    ])
                 </p>
             </article>
             <article class="panel is-info">
@@ -39,9 +43,25 @@
                     Gametype Breakdown
                 </p>
                 <p class="panel-block">
-                    @include('partials.playlist.mode-breakdown', ['items' => $gametypes, 'title' => 'Gametypes'])
+                    @include('partials.playlist.mode-breakdown', [
+                        'items' => $gametypes, 
+                        'title' => 'Gametypes',
+                        'changes' => $rotationChanges['gametypes'] ?? null
+                    ])
                 </p>
             </article>
+            
+            @if($currentDate || $previousDate)
+                <div class="notification is-light mb-2">
+                    @if($currentDate)
+                        <div><strong>Current rotation:</strong> <i>{{ $currentDate->format('M j, Y') }}</i></div>
+                    @endif
+                    @if($previousDate)
+                        <div><strong>Previous rotation:</strong> <i>{{ $previousDate->format('M j, Y') }}</i></div>
+                    @endif
+                </div>
+            @endif
+            
             @include('partials.leaderboard.common.next_refresh')
 
         </div>
