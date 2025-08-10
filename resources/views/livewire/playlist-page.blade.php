@@ -51,12 +51,12 @@
                 </p>
             </article>
             
-            @if($currentDate || $previousDate)
+            @if ($currentDate || $previousDate)
                 <div class="notification is-light mb-2">
-                    @if($currentDate)
+                    @if ($currentDate)
                         <div><strong>Current rotation:</strong> <i>{{ $currentDate->format('M j, Y') }}</i></div>
                     @endif
-                    @if($previousDate)
+                    @if ($previousDate)
                         <div><strong>Previous rotation:</strong> <i>{{ $previousDate->format('M j, Y') }}</i></div>
                     @endif
                 </div>
