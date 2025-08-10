@@ -79,7 +79,7 @@ class RefreshOverviewsTest extends TestCase
         $firefightThirdPerson = Gamevariant::factory()
             ->createOne([
                 'name' => '3P | Classic',
-        ]);
+            ]);
 
         $map1 = Map::factory()->createOne([
             'name' => 'Absolute',
