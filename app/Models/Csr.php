@@ -26,7 +26,7 @@ use InvalidArgumentException;
  * @property int|null $season
  * @property string|null $season_key
  * @property CompetitiveMode $mode
- * @property int $csr
+ * @property int|null $csr
  * @property int $matches_remaining
  * @property string $tier
  * @property int $tier_start_csr
