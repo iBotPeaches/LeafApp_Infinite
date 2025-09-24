@@ -93,6 +93,7 @@ class GametypeHelper
             'Cole Protocol',
             'Out With A Bang',
             'Minigame',
+            'Invasion',
         ];
 
         if (Str::contains($name, $miniGameModes, true)) {
