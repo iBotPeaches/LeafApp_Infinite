@@ -126,7 +126,12 @@ class GametypeHelper
             return BaseGametype::GRIFBALL();
         }
 
-        if (Str::contains($name, '3P | Classic', true)) {
+        $firefightModes = [
+            '3P | Classic',
+            'Battle of the Academy',
+        ];
+
+        if (Str::contains($name, $firefightModes, true)) {
             return BaseGametype::FIREFIGHT();
         }
 
