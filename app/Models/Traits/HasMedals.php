@@ -6,18 +6,17 @@ namespace App\Models\Traits;
 
 use App\Models\Medal;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property-read Collection $hydrated_medals
  */
 trait HasMedals
 {
-    public static ?Collection $medalCache = null;
-
     public function getHydratedMedalsAttribute(): Collection
     {
         $medals = $this->medals;
-        $allMedals = self::$medalCache ?? Medal::all();
+        $allMedals = Cache::flexible('medals.all', [0, 2400], fn () => Medal::all());
 
         return $allMedals->map(function (Medal $medal) use ($medals) {
             $medal['count'] = $medals[$medal->id] ?? 0;
