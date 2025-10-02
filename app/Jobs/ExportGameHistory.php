@@ -7,7 +7,6 @@ namespace App\Jobs;
 use App\Enums\Experience;
 use App\Enums\PlayerTab;
 use App\Models\GamePlayer;
-use App\Models\Medal;
 use App\Models\Player;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
@@ -96,8 +95,6 @@ class ExportGameHistory implements ShouldQueue
 
     public function handle(): array
     {
-        GamePlayer::$medalCache = Medal::all();
-
         $query = GamePlayer::query()
             ->select('game_players.*')
             ->with([
@@ -205,8 +202,6 @@ class ExportGameHistory implements ShouldQueue
                     ];
                 });
             });
-
-        GamePlayer::$medalCache = null;
 
         return $this->data;
     }
