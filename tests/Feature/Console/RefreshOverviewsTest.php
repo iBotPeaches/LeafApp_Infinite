@@ -11,6 +11,7 @@ use App\Models\Level;
 use App\Models\Map;
 use App\Models\Overview;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -186,11 +187,8 @@ class RefreshOverviewsTest extends TestCase
             ->assertOk();
     }
 
-    public function test_unknown_gametype(): void
+    public function test_unknown_gametype_emits_sentry_and_continues(): void
     {
-        // Expectations
-        $this->expectExceptionMessage('Unable to find base gametype for: not a real gametype');
-
         // Arrange
         $gametype = Gamevariant::factory()->createOne([
             'name' => 'not a real gametype',
@@ -202,7 +200,8 @@ class RefreshOverviewsTest extends TestCase
 
         // Act
         $this->artisan('analytics:overviews:refresh')
-            ->assertFailed();
+            ->assertOk();
+        $this->assertTrue(Context::has('gametype'));
     }
 
     public function test_overview_recently_generated_skipped(): void
