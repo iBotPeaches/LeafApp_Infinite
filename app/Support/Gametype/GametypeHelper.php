@@ -6,7 +6,10 @@ namespace App\Support\Gametype;
 
 use App\Enums\BaseGametype;
 use App\Models\Gamevariant;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
+
+use function Sentry\captureException;
 
 class GametypeHelper
 {
@@ -135,6 +138,14 @@ class GametypeHelper
             return BaseGametype::FIREFIGHT();
         }
 
-        throw new \InvalidArgumentException("Unable to find base gametype for: {$name}");
+        Context::add('gametype', [
+            'gamevariant' => $gamevariant->name,
+            'gamevariant_id' => $gamevariant->id,
+            'category' => $gamevariant->category->name ?? null,
+            'category_id' => $gamevariant->category_id,
+        ]);
+        captureException(new \InvalidArgumentException('Base Gametype not found for: '.$name));
+
+        return BaseGametype::MINI_GAME();
     }
 }
