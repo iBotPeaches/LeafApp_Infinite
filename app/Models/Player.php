@@ -493,6 +493,8 @@ class Player extends Model implements HasDotApi, Sitemapable
                 'pre_csr',
                 'post_csr',
                 'matches_remaining',
+                'expected_kills',
+                'expected_deaths',
             ]);
     }
 }
