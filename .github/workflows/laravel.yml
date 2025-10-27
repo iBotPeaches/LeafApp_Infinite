@@ -97,7 +97,7 @@ jobs:
           DB_CONNECTION: mysql
         run: php artisan test --without-tty --coverage --min=100 --coverage-html=output
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: coverage-html
