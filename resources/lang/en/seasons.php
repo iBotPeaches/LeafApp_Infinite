@@ -13,4 +13,5 @@ return [
     10 => 'Frontlines',
     11 => 'Last Stand',
     12 => 'Shadows',
+    13 => 'Infinite',
 ];
