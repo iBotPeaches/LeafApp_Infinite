@@ -52,8 +52,20 @@
                             @include('partials.player.game_outcome_icon')
                         @endif
                     </td>
-                    <td>{{ $game->personal->kills }}</td>
-                    <td>{{ $game->personal->deaths }}</td>
+                    <td class="{{ $game->personal->getExpectedKillsColor() }}">
+                        @if (!is_null($game->personal->expected_kills))
+                            @include('partials.game.expected_kills', ['gamePlayer' =>  $game->personal])
+                        @else
+                            {{ $game->personal->kills }}
+                        @endif
+                    </td>
+                    <td class="{{ $game->personal->getExpectedDeathsColor() }}">
+                        @if (!is_null($game->personal->expected_deaths))
+                            @include('partials.game.expected_deaths', ['gamePlayer' =>  $game->personal])
+                        @else
+                            {{ $game->personal->deaths }}
+                        @endif
+                    </td>
                     <td>{{ $game->personal->assists }}</td>
                     <td class="{{ $game->personal->getKdColor() }}">
                         {{ $game->personal->kd }}

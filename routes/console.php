@@ -34,7 +34,7 @@ Schedule::command(RefreshMedals::class)
 
 Schedule::command(RefreshMedals::class, ['--all'])
     ->withoutOverlapping()
-    ->weeklyOn(3, '3:01')
+    ->monthlyOn(21, '3:01')
     ->timezone('America/New_York');
 
 Schedule::command(RefreshOverviews::class)

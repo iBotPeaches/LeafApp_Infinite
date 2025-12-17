@@ -98,15 +98,9 @@ class ProcessOverviewAnalytic implements ShouldQueue
         Gamevariant::query()
             ->with('category')
             ->whereIn('id', $gametypeIds)
-            ->each(function (Gamevariant $gamevariant) use ($overview, &$variantMapping) {
-                try {
-                    $baseMode = GametypeHelper::findBaseGametype($gamevariant);
-                    $variantMapping[$baseMode->value][] = $gamevariant->id;
-                } catch (\InvalidArgumentException $e) {
-                    if (! $overview->is_manual) {
-                        throw $e;
-                    }
-                }
+            ->each(function (Gamevariant $gamevariant) use (&$variantMapping) {
+                $baseMode = GametypeHelper::findBaseGametype($gamevariant);
+                $variantMapping[$baseMode->value][] = $gamevariant->id;
             });
 
         foreach ($variantMapping as $baseMode => $variantIds) {
