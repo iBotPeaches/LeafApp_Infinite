@@ -37,12 +37,8 @@ class CompareRotations
                         'previous' => $previousPercent,
                         'difference' => $diff,
                     ];
-                } else {
-                    $changes[$name] = [
-                        'type' => 'unchanged',
-                        'current' => $currentPercent,
-                    ];
                 }
+                // Don't track unchanged items - no badge needed
             } else {
                 // New item added
                 $changes[$name] = [
@@ -54,7 +50,7 @@ class CompareRotations
 
         // Check for removed items
         foreach ($previous as $name => $previousPercent) {
-            if (!$current->has($name)) {
+            if (! $current->has($name)) {
                 $changes[$name] = [
                     'type' => 'removed',
                     'previous' => $previousPercent,

@@ -33,6 +33,7 @@ use Illuminate\Support\Str;
  * @property-read string $image
  * @property-read ?PlaylistStat $stat
  * @property-read Collection<int, PlaylistAnalytic> $analytics
+ * @property-read Collection<int, PlaylistChange> $changes
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
