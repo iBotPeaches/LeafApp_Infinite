@@ -24,7 +24,9 @@ class CompareRotationsTest extends TestCase
         $result = CompareRotations::execute($current, $previous);
 
         // Assert
-        $this->assertEquals('unchanged', $result['maps']['Aquarius']['type']);
+        // Aquarius percentage changed from 100% to 50%, so it should be marked as changed
+        $this->assertEquals('changed', $result['maps']['Aquarius']['type']);
+        $this->assertEquals(-50.0, $result['maps']['Aquarius']['difference']);
         $this->assertEquals('added', $result['maps']['Bazaar']['type']);
         $this->assertEquals(50.0, $result['maps']['Bazaar']['current']);
     }
@@ -44,7 +46,9 @@ class CompareRotationsTest extends TestCase
         $result = CompareRotations::execute($current, $previous);
 
         // Assert
-        $this->assertEquals('unchanged', $result['maps']['Aquarius']['type']);
+        // Aquarius percentage changed from 50% to 100%, so it should be marked as changed
+        $this->assertEquals('changed', $result['maps']['Aquarius']['type']);
+        $this->assertEquals(50.0, $result['maps']['Aquarius']['difference']);
         $this->assertEquals('removed', $result['maps']['Bazaar']['type']);
         $this->assertEquals(50.0, $result['maps']['Bazaar']['previous']);
     }
@@ -86,7 +90,9 @@ class CompareRotationsTest extends TestCase
         $result = CompareRotations::execute($current, $previous);
 
         // Assert
-        $this->assertEquals('unchanged', $result['gametypes']['Slayer']['type']);
+        // Slayer percentage changed from 100% to 50%, so it should be marked as changed
+        $this->assertEquals('changed', $result['gametypes']['Slayer']['type']);
+        $this->assertEquals(-50.0, $result['gametypes']['Slayer']['difference']);
         $this->assertEquals('added', $result['gametypes']['Strongholds']['type']);
         $this->assertEquals(50.0, $result['gametypes']['Strongholds']['current']);
     }
