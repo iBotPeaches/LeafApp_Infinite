@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Actions\Playlist\CompareRotations;
+use App\Actions\Playlist\HashRotations;
 use App\Models\Playlist;
 use App\Models\PlaylistChange;
 use App\Support\Rotations\RotationDecorator;
@@ -24,12 +25,17 @@ class PlaylistPage extends Component
         /** @var ScheduleTimer $timer */
         $timer = resolve(ScheduleTimerInterface::class);
 
-        // Get the most recent previous rotation
-        $previousChange = PlaylistChange::query()
+        $currentHash = HashRotations::execute($this->playlist->rotations);
+
+        // Get both current and previous rotation changes in one query
+        $changes = PlaylistChange::query()
             ->where('playlist_id', $this->playlist->id)
-            ->where('rotation_hash', '!=', \App\Actions\Playlist\HashRotations::execute($this->playlist->rotations))
             ->latest('created_at')
-            ->first();
+            ->limit(2)
+            ->get();
+
+        $currentChange = $changes->firstWhere('rotation_hash', $currentHash);
+        $previousChange = $changes->first(fn ($change) => $change->rotation_hash !== $currentHash);
 
         $rotationChanges = null;
         $previousDate = null;
@@ -41,14 +47,6 @@ class PlaylistPage extends Component
                 $previousChange->rotations ?? []
             );
             $previousDate = $previousChange->created_at;
-            
-            // Get the current rotation date
-            $currentChange = PlaylistChange::query()
-                ->where('playlist_id', $this->playlist->id)
-                ->where('rotation_hash', \App\Actions\Playlist\HashRotations::execute($this->playlist->rotations))
-                ->latest('created_at')
-                ->first();
-            
             $currentDate = $currentChange?->created_at;
         }
 
