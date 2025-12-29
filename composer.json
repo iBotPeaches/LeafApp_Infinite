@@ -13,7 +13,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "league/csv": "^9.8",
-        "livewire/livewire": "^3.0",
+        "livewire/livewire": "^3.7",
         "sentry/sentry-laravel": "^4.0",
         "spatie/laravel-markdown": "^2.2",
         "spatie/laravel-sitemap": "^7"
