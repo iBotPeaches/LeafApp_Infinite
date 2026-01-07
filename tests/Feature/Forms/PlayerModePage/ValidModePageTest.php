@@ -20,12 +20,12 @@ class ValidModePageTest extends TestCase
     {
         // Arrange
         $player = Player::factory()->createOne();
-        
+
         // Create multiple games with the same map/category to ensure total > 5 for bestModes/worseModes
         $game = Game::factory()
             ->forPlaylist(['is_ranked' => true])
             ->createOne();
-        
+
         // Create 6 wins and 6 losses with the same game attributes (map, category)
         // This ensures the grouped query will have totals > 5 for both WIN and LOSS
         GamePlayer::factory()
@@ -35,7 +35,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
                 'outcome' => Outcome::WIN,
             ]);
-            
+
         GamePlayer::factory()
             ->count(6)
             ->for($game)
@@ -62,12 +62,12 @@ class ValidModePageTest extends TestCase
     {
         // Arrange
         $player = Player::factory()->createOne();
-        
+
         // Create multiple games with the same map/category to ensure total > 5 for bestModes/worseModes
         $game = Game::factory()
             ->forPlaylist(['is_ranked' => true])
             ->createOne();
-        
+
         // Create 6 wins and 6 losses with the same game attributes (map, category)
         // This ensures the grouped query will have totals > 5 for both WIN and LOSS
         GamePlayer::factory()
@@ -77,7 +77,7 @@ class ValidModePageTest extends TestCase
                 'player_id' => $player->id,
                 'outcome' => Outcome::WIN,
             ]);
-            
+
         GamePlayer::factory()
             ->count(6)
             ->for($game)
