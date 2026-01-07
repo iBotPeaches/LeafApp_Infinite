@@ -6,11 +6,11 @@ namespace Tests\Feature\Forms\PlayerModePage;
 
 use App\Enums\Outcome;
 use App\Livewire\ModePage;
+use App\Models\Game;
 use App\Models\GamePlayer;
 use App\Models\Player;
 use App\Models\Season;
 use App\Support\Session\SeasonSession;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -20,16 +20,28 @@ class ValidModePageTest extends TestCase
     {
         // Arrange
         $player = Player::factory()->createOne();
+        
+        // Create multiple games with the same map/category to ensure total > 5 for bestModes/worseModes
+        $game = Game::factory()
+            ->forPlaylist(['is_ranked' => true])
+            ->createOne();
+        
+        // Create 6 wins and 6 losses with the same game attributes (map, category)
+        // This ensures the grouped query will have totals > 5 for both WIN and LOSS
         GamePlayer::factory()
-            ->count(8)
-            ->state(new Sequence(
-                ['outcome' => Outcome::WIN],
-                ['outcome' => Outcome::LOSS],
-                ['outcome' => Outcome::LEFT],
-                ['outcome' => Outcome::DRAW],
-            ))
+            ->count(6)
+            ->for($game)
             ->create([
                 'player_id' => $player->id,
+                'outcome' => Outcome::WIN,
+            ]);
+            
+        GamePlayer::factory()
+            ->count(6)
+            ->for($game)
+            ->create([
+                'player_id' => $player->id,
+                'outcome' => Outcome::LOSS,
             ]);
 
         Season::factory()->createOne([
@@ -50,16 +62,28 @@ class ValidModePageTest extends TestCase
     {
         // Arrange
         $player = Player::factory()->createOne();
+        
+        // Create multiple games with the same map/category to ensure total > 5 for bestModes/worseModes
+        $game = Game::factory()
+            ->forPlaylist(['is_ranked' => true])
+            ->createOne();
+        
+        // Create 6 wins and 6 losses with the same game attributes (map, category)
+        // This ensures the grouped query will have totals > 5 for both WIN and LOSS
         GamePlayer::factory()
-            ->count(8)
-            ->state(new Sequence(
-                ['outcome' => Outcome::WIN],
-                ['outcome' => Outcome::LOSS],
-                ['outcome' => Outcome::LEFT],
-                ['outcome' => Outcome::DRAW],
-            ))
+            ->count(6)
+            ->for($game)
             ->create([
                 'player_id' => $player->id,
+                'outcome' => Outcome::WIN,
+            ]);
+            
+        GamePlayer::factory()
+            ->count(6)
+            ->for($game)
+            ->create([
+                'player_id' => $player->id,
+                'outcome' => Outcome::LOSS,
             ]);
 
         SeasonSession::set(SeasonSession::$allSeasonKey);
