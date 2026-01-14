@@ -8,7 +8,7 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            <livewire:ranks-page></livewire:ranks-page>
+            <livewire:ranks-page /></livewire:ranks-page>
         </div>
     </div>
 @endsection

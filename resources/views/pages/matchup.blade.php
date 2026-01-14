@@ -6,5 +6,5 @@
     <livewire:championship-matchup
         :championship="$championship"
         :matchup="$matchup"
-    ></livewire:championship-matchup>
+    /></livewire:championship-matchup>
 @endsection

@@ -1,1 +1,1 @@
-<livewire:playlist-page :playlist="$playlist"></livewire:playlist-page>
+<livewire:playlist-page :playlist="$playlist" /></livewire:playlist-page>

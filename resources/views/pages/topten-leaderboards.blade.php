@@ -3,7 +3,7 @@
 @section('description', 'Top Ten Leaderboards')
 
 @section('content')
-    <livewire:top-ten-table></livewire:top-ten-table>
+    <livewire:top-ten-table /></livewire:top-ten-table>
     <article class="message is-dark">
         <div class="message-header">
             <p>Have an idea for a stat? Let me know</p>

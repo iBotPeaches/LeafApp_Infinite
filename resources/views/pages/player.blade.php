@@ -13,7 +13,7 @@
                     <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
 
                     @if (in_array($type, ['custom', 'matches', 'lan']))
-                        <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
+                        <livewire:scrim-toggle-panel /></livewire:scrim-toggle-panel>
                     @endif
                 </div>
             @endif

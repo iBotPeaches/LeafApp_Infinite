@@ -3,5 +3,5 @@
 @section('description', 'Halo Infinite Map Overviews')
 
 @section('content')
-    <livewire:overviews-table :type="$type"></livewire:overviews-table>
+    <livewire:overviews-table :type="$type" /></livewire:overviews-table>
 @endsection

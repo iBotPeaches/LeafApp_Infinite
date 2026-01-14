@@ -1,3 +1,3 @@
 <livewire:scrim-overview
     :scrim="$scrim"
-></livewire:scrim-overview>
+ /></livewire:scrim-overview>

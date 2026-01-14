@@ -7,5 +7,5 @@
         :championship="$championship"
         :bracket="$bracket"
         :round="$round"
-    ></livewire:championship-bracket>
+    /></livewire:championship-bracket>
 @endsection

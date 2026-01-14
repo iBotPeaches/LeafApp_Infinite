@@ -3,5 +3,5 @@
 @section('description', 'Leaf - HCS Open Championships')
 
 @section('content')
-    <livewire:championships-table></livewire:championships-table>
+    <livewire:championships-table /></livewire:championships-table>
 @endsection

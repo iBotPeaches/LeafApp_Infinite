@@ -3,5 +3,5 @@
 @section('description', 'Medal Leaderboards')
 
 @section('content')
-    <livewire:medals-table></livewire:medals-table>
+    <livewire:medals-table /></livewire:medals-table>
 @endsection
