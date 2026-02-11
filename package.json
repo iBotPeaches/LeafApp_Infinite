@@ -7,7 +7,7 @@
     "devDependencies": {
         "@creativebulma/bulma-divider": "^1.1.0",
         "@creativebulma/bulma-tooltip": "^1.2.0",
-        "@erbelion/vite-plugin-laravel-purgecss": "^0.4.4",
+        "@erbelion/vite-plugin-laravel-purgecss": "^0.4.7",
         "@fortawesome/fontawesome-free": "^7.1.0",
         "bulma": "^0.9.4",
         "bulma-ribbon": "^0.1.1",
