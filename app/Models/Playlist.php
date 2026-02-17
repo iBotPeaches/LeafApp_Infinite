@@ -33,6 +33,7 @@ use Illuminate\Support\Str;
  * @property-read string $image
  * @property-read ?PlaylistStat $stat
  * @property-read Collection<int, PlaylistAnalytic> $analytics
+ * @property-read Collection<int, PlaylistChange> $changes
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
@@ -136,5 +137,10 @@ class Playlist extends Model implements HasDotApi
     public function analytics(): HasMany
     {
         return $this->hasMany(PlaylistAnalytic::class);
+    }
+
+    public function changes(): HasMany
+    {
+        return $this->hasMany(PlaylistChange::class);
     }
 }
