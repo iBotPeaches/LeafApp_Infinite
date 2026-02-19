@@ -48,6 +48,10 @@ class PlayerBan extends Model implements HasDotApi
             'Your' => $this->player->gamertag."'s",
         ];
 
+        if ($this->is_expired) {
+            $replacements['will end'] = 'ended';
+        }
+
         return (string) str_replace(array_keys($replacements), $replacements, $value);
     }
 
