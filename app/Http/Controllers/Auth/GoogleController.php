@@ -15,7 +15,7 @@ class GoogleController extends Controller
     public function redirect(): RedirectResponse
     {
         return Socialite::driver('google')
-            ->setScopes(['email'])
+            ->setScopes(['email']) // @phpstan-ignore-line method.notFound
             ->redirect();
     }
 
