@@ -16,7 +16,7 @@
         "livewire/livewire": "^4.0",
         "sentry/sentry-laravel": "^4.0",
         "spatie/laravel-markdown": "^2.2",
-        "spatie/laravel-sitemap": "^7"
+        "spatie/laravel-sitemap": "^8"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
