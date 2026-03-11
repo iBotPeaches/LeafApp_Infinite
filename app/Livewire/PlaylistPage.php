@@ -9,6 +9,8 @@ use App\Models\PlaylistChange;
 use App\Support\Rotations\RotationDecorator;
 use App\Support\Schedule\ScheduleTimer;
 use App\Support\Schedule\ScheduleTimerInterface;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -23,7 +25,7 @@ class PlaylistPage extends Component
         /** @var ScheduleTimer $timer */
         $timer = resolve(ScheduleTimerInterface::class);
 
-        /** @var \Illuminate\Database\Eloquent\Collection<int, PlaylistChange> $changes */
+        /** @var EloquentCollection<int, PlaylistChange> $changes */
         $changes = $this->playlist->changes()->orderByDesc('created_at')->limit(2)->get();
         /** @var PlaylistChange|null $currentChange */
         $currentChange = $changes->first();
@@ -52,7 +54,7 @@ class PlaylistPage extends Component
         ]);
     }
 
-    private function computeDiffs(\Illuminate\Support\Collection $current, \Illuminate\Support\Collection $previous): array
+    private function computeDiffs(Collection $current, Collection $previous): array
     {
         $diffs = [];
         $allKeys = $current->keys()->merge($previous->keys())->unique();

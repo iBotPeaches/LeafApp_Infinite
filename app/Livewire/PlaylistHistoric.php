@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Models\Playlist;
 use App\Models\PlaylistChange;
 use App\Support\Rotations\RotationDecorator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -16,7 +17,7 @@ class PlaylistHistoric extends Component
 
     public function render(): View
     {
-        /** @var \Illuminate\Database\Eloquent\Collection<int, PlaylistChange> $changes */
+        /** @var Collection<int, PlaylistChange> $changes */
         $changes = $this->playlist->changes()->orderByDesc('created_at')->get();
 
         $historicRotations = $changes->map(function (PlaylistChange $change) {
