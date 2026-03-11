@@ -10,6 +10,7 @@
         <div class="column">
             @include('partials.playlist.current-playlist')
             @include('partials.playlist.sidebar-list')
+            @include('partials.playlist.rotation-dates')
         </div>
         <div class="column is-three-quarters">
             @include('partials.playlist.navigation')

@@ -14,4 +14,6 @@ final class PlaylistTab extends Enum implements LocalizedEnum
     const OVERVIEW = 'overview';
 
     const STATS = 'stats';
+
+    const HISTORIC = 'historic';
 }

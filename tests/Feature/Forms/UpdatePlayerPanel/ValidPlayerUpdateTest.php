@@ -7,6 +7,7 @@ namespace Tests\Feature\Forms\UpdatePlayerPanel;
 use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\PlayerTab;
+use App\Enums\Queue;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
@@ -400,7 +401,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->has(Csr::factory()->state(function () use ($playlist) {
                 return [
                     'playlist_id' => $playlist->id,
-                    'queue' => \App\Enums\Queue::OPEN,
+                    'queue' => Queue::OPEN,
                     'mode' => CompetitiveMode::ALL_TIME,
                     'season' => null,
                     'input' => Input::CROSSPLAY,

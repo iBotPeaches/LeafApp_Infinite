@@ -16,5 +16,11 @@
                 <span>Stats</span>
             </a>
         </li>
+        <li class="<?= $type === App\Enums\PlaylistTab::HISTORIC ? 'is-active' : null; ?>">
+            <a href="<?= route('playlist', [$playlist, App\Enums\PlaylistTab::HISTORIC]); ?>">
+                <span class="icon"><i class="fa fa-clock-rotate-left"></i></span>
+                <span>Historic</span>
+            </a>
+        </li>
     </ul>
 </div>
