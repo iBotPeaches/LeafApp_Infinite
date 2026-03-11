@@ -31,7 +31,7 @@
                     Map Breakdown
                 </p>
                 <p class="panel-block">
-                    @include('partials.playlist.mode-breakdown', ['items' => $maps, 'title' => 'Maps'])
+                    @include('partials.playlist.mode-breakdown', ['items' => $maps, 'title' => 'Maps', 'diffs' => $mapDiffs])
                 </p>
             </article>
             <article class="panel is-info">
@@ -39,7 +39,7 @@
                     Gametype Breakdown
                 </p>
                 <p class="panel-block">
-                    @include('partials.playlist.mode-breakdown', ['items' => $gametypes, 'title' => 'Gametypes'])
+                    @include('partials.playlist.mode-breakdown', ['items' => $gametypes, 'title' => 'Gametypes', 'diffs' => $gametypeDiffs])
                 </p>
             </article>
             @include('partials.leaderboard.common.next_refresh')
