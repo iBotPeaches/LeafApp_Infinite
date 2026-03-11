@@ -1,5 +1,10 @@
 <?php
 
+use App\Enums\OverviewTab;
+use App\Enums\OverviewType;
+use App\Enums\PlayerTab;
+use App\Enums\PlaylistTab;
+use App\Enums\ScrimTab;
 use App\Http\Controllers\Auth\BaseAuthController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\GameController;
@@ -31,7 +36,7 @@ Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'
 // Scrim
 Route::get('/scrims/{scrim}/players/csv', [ScrimController::class, 'csvPlayers'])->name('scrimPlayersCsv');
 Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])
-    ->where('scrimType', implode('|', \App\Enums\ScrimTab::getValues()))
+    ->where('scrimType', implode('|', ScrimTab::getValues()))
     ->name('scrim');
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
@@ -47,7 +52,7 @@ Route::middleware(['throttle:uploads'])->group(function () {
 });
 
 Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])
-    ->where('type', implode('|', \App\Enums\PlayerTab::getValues()))
+    ->where('type', implode('|', PlayerTab::getValues()))
     ->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
 
@@ -64,7 +69,7 @@ Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Playlists
 Route::get('/playlists/{playlist?}/{tab?}', [PlaylistController::class, 'index'])
-    ->where('tab', implode('|', \App\Enums\PlaylistTab::getValues()))
+    ->where('tab', implode('|', PlaylistTab::getValues()))
     ->name('playlist');
 
 // Ranks
@@ -72,10 +77,10 @@ Route::get('/ranks', RankController::class)->name('ranks');
 
 // Overviews
 Route::get('/overviews/{filterType?}', [OverviewController::class, 'list'])
-    ->where('filterType', implode('|', \App\Enums\OverviewType::getValues()))
+    ->where('filterType', implode('|', OverviewType::getValues()))
     ->name('overviews');
 Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])
-    ->where('tab', implode('|', \App\Enums\OverviewTab::getValues()))
+    ->where('tab', implode('|', OverviewTab::getValues()))
     ->name('overview');
 
 // Auth

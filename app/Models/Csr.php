@@ -201,7 +201,7 @@ class Csr extends Model implements HasDotApi
             }
 
             if (empty($queue) || empty($input)) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     'Queue ('.$queueName.') or input ('.$inputName.') is unknown.'
                 );
             }
