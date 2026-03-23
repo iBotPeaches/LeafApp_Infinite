@@ -91,7 +91,7 @@ Used for optimizing images that come from backdrops and emblems.
 1. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
 
 #### PHP
-1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
+1. PHP CodeSniffer - https://github.com/PHPCSStandards/PHP_CodeSniffer - BSD-3-Clause 
 1. Larastan - https://github.com/nunomaduro/larastan - MIT
 1. Guzzle - https://github.com/guzzle/guzzle - MIT
 1. Livewire - https://github.com/livewire/livewire - MIT
