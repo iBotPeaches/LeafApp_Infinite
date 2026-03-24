@@ -36,7 +36,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. `php artisan serve`
 
 ### Contributions
- * Code must pass phpcs. (`./vendor/bin/phpcs`)
+ * Code must pass pint. (`./vendor/bin/pint`)
  * Code must pass phpstan. (`./vendor/bin/phpstan analyse`)
  * Code must have 100% test coverage. (`composer coverage`)
 
@@ -91,12 +91,11 @@ Used for optimizing images that come from backdrops and emblems.
 1. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
 
 #### PHP
-1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
-1. Larastan - https://github.com/nunomaduro/larastan - MIT
+1. Laravel Pint - https://github.com/laravel/pint - MIT
+1. Larastan - https://github.com/larastan/larastan - MIT
 1. Guzzle - https://github.com/guzzle/guzzle - MIT
 1. Livewire - https://github.com/livewire/livewire - MIT
 1. Enum - https://github.com/BenSampo/laravel-enum - MIT
-1. DBAL - https://github.com/doctrine/dbal - MIT
 1. SEOTools - https://github.com/artesaos/seotools - MIT
 1. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
 1. Socialite - https://github.com/laravel/socialite - MIT
