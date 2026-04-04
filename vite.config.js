@@ -13,6 +13,7 @@ export default defineConfig({
         ]),
         purge({
             templates: ['blade'],
+            rehash: false,
             safelist: {
                 greedy: [
                     /orange/,
