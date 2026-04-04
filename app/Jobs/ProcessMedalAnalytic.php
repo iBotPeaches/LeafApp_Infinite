@@ -96,10 +96,11 @@ class ProcessMedalAnalytic implements ShouldQueue
             ->where('is_cheater', false)
             ->where('is_botfarmer', false)
             ->where('mode', $mode->value)
+            // @phpstan-ignore-next-line argument.type
             ->selectRaw('ROW_NUMBER() OVER(ORDER BY value DESC, total_seconds_played DESC) AS place,
                 CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) as value,
                 mode, total_seconds_played, player_id')
-            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0')
+            ->whereRaw('CAST(JSON_EXTRACT(medals, "$.'.$this->medal->id.'") as unsigned) > 0') // @phpstan-ignore-line argument.type
             ->orderByRaw('value DESC, total_seconds_played DESC');
 
         if ($this->season) {
