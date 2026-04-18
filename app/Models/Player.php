@@ -342,9 +342,11 @@ class Player extends Model implements HasDotApi, Sitemapable
 
         $totalGames = $playlistBreakdown->sum('total');
         if ($totalGames >= 100 && ! $this->is_forced_farmer) {
-            $botBootcampPercent = $playlistBreakdown->firstWhere('playlist_id', $botBootcampId)?->total / $totalGames;
+            $botBootcampTotal = $playlistBreakdown->firstWhere('playlist_id', $botBootcampId)?->total ?? 0;
+            $botBootcampPercent = $botBootcampTotal / $totalGames;
             $playsTooMuchBotBootcamp = $botBootcampPercent >= config('services.halo.botfarmer_threshold');
             $this->is_botfarmer = $playsTooMuchBotBootcamp;
+            $this->saveQuietly();
         }
     }
 
