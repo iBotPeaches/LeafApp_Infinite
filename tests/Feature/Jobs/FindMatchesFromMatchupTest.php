@@ -13,8 +13,8 @@ use App\Models\Pivots\MatchupPlayer;
 use App\Models\Player;
 use App\Services\DotApi\InfiniteInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Mockery;
@@ -48,7 +48,7 @@ class FindMatchesFromMatchupTest extends TestCase
             Mockery::mock(InfiniteInterface::class)
                 ->shouldReceive('matches')
                 ->once()
-                ->andReturn(new Collection())
+                ->andReturn(new EloquentCollection)
                 ->getMock()
         );
 
