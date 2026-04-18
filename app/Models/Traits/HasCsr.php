@@ -37,6 +37,10 @@ trait HasCsr
 
     public function getCsrChangeRawAttribute(): int
     {
+        if ($this->post_csr === null || $this->pre_csr === null) {
+            return 0;
+        }
+
         return $this->post_csr - $this->pre_csr;
     }
 

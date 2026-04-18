@@ -121,7 +121,7 @@ class Csr extends Model implements HasDotApi
 
     public function getNextRankPercentAttribute(): float
     {
-        if ($this->next_xp_for_level === 0) {
+        if ($this->next_xp_for_level === 0 || $this->current_xp_for_level === null) {
             return 0;
         }
 

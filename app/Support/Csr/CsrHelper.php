@@ -10,13 +10,21 @@ class CsrHelper
 {
     public static function getCsrFromValue(?int $value, ?int $matchesRemaining, ?int $championRank): Csr
     {
+        $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
+
+        if ($championRank !== null) {
+            return new Csr($championRank, null, 'Champion');
+        }
+
+        if ($value === null) {
+            return new Csr(0, $matchesCompleted, 'Unranked');
+        }
+
         // Since there is 50 CSR per level and 6 levels per class
         $rankClass = $value / 50;
         $subTier = (int) ceil($rankClass + 0.001);
-        $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
 
         return match (true) {
-            $championRank !== null => new Csr($championRank, null, 'Champion'),
             $rankClass > 0 && $rankClass < 6 => new Csr($value, $subTier, 'Bronze'),
             $rankClass >= 6 && $rankClass < 12 => new Csr($value, ($subTier - 6), 'Silver'),
             $rankClass >= 12 && $rankClass < 18 => new Csr($value, ($subTier - 12), 'Gold'),
