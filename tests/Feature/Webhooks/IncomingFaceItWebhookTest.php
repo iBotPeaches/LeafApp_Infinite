@@ -23,6 +23,13 @@ use Tests\TestCase;
 
 class IncomingFaceItWebhookTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config(['services.faceit.webhook.secret' => 'test-webhook-secret']);
+    }
+
     public function test_incoming_face_it_match_completed(): void
     {
         // Arrange & Act
@@ -217,5 +224,42 @@ class IncomingFaceItWebhookTest extends TestCase
                 'payloadFunction' => fn () => (new MockChampionshipCreated)->error(),
             ],
         ];
+    }
+
+    public function test_incoming_face_it_rejects_webhook_with_missing_signature_header(): void
+    {
+        $payload = (new MockMatchStatusFinished)->success();
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    public function test_incoming_face_it_rejects_webhook_when_secret_not_configured(): void
+    {
+        config(['services.faceit.webhook.secret' => null]);
+
+        $payload = (new MockMatchStatusFinished)->success();
+        $headers = [
+            'X-Cat-Dog' => 'secret',
+        ];
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    public function test_incoming_face_it_rejects_webhook_with_empty_secret(): void
+    {
+        config(['services.faceit.webhook.secret' => '']);
+
+        $payload = (new MockMatchStatusFinished)->success();
+        $headers = [
+            'X-Cat-Dog' => 'test-webhook-secret',
+        ];
+
+        $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }
