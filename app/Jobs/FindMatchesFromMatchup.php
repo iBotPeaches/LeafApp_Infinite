@@ -62,9 +62,9 @@ class FindMatchesFromMatchup implements ShouldQueue
                     $startedAt = $this->matchup->started_at;
                     if ($startedAt) {
                         $query
-                            ->whereDate('occurred_at', $startedAt->subDay())
+                            ->whereDate('occurred_at', $startedAt->copy()->subDay())
                             ->orWhereDate('occurred_at', $startedAt)
-                            ->orWhereDate('occurred_at', $startedAt->addDay());
+                            ->orWhereDate('occurred_at', $startedAt->copy()->addDay());
                     }
                 })
                 ->cursor()
