@@ -154,7 +154,7 @@ class GamePlayer extends Model implements HasDotApi
         $gamePlayer->expected_kills ??= max(Arr::get($payload, $prefix.'performances.kills.expected'), 0);
         $gamePlayer->expected_deaths ??= max(Arr::get($payload, $prefix.'performances.deaths.expected'), 0);
 
-        if (Arr::has($payload, 'stats.core.breakdown.medals')) {
+        if (Arr::has($payload, $prefix.'stats.core.breakdown.medals')) {
             $gamePlayer->medals = collect((array) Arr::get($payload, $prefix.'stats.core.breakdown.medals'))
                 ->mapWithKeys(function (array $medal) {
                     return [
