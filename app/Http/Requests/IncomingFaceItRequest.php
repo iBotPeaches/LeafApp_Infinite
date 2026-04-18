@@ -13,7 +13,7 @@ class IncomingFaceItRequest extends FormRequest
         $secret = config('services.faceit.webhook.secret');
         $header = $this->header('X-Cat-Dog');
 
-        if ($secret === null || $header === null) {
+        if ($secret === null || $secret === '' || $header === null) {
             return false;
         }
 
