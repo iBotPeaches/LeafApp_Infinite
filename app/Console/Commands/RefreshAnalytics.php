@@ -24,6 +24,13 @@ class RefreshAnalytics extends Command
 
         if ($analyticOption) {
             $analytic = 'App\Support\Analytics\Stats\\'.$analyticOption;
+
+            if (! is_a($analytic, AnalyticInterface::class, true)) {
+                $this->error('Invalid analytic class: '.$analyticOption);
+
+                return self::FAILURE;
+            }
+
             /** @var AnalyticInterface $analyticClass */
             $analyticClass = new $analytic;
 
@@ -39,6 +46,10 @@ class RefreshAnalytics extends Command
 
         foreach ($availableAnalytics as $availableAnalytic) {
             $analytic = 'App\Support\Analytics\Stats\\'.Str::before($availableAnalytic, '.php');
+
+            if (! is_a($analytic, AnalyticInterface::class, true)) {
+                continue;
+            }
 
             /** @var AnalyticInterface $analyticClass */
             $analyticClass = new $analytic;

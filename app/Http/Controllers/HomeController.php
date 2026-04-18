@@ -33,8 +33,21 @@ class HomeController extends Controller
             ->first();
 
         $availableAnalytics = Storage::disk('stats')->files();
+        if (empty($availableAnalytics)) {
+            return view('pages.home', [
+                'lastUpdated' => $lastUpdated,
+                'medalAnalytic' => $medalAnalytic,
+                'analyticClass' => null,
+                'analytic' => null,
+            ]);
+        }
+
         $randomAnalytic = 'App\Support\Analytics\Stats\\'.
             Str::before($availableAnalytics[array_rand($availableAnalytics)], '.php');
+
+        if (! is_a($randomAnalytic, AnalyticInterface::class, true)) {
+            abort(500);
+        }
 
         /** @var AnalyticInterface $randomAnalyticClass */
         $randomAnalyticClass = new $randomAnalytic;
