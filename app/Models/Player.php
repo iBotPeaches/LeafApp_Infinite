@@ -114,19 +114,9 @@ class Player extends Model implements HasDotApi, Sitemapable
     {
         $gamertag = urldecode($value);
 
-        try {
-            return $this->query()
-                ->where('gamertag', $gamertag)
-                ->firstOrFail();
-        } catch (ModelNotFoundException) {
-            /** @var InfiniteInterface $client */
-            $client = resolve(InfiniteInterface::class);
-            $client->appearance($gamertag);
-
-            return $this->query()
-                ->where('gamertag', $gamertag)
-                ->first();
-        }
+        return $this->query()
+            ->where('gamertag', $gamertag)
+            ->first();
     }
 
     public function getEmblemUrlAttribute(?string $value): ?string
