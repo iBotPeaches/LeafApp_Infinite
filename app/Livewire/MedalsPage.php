@@ -29,7 +29,7 @@ class MedalsPage extends Component
         $serviceRecord = $this->player->$serviceRecordType()->ofSeason($season)->first();
 
         $medals = Medal::all()->map(function (Medal $medal) use ($serviceRecord) {
-            $medal['count'] = $serviceRecord->medals[$medal->id] ?? 0;
+            $medal['count'] = $serviceRecord?->medals[$medal->id] ?? 0;
 
             return $medal;
         })->sortBy('name');
