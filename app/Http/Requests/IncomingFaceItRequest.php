@@ -10,7 +10,14 @@ class IncomingFaceItRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->header('X-Cat-Dog') === config('services.faceit.webhook.secret');
+        $secret = config('services.faceit.webhook.secret');
+        $header = $this->header('X-Cat-Dog');
+
+        if ($secret === null || $secret === '' || $header === null) {
+            return false;
+        }
+
+        return hash_equals($secret, $header);
     }
 
     public function rules(): array
