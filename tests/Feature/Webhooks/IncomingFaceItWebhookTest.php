@@ -23,6 +23,13 @@ use Tests\TestCase;
 
 class IncomingFaceItWebhookTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config(['services.faceit.webhook.secret' => 'test-webhook-secret']);
+    }
+
     public function test_incoming_face_it_match_completed(): void
     {
         // Arrange & Act
@@ -248,7 +255,7 @@ class IncomingFaceItWebhookTest extends TestCase
 
         $payload = (new MockMatchStatusFinished)->success();
         $headers = [
-            'X-Cat-Dog' => '',
+            'X-Cat-Dog' => 'test-webhook-secret',
         ];
 
         $response = $this->postJson(route('webhooks.faceit'), $payload, $headers);
