@@ -7,7 +7,7 @@ require 'contrib/php-fpm.php';
 
 set('application', 'Leaf');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
-set('php_fpm_service', 'php8.4-fpm');
+set('php_fpm_service', 'php8.5-fpm');
 set('git_ssh_command', 'ssh -o StrictHostKeyChecking=no');
 set('default_timeout', 1800);
 
