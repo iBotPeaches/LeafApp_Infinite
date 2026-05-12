@@ -13,14 +13,15 @@ use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
 use League\Csv\Writer;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PlayerController extends Controller
 {
-    public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): View
+    public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): Response
     {
         SEOTools::setTitle(e($player->gamertag.' '.Str::title($type)));
         SEOTools::addImages([
@@ -28,11 +29,11 @@ class PlayerController extends Controller
         ]);
         SEOTools::setDescription(e($player->gamertag.' Halo Infinite '.Str::title($type)));
 
-        return view('pages.player', [
+        return response()->view('pages.player', [
             'player' => $player,
             'user' => $request->user(),
             'type' => $type,
-        ]);
+        ])->setStatusCode($player->is_hidden ? ResponseAlias::HTTP_UNAVAILABLE_FOR_LEGAL_REASONS : ResponseAlias::HTTP_OK);
     }
 
     public function csv(Player $player, string $playerType): StreamedResponse

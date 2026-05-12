@@ -324,6 +324,23 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
+    public function test_loading_player_overview_page_as_hidden_player(): void
+    {
+        // Arrange
+        /** @var Player $player */
+        $player = Player::factory()->create([
+            'is_hidden' => true,
+        ]);
+
+        // Act
+        $response = $this->get(route('player', $player));
+
+        // Assert
+        $response->assertStatus(451);
+        $response->assertSee('Sorry - this user');
+        $response->assertDontSee('<span>Overview</span>', false);
+    }
+
     public static function gamertagDataProvider(): array
     {
         return [

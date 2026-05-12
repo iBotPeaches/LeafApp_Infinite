@@ -4,18 +4,22 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
-                <livewire:player-toggle-panel :type="$type" />
+            @if (!$player->is_hidden)
+                @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
+                    <livewire:player-toggle-panel :type="$type" />
+                @endif
             @endif
             <livewire:player-card :player="$player" />
-            @if (in_array($type, ['matches', 'custom', 'lan']))
-                <div class="notification mb-2">
-                    <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
+            @if (!$player->is_hidden)
+                @if (in_array($type, ['matches', 'custom', 'lan']))
+                    <div class="notification mb-2">
+                        <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
 
-                    @if (in_array($type, ['custom', 'matches', 'lan']))
-                        <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
-                    @endif
-                </div>
+                        @if (in_array($type, ['custom', 'matches', 'lan']))
+                            <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
+                        @endif
+                    </div>
+                @endif
             @endif
             @if ($player->is_private)
                 <div class="notification is-warning mb-2">
@@ -51,21 +55,30 @@
                     </span>
                 </div>
             @endif
-            @if (!config('services.dotapi.disabled'))
-                @if (!$player->is_bot)
-                    <livewire:update-player-panel :player="$player" :type="$type" />
+            @if (!$player->is_hidden)
+                @if (!config('services.dotapi.disabled'))
+                    @if (!$player->is_bot)
+                        <livewire:update-player-panel :player="$player" :type="$type" />
+                    @endif
                 @endif
+                <livewire:player-badges :player="$player" />
+                @auth
+                    @include('partials.player.linkable-card')
+                    <livewire:player-ban-card :player="$player" />
+                @endauth
             @endif
-            <livewire:player-badges :player="$player" />
-            @auth
-                @include('partials.player.linkable-card')
-                <livewire:player-ban-card :player="$player" />
-            @endauth
         </div>
-        <div class="column is-three-quarters">
-            @include('partials.player.navigation')
-            @include('partials.player.ban-header')
-            @include('partials.player.tabs.' . $type, ['player' => $player])
-        </div>
+            @if ($player->is_hidden)
+                <div class="column is-three-quarters">
+                    @include('partials.global.account_hidden')
+                    @include('partials.global.account_private')
+                </div>
+            @else
+                <div class="column is-three-quarters">
+                    @include('partials.player.navigation')
+                    @include('partials.player.ban-header')
+                    @include('partials.player.tabs.' . $type, ['player' => $player])
+                </div>
+            @endif
     </div>
 @endsection
