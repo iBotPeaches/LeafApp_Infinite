@@ -47,6 +47,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property bool $is_bot
  * @property bool $is_cheater
  * @property bool $is_throttled
+ * @property bool $is_hidden
  * @property bool $is_botfarmer
  * @property bool $is_forced_farmer
  * @property int|null $last_game_id_pulled
@@ -98,6 +99,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         'is_bot' => 'bool',
         'is_cheater' => 'bool',
         'is_throttled' => 'bool',
+        'is_hidden' => 'bool',
     ];
 
     public function getRouteKeyName(): string
