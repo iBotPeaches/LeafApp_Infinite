@@ -25,7 +25,7 @@ class PlayerBadges extends Component
         $topTen = $this->player->analytics()
             ->with('player')
             ->where('place', '<=', 10)
-            ->orderBy('place', 'ASC')
+            ->orderBy('place')
             ->get()
             ->each(function (Analytic $analytic) {
                 $analyticEnumKey = AnalyticKey::tryFrom($analytic->key);
@@ -37,8 +37,8 @@ class PlayerBadges extends Component
             ->whereNull('season_id')
             ->where('mode', Mode::MATCHMADE_PVP)
             ->where('place', '<=', 10)
-            ->orderBy('place', 'ASC')
-            ->orderBy('value', 'DESC')
+            ->orderBy('place')
+            ->orderBy('value', 'desc')
             ->get();
 
         return view('livewire.player-badges', [
