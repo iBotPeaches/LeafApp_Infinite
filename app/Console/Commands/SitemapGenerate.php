@@ -38,8 +38,11 @@ class SitemapGenerate extends Command
             ->add(Medal::all())
             ->writeToFile($sitemapFolder.'/sitemap_medals.xml');
 
+        // Since having Google scan all millions of players is too heavy.
+        // Just index those with over a million XP
         $playerIndex = 0;
         Player::query()
+            ->where('xp', '>', 1_000_000)
             ->withoutEagerLoads()
             ->chunkById(30000, function ($players) use ($sitemapFolder, &$playerIndex) {
                 Sitemap::create()
