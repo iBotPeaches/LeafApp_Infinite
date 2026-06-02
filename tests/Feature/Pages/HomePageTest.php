@@ -17,5 +17,7 @@ class HomePageTest extends TestCase
         // Assert
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('add-gamer-form');
+        $response->assertCookieMissing('XSRF-TOKEN');
+        $response->assertCookieMissing(config('session.cookie'));
     }
 }
