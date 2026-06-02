@@ -22,7 +22,9 @@ class SitemapGenerateTest extends TestCase
         Matchup::factory()->createOne();
         Scrim::factory()->createOne();
         Medal::factory()->createOne();
-        Player::factory()->createOne();
+        Player::factory()->createOne([
+            'xp' => 1_000_200,
+        ]);
 
         // Act & Assert
         $this
