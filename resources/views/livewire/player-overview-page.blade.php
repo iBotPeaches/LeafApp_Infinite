@@ -4,11 +4,11 @@
 /** @var App\Models\Season $season */
 /** @var App\Enums\Mode $mode */
 ?>
-@if (empty($serviceRecord))
-    @if ($player->is_private)
-        @include('partials.global.account_private')
-    @else
-        <div>
+<div>
+    @if (empty($serviceRecord))
+        @if ($player->is_private)
+            @include('partials.global.account_private')
+        @else
             <div class="notification is-warning">
                 <p>
                     No record was found for this user for this specific season: <strong>{{ $season->name ?? 'n/a' }}</strong>.
@@ -24,13 +24,11 @@
                     but exists - this is a limitation of current tool.
                 </div>
             @endif
-        </div>
-    @endif
-@else
-    @if ($player->is_private)
-        @include('partials.global.account_private')
+        @endif
     @else
-        <div>
+        @if ($player->is_private)
+            @include('partials.global.account_private')
+        @else
             @if ($mode->is(\App\Enums\Mode::MATCHMADE_RANKED()) && !$isAllSeasons)
                 <div class="notification is-warning">
                     We currently cannot pull filtered data (ie ranked) from a specific season. If you have data it's from an older Leaf that could.
@@ -40,6 +38,6 @@
             @if ($serviceRecord->medals)
                 @include('partials.player.medal-groups')
             @endif
-        </div>
+        @endif
     @endif
-@endif
+</div>
