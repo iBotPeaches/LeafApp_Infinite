@@ -26,6 +26,7 @@ task('deploy', [
     'artisan:storage:link',
     'npm:local:upload',
     'artisan:horizon:assets',
+    'artisan:livewire:assets',
     'app:version:file',
     'app:sentry:version',
     'deploy:publish',
@@ -56,6 +57,11 @@ task('app:sitemap', function () {
 task('artisan:horizon:assets', function () {
     cd('{{release_or_current_path}}');
     run('php artisan horizon:publish');
+});
+
+task('artisan:livewire:assets', function () {
+    cd('{{release_or_current_path}}');
+    run('php artisan livewire:publish --assets');
 });
 
 after('deploy:failed', 'deploy:unlock');
