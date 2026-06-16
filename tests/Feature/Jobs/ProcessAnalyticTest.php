@@ -41,6 +41,11 @@ class ProcessAnalyticTest extends TestCase
             'season_key' => null,
             'total_matches' => 1102,
         ]);
+        ServiceRecord::factory()->createOne([
+            'mode' => Mode::MATCHMADE_RANKED,
+            'season_key' => null,
+            'total_matches' => 1102,
+        ]);
         GamePlayer::factory()
             ->withMedals()
             ->for(

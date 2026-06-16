@@ -9,6 +9,8 @@ use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
 use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
+use App\Support\Analytics\Stats\HighestWinRateRankedServiceRecord;
+use App\Support\Analytics\Stats\HighestWinRateServiceRecord;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
@@ -93,6 +95,12 @@ trait HasAnalyticDataProvider
             ],
             'most callouts - sr' => [
                 new MostCalloutAssistsServiceRecord,
+            ],
+            'highest win rate - sr' => [
+                new HighestWinRateServiceRecord,
+            ],
+            'highest win rate ranked - sr' => [
+                new HighestWinRateRankedServiceRecord,
             ],
         ];
     }
