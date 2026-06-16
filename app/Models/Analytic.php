@@ -11,6 +11,8 @@ use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
 use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
+use App\Support\Analytics\Stats\HighestWinRateRankedServiceRecord;
+use App\Support\Analytics\Stats\HighestWinRateServiceRecord;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
@@ -87,6 +89,8 @@ class Analytic extends Model
             AnalyticKey::MOST_QUIT_MAP => new MostQuitMap,
             AnalyticKey::MOST_SCORE_SR => new MostScoreServiceRecord,
             AnalyticKey::MOST_GAMES_PLAYED_SR => new MostGamesPlayedServiceRecord,
+            AnalyticKey::HIGHEST_WIN_RATE_SR => new HighestWinRateServiceRecord,
+            AnalyticKey::HIGHEST_WIN_RATE_RANKED_SR => new HighestWinRateRankedServiceRecord,
             default => throw new UnexpectedValueException('Unknown value in getStatFromEnum')
         };
     }

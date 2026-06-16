@@ -33,4 +33,7 @@ enum AnalyticKey: string
     case LONGEST_MATCHMAKING_GAME = 'longest_matchmaking_game';
 
     case MOST_QUIT_MAP = 'most_quit_map';
+
+    case HIGHEST_WIN_RATE_SR = 'highest_win_rate_sr';
+    case HIGHEST_WIN_RATE_RANKED_SR = 'highest_win_rate_ranked_sr';
 }
