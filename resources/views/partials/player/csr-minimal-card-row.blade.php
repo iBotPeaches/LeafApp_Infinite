@@ -1,4 +1,4 @@
-<article class="tile is-flex">
+<article class="media is-flex">
     <figure class="media-left">
         <p class="image is-48x48 {{ 'is-' . Str::slug($playlist->rank) }}">
             <img src="{{ $playlist->toCsrObject()->url() }}" alt="{{ $playlist->rank }}"/>

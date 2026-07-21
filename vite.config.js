@@ -30,10 +30,7 @@ export default defineConfig({
                     /has-text-warning/,
                     /has-text-danger/,
                     /has-text-primary/,
-                    /has-background-success-light/,
-                    /has-background-info-light/,
-                    /has-background-warning-light/,
-                    /has-background-danger-light/,
+                    /has-background-(success|info|warning|danger)-soft/,
                 ]
             },
         }),

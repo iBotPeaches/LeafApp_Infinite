@@ -1,7 +1,7 @@
 <?php
     /** @var App\Models\Game $game */
 ?>
-<article class="tile is-child notification {{ $game->winner?->color }}">
+<article class="cell notification {{ $game->winner?->color }}">
     <p class="title">
         <a href="{{ route('game', [$game]) }}">
             {{ $game->map->name }}
