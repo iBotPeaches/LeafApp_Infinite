@@ -215,19 +215,16 @@ class ServiceRecord extends Model implements HasDotApi
         // Old seasons shouldn't be used to determine private-ness, since new players will be marked as inactive.
         // Just flag the account if the all seasons (merged) returns no data.
         if ($serviceRecord->player->isDirty(['is_private']) && ($season === null || $season->key === SeasonSession::$allSeasonKey)) {
-            $serviceRecord->player->save();
+            $serviceRecord->player->saveOrFail();
         }
 
         if ($serviceRecord->isDirty() && ! $serviceRecord->player->is_private) {
-            $serviceRecord->save();
+            $serviceRecord->saveOrFail();
         }
 
         return $serviceRecord;
     }
 
-    /**
-     * @return BelongsTo<Player, $this>
-     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

@@ -5,7 +5,7 @@
     <article class="message mb-3 {{ $team->color }}">
         <div class="message-body">
             <article class="media">
-                <div class="media-left mr-0" style="margin-right: 0 !important;">
+                <div class="media-left">
                     <figure class="image is-32x32">
                         <img src="{{ $team->emblem_url }}" alt="{{ $team->name }}">
                     </figure>

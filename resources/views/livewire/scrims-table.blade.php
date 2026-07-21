@@ -21,7 +21,9 @@
                     </td>
                     <td>
                         @if ($scrim->user->player)
-                            @include('partials.links.player', ['player' => $scrim->user->player])
+                            <a href="{{ route('player', $scrim->user->player) }}">
+                                {{ $scrim->user->player->gamertag }}
+                            </a>
                         @else
                             <i>a gamer</i>
                         @endif
@@ -32,5 +34,5 @@
             </tbody>
         </table>
     </div>
-    {{ $scrims->links(data: ['scrollTo' => false]) }}
+    {{ $scrims->links() }}
 </div>

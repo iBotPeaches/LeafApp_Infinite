@@ -24,10 +24,8 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $uuid
- * @property int|null $category_id
+ * @property int $category_id
  * @property int $map_id
- * @property int|null $playlist_id
- * @property int|null $gamevariant_id
  * @property bool $is_ffa
  * @property bool|null $is_lan
  * @property Experience $experience
@@ -39,12 +37,12 @@ use Illuminate\Support\Str;
  * @property bool $was_pulled
  * @property-read ?Category $category
  * @property-read Map $map
- * @property-read ?Playlist $playlist
- * @property-read ?Gamevariant $gamevariant
+ * @property-read Playlist|null $playlist
+ * @property-read Gamevariant|null $gamevariant
  * @property-read PersonalResult $personal
- * @property-read Collection<int, GamePlayer> $players
- * @property-read Collection<int, GameTeam> $teams
- * @property-read Collection<int, Analytic> $analytics
+ * @property-read GamePlayer[]|Collection $players
+ * @property-read GameTeam[]|Collection $teams
+ * @property-read Analytic[]|Collection $analytics
  * @property-read bool $outdated
  * @property-read string $name
  * @property-read string $description
@@ -117,12 +115,12 @@ class Game extends Model implements HasDotApi
 
     public function getNameAttribute(): string
     {
-        return ($this->gamevariant->name ?? $this->category?->name).' on '.$this->map->name;
+        return ($this->gamevariant?->name ?? $this->category?->name).' on '.$this->map->name;
     }
 
     public function getDescriptionAttribute(): string
     {
-        return ($this->gamevariant->name ?? $this->category?->name).' on '.
+        return ($this->gamevariant?->name ?? $this->category?->name).' on '.
             $this->map->name.' in '.
             $this->experience->description.' at '.
             $this->occurred_at->toFormattedDateString().' with: '.
@@ -176,11 +174,7 @@ class Game extends Model implements HasDotApi
 
     public function getScoreAttribute(): string
     {
-        if ($this->winner === null || $this->loser === null) {
-            return '?';
-        }
-
-        return $this->winner->final_score.'-'.$this->loser->final_score;
+        return $this->winner?->final_score.'-'.$this->loser?->final_score;
     }
 
     public static function fromDotApi(array $payload): ?self
@@ -230,7 +224,7 @@ class Game extends Model implements HasDotApi
         }
 
         if ($game->isDirty()) {
-            $game->save();
+            $game->saveOrFail();
         }
 
         if (Arr::has($payload, 'teams.0.id')) {
@@ -249,7 +243,7 @@ class Game extends Model implements HasDotApi
                 // re-process later.
                 if ($type === PlayerType::PLAYER && (bool) Arr::get($playerData, 'attributes.resolved') === false) {
                     $game->was_pulled = false;
-                    $game->save();
+                    $game->saveOrFail();
 
                     continue;
                 }
@@ -257,7 +251,7 @@ class Game extends Model implements HasDotApi
                 $player = Player::fromGamertag($gamertag);
                 if (! $player->exists) {
                     $player->is_bot = $type === PlayerType::BOT;
-                    $player->save();
+                    $player->saveOrFail();
                     PullAppearance::dispatch($player);
                 }
                 $playerData['_leaf']['player'] = $player;
@@ -269,58 +263,37 @@ class Game extends Model implements HasDotApi
         return $game;
     }
 
-    /**
-     * @return BelongsTo<Category, $this>
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return BelongsTo<Map, $this>
-     */
     public function map(): BelongsTo
     {
         return $this->belongsTo(Map::class);
     }
 
-    /**
-     * @return BelongsTo<Gamevariant, $this>
-     */
     public function gamevariant(): BelongsTo
     {
         return $this->belongsTo(Gamevariant::class);
     }
 
-    /**
-     * @return BelongsTo<Playlist, $this>
-     */
     public function playlist(): BelongsTo
     {
         return $this->belongsTo(Playlist::class);
     }
 
-    /**
-     * @return HasMany<GamePlayer, $this>
-     */
     public function players(): HasMany
     {
         return $this->hasMany(GamePlayer::class);
     }
 
-    /**
-     * @return HasMany<GameTeam, $this>
-     */
     public function teams(): HasMany
     {
         return $this->hasMany(GameTeam::class)
             ->orderBy('rank');
     }
 
-    /**
-     * @return HasMany<Analytic, $this>
-     */
     public function analytics(): HasMany
     {
         return $this->hasMany(Analytic::class);

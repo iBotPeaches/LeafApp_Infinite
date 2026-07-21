@@ -11,21 +11,21 @@ A docker-based infrastructure is available for development. If you wish to run d
 
 1. `cp .env.example .env`
 1. Set the database hostname in `.env` like `DB_HOST=leaf-db`
-1. `HOST_UID=$(id -u) docker compose up -d`
+1. `HOST_UID=$(id -u) docker compose --env-file .env -p leaf -f docker/docker-compose.yml up -d`
 1. `docker exec -it leaf-php composer install`
 1. `docker exec -it leaf-php npm ci`
 1. `docker exec -it leaf-php php artisan key:generate`
 1. `docker exec -it leaf-php php artisan migrate`
-1. `docker exec -it leaf-php npm run build`
+1. `docker exec -it leaf-php npm run dev`
 
-* Nginx listens at your local IP address, port 8822, e.g. http://localhost:8822
+* Nginx listens at your local IP address, port 8080, e.g. http://localhost:8080
 * MariaDB container's port 3306 is mapped to the host.
 * Xdebug is configured to make connections to port 9003 on the host. Path mappings should be set up so the root of the project is mapped to `/var/www` on the server.
 
 ### Setup
-1. PHP8.4
+1. PHP8.2
 1. Node + NPM installed
-1. MariaDB 10.11
+1. MariaDB 10.6+
 1. [Composer](https://getcomposer.org/) installed.
 1. `cp .env.example .env`
 1. `composer install`
@@ -36,7 +36,7 @@ A docker-based infrastructure is available for development. If you wish to run d
 1. `php artisan serve`
 
 ### Contributions
- * Code must pass pint. (`./vendor/bin/pint`)
+ * Code must pass phpcs. (`./vendor/bin/phpcs`)
  * Code must pass phpstan. (`./vendor/bin/phpstan analyse`)
  * Code must have 100% test coverage. (`composer coverage`)
 
@@ -91,11 +91,12 @@ Used for optimizing images that come from backdrops and emblems.
 1. Bulma-Ribbon - https://github.com/Wikiki/bulma-ribbon - MIT
 
 #### PHP
-1. Laravel Pint - https://github.com/laravel/pint - MIT
-1. Larastan - https://github.com/larastan/larastan - MIT
+1. PHP CodeSniffer - https://github.com/squizlabs/PHP_CodeSniffer - BSD-3-Clause 
+1. Larastan - https://github.com/nunomaduro/larastan - MIT
 1. Guzzle - https://github.com/guzzle/guzzle - MIT
 1. Livewire - https://github.com/livewire/livewire - MIT
 1. Enum - https://github.com/BenSampo/laravel-enum - MIT
+1. DBAL - https://github.com/doctrine/dbal - MIT
 1. SEOTools - https://github.com/artesaos/seotools - MIT
 1. TheLeague/CSV - https://github.com/thephpleague/csv - MIT
 1. Socialite - https://github.com/laravel/socialite - MIT

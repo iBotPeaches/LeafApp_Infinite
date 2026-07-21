@@ -8,7 +8,6 @@ use App\Enums\Outcome;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasOutcome;
 use App\Observers\GameTeamObserver;
-use App\Services\DotApi\Enums\Team as DotApiTeam;
 use Database\Factories\GameTeamFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,7 +30,7 @@ use Illuminate\Support\Arr;
  * @property int $final_score
  * @property-read Game $game
  * @property-read Team $team
- * @property-read Collection<int, GamePlayer> $players
+ * @property-read GamePlayer[]|Collection<int, GamePlayer> $players
  * @property-read string $name
  * @property-read string $color
  * @property-read string $tooltip_color
@@ -57,14 +56,8 @@ class GameTeam extends Model implements HasDotApi
     public function getColorAttribute(): string
     {
         return match ($this->internal_team_id) {
-            DotApiTeam::EAGLE => 'is-eagle',
-            DotApiTeam::COBRA => 'is-cobra',
-            DotApiTeam::HADES => 'is-hades',
-            DotApiTeam::VALKYRIE => 'is-valkyrie',
-            DotApiTeam::RAMPART => 'is-rampart',
-            DotApiTeam::CUTLASS => 'is-cutlass',
-            DotApiTeam::VALOR => 'is-valor',
-            DotApiTeam::HAZARD => 'is-hazard',
+            0 => 'is-info',
+            1 => 'is-danger',
             default => 'is-dark',
         };
     }
@@ -87,14 +80,8 @@ class GameTeam extends Model implements HasDotApi
     public function getTooltipColorAttribute(): string
     {
         return match ($this->internal_team_id) {
-            DotApiTeam::EAGLE => 'has-tooltip-eagle',
-            DotApiTeam::COBRA => 'has-tooltip-cobra',
-            DotApiTeam::HADES => 'has-tooltip-hades',
-            DotApiTeam::VALKYRIE => 'has-tooltip-valkyrie',
-            DotApiTeam::RAMPART => 'has-tooltip-rampart',
-            DotApiTeam::CUTLASS => 'has-tooltip-cutlass',
-            DotApiTeam::VALOR => 'has-tooltip-valor',
-            DotApiTeam::HAZARD => 'has-tooltip-hazard',
+            0 => 'has-tooltip-info',
+            1 => 'has-tooltip-danger',
             default => 'has-tooltip-dark',
         };
     }
@@ -129,31 +116,22 @@ class GameTeam extends Model implements HasDotApi
         $gameTeam->final_score = Arr::get($payload, $key);
 
         if ($gameTeam->isDirty()) {
-            $gameTeam->save();
+            $gameTeam->saveOrFail();
         }
 
         return $gameTeam;
     }
 
-    /**
-     * @return BelongsTo<Game, $this>
-     */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
-    /**
-     * @return BelongsTo<Team, $this>
-     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    /**
-     * @return HasMany<GamePlayer, $this>
-     */
     public function players(): HasMany
     {
         return $this->hasMany(GamePlayer::class);

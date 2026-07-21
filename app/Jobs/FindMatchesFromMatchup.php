@@ -23,7 +23,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
     private Matchup $matchup;
 
-    private InfiniteInterface $client;
+    private ?InfiniteInterface $client;
 
     private array $processedGameIds = [];
 
@@ -49,7 +49,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
         // 2 - Load their custom history to have latest
         $players->each(function (Player $player) {
-            $this->client->matches($player, Mode::CUSTOM());
+            $this->client?->matches($player, Mode::CUSTOM());
         });
 
         // 3 - Pick a player with visible customs to iterate
@@ -58,13 +58,14 @@ class FindMatchesFromMatchup implements ShouldQueue
                 ->games()
                 ->with('players')
                 ->whereDoesntHave('playlist')
+                // @phpstan-ignore-next-line
                 ->where(function (Builder $query): void {
                     $startedAt = $this->matchup->started_at;
                     if ($startedAt) {
                         $query
-                            ->whereDate('occurred_at', $startedAt->copy()->subDay())
+                            ->whereDate('occurred_at', $startedAt->subDay())
                             ->orWhereDate('occurred_at', $startedAt)
-                            ->orWhereDate('occurred_at', $startedAt->copy()->addDay());
+                            ->orWhereDate('occurred_at', $startedAt->addDay());
                     }
                 })
                 ->cursor()
@@ -85,7 +86,7 @@ class FindMatchesFromMatchup implements ShouldQueue
 
                     $matchupGame->game()->associate($game);
                     $matchupGame->matchup()->associate($this->matchup);
-                    $matchupGame->save();
+                    $matchupGame->saveOrFail();
 
                     $this->processedGameIds[] = $game->id;
                 });

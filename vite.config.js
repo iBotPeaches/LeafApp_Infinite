@@ -1,6 +1,7 @@
 import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import purge from '@erbelion/vite-plugin-laravel-purgecss';
+import manifestSRI from 'vite-plugin-manifest-sri';
 
 export default defineConfig({
     build: {
@@ -13,20 +14,11 @@ export default defineConfig({
         ]),
         purge({
             templates: ['blade'],
-            rehash: false,
             safelist: {
                 greedy: [
                     /orange/,
                     /purple/,
                     /unranked/,
-                    /eagle/,
-                    /cobra/,
-                    /hades/,
-                    /valkyrie/,
-                    /rampart/,
-                    /cutlass/,
-                    /valor/,
-                    /hazard/,
                 ],
                 deep: [
                     /has-tooltip-info/,
@@ -38,12 +30,10 @@ export default defineConfig({
                     /has-text-warning/,
                     /has-text-danger/,
                     /has-text-primary/,
-                    /has-background-success-light/,
-                    /has-background-info-light/,
-                    /has-background-warning-light/,
-                    /has-background-danger-light/,
+                    /has-background-(success|info|warning|danger)-soft/,
                 ]
             },
         }),
+        manifestSRI(),
     ],
 });

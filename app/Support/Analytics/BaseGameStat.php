@@ -15,7 +15,7 @@ class BaseGameStat
         return AnalyticType::GAME();
     }
 
-    public function baseBuilder(): Builder
+    public function builder(): Builder
     {
         return GamePlayer::query();
     }
@@ -24,20 +24,9 @@ class BaseGameStat
     {
         return [
             config('services.halo.playlists.bot-bootcamp'),
-            config('services.halo.playlists.survive-the-dead'),
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
             config('services.halo.playlists.firefight-legendary'),
-            config('services.halo.playlists.firefight-grunt-koth'),
-            config('services.halo.playlists.firefight-grunt-heroic'),
-            config('services.halo.playlists.firefight-grunt-legendary'),
-            config('services.halo.playlists.firefight-composer-normal'),
-            config('services.halo.playlists.firefight-composer-heroic'),
-            config('services.halo.playlists.firefight-composer-legendary'),
-            config('services.halo.playlists.firefight-battle-for-reach'),
-            config('services.halo.playlists.firefight-3person'),
-            config('services.halo.playlists.firefight-fiesta'),
-            config('services.halo.playlists.firefight-classic'),
         ];
     }
 }

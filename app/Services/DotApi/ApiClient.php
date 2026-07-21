@@ -125,7 +125,7 @@ class ApiClient implements InfiniteInterface
 
         // Save the Player with the latest game pulled (Custom vs Matchmaking)
         $player->$lastGameIdVariable = $firstPulledGameId ?? $player->$lastGameIdVariable;
-        $player->save();
+        $player->saveOrFail();
 
         return GamePlayer::query()
             ->where('player_id', $player->id)
@@ -274,7 +274,7 @@ class ApiClient implements InfiniteInterface
             PlayerBan::fromDotApi($ban);
         }
 
-        return $player->bans->where('ends_at', '>', now());
+        return $player->bans;
     }
 
     public function xuid(string $gamertag): ?string

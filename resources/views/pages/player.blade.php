@@ -4,81 +4,51 @@
 @section('content')
     <div class="columns">
         <div class="column">
-            @if (!$player->is_hidden)
-                @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
-                    <livewire:player-toggle-panel :type="$type" />
-                @endif
+            @if (in_array($type, ['overview', 'medals', 'competitive', 'modes']))
+                <livewire:player-toggle-panel :type="$type" />
             @endif
             <livewire:player-card :player="$player" />
-            @if (!$player->is_hidden)
-                @if (in_array($type, ['matches', 'custom', 'lan']))
-                    <div class="notification mb-2">
-                        <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
+            @if (in_array($type, ['matches', 'custom', 'lan']))
+                <div class="notification">
+                    <a class="is-small" href="{{ route('historyCsv', [$player, $type]) }}" rel="nofollow">export to csv</a>
 
-                        @if (in_array($type, ['custom', 'matches', 'lan']))
-                            <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
-                        @endif
-                    </div>
-                @endif
+                    @if (in_array($type, ['custom', 'matches', 'lan']))
+                        <livewire:scrim-toggle-panel></livewire:scrim-toggle-panel>
+                    @endif
+                </div>
             @endif
             @if ($player->is_private)
-                <div class="notification is-warning mb-2">
+                <div class="notification is-warning">
                     <i class="fas fa-exclamation-triangle"></i> Account Private
                 </div>
             @endif
-            @if ($player->is_donator)
-                <div class="notification is-success mb-2">
-                    <i class="fas fa-leaf"></i>
-                    <span class="has-tooltip-arrow" data-tooltip="Donated via BuyMeACoffee">
-                        Donator
-                    </span>
-                </div>
-            @endif
             @if ($player->is_cheater)
-                <div class="notification is-danger mb-2">
-                    <i class="fas fa-exclamation-triangle"></i> Account is banned
+                <div class="notification is-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Flagged as Cheater
                 </div>
             @endif
             @if ($player->is_botfarmer)
-                <div class="notification is-info mb-2">
+                <div class="notification is-info">
                     <i class="fas fa-robot"></i>
-                    <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp (or manually flagged as farmer/booster) and thus excluded from leaderboards.">
-                        Flagged as Farmer
+                    <span class="has-tooltip-arrow" data-tooltip="Match history is at least 50% Bot Bootcamp and thus excluded from leaderboards.">
+                        Flagged as Bot Farmer
                     </span>
                 </div>
             @endif
-            @if ($player->is_throttled)
-                <div class="notification is-info mb-2">
-                    <i class="fas fa-skull-crossbones"></i>
-                    <span class="has-tooltip-arrow" data-tooltip="Automation was detected refreshing this player - delayed to 24 hour refreshes.">
-                        Updates Throttled
-                    </span>
-                </div>
-            @endif
-            @if (!$player->is_hidden)
-                @if (!config('services.dotapi.disabled'))
-                    @if (!$player->is_bot)
-                        <livewire:update-player-panel :player="$player" :type="$type" />
-                    @endif
+            @if (!config('services.dotapi.disabled'))
+                @if (!$player->is_bot)
+                    <livewire:update-player-panel :player="$player" :type="$type" />
                 @endif
-                <livewire:player-badges :player="$player" />
-                @auth
-                    @include('partials.player.linkable-card')
-                    <livewire:player-ban-card :player="$player" />
-                @endauth
             @endif
+            <livewire:player-badges :player="$player" />
+            @auth
+                @include('partials.player.linkable-card')
+            @endauth
         </div>
-            @if ($player->is_hidden)
-                <div class="column is-three-quarters">
-                    @include('partials.global.account_hidden')
-                    @include('partials.global.account_private')
-                </div>
-            @else
-                <div class="column is-three-quarters">
-                    @include('partials.player.navigation')
-                    @include('partials.player.ban-header')
-                    @include('partials.player.tabs.' . $type, ['player' => $player])
-                </div>
-            @endif
+        <div class="column is-three-quarters">
+            @include('partials.player.navigation')
+            @include('partials.player.ban-header')
+            @include('partials.player.tabs.' . $type, ['player' => $player])
+        </div>
     </div>
 @endsection

@@ -19,12 +19,12 @@ class FindPlayersOnTeamTest extends TestCase
 {
     use WithFaker;
 
-    public function test_finding_player_from_team(): void
+    public function testFindingPlayerFromTeam(): void
     {
         // Arrange
         $gamertag = $this->faker->word;
-        $mockAppearanceResponse = (new MockAppearanceService)->success();
-        $mockXuidResponse = (new MockXuidService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->success();
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

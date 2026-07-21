@@ -9,12 +9,9 @@ use App\Support\Analytics\Stats\BestKDAServiceRecord;
 use App\Support\Analytics\Stats\BestKDServiceRecord;
 use App\Support\Analytics\Stats\HighestScoreInRankedGame;
 use App\Support\Analytics\Stats\HighestScoreInUnrankedGame;
-use App\Support\Analytics\Stats\HighestWinRateRankedServiceRecord;
-use App\Support\Analytics\Stats\HighestWinRateServiceRecord;
 use App\Support\Analytics\Stats\LongestMatchmakingGame;
 use App\Support\Analytics\Stats\MostAssistsInGame;
 use App\Support\Analytics\Stats\MostBetrayalsServiceRecord;
-use App\Support\Analytics\Stats\MostCalloutAssistsServiceRecord;
 use App\Support\Analytics\Stats\MostDeathsInGame;
 use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
 use App\Support\Analytics\Stats\MostKillsInGame;
@@ -23,114 +20,75 @@ use App\Support\Analytics\Stats\MostKillsServiceRecord;
 use App\Support\Analytics\Stats\MostKillsWithZeroDeathsGame;
 use App\Support\Analytics\Stats\MostMedalsInGame;
 use App\Support\Analytics\Stats\MostMedalsServiceRecord;
-use App\Support\Analytics\Stats\MostPerfectsInRankedGame;
 use App\Support\Analytics\Stats\MostQuitMap;
 use App\Support\Analytics\Stats\MostScoreServiceRecord;
 use App\Support\Analytics\Stats\MostTimePlayedServiceRecord;
+use App\Support\Analytics\Stats\MostXpPlayer;
 
 trait HasAnalyticDataProvider
 {
     public static function analyticDataProvider(): array
     {
         return [
-            'best accuracy - sr' => [
-                new BestAccuracyServiceRecord,
+            [
+                new BestAccuracyServiceRecord(),
             ],
-            'best kda - sr' => [
-                new BestKDAServiceRecord,
+            [
+                new BestKDAServiceRecord(),
             ],
-            'best kd - sr' => [
-                new BestKDServiceRecord,
+            [
+                new BestKDServiceRecord(),
             ],
-            'most betrayals - sr' => [
-                new MostBetrayalsServiceRecord,
+            [
+                new MostBetrayalsServiceRecord(),
             ],
-            'most kills in ranked game' => [
-                new MostKillsInRankedGame,
+            [
+                new MostKillsInRankedGame(),
             ],
-            'most kills w/ 0 deaths game' => [
-                new MostKillsWithZeroDeathsGame,
+            [
+                new MostKillsWithZeroDeathsGame(),
             ],
-            'most kills - sr' => [
-                new MostKillsServiceRecord,
+            [
+                new MostKillsServiceRecord(),
             ],
-            'most medals - sr' => [
-                new MostMedalsServiceRecord,
+            [
+                new MostMedalsServiceRecord(),
             ],
-            'most time played - sr' => [
-                new MostTimePlayedServiceRecord,
+            [
+                new MostTimePlayedServiceRecord(),
             ],
-            'longest matchmaking game' => [
-                new LongestMatchmakingGame,
+            [
+                new LongestMatchmakingGame(),
             ],
-            'highest score in ranked game' => [
-                new HighestScoreInRankedGame,
+            [
+                new HighestScoreInRankedGame(),
             ],
-            'highest score in unranked game' => [
-                new HighestScoreInUnrankedGame,
+            [
+                new HighestScoreInUnrankedGame(),
             ],
-            'most kills in game' => [
-                new MostKillsInGame,
+            [
+                new MostKillsInGame(),
             ],
-            'most deaths in game' => [
-                new MostDeathsInGame,
+            [
+                new MostDeathsInGame(),
             ],
-            'most assists in game' => [
-                new MostAssistsInGame,
+            [
+                new MostAssistsInGame(),
             ],
-            'most medals in game' => [
-                new MostMedalsInGame,
+            [
+                new MostMedalsInGame(),
             ],
-            'most quit map' => [
-                new MostQuitMap,
+            [
+                new MostQuitMap(),
             ],
-            'most score - sr' => [
-                new MostScoreServiceRecord,
+            [
+                new MostXpPlayer(),
             ],
-            'most games played - sr' => [
-                new MostGamesPlayedServiceRecord,
+            [
+                new MostScoreServiceRecord(),
             ],
-            'most perfects in ranked game' => [
-                new MostPerfectsInRankedGame,
-            ],
-            'most callouts - sr' => [
-                new MostCalloutAssistsServiceRecord,
-            ],
-            'highest win rate - sr' => [
-                new HighestWinRateServiceRecord,
-            ],
-            'highest win rate ranked - sr' => [
-                new HighestWinRateRankedServiceRecord,
-            ],
-        ];
-    }
-
-    public static function playlistDataProvider(): array
-    {
-        return [
-            'most kills w/ 0 deaths game' => [
-                new MostKillsWithZeroDeathsGame,
-            ],
-            'longest matchmaking game' => [
-                new LongestMatchmakingGame,
-            ],
-            'highest score in ranked game' => [
-                new HighestScoreInRankedGame,
-            ],
-            'most kills in game' => [
-                new MostKillsInGame,
-            ],
-            'most deaths in game' => [
-                new MostDeathsInGame,
-            ],
-            'most assists in game' => [
-                new MostAssistsInGame,
-            ],
-            'most medals in game' => [
-                new MostMedalsInGame,
-            ],
-            'most perfects in ranked game' => [
-                new MostPerfectsInRankedGame,
+            [
+                new MostGamesPlayedServiceRecord(),
             ],
         ];
     }

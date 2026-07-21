@@ -3,10 +3,10 @@
 /** @var App\Models\GamePlayer $winningPlayer */
 $winningPlayer = $game->players->sortBy('rank')->first();
 ?>
-<article class="tile is-child notification is-dark">
+<article class="cell notification is-dark">
     <p class="title">
         <a href="{{ route('game', [$game]) }}">
-            {{ $game->map->shorthand }}
+            {{ $game->map->name }}
         </a>
         @if ($winningPlayer)
             <span class="is-pulled-right">

@@ -19,7 +19,7 @@ class PullLogoFromMatchupTeamTest extends TestCase
 {
     use WithFaker;
 
-    public function test_pulling_logo_from_team(): void
+    public function testPullingLogoFromTeam(): void
     {
         // Arrange
         Http::preventStrayRequests();
@@ -34,7 +34,7 @@ class PullLogoFromMatchupTeamTest extends TestCase
             })
         );
 
-        $mockOptimizedResponse = (new MockImageService)->success();
+        $mockOptimizedResponse = (new MockImageService())->success();
         $headers = ['Location' => 'domain.com'];
         Http::fakeSequence()
             ->push($mockOptimizedResponse, Response::HTTP_OK, $headers);

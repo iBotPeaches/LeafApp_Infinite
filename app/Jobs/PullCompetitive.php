@@ -22,8 +22,6 @@ class PullCompetitive implements ShouldQueue
 
     public int $timeout = 60;
 
-    public bool $failOnTimeout = true;
-
     private Player $player;
 
     private ?string $seasonKey;

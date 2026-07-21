@@ -14,7 +14,7 @@
                 <th><abbr title="Deaths">D</abbr></th>
                 <th><abbr title="Assists">A</abbr></th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
-                <th><abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></th>
+                <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                 <th>Rank</th>
                 <th>Date</th>
@@ -38,7 +38,7 @@
                     </td>
                     <td>
                         <abbr title="{{ $game->map->name }}">
-                            {{ \Illuminate\Support\Str::limit($game->map->shorthand, 15) }}
+                            {{ \Illuminate\Support\Str::limit($game->map->name, 15) }}
                         </abbr>
                     </td>
                     <td>
@@ -52,20 +52,8 @@
                             @include('partials.player.game_outcome_icon')
                         @endif
                     </td>
-                    <td class="{{ $game->personal->getExpectedKillsColor() }}">
-                        @if (!is_null($game->personal->expected_kills))
-                            @include('partials.game.expected_kills', ['gamePlayer' =>  $game->personal])
-                        @else
-                            {{ $game->personal->kills }}
-                        @endif
-                    </td>
-                    <td class="{{ $game->personal->getExpectedDeathsColor() }}">
-                        @if (!is_null($game->personal->expected_deaths))
-                            @include('partials.game.expected_deaths', ['gamePlayer' =>  $game->personal])
-                        @else
-                            {{ $game->personal->deaths }}
-                        @endif
-                    </td>
+                    <td>{{ $game->personal->kills }}</td>
+                    <td>{{ $game->personal->deaths }}</td>
                     <td>{{ $game->personal->assists }}</td>
                     <td class="{{ $game->personal->getKdColor() }}">
                         {{ $game->personal->kd }}
@@ -73,7 +61,7 @@
                     <td class="{{ $game->personal->getKdaColor() }}">
                         {{ $game->personal->kda }}
                     </td>
-                    <td class="has-background-{{ $game->personal->accuracy_color }}-light">
+                    <td class="has-background-{{ $game->personal->accuracy_color }}-soft">
                         {{ $game->personal->accuracy }}%
                     </td>
                     <td>{{ $game->personal->rank }}</td>
@@ -90,5 +78,5 @@
             </tbody>
         </table>
     </div>
-    {{ $games->links(data: ['scrollTo' => false]) }}
+    {{ $games->links() }}
 </div>

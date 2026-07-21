@@ -20,9 +20,6 @@ use Illuminate\Support\Str;
  * @property string $type
  * @property string $scope
  * @property-read Player $player
- * @property-read bool $is_expired
- * @property-read string $days_remaining
- * @property-read string $short_message
  *
  * @method static PlayerBanFactory factory(...$parameters)
  */
@@ -40,36 +37,6 @@ class PlayerBan extends Model implements HasDotApi
 
     public $timestamps = false;
 
-    public function getMessageAttribute(string $value): string
-    {
-        $word = $this->is_expired ? 'had' : 'has';
-        $replacements = [
-            'You have' => $this->player->gamertag.' '.$word,
-            'Your' => $this->player->gamertag."'s",
-        ];
-
-        if ($this->is_expired) {
-            $replacements['will end'] = 'ended';
-        }
-
-        return (string) str_replace(array_keys($replacements), $replacements, $value);
-    }
-
-    public function getShortMessageAttribute(): string
-    {
-        return Str::beforeLast($this->message, $this->player->gamertag);
-    }
-
-    public function getDaysRemainingAttribute(): string
-    {
-        return number_format($this->ends_at->diffInDays(absolute: true));
-    }
-
-    public function getIsExpiredAttribute(): bool
-    {
-        return $this->ends_at->isPast();
-    }
-
     public static function fromDotApi(array $payload): ?self
     {
         /** @var Player $player */
@@ -78,7 +45,7 @@ class PlayerBan extends Model implements HasDotApi
         // There is nothing unique about a ban message. So lets make a key of a slugged message with datetime of expiration.
         $message = Arr::get($payload, 'message');
         $endDate = Arr::get($payload, 'end_date');
-        $key = md5(Str::slug($message).$player->id);
+        $key = md5(Str::slug($message).$endDate);
 
         /** @var PlayerBan $playerBan */
         $playerBan = self::query()
@@ -95,15 +62,12 @@ class PlayerBan extends Model implements HasDotApi
         $playerBan->scope = Arr::get($payload, 'properties.scope');
 
         if ($playerBan->isDirty()) {
-            $playerBan->save();
+            $playerBan->saveOrFail();
         }
 
         return $playerBan;
     }
 
-    /**
-     * @return BelongsTo<Player, $this>
-     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

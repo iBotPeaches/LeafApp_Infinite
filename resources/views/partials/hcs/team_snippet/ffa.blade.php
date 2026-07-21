@@ -5,7 +5,7 @@
 ?>
 @foreach ($matchup->matchupTeams->sortBy('points') as $matchupTeam)
     <?php $player = $matchupTeam->getPlayer(); ?>
-    <div class="card has-background-{{ $matchupTeam->isWinner() ? 'success' : 'dark' }}-light">
+    <div class="card has-background-{{ $matchupTeam->isWinner() ? 'success' : 'dark' }}-soft">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
@@ -16,7 +16,9 @@
                 <div class="media-content">
                     <p class="title is-6">
                         @if ($player)
-                            @include('partials.links.player', ['player' => $player])
+                            <a href="{{ route('player', [$player]) }}">
+                                {{ $player?->gamertag ?? '' }}
+                            </a>
                         @else
                             <span>{{ $matchupTeam->name }}</span>
                         @endif

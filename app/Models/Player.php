@@ -43,13 +43,9 @@ use Spatie\Sitemap\Tags\Url;
  * @property int|null $xp
  * @property string $service_tag
  * @property bool $is_private
- * @property bool $is_donator
  * @property bool $is_bot
  * @property bool $is_cheater
- * @property bool $is_throttled
- * @property bool $is_hidden
  * @property bool $is_botfarmer
- * @property bool $is_forced_farmer
  * @property int|null $last_game_id_pulled
  * @property int|null $last_custom_game_id_pulled
  * @property int|null $last_lan_game_id_pulled
@@ -71,7 +67,6 @@ use Spatie\Sitemap\Tags\Url;
  * @property-read Collection<int, PlayerBan> $bans
  * @property-read Collection<int, MedalAnalytic> $medals
  * @property-read Collection<int, Analytic> $analytics
- * @property-read PlayerBan|null $latestBan
  * @property-read ServiceRecord $serviceRecord
  * @property-read ServiceRecord $serviceRecordPvp
  * @property-read string $url_safe_gamertag
@@ -92,14 +87,7 @@ class Player extends Model implements HasDotApi, Sitemapable
     ];
 
     public $casts = [
-        'is_donator' => 'bool',
         'is_botfarmer' => 'bool',
-        'is_forced_farmer' => 'bool',
-        'is_private' => 'bool',
-        'is_bot' => 'bool',
-        'is_cheater' => 'bool',
-        'is_throttled' => 'bool',
-        'is_hidden' => 'bool',
     ];
 
     public function getRouteKeyName(): string
@@ -161,7 +149,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         if ($threshold && $lastThreshold) {
             $xpTowardsNext = $this->xp_towards_next_rank;
 
-            return (float) number_format(($xpTowardsNext / ($this->nextRank->required ?? 1)) * 100, 2);
+            return (float) number_format(($xpTowardsNext / ($this->nextRank?->required ?? 1)) * 100, 2);
         }
 
         return 100.0;
@@ -176,12 +164,12 @@ class Player extends Model implements HasDotApi, Sitemapable
             return $this->xp - $lastThreshold;
         }
 
-        return 100;
+        return 0;
     }
 
     public function getXpRequiredForNextRankAttribute(): int
     {
-        return $this->nextRank->required ?? 100;
+        return $this->nextRank?->required ?? 100;
     }
 
     public function getPercentProgressToHeroAttribute(): string
@@ -201,6 +189,7 @@ class Player extends Model implements HasDotApi, Sitemapable
 
     public static function fromGamertag(string $gamertag): self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('gamertag', $gamertag)
             ->firstOrNew([
@@ -224,7 +213,7 @@ class Player extends Model implements HasDotApi, Sitemapable
         }
 
         if ($player->isDirty()) {
-            $player->save();
+            $player->saveOrFail();
         }
 
         return $player;
@@ -235,22 +224,6 @@ class Player extends Model implements HasDotApi, Sitemapable
         /** @var InfiniteInterface $client */
         $client = resolve(InfiniteInterface::class);
         $this->xuid = $client->xuid($this->url_safe_gamertag);
-    }
-
-    public function checkForBanFromDotApi(): bool
-    {
-        /** @var InfiniteInterface $client */
-        $client = resolve(InfiniteInterface::class);
-
-        $bans = $client->banSummary($this);
-        if ($bans->isEmpty()) {
-            return false;
-        }
-
-        $this->is_cheater = true;
-        $this->save();
-
-        return $this->is_cheater;
     }
 
     public function updateFromDotApi(bool $forceUpdate = false, ?string $type = null): void
@@ -297,54 +270,28 @@ class Player extends Model implements HasDotApi, Sitemapable
 
         $client->careerRank($this);
 
-        // We will ignore Firefight (+ others) from this calculation as those medals are ignored in the Service Record.
-        // Thus including these matches would skew the data in detection of a "Bot Farmer".
-        $skippedPlaylistUuids = [
-            config('services.halo.playlists.survive-the-dead'),
+        // We will ignore Firefight from this calculation as FF medals are ignored in the Service Record.
+        // Thus including FF matches would skew the data in detection of a "Bot Farmer".
+        $firefightUuids = [
             config('services.halo.playlists.firefight-koth'),
             config('services.halo.playlists.firefight-heroic'),
             config('services.halo.playlists.firefight-legendary'),
-            config('services.halo.playlists.firefight-grunt-koth'),
-            config('services.halo.playlists.firefight-grunt-heroic'),
-            config('services.halo.playlists.firefight-grunt-legendary'),
-            config('services.halo.playlists.firefight-composer-normal'),
-            config('services.halo.playlists.firefight-composer-heroic'),
-            config('services.halo.playlists.firefight-composer-legendary'),
-            config('services.halo.playlists.firefight-battle-for-reach'),
-            config('services.halo.playlists.firefight-3person'),
-            config('services.halo.playlists.firefight-fiesta'),
-            config('services.halo.playlists.firefight-classic'),
         ];
-
-        $firefightIds = Playlist::query()
-            ->select('id')
-            ->whereIn('uuid', $skippedPlaylistUuids)
-            ->get()
-            ->pluck('id');
-
-        $botBootcampId = (int) Playlist::query()
-            ->select('id')
-            ->where('uuid', config('services.halo.playlists.bot-bootcamp'))
-            ->value('id');
 
         // Check for "Bot Farmer" status - aka a ton of Bot Bootcamp
         $playlistBreakdown = DB::query()
             ->from('game_players')
-            ->select('games.playlist_id', new Expression('COUNT(game_players.id) as total'))
+            ->select('playlists.name', new Expression('COUNT(*) as total'))
             ->where('player_id', $this->id)
-            ->whereNotNull('games.playlist_id')
+            ->whereNotIn('playlists.uuid', $firefightUuids)
             ->join('games', 'game_players.game_id', '=', 'games.id')
-            ->groupBy('games.playlist_id')
+            ->join('playlists', 'games.playlist_id', '=', 'playlists.id')
+            ->groupBy('playlists.name')
             ->get();
 
-        // We now filter out skipped playlists from the breakdown.
-        $playlistBreakdown = $playlistBreakdown->filter(function (\stdClass $row) use ($firefightIds) {
-            return ! $firefightIds->contains($row->playlist_id);
-        });
-
         $totalGames = $playlistBreakdown->sum('total');
-        if ($totalGames >= 100 && ! $this->is_forced_farmer) {
-            $botBootcampPercent = $playlistBreakdown->firstWhere('playlist_id', $botBootcampId)?->total / $totalGames;
+        if ($totalGames >= 100) {
+            $botBootcampPercent = $playlistBreakdown->firstWhere('name', 'Bot Bootcamp')?->total / $totalGames;
             $playsTooMuchBotBootcamp = $botBootcampPercent >= config('services.halo.botfarmer_threshold');
             $this->is_botfarmer = $playsTooMuchBotBootcamp;
         }
@@ -391,91 +338,53 @@ class Player extends Model implements HasDotApi, Sitemapable
         return $url;
     }
 
-    /**
-     * @return BelongsTo<Rank, $this>
-     */
     public function rank(): BelongsTo
     {
         return $this->belongsTo(Rank::class, 'rank_id');
     }
 
-    /**
-     * @return BelongsTo<Rank, $this>
-     */
     public function nextRank(): BelongsTo
     {
         return $this->belongsTo(Rank::class, 'next_rank_id');
     }
 
-    /**
-     * @return HasOne<ServiceRecord, $this>
-     */
     public function serviceRecord(): HasOne
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_RANKED);
     }
 
-    /**
-     * @return HasOne<ServiceRecord, $this>
-     */
     public function serviceRecordPvp(): HasOne
     {
         return $this->hasOne(ServiceRecord::class)
             ->where('mode', \App\Enums\Mode::MATCHMADE_PVP);
     }
 
-    /**
-     * @return HasMany<Csr, $this>
-     */
     public function csrs(): HasMany
     {
         return $this->hasMany(Csr::class);
     }
 
-    /**
-     * @return HasMany<MatchupPlayer, $this>
-     */
     public function faceitPlayers(): HasMany
     {
         return $this->hasMany(MatchupPlayer::class);
     }
 
-    /**
-     * @return HasMany<PlayerBan, $this>
-     */
     public function bans(): HasMany
     {
         return $this->hasMany(PlayerBan::class);
     }
 
-    /**
-     * @return HasOne<PlayerBan, $this>
-     */
-    public function latestBan(): HasOne
-    {
-        return $this->hasOne(PlayerBan::class)->latestOfMany();
-    }
-
-    /**
-     * @return HasMany<MedalAnalytic, $this>
-     */
     public function medals(): HasMany
     {
         return $this->hasMany(MedalAnalytic::class);
     }
 
-    /**
-     * @return HasMany<Analytic, $this>
-     */
     public function analytics(): HasMany
     {
         return $this->hasMany(Analytic::class);
     }
 
-    /**
-     * @return BelongsToMany<Game, $this, PersonalResult, 'personal'>
-     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'game_players')
@@ -495,8 +404,6 @@ class Player extends Model implements HasDotApi, Sitemapable
                 'pre_csr',
                 'post_csr',
                 'matches_remaining',
-                'expected_kills',
-                'expected_deaths',
             ]);
     }
 }

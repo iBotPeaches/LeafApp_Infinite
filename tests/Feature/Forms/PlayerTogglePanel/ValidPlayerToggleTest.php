@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class ValidPlayerToggleTest extends TestCase
 {
-    public function test_valid_response_from_mode_change(): void
+    public function testValidResponseFromModeChange(): void
     {
         // Arrange
 
@@ -22,14 +22,14 @@ class ValidPlayerToggleTest extends TestCase
             'playerType' => Mode::MATCHMADE_PVP,
         ])
             ->call('onChange')
-            ->assertDispatchedTo('player-overview-page', '$refresh')
+            ->assertDispatchedTo('overview-page', '$refresh')
             ->assertDispatchedTo('medals-page', '$refresh');
 
         $mode = ModeSession::get();
         $this->assertEquals(Mode::MATCHMADE_PVP(), $mode);
     }
 
-    public function test_valid_response_from_season_change(): void
+    public function testValidResponseFromSeasonChange(): void
     {
         // Arrange
 
@@ -37,7 +37,7 @@ class ValidPlayerToggleTest extends TestCase
         Livewire::test(PlayerTogglePanel::class)
             ->set('seasonKey', '1-1')
             ->call('onSeasonChange')
-            ->assertDispatchedTo('player-overview-page', '$refresh')
+            ->assertDispatchedTo('overview-page', '$refresh')
             ->assertDispatchedTo('medals-page', '$refresh');
 
         $this->assertEquals('1-1', SeasonSession::get());

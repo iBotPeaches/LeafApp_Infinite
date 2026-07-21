@@ -21,21 +21,15 @@
                     <td>
                         <article class="media">
                             <figure class="media-left">
-                                @if ($player->is_cheater)
-                                    <span class="tag is-danger">Banned</span>
-                                @elseif ($player->is_donator)
-                                    <span class="tag is-success">Donator</span>
-                                @elseif ($player->is_botfarmer)
-                                    <span class="tag is-info">Farmer</span>
-                                @else
-                                    <p class="image is-32x32">
-                                        <img src="{{ $player->emblem_url }}" alt="{{ $player->gamertag }} Emblem"/>
-                                    </p>
-                                @endif
+                                <p class="image is-32x32">
+                                    <img src="{{ $player->emblem_url }}" alt="{{ $player->gamertag }} Emblem"/>
+                                </p>
                             </figure>
                             <div class="media-content">
                                 <div class="content">
-                                    @include('partials.links.player', ['player' => $player])
+                                    <a href="{{ route('player', [$player]) }}">
+                                        {{ $player->gamertag }}
+                                    </a>
                                 </div>
                             </div>
                         </article>

@@ -14,9 +14,6 @@ use Illuminate\Support\Str;
  * @method static static PVE_BOTS()
  * @method static static CUSTOM()
  * @method static static FEATURED()
- * @method static static UNKNOWN()
- * @method static static PVE()
- * @method static static UNTRACKED()
  */
 final class Experience extends Enum implements LocalizedEnum
 {
@@ -29,12 +26,6 @@ final class Experience extends Enum implements LocalizedEnum
     const CUSTOM = 4;
 
     const FEATURED = 5;
-
-    const UNKNOWN = 6;
-
-    const PVE = 7;
-
-    const UNTRACKED = 8;
 
     public static function coerce(mixed $enumKeyOrValue): ?static
     {

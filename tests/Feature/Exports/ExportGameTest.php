@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class ExportGameTest extends TestCase
 {
-    public function test_export_game(): void
+    public function testExportGame(): void
     {
         // Arrange
         Http::fake();

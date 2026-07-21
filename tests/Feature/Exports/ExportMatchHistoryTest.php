@@ -14,7 +14,7 @@ use Tests\TestCase;
 
 class ExportMatchHistoryTest extends TestCase
 {
-    public function test_export_game_records_as_matches(): void
+    public function testExportGameRecordsAsMatches(): void
     {
         // Arrange
         Http::fake();
@@ -34,7 +34,7 @@ class ExportMatchHistoryTest extends TestCase
         $this->assertIsString($response->streamedContent());
     }
 
-    public function test_export_game_records_as_random(): void
+    public function testExportGameRecordsAsRandom(): void
     {
         // Arrange
         Http::fake();
@@ -54,7 +54,7 @@ class ExportMatchHistoryTest extends TestCase
         $this->assertIsString($response->streamedContent());
     }
 
-    public function test_export_game_records_as_custom(): void
+    public function testExportGameRecordsAsCustom(): void
     {
         // Arrange
         Http::fake();
@@ -78,7 +78,7 @@ class ExportMatchHistoryTest extends TestCase
         $this->assertIsString($response->streamedContent());
     }
 
-    public function test_export_game_records_as_lan(): void
+    public function testExportGameRecordsAsLan(): void
     {
         // Arrange
         Http::fake();

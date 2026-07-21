@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    public function test_authentication_redirect(): void
+    public function testAuthenticationRedirect(): void
     {
         // Arrange
 
@@ -22,7 +22,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_authentication_callback(): void
+    public function testAuthenticationCallback(): void
     {
         // Arrange
         $abstractUser = Mockery::mock(\Laravel\Socialite\Two\User::class);
@@ -39,7 +39,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_authentication_callback_with_profile_linked(): void
+    public function testAuthenticationCallbackWithProfileLinked(): void
     {
         // Arrange
         $googleId = rand();
@@ -61,7 +61,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_authentication_logout(): void
+    public function testAuthenticationLogout(): void
     {
         // Arrange
         $user = User::factory()->createOne();

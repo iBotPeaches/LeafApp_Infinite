@@ -7,7 +7,8 @@ use App\Enums\QueueName;
 use App\Models\Analytic;
 use App\Models\Game;
 use App\Models\GamePlayer;
-use App\Models\OverviewStat;
+use App\Models\Map;
+use App\Models\Player;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use Illuminate\Bus\Queueable;
@@ -51,17 +52,20 @@ class ProcessAnalytic implements ShouldQueue
                 case AnalyticType::ONLY_GAME():
                     $this->handleGameResults($topHundred);
                     break;
-                case AnalyticType::OVERVIEW_STAT():
-                    $this->handleOverviewStatResults($topHundred);
+                case AnalyticType::MAP():
+                    $this->handleMapResults($topHundred);
+                    break;
+                case AnalyticType::ONLY_PLAYER():
+                    $this->handleOnlyPlayerResults($topHundred);
                     break;
             }
 
-            foreach ([10 => $topTen, 100 => $topHundred, 1_000 => $topThousand] as $amount => $resultSet) {
+            foreach ([$topTen, $topHundred, $topThousand] as $resultSet) {
                 $writer = Writer::createFromString();
                 $writer->insertOne($this->analytic->csvHeader());
                 $writer->insertAll($this->analytic->csvData($resultSet));
 
-                $slug = $this->analytic->slug($amount);
+                $slug = $this->analytic->slug(count($resultSet ?? []));
 
                 Storage::disk('public')->put('top-ten/'.$slug.'.csv', $writer->toString());
             }
@@ -72,12 +76,12 @@ class ProcessAnalytic implements ShouldQueue
     private function handleGameResults(?Collection $games): void
     {
         $games?->each(function (Game $game, int $index) {
-            $analytic = new Analytic;
+            $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->place = $index + 1;
             $analytic->value = (float) $game->{$this->analytic->property()};
             $analytic->game()->associate($game);
-            $analytic->save();
+            $analytic->saveOrFail();
         });
     }
 
@@ -88,23 +92,19 @@ class ProcessAnalytic implements ShouldQueue
         $lastValue = null;
 
         $gamePlayers?->each(function (GamePlayer $gamePlayer, int $index) use (&$lastIndex, &$lastValue) {
-            if (method_exists($this->analytic, 'propertyFn')) {
-                $value = $this->analytic->propertyFn($gamePlayer);
-            } else {
-                $value = (float) $gamePlayer->{$this->analytic->property()};
-            }
+            $value = (float) $gamePlayer->{$this->analytic->property()};
             $place = $index + 1;
             if ($value === $lastValue) {
                 $place = $lastIndex;
             }
 
-            $analytic = new Analytic;
+            $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->place = $place;
             $analytic->value = $value;
             $analytic->game()->associate($gamePlayer->game);
             $analytic->player()->associate($gamePlayer->player);
-            $analytic->save();
+            $analytic->saveOrFail();
 
             // Store our last values in case users share the value.
             $lastIndex = $analytic->place;
@@ -125,12 +125,12 @@ class ProcessAnalytic implements ShouldQueue
                 $place = $lastIndex;
             }
 
-            $analytic = new Analytic;
+            $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->place = $place;
             $analytic->value = $value;
             $analytic->player()->associate($serviceRecord->player);
-            $analytic->save();
+            $analytic->saveOrFail();
 
             // Store our last values in case users share the value.
             $lastIndex = $analytic->place;
@@ -138,16 +138,42 @@ class ProcessAnalytic implements ShouldQueue
         });
     }
 
-    /** @param  Collection<int, OverviewStat>|null  $maps */
-    private function handleOverviewStatResults(?Collection $maps): void
+    /** @param  Collection<int, Map>|null  $maps */
+    private function handleMapResults(?Collection $maps): void
     {
-        $maps?->each(function (OverviewStat $overviewStat, int $index) {
-            $analytic = new Analytic;
+        $maps?->each(function (Map $map, int $index) {
+            $analytic = new Analytic();
             $analytic->key = $this->analytic->key();
             $analytic->place = $index + 1;
-            $analytic->value = (float) $overviewStat->{$this->analytic->property()};
-            $analytic->label = $overviewStat->getAttribute('label');
-            $analytic->save();
+            $analytic->value = (float) $map->{$this->analytic->property()};
+            $analytic->map()->associate($map);
+            $analytic->saveOrFail();
+        });
+    }
+
+    /** @param  Collection<int, Player>|null  $players */
+    private function handleOnlyPlayerResults(?Collection $players): void
+    {
+        $lastIndex = null;
+        $lastValue = null;
+
+        $players?->each(function (Player $player, int $index) use (&$lastIndex, &$lastValue) {
+            $value = (float) $player->{$this->analytic->property()};
+            $place = $index + 1;
+            if ($value === $lastValue) {
+                $place = $lastIndex;
+            }
+
+            $analytic = new Analytic();
+            $analytic->key = $this->analytic->key();
+            $analytic->place = $place;
+            $analytic->value = $value;
+            $analytic->player()->associate($player);
+            $analytic->saveOrFail();
+
+            // Store our last values in case users share the value.
+            $lastIndex = $analytic->place;
+            $lastValue = $analytic->value;
         });
     }
 }

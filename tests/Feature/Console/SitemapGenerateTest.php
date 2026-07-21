@@ -16,15 +16,13 @@ class SitemapGenerateTest extends TestCase
 {
     use WithFaker;
 
-    public function test_sitemap_generation(): void
+    public function testSitemapGeneration(): void
     {
         // Arrange
         Matchup::factory()->createOne();
         Scrim::factory()->createOne();
         Medal::factory()->createOne();
-        Player::factory()->createOne([
-            'xp' => 1_000_200,
-        ]);
+        Player::factory()->createOne();
 
         // Act & Assert
         $this

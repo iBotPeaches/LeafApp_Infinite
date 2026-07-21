@@ -23,7 +23,7 @@
     </div>
 @endif
 @foreach ($team->players as $player)
-    <div class="card has-background-{{ $color }}-light">
+    <div class="card has-background-{{ $color }}-soft">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
@@ -33,7 +33,9 @@
                 </div>
                 <div class="media-content">
                     <p class="title is-4">
-                        @include('partials.links.player', ['player' => $player])
+                        <a href="{{ route('player', [$player]) }}">
+                            {{ $player->gamertag ?? '' }}
+                        </a>
                     </p>
                     <p class="subtitle is-6"><i>-</i></p>
                 </div>

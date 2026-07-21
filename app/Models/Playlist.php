@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Actions\Playlist\HashRotations;
 use App\Enums\Input;
 use App\Enums\Queue;
 use App\Models\Contracts\HasDotApi;
 use App\Models\Traits\HasPlaylist;
 use Database\Factories\PlaylistFactory;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -31,9 +27,6 @@ use Illuminate\Support\Str;
  * @property array|null $rotations
  * @property string $image_url
  * @property-read string $image
- * @property-read ?PlaylistStat $stat
- * @property-read Collection<int, PlaylistAnalytic> $analytics
- * @property-read Collection<int, PlaylistChange> $changes
  *
  * @method static PlaylistFactory factory(...$parameters)
  */
@@ -82,6 +75,7 @@ class Playlist extends Model implements HasDotApi
 
     public static function fromPlaylistId(string $playlistId): ?self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('uuid', $playlistId)
             ->first();
@@ -108,39 +102,9 @@ class Playlist extends Model implements HasDotApi
         $playlist->image_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($playlist->isDirty()) {
-            $playlist->save();
-        }
-
-        // If Active, we need to check if the rotation (Hopper) has changed
-        if ($playlist->is_active) {
-            $rotationHash = HashRotations::execute($playlist->rotations);
-
-            PlaylistChange::query()
-                ->where('playlist_id', $playlist->id)
-                ->where('rotation_hash', $rotationHash)
-                ->firstOrCreate([
-                    'playlist_id' => $playlist->id,
-                    'rotation_hash' => $rotationHash,
-                ], [
-                    'rotations' => $playlist->rotations,
-                ]);
+            $playlist->saveOrFail();
         }
 
         return $playlist;
-    }
-
-    public function stat(): HasOne
-    {
-        return $this->hasOne(PlaylistStat::class);
-    }
-
-    public function analytics(): HasMany
-    {
-        return $this->hasMany(PlaylistAnalytic::class);
-    }
-
-    public function changes(): HasMany
-    {
-        return $this->hasMany(PlaylistChange::class);
     }
 }

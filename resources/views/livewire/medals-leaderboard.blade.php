@@ -51,18 +51,9 @@
                                 </figure>
                                 <div class="media-content">
                                     <div class="content" style="white-space: nowrap">
-                                        @include('partials.links.player', ['player' => $result->player])
-                                        @if ($result->player?->is_donator)
-                                            <span class="tag is-success" data-tooltip="Donated via BuyMeACoffee" style="border-bottom: 0;">
-                                                <i class="fas fa-leaf"></i>
-                                            </span>
-                                        @endif
-                                        @if ($result->player?->is_cheater)
-                                            <span class="tag is-danger">Banned</span>
-                                        @endif
-                                        @if ($result->player?->is_botfarmer)
-                                            <span class="tag is-info">Farmer</span>
-                                        @endif
+                                        <a href="{{ route('player', [$result->player]) }}">
+                                            {{ $result->player->gamertag }}
+                                        </a>
                                     </div>
                                 </div>
                             </article>
@@ -81,6 +72,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $results->links(data: ['scrollTo' => false]) }}
+        {{ $results->links() }}
     @endif
 </div>

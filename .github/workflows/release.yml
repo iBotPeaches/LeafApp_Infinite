@@ -13,13 +13,13 @@ jobs:
       url: 'https://leafapp.co'
 
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '16'
           cache: 'npm'
 
       - name: Set env
@@ -37,11 +37,11 @@ jobs:
       - name: Deploy
         uses: deployphp/action@v1
         with:
-          private-key: ${{ secrets.DEPLOY_V2_SECRET_KEY }}
+          private-key: ${{ secrets.DEPLOY_SECRET_KEY }}
           dep: deploy -vvv
-          deployer-version: "7.5.8"
+          deployer-version: "7.1.4"
 
-      - uses: getsentry/action-release@v3.7.0
+      - uses: getsentry/action-release@v1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
@@ -53,7 +53,7 @@ jobs:
           environment: production
 
       - name: Release
-        uses: softprops/action-gh-release@v3.0.2
+        uses: softprops/action-gh-release@v2
         with:
           draft: false
           prerelease: false

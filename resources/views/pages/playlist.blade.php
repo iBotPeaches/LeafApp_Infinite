@@ -10,11 +10,9 @@
         <div class="column">
             @include('partials.playlist.current-playlist')
             @include('partials.playlist.sidebar-list')
-            @include('partials.playlist.rotation-dates')
         </div>
         <div class="column is-three-quarters">
-            @include('partials.playlist.navigation')
-            @include('partials.playlist.tabs.' . $type, ['playlist' => $playlist])
+            <livewire:playlist-page :playlist="$playlist"></livewire:playlist-page>
         </div>
     </div>
 @endsection

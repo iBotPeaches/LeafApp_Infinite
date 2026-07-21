@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\PlayerTab;
-use App\Http\Requests\BanCheckRequest;
 use App\Http\Requests\LinkableRequest;
 use App\Jobs\ExportGameHistory;
 use App\Models\Player;
@@ -13,27 +12,26 @@ use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use League\Csv\Writer;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PlayerController extends Controller
 {
-    public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): Response
+    public function index(Request $request, Player $player, string $type = PlayerTab::OVERVIEW): View
     {
-        SEOTools::setTitle(e($player->gamertag.' '.Str::title($type)));
+        SEOTools::setTitle($player->gamertag.' '.Str::title($type));
         SEOTools::addImages([
             $player->emblem_url,
         ]);
-        SEOTools::setDescription(e($player->gamertag.' Halo Infinite '.Str::title($type)));
+        SEOTools::setDescription($player->gamertag.' Halo Infinite '.Str::title($type));
 
-        return response()->view('pages.player', [
+        return view('pages.player', [
             'player' => $player,
             'user' => $request->user(),
             'type' => $type,
-        ])->setStatusCode($player->is_hidden ? ResponseAlias::HTTP_UNAVAILABLE_FOR_LEGAL_REASONS : ResponseAlias::HTTP_OK);
+        ]);
     }
 
     public function csv(Player $player, string $playerType): StreamedResponse
@@ -66,7 +64,7 @@ class PlayerController extends Controller
         /** @var User $user */
         $user = $request->user();
         $user->player()->associate($player);
-        $user->save();
+        $user->saveOrFail();
 
         return redirect()->route('player', $player);
     }
@@ -76,14 +74,7 @@ class PlayerController extends Controller
         /** @var User $user */
         $user = $request->user();
         $user->player_id = null;
-        $user->save();
-
-        return redirect()->route('player', $player);
-    }
-
-    public function banCheck(BanCheckRequest $request, Player $player): RedirectResponse
-    {
-        $player->checkForBanFromDotApi();
+        $user->saveOrFail();
 
         return redirect()->route('player', $player);
     }

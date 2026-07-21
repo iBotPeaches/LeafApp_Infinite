@@ -7,10 +7,9 @@ parameters:
         - app
         - database/factories
         - database/seeders
-        - routes
 
     level: 8
 
     ignoreErrors:
-        - identifier: missingType.generics
-        - identifier: missingType.iterableValue
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

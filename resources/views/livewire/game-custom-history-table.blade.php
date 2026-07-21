@@ -23,7 +23,7 @@
                         <th><abbr title="Deaths">D</abbr></th>
                         <th><abbr title="Assists">A</abbr></th>
                         <th><abbr title="Kills / Deaths">KD</abbr></th>
-                        <th><abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></th>
+                        <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                         <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                         <th>Rank</th>
                         <th>Date</th>
@@ -38,7 +38,7 @@
                         <td>
                             <a href="{{ route('game', [$game]) }}">
                                 <abbr title="{{ $game->map->name }}">
-                                    {{ \Illuminate\Support\Str::limit($game->map->shorthand, 15) }}
+                                    {{ \Illuminate\Support\Str::limit($game->map->name, 15) }}
                                 </abbr>
                             </a>
                         </td>
@@ -59,7 +59,7 @@
                         <td class="{{ $game->personal->getKdaColor() }}">
                             {{ $game->personal->kda }}
                         </td>
-                        <td class="has-background-{{ $game->personal->accuracy_color }}-light">
+                        <td class="has-background-{{ $game->personal->accuracy_color }}-soft">
                             {{ $game->personal->accuracy }}%
                         </td>
                         <td>{{ $game->personal->rank }}</td>
@@ -76,6 +76,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $games->links(data: ['scrollTo' => false]) }}
+        {{ $games->links() }}
     @endif
 </div>

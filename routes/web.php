@@ -1,18 +1,11 @@
 <?php
 
-use App\Enums\OverviewTab;
-use App\Enums\OverviewType;
-use App\Enums\PlayerTab;
-use App\Enums\PlaylistTab;
-use App\Enums\ScrimTab;
 use App\Http\Controllers\Auth\BaseAuthController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HcsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeaderboardController;
-use App\Http\Controllers\ListController;
-use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\RankController;
@@ -34,26 +27,21 @@ Route::get('/leaderboards/medal', [LeaderboardController::class, 'medalList'])->
 Route::get('/leaderboards/medal/{medal}', [LeaderboardController::class, 'medal'])->name('medalLeaderboard');
 
 // Scrim
+Route::pattern('scrimType', 'overview|matches|players');
 Route::get('/scrims/{scrim}/players/csv', [ScrimController::class, 'csvPlayers'])->name('scrimPlayersCsv');
-Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])
-    ->where('scrimType', implode('|', ScrimTab::getValues()))
-    ->name('scrim');
+Route::get('/scrims/{scrim}/{scrimType?}', [ScrimController::class, 'show'])->name('scrim');
 Route::get('/scrims', [ScrimController::class, 'index'])->name('scrims');
 
 // Player
-Route::middleware(['throttle:ban'])->group(function () {
-    Route::get('/player/{player}/ban-check', [PlayerController::class, 'banCheck'])->name('banCheck');
-});
 Route::post('/player/{player}/link', [PlayerController::class, 'link'])->name('playerLink');
 Route::post('/player/{player}/unlink', [PlayerController::class, 'unlink'])->name('playerUnlink');
+Route::pattern('type', 'overview|medals|competitive|matches|custom|lan|modes');
 
 Route::middleware(['throttle:uploads'])->group(function () {
     Route::get('/player/{player}/matches/csv/{type}', [PlayerController::class, 'csv'])->name('historyCsv');
 });
 
-Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])
-    ->where('type', implode('|', PlayerTab::getValues()))
-    ->name('player');
+Route::get('/player/{player}/{type?}', [PlayerController::class, 'index'])->name('player');
 Route::redirect('/profile/{player}', '/player/{player}');
 
 // Game
@@ -62,35 +50,20 @@ Route::get('/game/{game}', [GameController::class, 'index'])->name('game');
 
 // HCS
 Route::get('/hcs/{championship}/matchup/{matchup}', [HcsController::class, 'matchup'])->name('matchup');
-Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])
-    ->whereNumber('round')
-    ->name('championship');
+Route::get('/hcs/{championship}/{bracket?}/{round?}', [HcsController::class, 'championship'])->name('championship');
 Route::get('/hcs', [HcsController::class, 'index'])->name('championships');
 
 // Playlists
-Route::get('/playlists/{playlist?}/{tab?}', [PlaylistController::class, 'index'])
-    ->where('tab', implode('|', PlaylistTab::getValues()))
-    ->name('playlist');
+Route::get('/playlists/{playlist?}', [PlaylistController::class, 'index'])->name('playlist');
 
 // Ranks
 Route::get('/ranks', RankController::class)->name('ranks');
-
-// Overviews
-Route::get('/overviews/{filterType?}', [OverviewController::class, 'list'])
-    ->where('filterType', implode('|', OverviewType::getValues()))
-    ->name('overviews');
-Route::get('/overview/{overview}/{tab?}', [OverviewController::class, 'show'])
-    ->where('tab', implode('|', OverviewTab::getValues()))
-    ->name('overview');
 
 // Auth
 Route::redirect('/login', '/auth/google/redirect')->name('login');
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('googleRedirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('googleCallback');
 Route::post('/auth/logout', [BaseAuthController::class, 'logout'])->name('logout');
-
-// Lists
-Route::get('/lists/banned', [ListController::class, 'banned'])->name('bannedList');
 
 // Home
 Route::get('/about', [HomeController::class, 'about'])->name('about');

@@ -18,11 +18,11 @@ class InvalidGameUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function test_invalid_response_due_to_game_rate_limit(): void
+    public function testInvalidResponseDueToGameRateLimit(): void
     {
         // Arrange
         Queue::fake();
-        $mockMatchResponse = (new MockMatchService)->error429();
+        $mockMatchResponse = (new MockMatchService())->error429();
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_TOO_MANY_REQUESTS);
@@ -38,11 +38,11 @@ class InvalidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Rate Limit Hit :( - Try later.');
     }
 
-    public function test_invalid_response_due_to_unknown_request_issue(): void
+    public function testInvalidResponseDueToUnknownRequestIssue(): void
     {
         // Arrange
         Queue::fake();
-        $mockMatchResponse = (new MockMatchService)->error404();
+        $mockMatchResponse = (new MockMatchService())->error404();
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_NOT_FOUND);
@@ -58,7 +58,7 @@ class InvalidGameUpdateTest extends TestCase
             ->assertViewHas('message', 'Oops - something went wrong.');
     }
 
-    public function test_invalid_response_due_to_crash(): void
+    public function testInvalidResponseDueToCrash(): void
     {
         // Arrange
         Queue::fake();

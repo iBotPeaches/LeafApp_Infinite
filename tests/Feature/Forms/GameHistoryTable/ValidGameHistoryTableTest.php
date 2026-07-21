@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class ValidGameHistoryTableTest extends TestCase
 {
-    public function test_valid_response_from_dot_api(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         Carbon::setTestNow(now());

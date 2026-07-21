@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class PlayerModelTest extends TestCase
 {
-    public function test_bot_does_not_dispatch_observer_xuid(): void
+    public function testBotDoesNotDispatchObserverXuid(): void
     {
         // Arrange
         Bus::fake([
@@ -24,13 +24,13 @@ class PlayerModelTest extends TestCase
         ]);
 
         // Act
-        $player->save();
+        $player->saveOrFail();
 
         // Assert
         Bus::assertNotDispatched(PullXuid::class);
     }
 
-    public function test_player_dispatches_observer_xuid(): void
+    public function testPlayerDispatchesObserverXuid(): void
     {
         // Arrange
         Bus::fake([
@@ -42,13 +42,13 @@ class PlayerModelTest extends TestCase
         ]);
 
         // Act
-        $player->save();
+        $player->saveOrFail();
 
         // Assert
         Bus::assertDispatched(PullXuid::class);
     }
 
-    public function test_next_rank_percentage_with_no_rank(): void
+    public function testNextRankPercentageWithNoRank(): void
     {
         // Arrange
         $player = Player::factory()->makeOne([
@@ -61,37 +61,7 @@ class PlayerModelTest extends TestCase
         $this->assertEquals(100.0, $player->percentage_next_rank);
     }
 
-    public function test_next_rank_percentage_is_between60and80(): void
-    {
-        // Arrange
-        $player = Player::factory()->makeOne([
-            'xp' => 650,
-            'rank_id' => Rank::factory(['id' => 2, 'threshold' => 40]),
-            'next_rank_id' => Rank::factory(['id' => 3, 'threshold' => 1000, 'required' => 1000]),
-            'is_bot' => false,
-        ]);
-
-        // Act && Assert
-        $this->assertEquals(61.0, $player->percentage_next_rank);
-        $this->assertEquals('is-primary', $player->percentage_next_rank_color);
-    }
-
-    public function test_next_rank_percentage_is_between40and60(): void
-    {
-        // Arrange
-        $player = Player::factory()->makeOne([
-            'xp' => 450,
-            'rank_id' => Rank::factory(['id' => 2, 'threshold' => 40]),
-            'next_rank_id' => Rank::factory(['id' => 3, 'threshold' => 1000, 'required' => 1000]),
-            'is_bot' => false,
-        ]);
-
-        // Act && Assert
-        $this->assertEquals(41.0, $player->percentage_next_rank);
-        $this->assertEquals('is-warning', $player->percentage_next_rank_color);
-    }
-
-    public function test_rank_values_with_next_rank(): void
+    public function testRankValuesWithNextRank(): void
     {
         // Arrange
         /** @var Rank $rank */

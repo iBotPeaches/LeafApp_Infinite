@@ -112,16 +112,6 @@ class MockCsrAllService extends BaseMock
             'next_sub_tier' => $this->faker->numberBetween(1, 5),
             'initial_measurement_matches' => 10,
             'tier_image_url' => $this->faker->imageUrl,
-            'extra' => [
-                [
-                    'key' => 'champion',
-                    'type' => 'object',
-                    'value' => [
-                        'rank' => $this->faker->numberBetween(1, 5),
-                        'tier_image_url' => $this->faker->imageUrl,
-                    ],
-                ],
-            ],
         ];
     }
 }

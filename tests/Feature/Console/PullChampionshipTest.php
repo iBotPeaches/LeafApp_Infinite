@@ -10,7 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use InvalidArgumentException;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Championship\MockChampionshipBracketService;
@@ -21,15 +20,15 @@ class PullChampionshipTest extends TestCase
 {
     use WithFaker;
 
-    #[DataProvider('championshipTypeDataProvider')]
-    public function test_valid_data_pull(string $type): void
+    /** @dataProvider championshipTypeDataProvider */
+    public function testValidDataPull(string $type): void
     {
         // Arrange
         Queue::fake();
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
         Arr::set($mockChampionshipResponse, 'type', $type);
 
@@ -46,14 +45,14 @@ class PullChampionshipTest extends TestCase
         Queue::assertPushed(FindPlayersFromTeam::class);
     }
 
-    public function test_valid_data_pull_as_ffa(): void
+    public function testValidDataPullAsFfa(): void
     {
         // Arrange
         Queue::fake();
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
         Arr::set($mockChampionshipResponse, 'type', 'stage');
         // TODO - Make setting players per team easier, this changes 4 to 1.
@@ -74,16 +73,16 @@ class PullChampionshipTest extends TestCase
         Queue::assertPushed(FindPlayersFromTeam::class);
     }
 
-    public function test_valid_data_pull_with_invalid_type(): void
+    public function testValidDataPullWithInvalidType(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
         Arr::set($mockChampionshipResponse, 'type', 'INVALID-TYPE');
 
@@ -97,16 +96,16 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function test_valid_data_pull_with_invalid_region(): void
+    public function testValidDataPullWithInvalidRegion(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
-        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService)->empty();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
+        $mockChampionshipBracketEmpty = (new MockChampionshipBracketService())->empty();
 
         Arr::set($mockChampionshipResponse, 'region', 'INVALID-ENUM');
 
@@ -120,14 +119,14 @@ class PullChampionshipTest extends TestCase
             ->assertExitCode(CommandAlias::FAILURE);
     }
 
-    public function test_invalid_status_enum_pull_on_championship(): void
+    public function testInvalidStatusEnumPullOnChampionship(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
 
         Arr::set($mockChampionshipResponse, 'status', 'INVALID-ENUM');
 
@@ -141,15 +140,15 @@ class PullChampionshipTest extends TestCase
         Http::assertSequencesAreEmpty();
     }
 
-    public function test_invalid_status_enum_pull_on_matchup(): void
+    public function testInvalidStatusEnumPullOnMatchup(): void
     {
         // Expectations
         $this->expectException(InvalidArgumentException::class);
 
         // Arrange
         $championshipId = $this->faker->uuid;
-        $mockChampionshipResponse = (new MockChampionshipService)->success();
-        $mockChampionshipBracketResponse = (new MockChampionshipBracketService)->success();
+        $mockChampionshipResponse = (new MockChampionshipService())->success();
+        $mockChampionshipBracketResponse = (new MockChampionshipBracketService())->success();
 
         Arr::set($mockChampionshipBracketResponse, 'items.0.status', 'INVALID-ENUM');
 
@@ -175,12 +174,6 @@ class PullChampionshipTest extends TestCase
             ],
             [
                 'type' => 'stage',
-            ],
-            [
-                'type' => 'bracket',
-            ],
-            [
-                'type' => 'swiss',
             ],
         ];
     }

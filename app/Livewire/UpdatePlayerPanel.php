@@ -45,12 +45,9 @@ class UpdatePlayerPanel extends Component
 
         if (Cache::has($cacheKey)) {
             $color = 'is-dark';
-
-            $message = match (true) {
-                $this->player->is_throttled => 'Player is throttled. Updates are delayed.',
-                $isOlderSeason => 'Season has ended. No more stat updates allowed.',
-                default => 'Profile was recently updated (or updating). Check back soon.',
-            };
+            $message = $isOlderSeason
+                ? 'Season has ended. No more stat updates allowed.'
+                : 'Profile was recently updated (or updating). Check back soon.';
         } else {
             if (! $this->runUpdate) {
                 $this->emitToRespectiveComponent();
@@ -64,16 +61,14 @@ class UpdatePlayerPanel extends Component
 
             try {
                 DB::transaction(function () use ($cacheKey, $isOlderSeason) {
-                    $cooldownMinutes = $this->player->is_throttled
-                        ? 60 * 24
-                        : config()->integer('services.dotapi.cooldown');
+                    $cooldownMinutes = (int) config('services.dotapi.cooldown');
                     $cooldownUnits = $isOlderSeason ? 'addMonths' : 'addMinutes';
                     Cache::put($cacheKey, true, now()->$cooldownUnits($cooldownMinutes));
 
                     $this->player->lockForUpdate();
                     $this->player->updateFromDotApi(false, $this->type);
                     if ($this->player->isDirty()) {
-                        $this->player->save();
+                        $this->player->saveOrFail();
                     }
                 }, 3);
             } catch (RequestException $exception) {
@@ -101,7 +96,7 @@ class UpdatePlayerPanel extends Component
     {
         switch ($this->type) {
             case PlayerTab::OVERVIEW:
-                $this->dispatch('$refresh')->to(PlayerOverviewPage::class);
+                $this->dispatch('$refresh')->to(OverviewPage::class);
                 break;
             case PlayerTab::COMPETITIVE:
                 $this->dispatch('$refresh')->to(CompetitivePage::class);

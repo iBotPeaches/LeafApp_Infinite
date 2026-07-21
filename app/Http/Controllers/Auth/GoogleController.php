@@ -14,8 +14,9 @@ class GoogleController extends Controller
 {
     public function redirect(): RedirectResponse
     {
+        // @phpstan-ignore-next-line
         return Socialite::driver('google')
-            ->setScopes(['email']) // @phpstan-ignore-line method.notFound
+            ->setScopes(['email'])
             ->redirect();
     }
 
@@ -29,7 +30,7 @@ class GoogleController extends Controller
                 'google_id' => $googleUser->getId(),
             ]);
 
-        $user->save();
+        $user->saveOrFail();
         Auth::login($user, true);
 
         if ($user->player) {

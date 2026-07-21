@@ -23,7 +23,7 @@ use Tests\TestCase;
 
 class GamePageTest extends TestCase
 {
-    public function test_loading_game_page_with_unpulled_game(): void
+    public function testLoadingGamePageWithUnpulledGame(): void
     {
         // Arrange
         Http::fake();
@@ -41,14 +41,14 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function test_loading_game_page_with_raw_valid_uuid(): void
+    public function testLoadingGamePageWithRawValidUuid(): void
     {
         // Arrange
         Queue::fake([
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -77,14 +77,14 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function test_loading_game_page_with_raw_valid_uuid_and_unknown_level(): void
+    public function testLoadingGamePageWithRawValidUuidAndUnknownLevel(): void
     {
         // Arrange
         Queue::fake([
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -109,14 +109,14 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function test_loading_game_page_with_unknown_category(): void
+    public function testLoadingGamePageWithUnknownCategory(): void
     {
         // Arrange
         Queue::fake([
             PullAppearance::class,
             PullXuid::class,
         ]);
-        $mockMatchResponse = (new MockMatchService)->success('Test', 'Test2');
+        $mockMatchResponse = (new MockMatchService())->success('Test', 'Test2');
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -141,7 +141,7 @@ class GamePageTest extends TestCase
         Queue::assertPushed(PullXuid::class);
     }
 
-    public function test_loading_game_page_with_old_game(): void
+    public function testLoadingGamePageWithOldGame(): void
     {
         // Arrange
         Http::fake();
@@ -160,7 +160,7 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function test_loading_game_page_with_social_game(): void
+    public function testLoadingGamePageWithSocialGame(): void
     {
         // Arrange
         Http::fake();
@@ -184,7 +184,7 @@ class GamePageTest extends TestCase
         $response->assertSeeLivewire('update-game-panel');
     }
 
-    public function test_loading_game_page_with_up_to_date_game(): void
+    public function testLoadingGamePageWithUpToDateGame(): void
     {
         // Arrange
         Http::fake();
@@ -222,7 +222,7 @@ class GamePageTest extends TestCase
         $response->assertDontSeeLivewire('update-game-panel');
     }
 
-    public function test_loading_game_page_with_up_to_date_game_alongside_performances(): void
+    public function testLoadingGamePageWithUpToDateGameAlongsidePerformances(): void
     {
         // Arrange
         Http::fake();

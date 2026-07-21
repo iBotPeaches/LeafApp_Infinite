@@ -5,17 +5,17 @@ namespace Deployer;
 require 'recipe/laravel.php';
 require 'contrib/php-fpm.php';
 
-set('application', 'Leaf');
+set('application', 'Leafapp');
 set('repository', 'git@github.com:iBotPeaches/LeafApp_Infinite.git');
-set('php_fpm_service', 'php8.5-fpm');
+set('php_fpm_service', 'ea-php82-php-fpm');
 set('git_ssh_command', 'ssh -o StrictHostKeyChecking=no');
 set('default_timeout', 1800);
 
 host('prod')
-    ->set('remote_user', 'leaf')
+    ->set('remote_user', 'leafapp')
     ->set('port', 22774)
-    ->set('hostname', 'deltatap.connortumbleson.com')
-    ->set('deploy_path', '/var/www/leaf');
+    ->set('hostname', 'leafapp.co')
+    ->set('deploy_path', '/home/leafapp/deploy');
 
 task('deploy', [
     'deploy:prepare',
@@ -26,7 +26,6 @@ task('deploy', [
     'artisan:storage:link',
     'npm:local:upload',
     'artisan:horizon:assets',
-    'artisan:livewire:assets',
     'app:version:file',
     'app:sentry:version',
     'deploy:publish',
@@ -57,11 +56,6 @@ task('app:sitemap', function () {
 task('artisan:horizon:assets', function () {
     cd('{{release_or_current_path}}');
     run('php artisan horizon:publish');
-});
-
-task('artisan:livewire:assets', function () {
-    cd('{{release_or_current_path}}');
-    run('php artisan livewire:publish --assets');
 });
 
 after('deploy:failed', 'deploy:unlock');

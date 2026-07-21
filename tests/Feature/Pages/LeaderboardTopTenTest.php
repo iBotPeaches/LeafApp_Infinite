@@ -6,7 +6,6 @@ namespace Tests\Feature\Pages;
 
 use App\Models\Analytic;
 use App\Support\Analytics\AnalyticInterface;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\Traits\HasAnalyticDataProvider;
@@ -15,8 +14,8 @@ class LeaderboardTopTenTest extends TestCase
 {
     use HasAnalyticDataProvider;
 
-    #[DataProvider('analyticDataProvider')]
-    public function test_loading_top_ten(AnalyticInterface $analyticClass): void
+    /** @dataProvider analyticDataProvider */
+    public function testLoadingTopTen(AnalyticInterface $analyticClass): void
     {
         // Arrange
         Analytic::factory()

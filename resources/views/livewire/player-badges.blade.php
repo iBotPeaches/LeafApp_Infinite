@@ -10,7 +10,7 @@
             </div>
             <div class="message-body">
                 @foreach ($medals as $medal)
-                    <article class="tile is-flex">
+                    <article class="media is-flex">
                         <figure class="media-left">
                             <p class="image is-24x24">
                                 <img src="{{ $medal['medal']->image }}" alt="{{ $medal['medal']->name }}"/>

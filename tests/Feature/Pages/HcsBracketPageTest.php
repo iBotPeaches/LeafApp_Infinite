@@ -12,14 +12,13 @@ use App\Models\Matchup;
 use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class HcsBracketPageTest extends TestCase
 {
-    #[DataProvider('bracketDataProvider')]
-    public function test_loading_bracket_page_with_matchups(?int $round, ?string $bracket, array $attributes): void
+    /** @dataProvider bracketDataProvider */
+    public function testLoadingBracketPageWithMatchups(?int $round, ?string $bracket, array $attributes): void
     {
         // Arrange
         Http::fake();
@@ -52,7 +51,7 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
-    public function test_loading_bracket_page_with_scheduled_matchups(): void
+    public function testLoadingBracketPageWithScheduledMatchups(): void
     {
         // Arrange
         Http::fake();
@@ -81,7 +80,7 @@ class HcsBracketPageTest extends TestCase
         $response->assertSeeLivewire('championship-bracket');
     }
 
-    public function test_loading_bracket_page_with_no_matchups(): void
+    public function testLoadingBracketPageWithNoMatchups(): void
     {
         // Arrange
         Http::fake();
@@ -101,74 +100,74 @@ class HcsBracketPageTest extends TestCase
         return [
             [
                 'round' => null,
-                'bracket' => null,
+                'group' => null,
                 'attributes' => [],
             ],
             [
                 'round' => null,
-                'bracket' => Bracket::RULES,
+                'group' => Bracket::RULES,
                 'attributes' => [],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::WINNERS,
+                'group' => Bracket::WINNERS,
                 'attributes' => [],
             ],
             [
                 'round' => 2,
-                'bracket' => Bracket::LOSERS,
+                'group' => Bracket::LOSERS,
                 'attributes' => [],
             ],
             [
                 'round' => 2,
-                'bracket' => Bracket::GRAND,
+                'group' => Bracket::GRAND,
                 'attributes' => [],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::WINNERS,
+                'group' => Bracket::WINNERS,
                 'attributes' => [
                     'type' => ChampionshipType::STAGE,
                 ],
             ],
             [
                 'round' => 2,
-                'bracket' => Bracket::LOSERS,
+                'group' => Bracket::LOSERS,
                 'attributes' => [
                     'type' => ChampionshipType::STAGE,
                 ],
             ],
             [
                 'round' => 2,
-                'bracket' => Bracket::POOL_D,
+                'group' => Bracket::POOL_D,
                 'attributes' => [
                     'type' => ChampionshipType::ROUND_ROBIN,
                 ],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::OTHER,
+                'group' => Bracket::OTHER,
                 'attributes' => [
                     'type' => ChampionshipType::ROUND_ROBIN,
                 ],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::OTHER,
+                'group' => Bracket::OTHER,
                 'attributes' => [
                     'type' => ChampionshipType::BRACKET,
                 ],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::MATCHES,
+                'group' => Bracket::MATCHES,
                 'attributes' => [
                     'type' => ChampionshipType::SWISS,
                 ],
             ],
             [
                 'round' => 1,
-                'bracket' => Bracket::SUMMARY,
+                'group' => Bracket::SUMMARY,
                 'attributes' => [
                     'type' => ChampionshipType::SWISS,
                 ],

@@ -8,15 +8,14 @@ use App\Livewire\AddGamerForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
 use Tests\TestCase;
 
 class InvalidGamerFormTest extends TestCase
 {
-    #[DataProvider('invalidTextDataProvider')]
-    public function test_invalid_test_submitted(?string $gamertag, string $validationError): void
+    /** @dataProvider invalidTextDataProvider */
+    public function testInvalidTestSubmitted(?string $gamertag, string $validationError): void
     {
         // Arrange & Act & Assert
         Livewire::test(AddGamerForm::class)
@@ -27,8 +26,8 @@ class InvalidGamerFormTest extends TestCase
             ]);
     }
 
-    #[DataProvider('invalidApiDataProvider')]
-    public function test_invalid_response_from_dot_api(callable $mockResponse, int $statusCode): void
+    /** @dataProvider invalidApiDataProvider */
+    public function testInvalidResponseFromDotApi(callable $mockResponse, int $statusCode): void
     {
         // Arrange
         $mockResponse = call_user_func($mockResponse);
@@ -44,10 +43,10 @@ class InvalidGamerFormTest extends TestCase
             ->assertHasErrors(['gamertag']);
     }
 
-    public function test_graceful_fallback_if_xuid_not_found_and_api_call_fails(): void
+    public function testGracefulFallbackIfXuidNotFoundAndApiCallFails(): void
     {
         // Arrange
-        $mockAppearanceResponse = (new MockAppearanceService)->success();
+        $mockAppearanceResponse = (new MockAppearanceService())->success();
         $gamertag = Arr::get($mockAppearanceResponse, 'additional.params.gamertag');
 
         Http::fakeSequence()
@@ -65,23 +64,23 @@ class InvalidGamerFormTest extends TestCase
     {
         return [
             401 => [
-                'mockResponse' => fn () => (new MockAppearanceService)->error401(),
+                'response' => fn () => (new MockAppearanceService())->error401(),
                 'statusCode' => Response::HTTP_UNAUTHORIZED,
             ],
             403 => [
-                'mockResponse' => fn () => (new MockAppearanceService)->error403(),
+                'response' => fn () => (new MockAppearanceService())->error403(),
                 'statusCode' => Response::HTTP_FORBIDDEN,
             ],
             404 => [
-                'mockResponse' => fn () => (new MockAppearanceService)->error404(),
+                'response' => fn () => (new MockAppearanceService())->error404(),
                 'statusCode' => Response::HTTP_NOT_FOUND,
             ],
             429 => [
-                'mockResponse' => fn () => (new MockAppearanceService)->error429(),
+                'response' => fn () => (new MockAppearanceService())->error429(),
                 'statusCode' => Response::HTTP_TOO_MANY_REQUESTS,
             ],
             500 => [
-                'mockResponse' => fn () => (new MockAppearanceService)->error500(),
+                'response' => fn () => (new MockAppearanceService())->error500(),
                 'statusCode' => Response::HTTP_INTERNAL_SERVER_ERROR,
             ],
         ];
@@ -92,15 +91,15 @@ class InvalidGamerFormTest extends TestCase
         return [
             'empty' => [
                 'gamertag' => null,
-                'validationError' => 'required',
+                'validation' => 'required',
             ],
             'empty string' => [
                 'gamertag' => '',
-                'validationError' => 'required',
+                'validation' => 'required',
             ],
             'too long' => [
                 'gamertag' => 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnoprstuvwxyz',
-                'validationError' => 'max',
+                'validation' => 'max',
             ],
         ];
     }
