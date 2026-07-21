@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class HcsIndexPageTest extends TestCase
 {
-    public function test_loading_championship_page_with_data(): void
+    public function testLoadingChampionshipPageWithData(): void
     {
         // Arrange
         Http::fake();
@@ -26,7 +26,7 @@ class HcsIndexPageTest extends TestCase
         $response->assertSeeLivewire('championships-table');
     }
 
-    public function test_loading_championship_page_with_no_data(): void
+    public function testLoadingChampionshipPageWithNoData(): void
     {
         // Arrange
         Http::fake();

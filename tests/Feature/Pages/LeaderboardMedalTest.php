@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class LeaderboardMedalTest extends TestCase
 {
-    public function test_loading_all_medals(): void
+    public function testLoadingAllMedals(): void
     {
         // Arrange
         /** @var Season $season */
@@ -54,7 +54,7 @@ class LeaderboardMedalTest extends TestCase
         }
     }
 
-    public function test_loading_all_medals_as_merged_season(): void
+    public function testLoadingAllMedalsAsMergedSeason(): void
     {
         // Arrange
         /** @var ServiceRecord $serviceRecord */

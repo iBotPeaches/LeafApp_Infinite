@@ -28,5 +28,5 @@
             </tbody>
         </table>
     </div>
-    {{ $championships->links(data: ['scrollTo' => false]) }}
+    {{ $championships->links() }}
 </div>

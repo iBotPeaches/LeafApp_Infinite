@@ -82,11 +82,11 @@ class Rank extends Model implements HasDotApi
         $rank->type = Arr::get($payload, 'properties.type');
         $rank->threshold = (int) Arr::get($payload, 'properties.threshold');
 
-        $lastThreshold = $previous->threshold ?? 0;
+        $lastThreshold = $previous?->threshold ?? 0;
         $rank->required = max(0, $rank->threshold - $lastThreshold);
 
         if ($rank->isDirty()) {
-            $rank->save();
+            $rank->saveOrFail();
         }
 
         return $rank;

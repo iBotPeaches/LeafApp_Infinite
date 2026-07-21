@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\Storage;
  * @property string $avatar
  * @property Outcome|null $outcome
  * @property-read Matchup $matchup
- * @property-read Collection<int, Player> $players
- * @property-read Collection<int, MatchupPlayer> $faceitPlayers
+ * @property-read Player[]|Collection $players
+ * @property-read MatchupPlayer[]|Collection $faceitPlayers
  *
  * @method static MatchupTeamFactory factory(...$parameters)
  */
@@ -102,7 +102,7 @@ class MatchupTeam extends Model implements HasFaceItApi
         $team->outcome = $winner ? ($winner === $teamInternalId ? Outcome::WIN() : Outcome::LOSS()) : Outcome::DRAW();
 
         if ($team->isDirty()) {
-            $team->save();
+            $team->saveOrFail();
         }
 
         PullLogoFromMatchupTeam::dispatchSync($team, Arr::get($payload, 'avatar'));
@@ -115,25 +115,16 @@ class MatchupTeam extends Model implements HasFaceItApi
         return $this->players->first();
     }
 
-    /**
-     * @return BelongsTo<Matchup, $this>
-     */
     public function matchup(): BelongsTo
     {
         return $this->belongsTo(Matchup::class);
     }
 
-    /**
-     * @return HasMany<MatchupPlayer, $this>
-     */
     public function faceitPlayers(): HasMany
     {
         return $this->hasMany(MatchupPlayer::class);
     }
 
-    /**
-     * @return BelongsToMany<Player, $this, MatchupPlayer, 'faceit'>
-     */
     public function players(): BelongsToMany
     {
         return $this->belongsToMany(Player::class, 'matchup_player')

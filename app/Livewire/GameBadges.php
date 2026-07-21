@@ -24,7 +24,7 @@ class GameBadges extends Component
         $topTen = $this->game->analytics()
             ->with('player')
             ->where('place', '<=', 10)
-            ->orderBy('place')
+            ->orderBy('place', 'ASC')
             ->get()
             ->each(function (Analytic $analytic) {
                 $analyticEnumKey = AnalyticKey::tryFrom($analytic->key);

@@ -33,7 +33,9 @@
                 </div>
                 <div class="media-content">
                     <p class="title is-4">
-                        @include('partials.links.player', ['player' => $player])
+                        <a href="{{ route('player', [$player]) }}">
+                            {{ $player->gamertag ?? '' }}
+                        </a>
                     </p>
                     <p class="subtitle is-6"><i>-</i></p>
                 </div>

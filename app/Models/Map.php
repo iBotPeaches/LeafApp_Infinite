@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Actions\Map\StandardizeMapName;
 use App\Models\Contracts\HasDotApi;
 use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +18,6 @@ use Illuminate\Support\Str;
  * @property string $name
  * @property string $thumbnail_url
  * @property-read string $image
- * @property-read string $shorthand
  * @property-read Level|null $level
  *
  * @method static MapFactory factory(...$parameters)
@@ -46,11 +44,6 @@ class Map extends Model implements HasDotApi
         return $this->thumbnail_url;
     }
 
-    public function getShorthandAttribute(): string
-    {
-        return StandardizeMapName::execute($this->name);
-    }
-
     public static function fromDotApi(array $payload): ?self
     {
         $mapId = Arr::get($payload, 'id');
@@ -70,15 +63,12 @@ class Map extends Model implements HasDotApi
         $map->level()->associate($level);
 
         if ($map->isDirty()) {
-            $map->save();
+            $map->saveOrFail();
         }
 
         return $map;
     }
 
-    /**
-     * @return BelongsTo<Level, $this>
-     */
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);

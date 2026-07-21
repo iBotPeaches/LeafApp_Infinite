@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class RanksPageTest extends TestCase
 {
-    public function test_loading_ranks_as_guest(): void
+    public function testLoadingRanksAsGuest(): void
     {
         // Arrange & Act
         $response = $this->get('/ranks');
@@ -20,7 +20,7 @@ class RanksPageTest extends TestCase
 
     }
 
-    public function test_loading_ranks_as_user(): void
+    public function testLoadingRanksAsUser(): void
     {
         // Arrange
         $user = User::factory()->createOne();

@@ -10,6 +10,7 @@ use App\Models\Medal;
 use App\Models\Player;
 use App\Models\Scrim;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
@@ -38,13 +39,10 @@ class SitemapGenerate extends Command
             ->add(Medal::all())
             ->writeToFile($sitemapFolder.'/sitemap_medals.xml');
 
-        // Since having Google scan all millions of players is too heavy.
-        // Just index those with over a million XP
         $playerIndex = 0;
         Player::query()
-            ->where('xp', '>', 1_000_000)
             ->withoutEagerLoads()
-            ->chunkById(30000, function ($players) use ($sitemapFolder, &$playerIndex) {
+            ->chunkById(30000, function (Collection $players) use ($sitemapFolder, &$playerIndex) {
                 Sitemap::create()
                     ->add($players)
                     ->writeToFile(sprintf($sitemapFolder.'/sitemap_players_%d.xml', $playerIndex++));
@@ -53,7 +51,7 @@ class SitemapGenerate extends Command
         $matchupIndex = 0;
         Matchup::query()
             ->with('championship')
-            ->chunkById(25000, function ($matchups) use ($sitemapFolder, &$matchupIndex) {
+            ->chunkById(25000, function (Collection $matchups) use ($sitemapFolder, &$matchupIndex) {
                 Sitemap::create()
                     ->add($matchups)
                     ->writeToFile(sprintf($sitemapFolder.'/sitemap_matchups_%d.xml', $matchupIndex++));

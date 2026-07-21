@@ -22,7 +22,7 @@ class PullAppearanceTest extends TestCase
 {
     use WithFaker;
 
-    public function test_pull_appearance_as_bot(): void
+    public function testPullAppearanceAsBot(): void
     {
         // Arrange
         Http::fake()->preventStrayRequests();
@@ -41,15 +41,15 @@ class PullAppearanceTest extends TestCase
         ]);
     }
 
-    public function test_pulling_assets_down_from_web(): void
+    public function testPullingAssetsDownFromWeb(): void
     {
         // Arrange
         Bus::fake([
             PullXuid::class,
         ]);
         Storage::fake();
-        $mockAppearanceResponse = (new MockAppearanceService)->success('gamertag');
-        $mockOptimizedResponse = (new MockImageService)->success();
+        $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');
+        $mockOptimizedResponse = (new MockImageService())->success();
 
         $this->instance(
             FileUtilInterface::class,
@@ -80,14 +80,14 @@ class PullAppearanceTest extends TestCase
         Bus::assertDispatched(PullXuid::class);
     }
 
-    public function test_invalid_pulling_assets_down_from_web_if_missing_image(): void
+    public function testInvalidPullingAssetsDownFromWebIfMissingImage(): void
     {
         // Arrange
         Bus::fake([
             PullXuid::class,
         ]);
         Storage::fake();
-        $mockAppearanceResponse = (new MockAppearanceService)->success('gamertag');
+        $mockAppearanceResponse = (new MockAppearanceService())->success('gamertag');
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

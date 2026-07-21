@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class SeasonModelTest extends TestCase
 {
-    public function test_nullable_length_property(): void
+    public function testNullableLengthProperty(): void
     {
         // Arrange
         Season::factory()->createOne();

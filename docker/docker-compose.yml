@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+    php:
+        build:
+            context: ./php
+            args:
+                HOST_UID: ${HOST_UID}
+        image: leaf-php
+        container_name: leaf-php
+        volumes:
+            - ../:/var/www
+        working_dir: /var/www/
+        environment:
+            XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003 start_with_request=trigger idekey=leaf
+            XDEBUG_MODE: develop,debug,coverage
+        networks:
+            - leaf
+
+    db:
+        image: mariadb:10.6
+        container_name: leaf-db
+        ports:
+            - '3306:3306'
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: true
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_USER: ${DB_USERNAME}
+        networks:
+            - leaf
+
+    nginx:
+        image: nginx:alpine
+        container_name: leaf-nginx
+        ports:
+            - '8080:80'
+        volumes:
+            - ../:/var/www
+            - ./nginx:/etc/nginx/conf.d/
+        networks:
+            - leaf
+
+networks:
+    leaf:
+        driver: bridge

@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Str;
 use App\Enums\AnalyticType;
+use App\Support\Analytics\Stats\MostXpPlayer;
 
 /** @var App\Models\ServiceRecord[]|App\Models\GamePlayer[]|App\Models\Map[] $results */
 /** @var App\Support\Analytics\AnalyticInterface $analyticClass */
@@ -16,18 +17,21 @@ use App\Enums\AnalyticType;
                 <thead>
                     <tr>
                         <th>Place</th>
-                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <th>Gamertag</th>
                         @endif
                         @if ($analyticClass->type()->isGame())
                             <th>Game</th>
                         @endif
-                        @if ($analyticClass->type()->isOverviewStat())
+                        @if ($analyticClass->type()->isMap())
                             <th>Map</th>
                         @endif
                         <th>{{ Str::title($analyticClass->unit()) }}</th>
                         @if ($analyticClass->type()->isGame())
                             <th>Date</th>
+                        @endif
+                        @if ($analyticClass->type()->isPlayer() && $analyticClass instanceof MostXpPlayer)
+                            <th>Rank</th>
                         @endif
                     </tr>
                 </thead>
@@ -37,7 +41,7 @@ use App\Enums\AnalyticType;
                         <td>
                             @th($result->place)
                         </td>
-                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::OVERVIEW_STAT()]))
+                        @if ($analyticClass->type()->notIn([AnalyticType::ONLY_GAME(), AnalyticType::MAP()]))
                             <td>
                                 <article class="media">
                                     <figure class="media-left">
@@ -47,18 +51,9 @@ use App\Enums\AnalyticType;
                                     </figure>
                                     <div class="media-content">
                                         <div class="content" style="white-space: nowrap">
-                                            @include('partials.links.player', ['player' => $result->player])
-                                            @if ($result->player?->is_donator)
-                                                <span class="tag is-success" data-tooltip="Donated via BuyMeACoffee" style="border-bottom: 0;">
-                                                    <i class="fas fa-leaf"></i>
-                                                </span>
-                                            @endif
-                                            @if ($result->player?->is_cheater)
-                                                <span class="tag is-danger">Banned</span>
-                                            @endif
-                                            @if ($result->player?->is_botfarmer)
-                                                <span class="tag is-info">Farmer</span>
-                                            @endif
+                                            <a href="{{ route('player', [$result->player]) }}">
+                                                {{ $result->player->gamertag }}
+                                            </a>
                                         </div>
                                     </div>
                                 </article>
@@ -71,8 +66,8 @@ use App\Enums\AnalyticType;
                                 </a>
                             </td>
                         @endif
-                        @if ($analyticClass->type()->isOverviewStat())
-                            <td>{{ $result->label }}</td>
+                        @if ($analyticClass->type()->isMap())
+                            <td>{{ $result->map->name }}</td>
                         @endif
                         <td>{{ $analyticClass->displayProperty($result) }}</td>
                         @if ($analyticClass->type()->isGame())
@@ -80,13 +75,16 @@ use App\Enums\AnalyticType;
                                 @include('partials.player.date-link', ['date' => $result->game->occurred_at])
                             </td>
                         @endif
+                        @if ($analyticClass->type()->isPlayer() && $analyticClass instanceof MostXpPlayer)
+                            <td>{{ $result->player->rank?->title }}</td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
-        {{ $results->links(data: ['scrollTo' => false]) }}
-        <div class="notification is-light is-hidden-mobile mb-2 mt-2">
+        {{ $results->links() }}
+        <div class="notification is-light is-hidden-mobile mt-2">
             export to csv: <a href="{{ $analyticClass->displayExportUrl(10) }}" rel="nofollow">top 10</a>,
             <a href="{{ $analyticClass->displayExportUrl(100) }}" rel="nofollow">top 100</a> or
             <a href="{{ $analyticClass->displayExportUrl(1000) }}" rel="nofollow">top 1,000</a>.

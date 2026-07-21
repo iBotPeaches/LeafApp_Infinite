@@ -6,7 +6,7 @@ $winningPlayer = $game->players->sortBy('rank')->first();
 <article class="cell notification is-dark">
     <p class="title">
         <a href="{{ route('game', [$game]) }}">
-            {{ $game->map->shorthand }}
+            {{ $game->map->name }}
         </a>
         @if ($winningPlayer)
             <span class="is-pulled-right">

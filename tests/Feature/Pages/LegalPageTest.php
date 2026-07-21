@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class LegalPageTest extends TestCase
 {
-    public function test_example_legal(): void
+    public function testExampleLegal(): void
     {
         // Arrange & Act
         $response = $this->get('/legal');

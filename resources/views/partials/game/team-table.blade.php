@@ -46,7 +46,7 @@ use Illuminate\Support\Str;
                 <th><abbr title="Deaths">D</abbr></th>
                 <th><abbr title="Assists">A</abbr></th>
                 <th><abbr title="Kills / Deaths">KD</abbr></th>
-                <th><abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></th>
+                <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
                 <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
                 <th><abbr title="Ordered by Points">Score</abbr></th>
                 <th>Rank</th>
@@ -61,7 +61,7 @@ use Illuminate\Support\Str;
                                 @if ($gamePlayer->player->is_bot)
                                     <span class="tag is-dark">BOT</span>
                                 @elseif ($gamePlayer->player->is_cheater)
-                                    <span class="tag is-danger">Banned</span>
+                                    <span class="tag is-danger">Cheater</span>
                                 @else
                                     <p class="image is-32x32">
                                         @include('partials.game.team_emblem_url')
@@ -70,7 +70,9 @@ use Illuminate\Support\Str;
                             </figure>
                             <div class="media-content">
                                 <div class="content" style="white-space: nowrap">
-                                    @include('partials.links.player', ['player' => $gamePlayer->player])
+                                    <a href="{{ route('player', [$gamePlayer->player]) }}">
+                                        {{ $gamePlayer->player->gamertag }}
+                                    </a>
                                 </div>
                             </div>
                         </article>

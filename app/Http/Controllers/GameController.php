@@ -18,9 +18,9 @@ class GameController extends Controller
     {
         $images[] = $game->map->thumbnail_url;
 
-        SEOTools::setTitle(e($game->name));
+        SEOTools::setTitle($game->name);
         SEOTools::addImages($images);
-        SEOTools::setDescription(e($game->description));
+        SEOTools::setDescription($game->description);
 
         return view('pages.game', [
             'game' => $game,

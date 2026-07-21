@@ -12,7 +12,7 @@
             <article class="cell notification is-dark">
                 <p class="title">
                     <a href="{{ route('game', [$game]) }}">
-                        {{ $game->map->shorthand }}
+                        {{ $game->map->name }}
                     </a>
                 </p>
                 <p class="subtitle">{{ $game->gamevariant?->name ?? $game->category?->name }}</p>

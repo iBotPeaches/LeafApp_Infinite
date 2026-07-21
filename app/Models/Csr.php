@@ -26,7 +26,7 @@ use InvalidArgumentException;
  * @property int|null $season
  * @property string|null $season_key
  * @property CompetitiveMode $mode
- * @property int|null $csr
+ * @property int $csr
  * @property int $matches_remaining
  * @property string $tier
  * @property int $tier_start_csr
@@ -34,7 +34,6 @@ use InvalidArgumentException;
  * @property string $next_tier
  * @property int $next_sub_tier
  * @property int $next_csr
- * @property int|null $champion_rank
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read Player $player
@@ -85,10 +84,6 @@ class Csr extends Model implements HasDotApi
 
     public function getRankAttribute(): string
     {
-        if ($this->champion_rank > 0) {
-            return 'Champion';
-        }
-
         if ($this->hasNextRank()) {
             return $this->tier.' '.($this->sub_tier + 1);
         }
@@ -177,7 +172,7 @@ class Csr extends Model implements HasDotApi
 
     public function toCsrObject(): \App\Support\Csr\Csr
     {
-        return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining, $this->champion_rank);
+        return CsrHelper::getCsrFromValue($this->csr, $this->matches_remaining);
     }
 
     public static function fromDotApi(array $payload): ?self
@@ -201,7 +196,7 @@ class Csr extends Model implements HasDotApi
             }
 
             if (empty($queue) || empty($input)) {
-                throw new InvalidArgumentException(
+                throw new \InvalidArgumentException(
                     'Queue ('.$queueName.') or input ('.$inputName.') is unknown.'
                 );
             }
@@ -255,12 +250,8 @@ class Csr extends Model implements HasDotApi
                 $csr->next_sub_tier = ((int) Arr::get($playlistMode, 'next_sub_tier')) - 1;
                 $csr->next_csr = Arr::get($playlistMode, 'next_tier_start');
 
-                /** @var array $extras */
-                $extras = Arr::get($playlistMode, 'extra', []);
-                $csr->champion_rank = CsrHelper::parseExtrasForChampionRank($extras);
-
                 if ($csr->isDirty()) {
-                    $csr->save();
+                    $csr->saveOrFail();
                 }
             }
         }
@@ -268,17 +259,11 @@ class Csr extends Model implements HasDotApi
         return $csr ?? null;
     }
 
-    /**
-     * @return BelongsTo<Playlist, $this>
-     */
     public function playlist(): BelongsTo
     {
         return $this->belongsTo(Playlist::class);
     }
 
-    /**
-     * @return BelongsTo<Player, $this>
-     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);

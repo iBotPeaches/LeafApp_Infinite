@@ -14,14 +14,13 @@ use App\Models\MatchupTeam;
 use App\Models\Pivots\MatchupGame;
 use App\Models\Pivots\MatchupPlayer;
 use Illuminate\Support\Facades\Http;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class HcsMatchupPageTest extends TestCase
 {
-    #[DataProvider('groupDataProvider')]
-    public function test_loading_matchup_page_with_team_and_players(int $group): void
+    /** @dataProvider groupDataProvider */
+    public function testLoadingMatchupPageWithTeamAndPlayers(int $group): void
     {
         // Arrange
         Http::fake();
@@ -52,7 +51,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function test_loading_matchup_page_for_ffa(): void
+    public function testLoadingMatchupPageForFfa(): void
     {
         // Arrange
         Http::fake();
@@ -90,7 +89,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function test_loading_matchup_page_for_swiss(): void
+    public function testLoadingMatchupPageForSwiss(): void
     {
         // Arrange
         Http::fake();
@@ -128,7 +127,7 @@ class HcsMatchupPageTest extends TestCase
         $response->assertSeeLivewire('championship-matchup');
     }
 
-    public function test_loading_matchup_page_with_no_data(): void
+    public function testLoadingMatchupPageWithNoData(): void
     {
         // Arrange
         Http::fake();
@@ -156,13 +155,13 @@ class HcsMatchupPageTest extends TestCase
     {
         return [
             [
-                'group' => 1,
+                'round' => 1,
             ],
             [
-                'group' => 2,
+                'round' => 2,
             ],
             [
-                'group' => 3,
+                'round' => 3,
             ],
         ];
     }

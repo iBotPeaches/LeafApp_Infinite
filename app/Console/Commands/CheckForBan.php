@@ -35,22 +35,24 @@ class CheckForBan extends Command
             return CommandAlias::FAILURE;
         }
 
-        $wasBanned = $player->checkForBanFromDotApi();
+        $bans = $this->client->banSummary($player);
 
-        if (! $wasBanned) {
+        if ($bans->isEmpty()) {
             $this->output->success('No bans detected!');
 
             return CommandAlias::SUCCESS;
-        } else {
-            $this->output->error('Ban(s) detected!');
         }
+
+        $this->output->error('Ban(s) detected!');
+        $player->is_cheater = true;
+        $player->saveOrFail();
 
         $this->table([
             'Message',
             'Expires At',
             'Type',
             'Scope',
-        ], $player->bans->where('ends_at', '>', now())->map(function (PlayerBan $ban) {
+        ], $bans->map(function (PlayerBan $ban) { // @phpstan-ignore-line
             return [
                 'messsage' => $ban->message,
                 'expires_at' => $ban->ends_at->toIso8601ZuluString(),

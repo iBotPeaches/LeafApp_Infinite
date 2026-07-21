@@ -7,7 +7,6 @@ namespace App\Livewire;
 use App\Enums\Bracket;
 use App\Models\Championship;
 use App\Support\Bracket\BracketDecorator;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -33,7 +32,7 @@ class ChampionshipBracket extends Component
             ->where('group', $bracketEnum->toNumerical())
             ->sortBy('round')
             ->groupBy('round')
-            ->map(function (Collection $row) {
+            ->map(function (\Illuminate\Support\Collection $row) {
                 return $row->count();
             });
 

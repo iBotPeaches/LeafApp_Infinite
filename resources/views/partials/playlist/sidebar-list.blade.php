@@ -8,7 +8,7 @@
     </p>
     @foreach ($playlists as $p)
         <a class="panel-block is-block <?= $p->id === $playlist->id ? 'has-background-link-soft' : ''; ?>"
-           href="<?= route('playlist', [$p, $type]); ?>"
+           href="<?= route('playlist', [$p]); ?>"
         >
             {{ $p->name }}
         </a>

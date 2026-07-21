@@ -16,10 +16,13 @@ trait HasAccuracy
                 return 'success';
 
             case $this->accuracy > 40 && $this->accuracy <= 55:
-                return '';
+                return 'info';
+
+            case $this->accuracy > 20 && $this->accuracy <= 40:
+                return 'warning';
 
             default:
-            case $this->accuracy < 40:
+            case $this->accuracy < 20:
                 return 'danger';
         }
     }

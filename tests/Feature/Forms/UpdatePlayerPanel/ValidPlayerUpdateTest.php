@@ -7,7 +7,6 @@ namespace Tests\Feature\Forms\UpdatePlayerPanel;
 use App\Enums\CompetitiveMode;
 use App\Enums\Input;
 use App\Enums\PlayerTab;
-use App\Enums\Queue;
 use App\Jobs\PullAppearance;
 use App\Jobs\PullCompetitive;
 use App\Jobs\PullMatchHistory;
@@ -45,7 +44,7 @@ class ValidPlayerUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function test_automatically_marked_private_if_invalid_record(): void
+    public function testAutomaticallyMarkedPrivateIfInvalidRecord(): void
     {
         // Arrange
         SeasonSession::set(SeasonSession::$allSeasonKey);
@@ -55,8 +54,8 @@ class ValidPlayerUpdateTest extends TestCase
             PullMatchHistory::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         // Set values into responses that "fake" a private account.
         Arr::set($mockServiceResponse, 'data.time_played.seconds', 0);
@@ -94,7 +93,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
     }
 
-    public function test_automatically_skipping_service_record_if_unplayed_season(): void
+    public function testAutomaticallySkippingServiceRecordIfUnplayedSeason(): void
     {
         // Arrange
         Bus::fake([
@@ -103,9 +102,9 @@ class ValidPlayerUpdateTest extends TestCase
             PullMatchHistory::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockServiceResponse = (new MockServiceRecordService)->error403();
-        $mockSuccessfulServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->error403();
+        $mockSuccessfulServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockServiceResponse, Response::HTTP_FORBIDDEN)
@@ -134,20 +133,20 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatchedTimes(PullMatchHistory::class, 2);
     }
 
-    public function test_automatically_pulling_xuid_if_missing(): void
+    public function testAutomaticallyPullingXuidIfMissing(): void
     {
         // Arrange
         Bus::fake([
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockXuidResponse = (new MockXuidService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -201,20 +200,20 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function test_automatically_marking_as_bot_farmer(): void
+    public function testAutomaticallyMarkingAsBotFarmer(): void
     {
         // Arrange
         Bus::fake([
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockXuidResponse = (new MockXuidService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -227,12 +226,8 @@ class ValidPlayerUpdateTest extends TestCase
             ->push($mockCareerRankResponse, Response::HTTP_OK);
 
         $playlist = Playlist::factory()->createOne([
-            'uuid' => config('services.halo.playlists.bot-bootcamp'),
-            'name' => 'Bot Bootcamp',
-        ]);
-
-        Playlist::factory()->createOne([
             'uuid' => 1,
+            'name' => 'Bot Bootcamp',
         ]);
 
         Level::factory()->createOne([
@@ -284,7 +279,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function test_automatically_removing_old_agent_if_xuid_moved(): void
+    public function testAutomaticallyRemovingOldAgentIfXuidMoved(): void
     {
         // Arrange
         Bus::fake([
@@ -293,13 +288,13 @@ class ValidPlayerUpdateTest extends TestCase
 
         $xuid = $this->faker->numerify('################');
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockXuidResponse = (new MockXuidService)->success($gamertag, $xuid);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockXuidResponse = (new MockXuidService())->success($gamertag, $xuid);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_OK)
@@ -358,19 +353,19 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function test_automatically_unmarked_private_if_valid_record(): void
+    public function testAutomaticallyUnmarkedPrivateIfValidRecord(): void
     {
         // Arrange
         Bus::fake([
             PullAppearance::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockCsrResponse, Response::HTTP_OK)
@@ -401,7 +396,7 @@ class ValidPlayerUpdateTest extends TestCase
             ->has(Csr::factory()->state(function () use ($playlist) {
                 return [
                     'playlist_id' => $playlist->id,
-                    'queue' => Queue::OPEN,
+                    'queue' => \App\Enums\Queue::OPEN,
                     'mode' => CompetitiveMode::ALL_TIME,
                     'season' => null,
                     'input' => Input::CROSSPLAY,
@@ -432,7 +427,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullAppearance::class);
     }
 
-    public function test_automatically_defer_next_pages_if_games_already_loaded(): void
+    public function testAutomaticallyDeferNextPagesIfGamesAlreadyLoaded(): void
     {
         // Arrange
         Bus::fake([
@@ -442,8 +437,8 @@ class ValidPlayerUpdateTest extends TestCase
             PullServiceRecord::class,
         ]);
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
         ModeSession::set(\App\Enums\Mode::MATCHMADE_RANKED);
 
         Http::fakeSequence()
@@ -479,7 +474,7 @@ class ValidPlayerUpdateTest extends TestCase
             ]);
 
         $player->last_game_id_pulled = $gamePlayer->game_id;
-        $player->save();
+        $player->saveOrFail();
 
         // Act & Assert
         Livewire::test(UpdatePlayerPanel::class, [
@@ -498,7 +493,7 @@ class ValidPlayerUpdateTest extends TestCase
         Bus::assertDispatched(PullServiceRecord::class);
     }
 
-    public function test_initial_page_load_deferred_from_api_calls(): void
+    public function testInitialPageLoadDeferredFromApiCalls(): void
     {
         // Arrange
         Http::fake();
@@ -516,7 +511,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function test_page_load_deferred_from_api_calls(): void
+    public function testPageLoadDeferredFromApiCalls(): void
     {
         // Arrange
         Http::fake();
@@ -537,7 +532,7 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function test_page_load_deferred_from_api_calls_as_older_season(): void
+    public function testPageLoadDeferredFromApiCallsAsOlderSeason(): void
     {
         // Arrange
         Http::fake();
@@ -559,43 +554,19 @@ class ValidPlayerUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function test_page_load_deferred_from_api_calls_as_throttled_user(): void
-    {
-        // Arrange
-        Http::fake();
-        SeasonSession::set('1-1');
-        $player = Player::factory()->createOne([
-            'is_throttled' => true,
-        ]);
-
-        $cacheKey = 'player-profile-'.$player->id.SeasonSession::get().md5($player->gamertag);
-        Cache::put($cacheKey, true);
-
-        // Act & Assert
-        Livewire::test(UpdatePlayerPanel::class, [
-            'player' => $player,
-            'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => false,
-        ])
-            ->assertViewHas('color', 'is-dark')
-            ->assertViewHas('message', 'Player is throttled. Updates are delayed.');
-
-        Http::assertNothingSent();
-    }
-
-    public function test_valid_response_from_all_dot_api_services_as_face_it_player(): void
+    public function testValidResponseFromAllDotApiServicesAsFaceItPlayer(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -645,20 +616,20 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_overview_scoped_to_season(): void
+    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToSeason(): void
     {
         // Arrange
         SeasonSession::set(config('services.dotapi.competitive.key'));
 
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -706,91 +677,26 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertDispatchedTo('player-overview-page', '$refresh')
+            ->assertDispatchedTo('overview-page', '$refresh')
             ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 1);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_overview_as_throttled_user(): void
+    public function testValidResponseFromAllDotApiServicesAsOverviewScopedToAll(): void
     {
         // Arrange
         SeasonSession::set(SeasonSession::$allSeasonKey);
 
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
-
-        Http::fakeSequence()
-            ->push($mockAppearanceResponse, Response::HTTP_OK)
-            ->push($mockLanEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockCsrResponse, Response::HTTP_OK)
-            ->push($mockMatchesResponse, Response::HTTP_OK)
-            ->push($mockEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockCustomEmptyMatchesResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockServiceResponse, Response::HTTP_OK)
-            ->push($mockCareerRankResponse, Response::HTTP_OK);
-
-        Playlist::factory()->createOne([
-            'uuid' => 1,
-        ]);
-
-        Level::factory()->createOne([
-            'uuid' => 1,
-        ]);
-
-        Category::factory()->createOne([
-            'uuid' => 1,
-        ]);
-
-        $player = Player::factory()->createOne([
-            'gamertag' => $gamertag,
-            'is_throttled' => true,
-        ]);
-
-        MatchupPlayer::factory()->createOne([
-            'player_id' => $player->id,
-        ]);
-
-        Rank::factory()->createOne([
-            'id' => 12,
-        ]);
-
-        // Act & Assert
-        Livewire::test(UpdatePlayerPanel::class, [
-            'player' => $player,
-            'type' => PlayerTab::OVERVIEW,
-            'runUpdate' => true,
-        ])
-            ->assertViewHas('color', 'is-success')
-            ->assertViewHas('message', 'Profile updated!')
-            ->assertDispatchedTo('player-overview-page', '$refresh')
-            ->assertDispatchedTo('player-card', '$refresh');
-
-        $this->assertDatabaseCount('service_records', 2);
-    }
-
-    public function test_valid_response_from_all_dot_api_services_as_overview_scoped_to_all(): void
-    {
-        // Arrange
-        SeasonSession::set(SeasonSession::$allSeasonKey);
-
-        $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -835,24 +741,24 @@ class ValidPlayerUpdateTest extends TestCase
         ])
             ->assertViewHas('color', 'is-success')
             ->assertViewHas('message', 'Profile updated!')
-            ->assertDispatchedTo('player-overview-page', '$refresh')
+            ->assertDispatchedTo('overview-page', '$refresh')
             ->assertDispatchedTo('player-card', '$refresh');
 
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_competitive(): void
+    public function testValidResponseFromAllDotApiServicesAsCompetitive(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -903,18 +809,18 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_matches(): void
+    public function testValidResponseFromAllDotApiServicesAsMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -965,18 +871,18 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_custom_matches(): void
+    public function testValidResponseFromAllDotApiServicesAsCustomMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -1027,18 +933,18 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_lan_matches(): void
+    public function testValidResponseFromAllDotApiServicesAsLanMatches(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)
@@ -1089,18 +995,18 @@ class ValidPlayerUpdateTest extends TestCase
         $this->assertDatabaseCount('service_records', 2);
     }
 
-    public function test_valid_response_from_all_dot_api_services_except_for_career_rank(): void
+    public function testValidResponseFromAllDotApiServicesExceptForCareerRank(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockLanEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCsrResponse = (new MockCsrAllService)->success($gamertag);
-        $mockMatchesResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockCustomEmptyMatchesResponse = (new MockMatchesService)->empty($gamertag);
-        $mockServiceResponse = (new MockServiceRecordService)->success($gamertag);
-        $mockCareerRankResponse = (new MockCareerRankService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockLanEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCsrResponse = (new MockCsrAllService())->success($gamertag);
+        $mockMatchesResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockCustomEmptyMatchesResponse = (new MockMatchesService())->empty($gamertag);
+        $mockServiceResponse = (new MockServiceRecordService())->success($gamertag);
+        $mockCareerRankResponse = (new MockCareerRankService())->success($gamertag);
 
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK)

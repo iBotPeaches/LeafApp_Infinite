@@ -23,12 +23,12 @@ class PullMatchupGameTest extends TestCase
 {
     use WithFaker;
 
-    public function test_valid_data_pull(): void
+    public function testValidDataPull(): void
     {
         // Arrange
         $gamertag = $this->faker->word.$this->faker->numerify;
-        $mockHistoryResponse = (new MockMatchesService)->success($gamertag);
-        $mockEmptyHistoryResponse = (new MockMatchesService)->empty($gamertag);
+        $mockHistoryResponse = (new MockMatchesService())->success($gamertag);
+        $mockEmptyHistoryResponse = (new MockMatchesService())->empty($gamertag);
 
         Arr::set($mockHistoryResponse, 'data.0.details.playlist', null);
 

@@ -32,8 +32,8 @@ use Spatie\Sitemap\Tags\Url;
  * @property Carbon|null $started_at
  * @property Carbon|null $ended_at
  * @property-read Championship $championship
- * @property-read Collection<int, MatchupTeam> $matchupTeams
- * @property-read Collection<int, Game> $games
+ * @property-read MatchupTeam[]|Collection $matchupTeams
+ * @property-read Game[]|Collection $games
  * @property-read MatchupTeam|null $winner
  * @property-read MatchupTeam|null $loser
  * @property-read MatchupTeam|null $team1
@@ -152,7 +152,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
             return null;
         }
 
-        return $this->ended_at->diffInMinutes(date: $this->started_at, absolute: true).' minutes';
+        return $this->ended_at->diffInMinutes($this->started_at).' minutes';
     }
 
     public function isCancelled(): bool
@@ -192,7 +192,7 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         $matchup->ended_at = Arr::get($payload, 'finished_at');
 
         if ($matchup->isDirty()) {
-            $matchup->save();
+            $matchup->saveOrFail();
         }
 
         return $matchup;
@@ -207,26 +207,17 @@ class Matchup extends Model implements HasFaceItApi, Sitemapable
         return $url;
     }
 
-    /**
-     * @return BelongsTo<Championship, $this>
-     */
     public function championship(): BelongsTo
     {
         return $this->belongsTo(Championship::class);
     }
 
-    /**
-     * @return HasMany<MatchupTeam, $this>
-     */
     public function matchupTeams(): HasMany
     {
         return $this->hasMany(MatchupTeam::class)
             ->orderByDesc('id');
     }
 
-    /**
-     * @return BelongsToMany<Game, $this>
-     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class, 'matchup_game');

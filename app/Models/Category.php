@@ -34,12 +34,14 @@ class Category extends Model implements HasDotApi, HasDotApiMetadata
     public static function fromMetadata(array $payload): ?self
     {
         try {
+            /** @noinspection PhpIncompatibleReturnTypeInspection */
             return self::query()
                 ->where('uuid', (string) Arr::get($payload, 'properties.category_id'))
                 ->firstOrFail();
         } catch (Throwable $e) {
             captureException(UnknownCategoryException::fromPayload($payload));
 
+            /** @noinspection PhpIncompatibleReturnTypeInspection */
             return self::query()
                 ->where('name', 'Unknown')
                 ->first();
@@ -61,7 +63,7 @@ class Category extends Model implements HasDotApi, HasDotApiMetadata
         $category->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($category->isDirty()) {
-            $category->save();
+            $category->saveOrFail();
         }
 
         return $category;

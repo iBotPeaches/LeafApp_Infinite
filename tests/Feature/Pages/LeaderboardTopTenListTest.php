@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class LeaderboardTopTenListTest extends TestCase
 {
-    public function test_loading_all_analytics(): void
+    public function testLoadingAllAnalytics(): void
     {
         // Arrange
         Analytic::factory()

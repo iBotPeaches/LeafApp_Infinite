@@ -16,10 +16,10 @@ class PullXuidTest extends TestCase
 {
     use WithFaker;
 
-    public function test_deleting_failed_xuid_job(): void
+    public function testDeletingFailedXuidJob(): void
     {
         // Arrange
-        $mockXuidResponse = (new MockXuidService)->success('gamertag');
+        $mockXuidResponse = (new MockXuidService())->success('gamertag');
 
         Http::fakeSequence()
             ->push($mockXuidResponse, Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -61,7 +61,7 @@ use Illuminate\Support\Collection;
  * @property int|null $assists_callout
  * @property int|null $expected_kills
  * @property int|null $expected_deaths
- * @property array|null $medals
+ * @property array $medals
  * @property-read Player $player
  * @property-read Game $game
  * @property-read GameTeam|null $team
@@ -128,7 +128,7 @@ class GamePlayer extends Model implements HasDotApi
         $gamePlayer->mmr ??= Arr::get($payload, $prefix.'stats.mmr');
         $gamePlayer->kills = Arr::get($payload, $prefix.'stats.core.summary.kills');
         $gamePlayer->deaths = Arr::get($payload, $prefix.'stats.core.summary.deaths');
-        $gamePlayer->assists = max((int) Arr::get($payload, $prefix.'stats.core.summary.assists'), 0);
+        $gamePlayer->assists = Arr::get($payload, $prefix.'stats.core.summary.assists');
         $gamePlayer->betrayals = Arr::get($payload, $prefix.'stats.core.summary.betrayals');
         $gamePlayer->suicides = Arr::get($payload, $prefix.'stats.core.summary.suicides');
         $gamePlayer->max_spree = Arr::get($payload, $prefix.'stats.core.summary.max_killing_spree');
@@ -151,10 +151,10 @@ class GamePlayer extends Model implements HasDotApi
         $gamePlayer->assists_emp ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.emp');
         $gamePlayer->assists_driver ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.driver');
         $gamePlayer->assists_callout ??= Arr::get($payload, $prefix.'stats.core.breakdown.assists.callouts');
-        $gamePlayer->expected_kills ??= max(Arr::get($payload, $prefix.'performances.kills.expected'), 0);
-        $gamePlayer->expected_deaths ??= max(Arr::get($payload, $prefix.'performances.deaths.expected'), 0);
+        $gamePlayer->expected_kills ??= Arr::get($payload, $prefix.'performances.kills.expected');
+        $gamePlayer->expected_deaths ??= Arr::get($payload, $prefix.'performances.deaths.expected');
 
-        if (Arr::has($payload, $prefix.'stats.core.breakdown.medals')) {
+        if (Arr::has($payload, 'stats.core.breakdown.medals')) {
             $gamePlayer->medals = collect((array) Arr::get($payload, $prefix.'stats.core.breakdown.medals'))
                 ->mapWithKeys(function (array $medal) {
                     return [
@@ -164,31 +164,22 @@ class GamePlayer extends Model implements HasDotApi
         }
 
         if ($gamePlayer->isDirty()) {
-            $gamePlayer->save();
+            $gamePlayer->saveOrFail();
         }
 
         return $gamePlayer;
     }
 
-    /**
-     * @return BelongsTo<Player, $this>
-     */
     public function player(): BelongsTo
     {
         return $this->belongsTo(Player::class);
     }
 
-    /**
-     * @return BelongsTo<Game, $this>
-     */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
-    /**
-     * @return BelongsTo<GameTeam, $this>
-     */
     public function team(): BelongsTo
     {
         return $this->belongsTo(GameTeam::class, 'game_team_id');

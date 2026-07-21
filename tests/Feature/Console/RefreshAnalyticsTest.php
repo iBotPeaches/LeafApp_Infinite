@@ -14,7 +14,7 @@ class RefreshAnalyticsTest extends TestCase
 {
     use WithFaker;
 
-    public function test_valid_dispatch_of_jobs(): void
+    public function testValidDispatchOfJobs(): void
     {
         // Arrange
         Queue::fake();
@@ -28,14 +28,14 @@ class RefreshAnalyticsTest extends TestCase
         Queue::assertPushed(ProcessAnalytic::class);
     }
 
-    public function test_valid_dispatch_of_specific_job(): void
+    public function testValidDispatchOfSpecificJob(): void
     {
         // Arrange
         Queue::fake();
 
         // Act
         $this
-            ->artisan('analytics:refresh', ['analytic' => 'MostScoreServiceRecord'])
+            ->artisan('analytics:refresh', ['analytic' => 'MostXpPlayer'])
             ->assertExitCode(CommandAlias::SUCCESS);
 
         // Assert

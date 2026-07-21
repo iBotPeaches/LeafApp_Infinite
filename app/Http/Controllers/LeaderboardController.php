@@ -26,11 +26,11 @@ class LeaderboardController extends Controller
 
     public function medal(Medal $medal): View
     {
-        SEOTools::setTitle(e($medal->name.' Leaderboards'));
+        SEOTools::setTitle($medal->name.' Leaderboards');
         SEOTools::addImages([
             $medal->image,
         ]);
-        SEOTools::setDescription(e('Halo Infinite Medal: '.$medal->name.' Leaderboards'));
+        SEOTools::setDescription('Halo Infinite Medal: '.$medal->name.' Leaderboards');
 
         /** @var ScheduleTimer $timer */
         $timer = resolve(ScheduleTimerInterface::class);
@@ -45,8 +45,8 @@ class LeaderboardController extends Controller
     {
         $analyticClass = Analytic::getStatFromEnum($key);
 
-        SEOTools::setTitle(e($analyticClass->title().' Top Ten Leaderboards'));
-        SEOTools::setDescription(e('Top Ten Halo Infinite Leaderboards: '.$analyticClass->title()));
+        SEOTools::setTitle($analyticClass->title().' Top Ten Leaderboards');
+        SEOTools::setDescription('Top Ten Halo Infinite Leaderboards: '.$analyticClass->title());
 
         return view('pages.topten-leaderboard', [
             'analyticClass' => $analyticClass,

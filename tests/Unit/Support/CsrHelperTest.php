@@ -6,102 +6,57 @@ namespace Tests\Unit\Support;
 
 use App\Support\Csr\CsrHelper;
 use Illuminate\Support\Str;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class CsrHelperTest extends TestCase
 {
-    #[DataProvider('csrDataProvider')]
-    public function test_csr_calculation_to_rank(int $csr, string $expected): void
+    /** @dataProvider csrDataProvider */
+    public function testCsrCalculationToRank(int $csr, string $expected)
     {
         $this->assertEquals(
             $expected,
-            CsrHelper::getCsrFromValue($csr, null, null)->title,
+            CsrHelper::getCsrFromValue($csr, null)->title,
             $csr.' csr is not: '.$expected
         );
     }
 
-    #[DataProvider('csrDataProvider')]
-    public function test_csr_calculation_to_asset(int $csr, string $expected): void
+    /** @dataProvider csrDataProvider */
+    public function testCsrCalculationToAsset(int $csr, string $expected)
     {
         $this->assertStringEndsWith(
             Str::slug($expected).'.png',
-            CsrHelper::getCsrFromValue($csr, null, null)->url(),
+            CsrHelper::getCsrFromValue($csr, null)->url(),
             $csr.' url() is not ending with proper string.'
         );
     }
 
-    #[DataProvider('unrankedCsrDataProvider')]
-    public function test_unranked_csr_calculation_to_rank(?int $matchesRemaining, string $expected): void
+    /** @dataProvider unrankedCsrDataProvider */
+    public function testUnrankedCsrCalculationToRank(?int $matchesRemaining, string $expected)
     {
         $this->assertEquals(
             $expected,
-            CsrHelper::getCsrFromValue(0, $matchesRemaining, null)->title,
+            CsrHelper::getCsrFromValue(0, $matchesRemaining)->title,
             $matchesRemaining.' matches remaining is not: '.$expected
         );
     }
 
-    #[DataProvider('unrankedCsrDataProvider')]
-    public function test_unranked_csr_calculation_to_asset(?int $matchesRemaining, string $expected): void
+    /** @dataProvider unrankedCsrDataProvider */
+    public function testUnrankedCsrCalculationToAsset(?int $matchesRemaining, string $expected)
     {
-        $matchesCompleted = $matchesRemaining === null ? 0 : (5 - $matchesRemaining);
+        $matchesCompleted = $matchesRemaining === null ? 0 : (10 - $matchesRemaining);
 
         $this->assertStringEndsWith(
             Str::slug($expected.'-'.$matchesCompleted).'.png',
-            CsrHelper::getCsrFromValue(0, $matchesRemaining, null)->url(),
+            CsrHelper::getCsrFromValue(0, $matchesRemaining)->url(),
             $matchesRemaining.' url() is not ending with proper string: '.$expected
         );
-    }
-
-    #[DataProvider('championDataProvider')]
-    public function test_champion_calculation_to_rank(int $csr, ?int $matchesRemaining, ?int $championRank, string $expected): void
-    {
-        $this->assertEquals(
-            $expected,
-            CsrHelper::getCsrFromValue($csr, $matchesRemaining, $championRank)->title,
-            $championRank.' champion rank is not: '.$expected
-        );
-    }
-
-    #[DataProvider('championDataProvider')]
-    public function test_champion_calculation_to_asset(int $csr, ?int $matchesRemaining, ?int $championRank, string $expected): void
-    {
-        $this->assertStringEndsWith(
-            Str::slug($expected).'.png',
-            CsrHelper::getCsrFromValue($csr, $matchesRemaining, $championRank)->url(),
-            $championRank.' url() is not ending with proper string: '.$expected
-        );
-    }
-
-    public static function championDataProvider(): array
-    {
-        return [
-            'champion 200' => [
-                'csr' => 1500,
-                'matchesRemaining' => 0,
-                'championRank' => 200,
-                'expected' => 'Champion',
-            ],
-            'champion 1' => [
-                'csr' => 1500,
-                'matchesRemaining' => 0,
-                'championRank' => 1,
-                'expected' => 'Champion',
-            ],
-            'champion null' => [
-                'csr' => 1500,
-                'matchesRemaining' => 0,
-                'championRank' => null,
-                'expected' => 'Onyx',
-            ],
-        ];
     }
 
     public static function unrankedCsrDataProvider(): array
     {
         return [
             'unranked 0' => [
-                'matchesRemaining' => 5,
+                'matchesRemaining' => 10,
                 'expected' => 'Unranked',
             ],
             'unranked null' => [
@@ -109,10 +64,10 @@ class CsrHelperTest extends TestCase
                 'expected' => 'Unranked',
             ],
             'unranked-1' => [
-                'matchesRemaining' => 4,
+                'matchesRemaining' => 9,
                 'expected' => 'Unranked',
             ],
-            'unranked-4' => [
+            'unranked-9' => [
                 'matchesRemaining' => 1,
                 'expected' => 'Unranked',
             ],

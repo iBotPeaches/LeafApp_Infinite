@@ -47,30 +47,6 @@ class CompetitivePage extends Component
             // Hack Part 2 - 6-3 and 6-2 were pre-published, but not yet out.
             // As of now they have the same CSR Key as 6-1, so we'll just use that.
             $seasonKey = ($seasonKey === '6-2' || $seasonKey === '6-3') ? '6-1' : $seasonKey;
-
-            // Hack Part 3 - 7-2 and 7-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 7-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '7-2' || $seasonKey === '7-3') ? '7-1' : $seasonKey;
-
-            // Hack Part 4 - 8-2 and 8-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 8-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '8-2' || $seasonKey === '8-3') ? '8-1' : $seasonKey;
-
-            // Hack Part 5 - 9-2 and 9-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 9-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '9-2' || $seasonKey === '9-3') ? '9-1' : $seasonKey;
-
-            // Hack Part 6 - 10-2 and 10-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 10-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '10-2' || $seasonKey === '10-3') ? '10-1' : $seasonKey;
-
-            // Hack Part 7 - 11-2 and 11-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 11-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '11-2' || $seasonKey === '11-3') ? '11-1' : $seasonKey;
-
-            // Hack Part 8 - 12-2 and 12-3 were pre-published, but not yet out.
-            // As of now they have the same CSR Key as 12-1, so we'll just use that.
-            $seasonKey = ($seasonKey === '12-2' || $seasonKey === '12-3') ? '12-1' : $seasonKey;
         }
 
         return view('livewire.competitive-page', [

@@ -22,7 +22,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property-read User $user
- * @property-read Collection<int, Game> $games
+ * @property-read Game[]|Collection<int,Game> $games
  *
  * @method static ScrimFactory factory(...$parameters)
  */
@@ -34,9 +34,9 @@ class Scrim extends Model implements Sitemapable
 
     public static function createScrimWithGames(User $user, array $gameIds): self
     {
-        $model = new self;
+        $model = new self();
         $model->user()->associate($user);
-        $model->save();
+        $model->saveOrFail();
 
         $model->games()->sync($gameIds);
 
@@ -52,17 +52,11 @@ class Scrim extends Model implements Sitemapable
         return $url;
     }
 
-    /**
-     * @return BelongsTo<User, $this>
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany<Game, $this>
-     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class);

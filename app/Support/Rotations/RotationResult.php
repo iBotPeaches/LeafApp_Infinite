@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Support\Rotations;
 
-use App\Actions\Map\StandardizeMapName;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -20,8 +19,6 @@ class RotationResult
 
     public string $gametypeName;
 
-    public string $combinedName;
-
     public function __construct(array $data)
     {
         $this->name = Arr::get($data, 'name');
@@ -34,8 +31,7 @@ class RotationResult
         if (Str::contains($gametypeName, 'Super') && ! Str::contains($this->gametypeName, 'Super')) {
             $this->gametypeName .= ' (Super)';
         }
-        $this->mapName = StandardizeMapName::execute($mapName);
-        $this->combinedName = $this->mapName.' - '.$this->gametypeName;
+        $this->mapName = $mapName;
     }
 
     public function setWeight(int $total): void

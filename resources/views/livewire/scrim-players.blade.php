@@ -8,7 +8,7 @@
             <th><abbr title="Deaths">D</abbr></th>
             <th><abbr title="Assists">A</abbr></th>
             <th><abbr title="Kills / Deaths">KD</abbr></th>
-            <th><abbr title="Kills + (Assists * .3) / Deaths">KDA</abbr></th>
+            <th><abbr title="Kills + Assists / Deaths">KDA</abbr></th>
             <th><abbr title="Shots Hit / Shots Taken">Accuracy</abbr></th>
             <th><abbr title="Damage Dealt">Dmg. Dealt</abbr></th>
             <th><abbr title="Damage Taken">Dmg. Taken</abbr></th>
@@ -28,7 +28,9 @@
                         </figure>
                         <div class="media-content">
                             <div class="content" style="white-space: nowrap">
-                                @include('partials.links.player', ['player' => $gamePlayer->player])
+                                <a href="{{ route('player', [$gamePlayer->player]) }}">
+                                    {{ $gamePlayer->player->gamertag }}
+                                </a>
                             </div>
                         </div>
                     </article>

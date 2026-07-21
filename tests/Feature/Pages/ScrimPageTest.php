@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class ScrimPageTest extends TestCase
 {
-    public function test_loading_scrim_overview_page_with_data(): void
+    public function testLoadingScrimOverviewPageWithData(): void
     {
         // Arrange
         Http::fake();
@@ -36,7 +36,7 @@ class ScrimPageTest extends TestCase
         $response->assertSeeLivewire('scrim-overview');
     }
 
-    public function test_loading_scrim_matches_page_with_data_as_ffa(): void
+    public function testLoadingScrimMatchesPageWithDataAsFfa(): void
     {
         // Arrange
         Http::fake();
@@ -60,7 +60,7 @@ class ScrimPageTest extends TestCase
         $response->assertSeeLivewire('scrim-matches');
     }
 
-    public function test_loading_scrim_matches_page_with_data_as_team(): void
+    public function testLoadingScrimMatchesPageWithDataAsTeam(): void
     {
         // Arrange
         Http::fake();
@@ -84,7 +84,7 @@ class ScrimPageTest extends TestCase
         $response->assertSeeLivewire('scrim-matches');
     }
 
-    public function test_loading_scrim_players_page_with_data(): void
+    public function testLoadingScrimPlayersPageWithData(): void
     {
         // Arrange
         Http::fake();

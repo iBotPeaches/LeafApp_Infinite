@@ -26,7 +26,7 @@ class ValidGameUpdateTest extends TestCase
 {
     use WithFaker;
 
-    public function test_initial_page_load_deferred_from_api_calls(): void
+    public function testInitialPageLoadDeferredFromApiCalls(): void
     {
         // Arrange
         Http::fake();
@@ -43,13 +43,13 @@ class ValidGameUpdateTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function test_valid_response_from_all_dot_api_services_for_unresolved_gamer(): void
+    public function testValidResponseFromAllDotApiServicesForUnresolvedGamer(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = 'test';
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.players.1.attributes.resolved', false);
 
@@ -89,13 +89,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_for_a_bot(): void
+    public function testValidResponseFromAllDotApiServicesForABot(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.players.1.details.type', PlayerType::BOT);
 
@@ -126,13 +126,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_for_unranked(): void
+    public function testValidResponseFromAllDotApiServicesForUnranked(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.queue', null);
         Arr::set($mockMatchResponse, 'data.details.playlist.properties.input', null);
@@ -166,13 +166,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services(): void
+    public function testValidResponseFromAllDotApiServices(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK);
@@ -201,13 +201,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_slayer(): void
+    public function testValidResponseFromAllDotApiServicesAsSlayer(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Slayer');
 
@@ -238,13 +238,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_ctf(): void
+    public function testValidResponseFromAllDotApiServicesAsCtf(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'CTF');
 
@@ -275,13 +275,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_oddball(): void
+    public function testValidResponseFromAllDotApiServicesAsOddball(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Oddball');
 
@@ -312,13 +312,13 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_as_strongholds(): void
+    public function testValidResponseFromAllDotApiServicesAsStrongholds(): void
     {
         // Arrange
         Queue::fake();
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
 
         Arr::set($mockMatchResponse, 'data.details.ugcgamevariant.name', 'Strongholds');
 
@@ -349,16 +349,16 @@ class ValidGameUpdateTest extends TestCase
         Queue::assertPushed(PullAppearance::class);
     }
 
-    public function test_valid_response_from_all_dot_api_services_including_appearance(): void
+    public function testValidResponseFromAllDotApiServicesIncludingAppearance(): void
     {
         // Arrange
         Bus::fake(PullXuid::class);
         $gamertag = $this->faker->word.$this->faker->numerify;
         $gamertag2 = $this->faker->word.$this->faker->numerify;
 
-        $mockMatchResponse = (new MockMatchService)->success($gamertag, $gamertag2);
-        $mockAppearanceResponse = (new MockAppearanceService)->invalidSuccess($gamertag);
-        $mockAppearance2Response = (new MockAppearanceService)->invalidSuccess($gamertag2);
+        $mockMatchResponse = (new MockMatchService())->success($gamertag, $gamertag2);
+        $mockAppearanceResponse = (new MockAppearanceService())->invalidSuccess($gamertag);
+        $mockAppearance2Response = (new MockAppearanceService())->invalidSuccess($gamertag2);
 
         Http::fakeSequence()
             ->push($mockMatchResponse, Response::HTTP_OK)

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class MissingCustomGameHistoryTableTest extends TestCase
 {
-    public function test_valid_response_from_dot_api(): void
+    public function testValidResponseFromDotApi(): void
     {
         // Arrange
         $player = Player::factory()->createOne();

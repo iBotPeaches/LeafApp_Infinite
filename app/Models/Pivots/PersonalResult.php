@@ -8,7 +8,6 @@ use App\Enums\Outcome;
 use App\Models\Traits\HasAccuracy;
 use App\Models\Traits\HasCsr;
 use App\Models\Traits\HasKd;
-use App\Models\Traits\HasPerformance;
 use App\Models\Traits\HasScoring;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -27,13 +26,11 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $pre_csr
  * @property int $post_csr
  * @property ?int $matches_remaining
- * @property ?int $expected_kills
- * @property ?int $expected_deaths
  * @property float|null $mmr
  */
 class PersonalResult extends Pivot
 {
-    use HasAccuracy, HasCsr, HasKd, HasPerformance, HasScoring;
+    use HasAccuracy, HasCsr, HasKd, HasScoring;
 
     public $casts = [
         'outcome' => Outcome::class,

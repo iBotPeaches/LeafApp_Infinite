@@ -49,15 +49,12 @@ class Gamevariant extends Model implements HasDotApi
         $gamevariant->category()->associate($category);
 
         if ($gamevariant->isDirty()) {
-            $gamevariant->save();
+            $gamevariant->saveOrFail();
         }
 
         return $gamevariant;
     }
 
-    /**
-     * @return BelongsTo<Category, $this>
-     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

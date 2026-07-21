@@ -22,8 +22,6 @@ class PullLogoFromMatchupTeam implements ShouldQueue
 
     public int $tries = 1;
 
-    public bool $failOnTimeout = true;
-
     public MatchupTeam $matchupTeam;
 
     public string $avatar;

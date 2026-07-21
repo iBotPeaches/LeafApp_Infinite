@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\GameTeam;
-use App\Services\DotApi\Enums\Team;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class GameTeamModelTest extends TestCase
 {
-    #[DataProvider('teamColorDataProvider')]
-    public function test_color_from_team_name(int $internalTeamId, string $expected): void
+    /** @dataProvider teamColorDataProvider */
+    public function testColorFromTeamName(int $internalId, string $expected): void
     {
         // Arrange
         /** @var GameTeam $gameTeam */
         $gameTeam = GameTeam::factory()
             ->make([
-                'internal_team_id' => $internalTeamId,
+                'internal_team_id' => $internalId,
             ]);
 
         // Act & Assert
@@ -30,39 +28,15 @@ class GameTeamModelTest extends TestCase
     {
         return [
             [
-                'internalTeamId' => Team::EAGLE,
-                'expected' => 'eagle',
+                'internal_team_id' => 0,
+                'expected' => 'info',
             ],
             [
-                'internalTeamId' => Team::COBRA,
-                'expected' => 'cobra',
+                'internal_team_id' => 1,
+                'expected' => 'danger',
             ],
             [
-                'internalTeamId' => Team::HADES,
-                'expected' => 'hades',
-            ],
-            [
-                'internalTeamId' => Team::VALKYRIE,
-                'expected' => 'valkyrie',
-            ],
-            [
-                'internalTeamId' => Team::RAMPART,
-                'expected' => 'rampart',
-            ],
-            [
-                'internalTeamId' => Team::CUTLASS,
-                'expected' => 'cutlass',
-            ],
-            [
-                'internalTeamId' => Team::VALOR,
-                'expected' => 'valor',
-            ],
-            [
-                'internalTeamId' => Team::HAZARD,
-                'expected' => 'hazard',
-            ],
-            [
-                'internalTeamId' => 99,
+                'internal_team_id' => 99,
                 'expected' => 'dark',
             ],
         ];

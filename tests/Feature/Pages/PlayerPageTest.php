@@ -10,21 +10,18 @@ use App\Enums\Queue;
 use App\Models\Csr;
 use App\Models\Player;
 use App\Models\PlayerBan;
-use App\Models\Playlist;
 use App\Models\Rank;
 use App\Models\ServiceRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Appearance\MockAppearanceService;
-use Tests\Mocks\BanSummary\MockBanSummaryService;
 use Tests\TestCase;
 
 class PlayerPageTest extends TestCase
 {
-    #[DataProvider('gamertagDataProvider')]
-    public function test_loading_player_matches_page(string $gamertag): void
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerMatchesPage(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -55,12 +52,12 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function test_profile_loading_if_no_appearance(): void
+    public function testProfileLoadingIfNoAppearance(): void
     {
         // Arrange
         $gamertag = 'TESTGAMERTAG';
 
-        $mockAppearanceResponse = (new MockAppearanceService)->success($gamertag);
+        $mockAppearanceResponse = (new MockAppearanceService())->success($gamertag);
         Http::fakeSequence()
             ->push($mockAppearanceResponse, Response::HTTP_OK);
 
@@ -71,7 +68,7 @@ class PlayerPageTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_linking_profile(): void
+    public function testLinkingProfile(): void
     {
         // Arrange
         Http::fake();
@@ -91,7 +88,7 @@ class PlayerPageTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_unlinking_profile(): void
+    public function testUnlinkingProfile(): void
     {
         // Arrange
         Http::fake();
@@ -111,58 +108,8 @@ class PlayerPageTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_check_for_ban(): void
-    {
-        // Arrange
-        /** @var Player $player */
-        $player = Player::factory()->createOne();
-
-        $mockBanCheckResponse = (new MockBanSummaryService)->banned($player->gamertag);
-        Http::fakeSequence()
-            ->push($mockBanCheckResponse, Response::HTTP_OK);
-
-        $user = User::factory()->createOne();
-
-        $this->actingAs($user);
-
-        // Act
-        $response = $this->get('/player/'.urlencode($player->gamertag).'/ban-check');
-
-        // Assert
-        $response->assertRedirect();
-        $this->assertDatabaseHas('players', [
-            'id' => $player->id,
-            'is_cheater' => true,
-        ]);
-    }
-
-    public function test_check_for_no_ban(): void
-    {
-        // Arrange
-        /** @var Player $player */
-        $player = Player::factory()->createOne();
-
-        $mockBanCheckResponse = (new MockBanSummaryService)->unbanned($player->gamertag);
-        Http::fakeSequence()
-            ->push($mockBanCheckResponse, Response::HTTP_OK);
-
-        $user = User::factory()->createOne();
-
-        $this->actingAs($user);
-
-        // Act
-        $response = $this->get('/player/'.urlencode($player->gamertag).'/ban-check');
-
-        // Assert
-        $response->assertRedirect();
-        $this->assertDatabaseHas('players', [
-            'id' => $player->id,
-            'is_cheater' => false,
-        ]);
-    }
-
-    #[DataProvider('gamertagDataProvider')]
-    public function test_loading_player_overview_page(string $gamertag): void
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerOverviewPage(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -170,7 +117,6 @@ class PlayerPageTest extends TestCase
         Player::factory()
             ->createOne([
                 'gamertag' => $gamertag,
-                'is_throttled' => true,
             ]);
 
         // Act
@@ -178,32 +124,11 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee('Updates Throttled');
-        $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function test_loading_player_matches_page_with_playlist_filter(): void
-    {
-        // Arrange
-        Http::fake();
-
-        $player = Player::factory()->createOne([
-            'gamertag' => 'gamertag',
-        ]);
-
-        $playlist = Playlist::factory()->createOne();
-
-        // Act
-        $response = $this->get('/player/'.$player->url_safe_gamertag.'/matches?playlist='.$playlist->uuid);
-
-        // Assert
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('game-history-table');
-        $response->assertSeeLivewire('update-player-panel');
-    }
-
-    public function test_loading_player_overview_page_with_medal_data(): void
+    public function testLoadingPlayerOverviewPageWithMedalData(): void
     {
         // Arrange
         Http::fake();
@@ -218,11 +143,11 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    public function test_loading_player_overview_page_as_banned_user(): void
+    public function testLoadingPlayerOverviewPageAsBannedUser(): void
     {
         // Arrange
         Http::fake();
@@ -238,12 +163,12 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    #[DataProvider('gamertagDataProvider')]
-    public function test_loading_player_overview_page_as_private_player(string $gamertag): void
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerOverviewPageAsPrivatePlayer(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -259,12 +184,12 @@ class PlayerPageTest extends TestCase
 
         // Assert
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSeeLivewire('player-overview-page');
+        $response->assertSeeLivewire('overview-page');
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    #[DataProvider('gamertagDataProvider')]
-    public function test_loading_player_modes_page(string $gamertag): void
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerModesPage(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -283,8 +208,8 @@ class PlayerPageTest extends TestCase
         $response->assertSeeLivewire('update-player-panel');
     }
 
-    #[DataProvider('gamertagDataProvider')]
-    public function test_loading_player_competitive_page(string $gamertag): void
+    /** @dataProvider gamertagDataProvider */
+    public function testLoadingPlayerCompetitivePage(string $gamertag): void
     {
         // Arrange
         Http::fake();
@@ -322,23 +247,6 @@ class PlayerPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSeeLivewire('competitive-page');
         $response->assertSeeLivewire('update-player-panel');
-    }
-
-    public function test_loading_player_overview_page_as_hidden_player(): void
-    {
-        // Arrange
-        /** @var Player $player */
-        $player = Player::factory()->create([
-            'is_hidden' => true,
-        ]);
-
-        // Act
-        $response = $this->get(route('player', $player));
-
-        // Assert
-        $response->assertStatus(451);
-        $response->assertSee('Sorry - this user');
-        $response->assertDontSee('<span>Overview</span>', false);
     }
 
     public static function gamertagDataProvider(): array

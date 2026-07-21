@@ -29,7 +29,7 @@ use Spatie\Sitemap\Tags\Url;
  * @property ChampionshipType $type
  * @property string|null $description
  * @property Carbon $started_at
- * @property-read Collection<int, Matchup> $matchups
+ * @property-read Matchup[]|Collection $matchups
  * @property-read string $faceitUrl
  * @property-read bool $has_championship
  *
@@ -128,7 +128,7 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         $championship->description = Arr::get($payload, 'description');
 
         if ($championship->isDirty()) {
-            $championship->save();
+            $championship->saveOrFail();
         }
 
         return $championship;
@@ -139,9 +139,6 @@ class Championship extends Model implements HasFaceItApi, Sitemapable
         return route('championship', $this);
     }
 
-    /**
-     * @return HasMany<Matchup, $this>
-     */
     public function matchups(): HasMany
     {
         return $this->hasMany(Matchup::class);

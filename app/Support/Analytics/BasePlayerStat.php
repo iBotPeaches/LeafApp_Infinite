@@ -15,7 +15,7 @@ class BasePlayerStat
         return AnalyticType::PLAYER();
     }
 
-    public function baseBuilder(): Builder
+    public function builder(): Builder
     {
         return ServiceRecord::query();
     }

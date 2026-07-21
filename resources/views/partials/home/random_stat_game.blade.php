@@ -17,7 +17,9 @@
             </a>
             <i>
                 {{ $analyticClass->displayProperty($gamePlayer) }} {{ $analyticClass->unit() }} by
-                @include('partials.links.player', ['player' => $gamePlayer->player])
+                <a href="{{ route('player', [$gamePlayer->player]) }}">
+                    {{ $gamePlayer->player->gamertag }}
+                </a>
                 on
                 {{ $gamePlayer->game->occurred_at->toFormattedDateString() }}
             </i>

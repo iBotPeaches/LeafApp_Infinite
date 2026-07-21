@@ -1,5 +1,5 @@
 <?php
-/** @var App\Models\GamePlayer|App\Models\Pivots\PersonalResult $gamePlayer */
+/** @var App\Models\GamePlayer $gamePlayer */
 ?>
 <span
     class="has-tooltip-arrow"

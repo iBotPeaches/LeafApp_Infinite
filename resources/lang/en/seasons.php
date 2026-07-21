@@ -7,11 +7,4 @@ return [
     4 => 'Infection',
     5 => 'Reckoning',
     6 => 'Spirit of Fire',
-    7 => 'Banished Honor',
-    8 => 'Fleetcom',
-    9 => 'Great Journey',
-    10 => 'Frontlines',
-    11 => 'Last Stand',
-    12 => 'Shadows',
-    13 => 'Infinite',
 ];

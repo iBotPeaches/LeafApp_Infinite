@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class RankModelTest extends TestCase
 {
-    public function test_icon_image(): void
+    public function testIconImage(): void
     {
         // Arrange
         $rank = Rank::factory()->createOne([

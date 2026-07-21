@@ -29,10 +29,11 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
 
     public $timestamps = false;
 
-    public const string UNKNOWN_LEVEL_UUID = '00000000-0000-0000-0000-000000000000';
+    public const UNKNOWN_LEVEL_UUID = '00000000-0000-0000-0000-000000000000';
 
     public static function fromMetadata(array $payload): ?self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('uuid', (string) Arr::get($payload, 'properties.level_id'))
             ->first() ?? self::asUnknownLevel();
@@ -40,6 +41,7 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
 
     private static function asUnknownLevel(): ?self
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()
             ->where('uuid', self::UNKNOWN_LEVEL_UUID)
             ->first();
@@ -66,7 +68,7 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
         $level->thumbnail_url = Arr::get($payload, 'image_urls.thumbnail');
 
         if ($level->isDirty()) {
-            $level->save();
+            $level->saveOrFail();
         }
 
         return $level;

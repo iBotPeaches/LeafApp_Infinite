@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\BaseGametype;
 use App\Enums\Bracket;
 use App\Enums\CompetitiveMode;
 use App\Enums\Experience;
@@ -19,9 +18,6 @@ return [
         Experience::PVE_BOTS => 'PVE Bots',
         Experience::CUSTOM => 'Custom',
         Experience::FEATURED => 'Featured',
-        Experience::UNKNOWN => 'Unknown',
-        Experience::PVE => 'PVE',
-        Experience::UNTRACKED => 'Untracked',
     ],
     Outcome::class => [
         Outcome::WIN => 'Win',
@@ -73,27 +69,5 @@ return [
         FaceItStatus::JOIN => 'Join',
         FaceItStatus::CREATED => 'Created',
         FaceItStatus::ADJUSTMENT => 'Adjusted',
-    ],
-    BaseGametype::class => [
-        BaseGametype::ASSAULT => 'Assault',
-        BaseGametype::ATTRITION => 'Attrition',
-        BaseGametype::CTF => 'CTF',
-        BaseGametype::ELIMINATION => 'Elimination',
-        BaseGametype::ESCALATION => 'Escalation',
-        BaseGametype::EXTRACTION => 'Extraction',
-        BaseGametype::FIREFIGHT => 'Firefight',
-        BaseGametype::GRIFBALL => 'Grifball',
-        BaseGametype::INFECTION => 'Infection',
-        BaseGametype::JUGGERNAUT => 'Juggernaut',
-        BaseGametype::KOTH => 'KoTH',
-        BaseGametype::LAND_GRAB => 'Land Grab',
-        BaseGametype::LSS => 'LSS',
-        BaseGametype::MINI_GAME => 'Minigame',
-        BaseGametype::ODDBALL => 'Oddball',
-        BaseGametype::SLAYER => 'Slayer',
-        BaseGametype::STOCKPILE => 'Stockpile',
-        BaseGametype::STRONGHOLDS => 'Strongholds',
-        BaseGametype::TOTAL_CONTROL => 'Total Control',
-        BaseGametype::VIP => 'VIP',
     ],
 ];

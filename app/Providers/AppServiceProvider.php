@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(ScheduleTimerInterface::class, function ($app) {
-            return new ScheduleTimer;
+            return new ScheduleTimer();
         });
 
         // @codeCoverageIgnoreStart
@@ -57,12 +57,6 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('uploads', function (Request $request) {
             return Limit::perHour(10)->by($request->ip())->response(function () {
                 return response()->view('pages.errors.429', [], Response::HTTP_TOO_MANY_REQUESTS);
-            });
-        });
-
-        RateLimiter::for('ban', function (Request $request) {
-            return Limit::perDay(5)->by($request->ip())->response(function () {
-                return response()->view('pages.errors.429-ban', [], Response::HTTP_TOO_MANY_REQUESTS);
             });
         });
         // @codeCoverageIgnoreEnd
