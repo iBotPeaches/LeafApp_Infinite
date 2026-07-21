@@ -7,9 +7,9 @@
     </div>
 @endif
 @foreach ($games as $game)
-    <div class="tile is-ancestor">
-        <div class="tile is-parent is-vertical">
-            <article class="tile is-child notification is-dark">
+    <div class="fixed-grid has-1-cols">
+        <div class="grid">
+            <article class="cell notification is-dark">
                 <p class="title">
                     <a href="{{ route('game', [$game]) }}">
                         {{ $game->map->shorthand }}

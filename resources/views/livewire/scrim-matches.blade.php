@@ -3,8 +3,8 @@
 ?>
 <div>
     @foreach ($games as $game)
-        <div class="tile is-ancestor">
-            <div class="tile is-parent is-vertical">
+        <div class="fixed-grid has-1-cols">
+            <div class="grid">
                 @if ($game->is_ffa)
                     @include('partials.scrim.matches_breakdown.ffa')
                 @else

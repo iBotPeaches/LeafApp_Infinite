@@ -2,7 +2,7 @@
     /** @var \App\Models\GamePlayer $gamePlayer */
 ?>
 @foreach ($powerfulMedals as $medal)
-    <article class="tile">
+    <article class="media">
         <figure class="media-left">
             <p class="image is-48x48">
                 <img src="{{ $medal['medal']->image }}" alt="{{ $medal['medal']->name }}"/>
