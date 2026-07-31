@@ -1488,16 +1488,16 @@
         },
         {
             "name": "jaybizzle/laravel-crawler-detect",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Laravel-Crawler-Detect.git",
-                "reference": "3cd7b0cbbf317496603e04be7cf17ea171bdc276"
+                "reference": "ec1dfaea645a30c6b462702b7b9a2b1e933537d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Laravel-Crawler-Detect/zipball/3cd7b0cbbf317496603e04be7cf17ea171bdc276",
-                "reference": "3cd7b0cbbf317496603e04be7cf17ea171bdc276",
+                "url": "https://api.github.com/repos/JayBizzle/Laravel-Crawler-Detect/zipball/ec1dfaea645a30c6b462702b7b9a2b1e933537d3",
+                "reference": "ec1dfaea645a30c6b462702b7b9a2b1e933537d3",
                 "shasum": ""
             },
             "require": {
@@ -1552,9 +1552,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JayBizzle/Laravel-Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Laravel-Crawler-Detect/tree/v2.0.0"
+                "source": "https://github.com/JayBizzle/Laravel-Crawler-Detect/tree/v2.1.0"
             },
-            "time": "2026-07-11T08:22:50+00:00"
+            "time": "2026-07-28T17:24:08+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
