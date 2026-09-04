@@ -6,6 +6,7 @@ namespace App\Livewire;
 
 use App\Models\Player;
 use App\Rules\ValidInfiniteAccount;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
@@ -35,7 +36,7 @@ class AddGamerForm extends Component
         $this->resetValidation('gamertag');
     }
 
-    public function submit(): ?Redirector
+    public function submit(): ?RedirectResponse
     {
         $this->validate();
 
@@ -60,9 +61,8 @@ class AddGamerForm extends Component
         return view('livewire.add-gamer-form');
     }
 
-    private function redirectPlayer(Player $player): Redirector
+    private function redirectPlayer(Player $player): RedirectResponse
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return redirect()->route('player', [$player]); // @phpstan-ignore-line
+        return redirect()->route('player', [$player]);
     }
 }
