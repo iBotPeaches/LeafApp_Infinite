@@ -9,7 +9,6 @@ use App\Rules\ValidInfiniteAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 
 class AddGamerForm extends Component
 {
