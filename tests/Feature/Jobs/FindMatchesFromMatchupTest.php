@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
-use Mockery;
+use JMac\Testing\Double;
 use Tests\TestCase;
 
 class FindMatchesFromMatchupTest extends TestCase
@@ -43,14 +43,9 @@ class FindMatchesFromMatchupTest extends TestCase
     public function test_finds_games_happening_the_day_after_matchup_start(): void
     {
         // Arrange
-        $this->app->instance(
-            InfiniteInterface::class,
-            Mockery::mock(InfiniteInterface::class)
-                ->shouldReceive('matches')
-                ->once()
-                ->andReturn(new EloquentCollection)
-                ->getMock()
-        );
+        $infinite = Double::for(InfiniteInterface::class);
+        $infinite->expects('matches')->returns(new EloquentCollection);
+        $this->app->instance(InfiniteInterface::class, $infinite);
 
         $startedAt = Carbon::parse('2026-01-15 18:30:00');
         $matchup = Matchup::factory()->createOne([
