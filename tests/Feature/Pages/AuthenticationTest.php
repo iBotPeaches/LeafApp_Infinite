@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\Feature\Pages;
 
 use App\Models\User;
+use JMac\Testing\Double;
+use Laravel\Socialite\Contracts\Factory;
+use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Facades\Socialite;
-use Mockery;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -25,12 +27,7 @@ class AuthenticationTest extends TestCase
     public function test_authentication_callback(): void
     {
         // Arrange
-        $abstractUser = Mockery::mock(\Laravel\Socialite\Two\User::class);
-        $abstractUser
-            ->shouldReceive('getId')
-            ->andReturn(rand());
-
-        Socialite::shouldReceive('driver->user')->andReturn($abstractUser);
+        $this->fakeSocialiteUser(rand());
 
         // Act
         $response = $this->get('/auth/google/callback');
@@ -43,12 +40,7 @@ class AuthenticationTest extends TestCase
     {
         // Arrange
         $googleId = rand();
-        $abstractUser = Mockery::mock(\Laravel\Socialite\Two\User::class);
-        $abstractUser
-            ->shouldReceive('getId')
-            ->andReturn($googleId);
-
-        Socialite::shouldReceive('driver->user')->andReturn($abstractUser);
+        $this->fakeSocialiteUser($googleId);
 
         User::factory()->createOne([
             'google_id' => $googleId,
@@ -73,5 +65,19 @@ class AuthenticationTest extends TestCase
 
         // Assert
         $response->assertRedirect();
+    }
+
+    private function fakeSocialiteUser(int $googleId): void
+    {
+        $abstractUser = Double::for(\Laravel\Socialite\Two\User::class);
+        $abstractUser->allows('getId')->returns($googleId);
+
+        $provider = Double::for(Provider::class);
+        $provider->allows('user')->returns($abstractUser);
+
+        $socialite = Double::for(Factory::class);
+        $socialite->allows('driver')->returns($provider);
+
+        Socialite::swap($socialite);
     }
 }

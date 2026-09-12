@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "830a7719e4607abca7b2849b3188cfe4",
+    "content-hash": "be240ef02a623d43f6559b3986ae585a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8623,6 +8623,57 @@
                 "source": "https://github.com/iamcal/SQLParser/tree/v0.7"
             },
             "time": "2026-01-28T22:20:33+00:00"
+        },
+        {
+            "name": "jasonmccreary/double",
+            "version": "v0.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jasonmccreary/double.git",
+                "reference": "c9d6d75e83ef17ea783ed5430c9f466aac85dadb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/c9d6d75e83ef17ea783ed5430c9f466aac85dadb",
+                "reference": "c9d6d75e83ef17ea783ed5430c9f466aac85dadb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.29",
+                "phpunit/phpunit": "^11.5.50 || ^12.5.8 || ^13.0.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JMac\\Testing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jason McCreary",
+                    "email": "jason@pureconcepts.net"
+                }
+            ],
+            "description": "A modern PHP double library that puts developer experience first.",
+            "keywords": [
+                "Double",
+                "mock",
+                "spy",
+                "stub",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/jasonmccreary/double/issues",
+                "source": "https://github.com/jasonmccreary/double/tree/v0.6.1"
+            },
+            "time": "2026-08-19T22:33:25+00:00"
         },
         {
             "name": "larastan/larastan",
