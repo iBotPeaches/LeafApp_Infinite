@@ -17,9 +17,7 @@ class ValidOverviewsListingTest extends TestCase
         $overview = Overview::factory()->createOne();
 
         // Act & Assert
-        Livewire::test(OverviewsTable::class, [
-            'overviews' => collect([$overview]),
-        ])
+        Livewire::test(OverviewsTable::class)
             ->assertViewHas('overviews')
             ->assertSee($overview->name)
             ->assertSeeHtml($overview->thumbnail_url);
