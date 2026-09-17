@@ -10,7 +10,7 @@ use App\Models\MatchupTeam;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Mockery;
+use JMac\Testing\Double;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Mocks\Image\MockImageService;
 use Tests\TestCase;
@@ -25,14 +25,9 @@ class PullLogoFromMatchupTeamTest extends TestCase
         Http::preventStrayRequests();
         Storage::fake();
 
-        $this->instance(
-            FileUtilInterface::class,
-            Mockery::mock(FileUtilInterface::class, function (Mockery\MockInterface $mock) {
-                $mock
-                    ->shouldReceive('getFileContents')
-                    ->andReturn('example-binary-contents');
-            })
-        );
+        $fileUtil = Double::for(FileUtilInterface::class);
+        $fileUtil->allows('getFileContents')->returns('example-binary-contents');
+        $this->instance(FileUtilInterface::class, $fileUtil);
 
         $mockOptimizedResponse = (new MockImageService)->success();
         $headers = ['Location' => 'domain.com'];
