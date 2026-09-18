@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be240ef02a623d43f6559b3986ae585a",
+    "content-hash": "10cb93684aa66e5e0169aa50cf8c73f2",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8630,16 +8630,16 @@
         },
         {
             "name": "jasonmccreary/double",
-            "version": "v0.6.1",
+            "version": "v0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/double.git",
-                "reference": "c9d6d75e83ef17ea783ed5430c9f466aac85dadb"
+                "reference": "051bc29263baf77db1e0519cb708a73aa91cf232"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/c9d6d75e83ef17ea783ed5430c9f466aac85dadb",
-                "reference": "c9d6d75e83ef17ea783ed5430c9f466aac85dadb",
+                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/051bc29263baf77db1e0519cb708a73aa91cf232",
+                "reference": "051bc29263baf77db1e0519cb708a73aa91cf232",
                 "shasum": ""
             },
             "require": {
@@ -8666,6 +8666,7 @@
                 }
             ],
             "description": "A modern PHP double library that puts developer experience first.",
+            "homepage": "https://testdoublephp.com",
             "keywords": [
                 "Double",
                 "mock",
@@ -8674,10 +8675,11 @@
                 "testing"
             ],
             "support": {
+                "docs": "https://testdoublephp.com",
                 "issues": "https://github.com/jasonmccreary/double/issues",
-                "source": "https://github.com/jasonmccreary/double/tree/v0.6.1"
+                "source": "https://github.com/jasonmccreary/double"
             },
-            "time": "2026-08-19T22:33:25+00:00"
+            "time": "2026-09-14T16:21:40+00:00"
         },
         {
             "name": "larastan/larastan",
