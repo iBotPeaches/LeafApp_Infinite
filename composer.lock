@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10cb93684aa66e5e0169aa50cf8c73f2",
+    "content-hash": "fa2084282ee3f3d933755eb45fe21e38",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8630,20 +8630,20 @@
         },
         {
             "name": "jasonmccreary/double",
-            "version": "v0.9.0",
+            "version": "v0.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/double.git",
-                "reference": "051bc29263baf77db1e0519cb708a73aa91cf232"
+                "reference": "bec7fd4f4a93e0363e937dd979439351eae6522c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/051bc29263baf77db1e0519cb708a73aa91cf232",
-                "reference": "051bc29263baf77db1e0519cb708a73aa91cf232",
+                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/bec7fd4f4a93e0363e937dd979439351eae6522c",
+                "reference": "bec7fd4f4a93e0363e937dd979439351eae6522c",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.3"
+                "php": "^8.2"
             },
             "require-dev": {
                 "laravel/pint": "^1.29",
@@ -8679,7 +8679,7 @@
                 "issues": "https://github.com/jasonmccreary/double/issues",
                 "source": "https://github.com/jasonmccreary/double"
             },
-            "time": "2026-09-14T16:21:40+00:00"
+            "time": "2026-09-18T19:30:32+00:00"
         },
         {
             "name": "larastan/larastan",
