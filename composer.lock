@@ -8629,16 +8629,16 @@
         },
         {
             "name": "jasonmccreary/double",
-            "version": "v0.10.1",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/double.git",
-                "reference": "bec7fd4f4a93e0363e937dd979439351eae6522c"
+                "reference": "cf403df8470d1165642084ea11ab5c719da2a491"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/bec7fd4f4a93e0363e937dd979439351eae6522c",
-                "reference": "bec7fd4f4a93e0363e937dd979439351eae6522c",
+                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/cf403df8470d1165642084ea11ab5c719da2a491",
+                "reference": "cf403df8470d1165642084ea11ab5c719da2a491",
                 "shasum": ""
             },
             "require": {
@@ -8678,7 +8678,7 @@
                 "issues": "https://github.com/jasonmccreary/double/issues",
                 "source": "https://github.com/jasonmccreary/double"
             },
-            "time": "2026-09-18T19:30:32+00:00"
+            "time": "2026-09-21T12:37:31+00:00"
         },
         {
             "name": "larastan/larastan",
