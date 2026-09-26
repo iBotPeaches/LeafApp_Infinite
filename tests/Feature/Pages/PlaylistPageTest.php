@@ -64,6 +64,23 @@ class PlaylistPageTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
+    public function test_playlist_loading_stats_with_missing_player(): void
+    {
+        // Arrange
+        $playlist = Playlist::factory()
+            ->has(PlaylistStat::factory(), 'stat')
+            ->has(PlaylistAnalytic::factory()->state([
+                'player_id' => null,
+            ]), 'analytics')
+            ->create();
+
+        // Response
+        $response = $this->get('/playlists/'.$playlist->uuid.'/stats');
+
+        // Assert
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
     public function test_playlist_loading_historic(): void
     {
         // Arrange
