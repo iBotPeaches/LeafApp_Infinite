@@ -14,6 +14,7 @@ use App\Models\OverviewStat;
 use App\Models\ServiceRecord;
 use App\Support\Analytics\AnalyticInterface;
 use App\Support\Analytics\Stats\MostGamesPlayedServiceRecord;
+use App\Support\Analytics\Stats\MostKillsInRankedGame;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -24,6 +25,21 @@ class ProcessAnalyticTest extends TestCase
 {
     use HasAnalyticDataProvider;
     use WithFaker;
+
+    public function test_most_kills_in_ranked_game_excludes_unranked_games(): void
+    {
+        $rankedGamePlayer = GamePlayer::factory()
+            ->for(Game::factory()->forPlaylist(['is_ranked' => true]))
+            ->create(['kills' => 10]);
+
+        GamePlayer::factory()
+            ->for(Game::factory()->forPlaylist(['is_ranked' => false]))
+            ->create(['kills' => 100]);
+
+        $results = (new MostKillsInRankedGame)->results();
+
+        $this->assertSame([$rankedGamePlayer->id], $results?->modelKeys());
+    }
 
     #[DataProvider('analyticDataProvider')]
     public function test_processing_each_category(AnalyticInterface $analyticClass): void
