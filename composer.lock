@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa2084282ee3f3d933755eb45fe21e38",
+    "content-hash": "7f3b86ea7ecfcb3d8746ba444d4cc660",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8631,16 +8631,16 @@
         },
         {
             "name": "jasonmccreary/double",
-            "version": "v0.10.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/double.git",
-                "reference": "cf403df8470d1165642084ea11ab5c719da2a491"
+                "reference": "8d795c50489ce673882b3c819e9bbca0f6f0ef3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/cf403df8470d1165642084ea11ab5c719da2a491",
-                "reference": "cf403df8470d1165642084ea11ab5c719da2a491",
+                "url": "https://api.github.com/repos/jasonmccreary/double/zipball/8d795c50489ce673882b3c819e9bbca0f6f0ef3a",
+                "reference": "8d795c50489ce673882b3c819e9bbca0f6f0ef3a",
                 "shasum": ""
             },
             "require": {
@@ -8680,7 +8680,7 @@
                 "issues": "https://github.com/jasonmccreary/double/issues",
                 "source": "https://github.com/jasonmccreary/double"
             },
-            "time": "2026-09-21T12:37:31+00:00"
+            "time": "2026-09-28T13:00:45+00:00"
         },
         {
             "name": "larastan/larastan",
