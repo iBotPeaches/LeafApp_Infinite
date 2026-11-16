@@ -48,7 +48,7 @@ class Level extends Model implements HasDotApi, HasDotApiMetadata
     public static function fromDotApi(array $payload): ?self
     {
         $levelId = Arr::get($payload, 'id');
-        $levelName = Arr::get($payload, 'name');
+        $levelName = (string) Arr::get($payload, 'name');
 
         // HACK - The API started adding " - Ranked" to Ranked Maps.
         // This has caused data accuracy issues due to older ranked maps not having this suffix.

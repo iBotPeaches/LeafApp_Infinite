@@ -110,7 +110,7 @@ class ServiceRecord extends Model implements HasDotApi
             case $this->win_percent > 50:
                 return 'has-text-success';
 
-            case $this->win_percent > 35 && $this->win_percent <= 50:
+            case $this->win_percent > 35:
                 return 'has-text-warning';
 
             default:
@@ -125,7 +125,7 @@ class ServiceRecord extends Model implements HasDotApi
             case $this->kda >= 2:
                 return 'has-text-success';
 
-            case $this->kda > 1 && $this->kda < 2:
+            case $this->kda > 1:
                 return 'has-text-warning';
 
             default:
@@ -140,7 +140,7 @@ class ServiceRecord extends Model implements HasDotApi
             case $this->kd >= 1:
                 return 'has-text-success';
 
-            case $this->kd > 0.5 && $this->kd < 1:
+            case $this->kd > 0.5:
                 return 'has-text-warning';
 
             default:

@@ -160,8 +160,8 @@ class Csr extends Model implements HasDotApi
 
         return match (true) {
             $this->next_rank_percent > 80 => 'is-success',
-            $this->next_rank_percent > 60 && $this->next_rank_percent <= 80 => 'is-primary',
-            $this->next_rank_percent > 40 && $this->next_rank_percent <= 60 => 'is-warning',
+            $this->next_rank_percent > 60 => 'is-primary',
+            $this->next_rank_percent > 40 => 'is-warning',
             default => 'is-danger',
         };
     }
