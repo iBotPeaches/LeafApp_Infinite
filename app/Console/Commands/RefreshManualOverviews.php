@@ -20,8 +20,9 @@ class RefreshManualOverviews extends Command
     {
         /** @var Collection<Overview> $overviews */
         $overviews = Overview::query()
+            ->with('maps')
             ->where('is_manual', true)
-            ->cursor();
+            ->lazy();
 
         foreach ($overviews as $overview) {
             $mapIds = $overview->maps->pluck('map_id')->toArray();

@@ -67,7 +67,7 @@ class FindMatchesFromMatchup implements ShouldQueue
                             ->orWhereDate('occurred_at', $startedAt->copy()->addDay());
                     }
                 })
-                ->cursor()
+                ->lazy()
                 ->filter(function (Game $game) use ($playerIds) {
                     // 4 - Find matches that fit criteria of all step 1 folks
                     $gamePlayerIds = $game->players->pluck('player_id');

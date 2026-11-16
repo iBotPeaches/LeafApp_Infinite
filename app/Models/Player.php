@@ -193,8 +193,8 @@ class Player extends Model implements HasDotApi, Sitemapable
     {
         return match (true) {
             $this->percentage_next_rank > 80 => 'is-success',
-            $this->percentage_next_rank > 60 && $this->percentage_next_rank <= 80 => 'is-primary',
-            $this->percentage_next_rank > 40 && $this->percentage_next_rank <= 60 => 'is-warning',
+            $this->percentage_next_rank > 60 => 'is-primary',
+            $this->percentage_next_rank > 40 => 'is-warning',
             default => 'is-danger',
         };
     }
