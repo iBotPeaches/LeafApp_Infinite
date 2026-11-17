@@ -7,7 +7,7 @@
         "ext-pdo": "*",
         "artesaos/seotools": "^1.1",
         "bensampo/laravel-enum": "^6.3",
-        "guzzlehttp/guzzle": "^7.4",
+        "guzzlehttp/guzzle": "^8.5",
         "jaybizzle/laravel-crawler-detect": "^2.0",
         "laravel/framework": "^13.3",
         "laravel/horizon": "^v5.15.0",
